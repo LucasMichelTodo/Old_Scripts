@@ -28,3 +28,8 @@ for (x in fls){
 un_fls <- select.files.end("~/ISGlobal/Chip_Seq/Aln_Unaln/", ".un.bam")
 al_fls <- select.files.end("~/ISGlobal/Chip_Seq/Aln_Unaln/", ".al.bam")
 BAM_ACGT_count(paste0(outpath, un_fls))
+
+## Provant cosetes per al git
+
+### Prova 2
+
