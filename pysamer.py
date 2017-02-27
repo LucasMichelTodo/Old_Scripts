@@ -86,24 +86,86 @@ def get_coding_coverage(bamfile):
 		starts.append(element.split(":")[1].strip("([+-])").split("-")[0])
 		ends.append(element.split(":")[1].strip("([+-])").split("-")[1])
 
-	coverage = [] 
-	index = 0
-	while index <= len(references)-1:
+	coverage = []
+	for index in tqdm(range(len(references))):
 		cov = sam.count_coverage(reference=references[index], start=int(starts[index]), end=int(ends[index]))
 		total_cov = numpy.sum(cov, axis=0)
-		coverage.append(total_cov)
-		index += 1
+		coverage.append(total_cov) ## Assuming coding regions do NOT OVERLAP
 
 	coverage = numpy.concatenate(coverage, axis=0)
 	print coverage
 	print numpy.mean(coverage)
 
+# regions = coding_df["location"]
+# chromosomes = []
+# for element in regions:
+# 	chromosomes.append(element.split(":")[0])
+
+# chrom_series = pandas.Series(chromosomes)
+# print chrom_series.value_counts()
+# print numpy.unique(chromosomes)
+
+regions = coding_df["location"]
+#references = []
+#starts = []
+#ends = []
+chrom = map(lambda x: x.split(":"), regions)
+chroms = {}
+for pair in chrom:
+	if pair[0] in chroms:
+		chroms[pair[0]].append(pair[1])
+	else:
+		chroms[pair[0]] = [pair[1]]
+
+for key in chroms:
+	chroms[key] = map(lambda x: x.strip("([+-])").split("-"), chroms[key])
+
+noncoding = {}
+for key in chroms:
+	noncoding[key] = []
+	for i in chroms[key]:
+		noncoding[key].append(int(i[0])-1)
+		noncoding[key].append(int(i[1])+1)
+
+for key in noncoding:
+	noncoding[key].insert(0,1)
+	noncoding[key].append(999999999)
+
+print noncoding
+
+
+#print[noncoding]
+
+# df = pandas.DataFrame(chrom)
+# df.columns = ["chrom","idx"]
+# for element in df["chrom"]:
+# 	element
+# print df
+
+# chroms = {}
+# for element in regions:
+# 	indxs = []
+# 	chroms[element.split(":")[0]] = indxs.append(element.split(":")[1])
+
+# print chroms
+# chroms_df = pandas.DataFrame.from_dict(data=chroms, orient = "index")
+# print chroms_df
+# 	starts.append(element.split(":")[1].strip("([+-])").split("-")[0])
+# 	ends.append(element.split(":")[1].strip("([+-])").split("-")[1])
+
+# nc_idx = [1]
+# 	for element in regions:
+# 		nc_idx.append(element.split(":")[1].strip("([+-])").split("-")[0]-1)
+# 		nc_idx.append(element.split(":")[1].strip("([+-])").split("-")[0]+1)
+# 	nc_idx.append(#longitud del chrom)
+
+
 
 
 filenames = sys.argv[1:]
 print filenames
-for element in tqdm(filenames):
-	get_coding_coverage(element)
+#for element in filenames:
+	#get_coding_coverage(element)
 	#get_flags(element)
 	#get_unaligned_mate(element)
 	#get_unaligned(element)
