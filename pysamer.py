@@ -69,25 +69,29 @@ for key in noncoding:
 	noncoding[key].insert(0,1)
 	noncoding[key].append(sizes[key])
 
-## Remove overlapping gene
-#del noncoding["Pf3D7_09_v3"][73:75]
-#print range(len(noncoding["Pf3D7_09_v3"])+2)[2:]
+## Remove overlapping genes:
 
-for key in noncoding:
-	for i in range(len(noncoding[key])):
-		if noncoding[key][i] < noncoding[key][i-1]:
-			print "Overlap in Chrom: {} position {}" .format(key, i)
-			print noncoding[key][i-2:i+2]
-			if i in range(len(noncoding[key])+3)[2:]:
-				if noncoding[key][i-2:i+2]:
+n_iter = [0,1]
+for i in n_iter:
+	for key in noncoding:
+		for i in range(len(noncoding[key])):
+			if len(noncoding[key][i-2:i+2]) == 4:
+				if noncoding[key][i] < noncoding[key][i-1]:
+					# print "Overlap in Chrom: {} position {}" .format(key, i)
+					# print noncoding[key][i-2:i+2]
 					noncoding[key][i-2:i+2] = [min(noncoding[key][i-2:i+2]),max(noncoding[key][i-2:i+2])]
 			else:
 				pass
 
+## Check no overlapping genes are still present:
+
 for key in noncoding:
 	for i in range(len(noncoding[key])):
-		if noncoding[key][i] < noncoding[key][i-1]:
-			print "Encara en queden..."
+		if noncoding[key][i] < noncoding[key][i-1] and i != 0 and i !=1:
+			print "Overlap in Chrom: {} position {}" .format(key, i)
+			print noncoding[key][i-2:i+2]
+
+
 
 
 ### FUNCTIONS
