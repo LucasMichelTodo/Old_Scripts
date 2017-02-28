@@ -58,16 +58,15 @@ noncoding = {}
 for key in chroms:
 	noncoding[key] = []
 	for i in chroms[key]:
-#if i > noncoding[key][-1]:
 		noncoding[key].append(int(i[0])-1)
 		noncoding[key].append(int(i[1])+1)
-
-
-
 
 for key in noncoding:
 	noncoding[key].insert(0,1)
 	noncoding[key].append(sizes[key])
+
+# Set one 0 to 1 (coding region starts at pos 1):
+noncoding["Pf3D7_API_v3"][1] = 1
 
 ## Remove overlapping genes:
 
@@ -90,8 +89,6 @@ for key in noncoding:
 		if noncoding[key][i] < noncoding[key][i-1] and i != 0 and i !=1:
 			print "Overlap in Chrom: {} position {}" .format(key, i)
 			print noncoding[key][i-2:i+2]
-
-
 
 
 ### FUNCTIONS
@@ -156,7 +153,6 @@ def get_coding_coverage(bamfile):
 
 	coverage = []
 	for index in tqdm(range(len(references))):
-		#print "{} {} {}" .format(references[index], starts[index], ends[index])
 		cov = sam.count_coverage(reference=references[index], start=int(starts[index]), end=int(ends[index]))
 		total_cov = numpy.sum(cov, axis=0)
 		coverage.append(total_cov) ## Assuming coding regions do NOT OVERLAP
@@ -182,44 +178,22 @@ def get_coding_coverage(bamfile):
 
 
 	for index in tqdm(range(len(nc_references))):
-		print "{} {} {}" .format(nc_references[index], nc_starts[index], nc_ends[index])
 		nc_cov = sam.count_coverage(reference=nc_references[index], start=int(nc_starts[index]), end=int(nc_ends[index]))
-		#print (nc_cov)
 		nc_total_cov = numpy.sum(nc_cov, axis=0)
-		#print nc_total_cov
 		nc_coverage.append(nc_total_cov)
-		#print (nc_coverage) 
+
 
 	nc_coverage = numpy.concatenate(nc_coverage, axis=0)
 	print "Non-Coding coverage: {}" .format(nc_coverage)
 	print "Non-Coding mean coverage: {}" .format(numpy.mean(nc_coverage))
 
 
-# nc_references = []
-# nc_starts = []
-# nc_ends = []
-# nc_coverage = []
-# i = 0
-# for key in noncoding:
-# 	for x in noncoding[key]:
-# 		if i == 0:
-# 			nc_references.append(key)
-# 			nc_starts.append(x)
-# 			i = 1
-# 		if i == 1:
-# 			nc_ends.append(x)
-# 			i = 0
-
-# print len(nc_references)
-# print len(nc_starts)
-# print len(nc_ends)
-
 filenames = sys.argv[1:]
 print filenames
-#for element in filenames:
-	#get_coding_coverage(element)
-	#get_flags(element)
-	#get_unaligned_mate(element)
-	#get_unaligned(element)
-	#get_frag_len(element)
-	#get_MAPQ(element)
+for element in filenames:
+	get_coding_coverage(element)
+	get_flags(element)
+	get_unaligned_mate(element)
+	get_unaligned(element)
+	get_frag_len(element)
+	get_MAPQ(element)
