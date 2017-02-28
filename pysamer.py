@@ -40,8 +40,8 @@ with open("/home/lucas/ISGlobal/Gen_Referencies/Pf3D7.sizes", "rb") as csvfile:
 		else:
 			pass
 
-sizes["Pf_M76611"] = sizes.pop("M76611")
-sizes["Pf3D7_API_v3"] = sizes.pop("PFC10_API_IRAB")
+# sizes["Pf_M76611"] = sizes.pop("M76611")
+# sizes["Pf3D7_API_v3"] = sizes.pop("PFC10_API_IRAB")
 
 chrom = map(lambda x: x.split(":"), regions)
 chroms = {}
@@ -61,12 +61,15 @@ for key in chroms:
 		noncoding[key].append(int(i[0])-1)
 		noncoding[key].append(int(i[1])+1)
 
+noncoding["M76611"] = noncoding.pop("Pf_M76611")
+noncoding["PFC10_API_IRAB"] = noncoding.pop("Pf3D7_API_v3")
+
 for key in noncoding:
 	noncoding[key].insert(0,1)
 	noncoding[key].append(sizes[key])
 
 # Set one 0 to 1 (coding region starts at pos 1):
-noncoding["Pf3D7_API_v3"][1] = 1
+noncoding["PFC10_API_IRAB"][1] = 1
 
 ## Remove overlapping genes:
 
@@ -94,22 +97,38 @@ for key in noncoding:
 ### FUNCTIONS
 
 def get_frag_len(samfile):
-	sam = pysam.AlignmentFile(samfile, "r")
+	if samfile[-4:] == ".sam":
+		sam = pysam.AlignmentFile(samfile, "r")
+	elif samfile[-4:] == ".bam":
+		sam = pysam.AlignmentFile(samfile, "rb")
+	else:
+		print "Not a bam nor a sam file!"
+		
+
 	lens = []
 	for read in sam.fetch():
 		lens.append(read.template_length)
-	with open(samfile.replace(".sam", "_lengths.csv"),"w") as csvfile:
+	with open(samfile.replace(samfile[-4:], "_lengths.csv"),"w") as csvfile:
 		writer = csv.writer(csvfile, delimiter = "\t", quoting=csv.QUOTE_MINIMAL)
 		writer.writerow(lens)
+	sam.close()
 
 def get_MAPQ(samfile):
-	sam = pysam.AlignmentFile(samfile, "r")
+	if samfile[-4:] == ".sam":
+		sam = pysam.AlignmentFile(samfile, "r")
+	elif samfile[-4:] == ".bam":
+		sam = pysam.AlignmentFile(samfile, "rb")
+	else:
+		print "Not a bam nor a sam file!"
+		
+
 	mapq = []
 	for read in sam.fetch():
 		mapq.append(read.mapping_quality)
-	with open(samfile.replace(".sam", "_MAPQ.csv"), "w") as csvfile:
+	with open(samfile.replace(samfile[-4:], "_MAPQ.csv"), "w") as csvfile:
 		writer = csv.writer(csvfile, delimiter = "\t", quoting=csv.QUOTE_MINIMAL)
 		writer.writerow(mapq)
+	sam.close()
 
 def get_unaligned(samfile):
 	cmd = "samtools view -h -f 4 {} > {}" .format(samfile, samfile.replace(".sam", "_unmapped.sam"))
@@ -122,22 +141,36 @@ def get_unaligned(samfile):
 	subprocess.call(cmd, shell=True)
 	
 def get_unaligned_mate(samfile):
-	sam = pysam.AlignmentFile(samfile, "r")
+	if samfile[-4:] == ".sam":
+		sam = pysam.AlignmentFile(samfile, "r")
+	elif samfile[-4:] == ".bam":
+		sam = pysam.AlignmentFile(samfile, "rb")
+	else:
+		print "Not a bam nor a sam file!"
+		
 	unpaired_mates = 0
 	for read in sam.fetch():
 		if read.mate_is_unmapped:
 			unpaired_mates += 1
-	print unpaired_mates
+	print "Unpaired mates: {}" .format(unpaired_mates)
+	sam.close()
 
 def get_flags(samfile):
+	if samfile[-4:] == ".sam":
+		sam = pysam.AlignmentFile(samfile, "r")
+	elif samfile[-4:] == ".bam":
+		sam = pysam.AlignmentFile(samfile, "rb")
+	else:
+		print "Not a bam nor a sam file!"
+		
 	flags = {}
-	sam = pysam.AlignmentFile(samfile, "r")
 	for read in sam.fetch():
 		if read.flag in flags:
 			flags[read.flag] += 1
 		else:
 			flags[read.flag] = 1
-	print flags
+	print "Flags present: {}" .format(flags)
+	sam.close()
 
 def get_coding_coverage(bamfile):
 	sam = pysam.AlignmentFile(bamfile, "rb")
@@ -150,6 +183,16 @@ def get_coding_coverage(bamfile):
 		references.append(element.split(":")[0])
 		starts.append(element.split(":")[1].strip("([+-])").split("-")[0])
 		ends.append(element.split(":")[1].strip("([+-])").split("-")[1])
+
+	# Correct the reference:
+	for idx, item in enumerate(references):
+		if item == "Pf_M76611":
+			references[idx] = "M76611"
+		elif item == "Pf3D7_API_v3":
+			references[idx] = "PFC10_API_IRAB"
+		else:
+			pass
+		
 
 	coverage = []
 	for index in tqdm(range(len(references))):
@@ -192,8 +235,8 @@ filenames = sys.argv[1:]
 print filenames
 for element in filenames:
 	get_coding_coverage(element)
-	get_flags(element)
-	get_unaligned_mate(element)
-	get_unaligned(element)
-	get_frag_len(element)
-	get_MAPQ(element)
+	#get_flags(element)
+	#get_unaligned_mate(element)
+	#get_unaligned(element)
+	#get_frag_len(element)
+	#get_MAPQ(element)
