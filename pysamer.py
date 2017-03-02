@@ -202,6 +202,10 @@ def get_coding_coverage(bamfile):
 		coverage.append(total_cov) ## Assuming coding regions do NOT OVERLAP
 
 	coverage = numpy.concatenate(coverage, axis=0)
+	with open("Coverage_Results.txt", "a") as results_file:
+		results_file.write("File :{}\n\n" .format(bamfile) +
+							"Coding coverage: {}\n" .format(coverage) +
+							"Coding mean coverage: {}\n\n" .format(numpy.mean(coverage))) 
 	print "Coding coverage: {}" .format(coverage)
 	print "Coding mean coverage: {}" .format(numpy.mean(coverage))
 
@@ -226,8 +230,10 @@ def get_coding_coverage(bamfile):
 		nc_total_cov = numpy.sum(nc_cov, axis=0)
 		nc_coverage.append(nc_total_cov)
 
-
 	nc_coverage = numpy.concatenate(nc_coverage, axis=0)
+	with open("Coverage_Results.txt", "a") as results_file:
+		results_file.write("Non-Coding coverage: {}\n" .format(nc_coverage) +
+							"Non-Coding mean coverage: {}\n\n" .format(numpy.mean(nc_coverage)))
 	print "Non-Coding coverage: {}" .format(nc_coverage)
 	print "Non-Coding mean coverage: {}" .format(numpy.mean(nc_coverage))
 
