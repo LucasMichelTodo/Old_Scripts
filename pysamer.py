@@ -97,6 +97,8 @@ for key in noncoding:
 
 ### FUNCTIONS
 
+# Get fragment lengths for all reads and print to a csv file.
+
 def get_frag_len(samfile):
 	if samfile[-4:] == ".sam":
 		sam = pysam.AlignmentFile(samfile, "r")
@@ -113,6 +115,8 @@ def get_frag_len(samfile):
 		writer = csv.writer(csvfile, delimiter = "\t", quoting=csv.QUOTE_MINIMAL)
 		writer.writerow(lens)
 	sam.close()
+
+# Get MAPQ for all reads and print to a csv file:
 
 def get_MAPQ(samfile):
 	if samfile[-4:] == ".sam":
@@ -131,6 +135,8 @@ def get_MAPQ(samfile):
 		writer.writerow(mapq)
 	sam.close()
 
+#Get unaligned reads via samtools:
+
 def get_unaligned(samfile):
 	cmd = "samtools view -h -f 4 {} > {}" .format(samfile, samfile.replace(".sam", "_unmapped.sam"))
 	subprocess.call(cmd, shell=True)
@@ -140,6 +146,8 @@ def get_unaligned(samfile):
 												samfile.replace(".sam", "_unmapped.sam"),
 												samfile.replace(".sam", "_mateunmapped.sam"))
 	subprocess.call(cmd, shell=True)
+
+#Get number of reads with an unaligned mate:
 	
 def get_unaligned_mate(samfile):
 	if samfile[-4:] == ".sam":
@@ -155,6 +163,8 @@ def get_unaligned_mate(samfile):
 			unpaired_mates += 1
 	print "Unpaired mates: {}" .format(unpaired_mates)
 	sam.close()
+
+#Print flags prensent in alignment (type and amount):
 
 def get_flags(samfile):
 	if samfile[-4:] == ".sam":
@@ -172,6 +182,8 @@ def get_flags(samfile):
 			flags[read.flag] = 1
 	print "Flags present: {}" .format(flags)
 	sam.close()
+
+#Get coverage splitted among coding and noncoding regions, written into a .txt file:
 
 def get_coding_coverage(bamfile):
 	sam = pysam.AlignmentFile(bamfile, "rb")
@@ -237,13 +249,15 @@ def get_coding_coverage(bamfile):
 	print "Non-Coding coverage: {}" .format(nc_coverage)
 	print "Non-Coding mean coverage: {}" .format(numpy.mean(nc_coverage))
 
+# Make funtion self-executable:
 
-filenames = sys.argv[1:]
-print filenames
-for element in filenames:
-	get_coding_coverage(element)
-	#get_flags(element)
-	#get_unaligned_mate(element)
-	#get_unaligned(element)
-	#get_frag_len(element)
-	#get_MAPQ(element)
+if __name__ == "__main__":
+	filenames = sys.argv[1:]
+	print filenames
+	for element in filenames:
+		get_coding_coverage(element)
+		#get_flags(element)
+		#get_unaligned_mate(element)
+		#get_unaligned(element)
+		#get_frag_len(element)
+		#get_MAPQ(element)
