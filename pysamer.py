@@ -10,6 +10,7 @@ from tqdm import tqdm
 import csv
 import pandas
 import numpy
+from Bio.Seq import Seq
 
 # Get reference annotated genome
 
@@ -40,8 +41,8 @@ with open("/home/lucas/ISGlobal/Gen_Referencies/Pf3D7.sizes", "rb") as csvfile:
 		else:
 			pass
 
-sizes["Pf_M76611"] = sizes.pop("M76611")
-sizes["Pf3D7_API_v3"] = sizes.pop("PFC10_API_IRAB")
+# sizes["Pf_M76611"] = sizes.pop("M76611")
+# sizes["Pf3D7_API_v3"] = sizes.pop("PFC10_API_IRAB")
 
 chrom = map(lambda x: x.split(":"), regions)
 chroms = {}
@@ -61,16 +62,16 @@ for key in chroms:
 		noncoding[key].append(int(i[0])-1)
 		noncoding[key].append(int(i[1])+1)
 
-# noncoding["M76611"] = noncoding.pop("Pf_M76611")
-# noncoding["PFC10_API_IRAB"] = noncoding.pop("Pf3D7_API_v3")
+noncoding["M76611"] = noncoding.pop("Pf_M76611")
+noncoding["PFC10_API_IRAB"] = noncoding.pop("Pf3D7_API_v3")
 
 for key in noncoding:
 	noncoding[key].insert(0,1)
 	noncoding[key].append(sizes[key])
 
 # Set one 0 to 1 (coding region starts at pos 1):
-# noncoding["PFC10_API_IRAB"][1] = 1
-noncoding["Pf3D7_API_v3"][1] = 1
+noncoding["PFC10_API_IRAB"][1] = 1
+# noncoding["Pf3D7_API_v3"][1] = 1
 
 ## Remove overlapping genes:
 
@@ -197,14 +198,14 @@ def get_coding_coverage(bamfile):
 		starts.append(element.split(":")[1].strip("([+-])").split("-")[0])
 		ends.append(element.split(":")[1].strip("([+-])").split("-")[1])
 
-	# Correct the reference if necessary:
-	# for idx, item in enumerate(references):
-	# 	if item == "Pf_M76611":
-	# 		references[idx] = "M76611"
-	# 	elif item == "Pf3D7_API_v3":
-	# 		references[idx] = "PFC10_API_IRAB"
-	# 	else:
-	# 		pass
+	#Correct the reference if necessary:
+	for idx, item in enumerate(references):
+		if item == "Pf_M76611":
+			references[idx] = "M76611"
+		elif item == "Pf3D7_API_v3":
+			references[idx] = "PFC10_API_IRAB"
+		else:
+			pass
 		
 
 	coverage = []
@@ -255,9 +256,9 @@ if __name__ == "__main__":
 	filenames = sys.argv[1:]
 	print filenames
 	for element in filenames:
-		get_coding_coverage(element)
+		#get_coding_coverage(element)
 		#get_flags(element)
 		#get_unaligned_mate(element)
 		#get_unaligned(element)
-		#get_frag_len(element)
+		get_frag_len(element)
 		#get_MAPQ(element)

@@ -81,122 +81,342 @@ First we import the data for every alignment:
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
 \hlcom{####  Fetch files and create iterables ####}
-\hlstd{file_names} \hlkwb{<-} \hlkwd{list.files}\hlstd{(}\hlstr{"./inputs"}\hlstd{)}
-\hlstd{file_names} \hlkwb{<-} \hlkwd{gsub}\hlstd{(}\hlstr{"_read[12]_sample.fastq"}\hlstd{,} \hlstr{""}\hlstd{,file_names)}
-\hlstd{file_names} \hlkwb{<-} \hlkwd{unique}\hlstd{(file_names)}
-\hlstd{dir} \hlkwb{=} \hlstr{"./params_%%/"}
-\hlstd{params} \hlkwb{<-} \hlkwd{c}\hlstd{(}\hlnum{1}\hlopt{:}\hlnum{3}\hlstd{)}
-\hlkwa{for}\hlstd{(element} \hlkwa{in} \hlstd{params)\{}
-  \hlkwd{gsub}\hlstd{(}\hlstr{"%%"}\hlstd{, element, dir)}
+\hlstd{file_names} \hlkwb{<-} \hlkwd{list.files}\hlstd{(}\hlstr{"/home/lucas/ISGlobal/TestSet/align_tests/inputs/"}\hlstd{)}
+\hlstd{file_names} \hlkwb{<-} \hlkwd{unique}\hlstd{(}\hlkwd{lapply}\hlstd{(file_names,} \hlkwa{function}\hlstd{(}\hlkwc{x}\hlstd{)} \hlkwd{substr}\hlstd{(x,}\hlnum{1}\hlstd{,}\hlnum{17}\hlstd{)))}
 
-\hlstd{\}}
-
-\hlstd{mapq} \hlkwb{<-} \hlkwd{read.csv2}\hlstd{(}\hlkwc{file} \hlstd{=} \hlstr{"./params_1/A7K9_14456_TTAGGC_MAPQ.csv"}\hlstd{,} \hlkwc{sep} \hlstd{=} \hlstr{"\textbackslash{}t"}\hlstd{,} \hlkwc{header} \hlstd{=} \hlnum{FALSE}\hlstd{)}
+\hlstd{dirs} \hlkwb{<-} \hlkwd{list.files}\hlstd{(}\hlstr{"/home/lucas/ISGlobal/TestSet/align_tests/"}\hlstd{)[}\hlkwd{substr}\hlstd{(}\hlkwd{list.files}\hlstd{(}\hlstr{"/home/lucas/ISGlobal/TestSet/align_tests/"}\hlstd{),}\hlnum{1}\hlstd{,}\hlnum{6}\hlstd{)} \hlopt{==} \hlstr{"params"}\hlstd{]}
 \end{alltt}
-
-
-{\ttfamily\noindent\color{warningcolor}{\#\# Warning in file(file, "{}rt"{}): cannot open file './params\_1/A7K9\_14456\_TTAGGC\_MAPQ.csv': No such file or directory}}
-
-{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in file(file, "{}rt"{}): cannot open the connection}}\begin{alltt}
-\hlstd{lens} \hlkwb{<-} \hlkwd{read.csv2}\hlstd{(}\hlkwc{file} \hlstd{=} \hlstr{"./params_1/A7K9_14456_TTAGGC_lengths.csv"}\hlstd{,} \hlkwc{sep} \hlstd{=} \hlstr{"\textbackslash{}t"}\hlstd{,} \hlkwc{header} \hlstd{=} \hlnum{FALSE}\hlstd{)}
-\end{alltt}
-
-
-{\ttfamily\noindent\color{warningcolor}{\#\# Warning in file(file, "{}rt"{}): cannot open file './params\_1/A7K9\_14456\_TTAGGC\_lengths.csv': No such file or directory}}
-
-{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in file(file, "{}rt"{}): cannot open the connection}}\begin{alltt}
-\hlstd{lens_something} \hlkwb{<-} \hlkwd{read.csv2}\hlstd{(}\hlkwc{file} \hlstd{=} \hlstr{"./params_1/A7K9_14456_TTAGGC_somethingununmapped_lengths.csv"}\hlstd{,} \hlkwc{sep} \hlstd{=} \hlstr{"\textbackslash{}t"}\hlstd{,} \hlkwc{header} \hlstd{=} \hlnum{FALSE}\hlstd{)}
-\end{alltt}
-
-
-{\ttfamily\noindent\color{warningcolor}{\#\# Warning in file(file, "{}rt"{}): cannot open file './params\_1/A7K9\_14456\_TTAGGC\_somethingununmapped\_lengths.csv': No such file or directory}}
-
-{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in file(file, "{}rt"{}): cannot open the connection}}\begin{alltt}
-\hlstd{abs_lens} \hlkwb{<-} \hlkwd{abs}\hlstd{(}\hlkwd{as.numeric}\hlstd{(lens))}
-\end{alltt}
-
-
-{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in eval(expr, envir, enclos): object 'lens' not found}}\begin{alltt}
-\hlstd{abs_lens_something} \hlkwb{<-} \hlkwd{abs}\hlstd{(}\hlkwd{as.numeric}\hlstd{(lens_something))}
-\end{alltt}
-
-
-{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in eval(expr, envir, enclos): object 'lens\_something' not found}}\begin{alltt}
-\hlkwd{max}\hlstd{(}\hlkwd{as.numeric}\hlstd{(lens))}
-\end{alltt}
-
-
-{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in eval(expr, envir, enclos): object 'lens' not found}}\begin{alltt}
-\hlkwd{which}\hlstd{(lens} \hlopt{==} \hlnum{1057118}\hlstd{)}
-\end{alltt}
-
-
-{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in which(lens == 1057118): object 'lens' not found}}\begin{alltt}
-\hlstd{purged_lens} \hlkwb{<-} \hlstd{abs_lens}
-\end{alltt}
-
-
-{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in eval(expr, envir, enclos): object 'abs\_lens' not found}}\begin{alltt}
-\hlstd{purged_lens[}\hlnum{86703}\hlopt{:}\hlnum{86704}\hlstd{]} \hlkwb{<-} \hlkwd{c}\hlstd{(}\hlnum{0}\hlstd{,}\hlnum{0}\hlstd{)}
-\end{alltt}
-
-
-{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in purged\_lens[86703:86704] <- c(0, 0): object 'purged\_lens' not found}}\end{kframe}
+\end{kframe}
 \end{knitrout}
 
 \section{Plots}
 \subsection{MAPQ}
+
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
-\hlstd{x} \hlkwb{<-} \hlkwd{as.data.frame}\hlstd{(}\hlkwd{as.numeric}\hlstd{(mapq))}
-\end{alltt}
-
-
-{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in as.data.frame(as.numeric(mapq)): object 'mapq' not found}}\begin{alltt}
-\hlkwd{colnames}\hlstd{(x)} \hlkwb{<-} \hlstr{"MAPQ"}
-\end{alltt}
-
-
-{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in colnames(x) <- "{}MAPQ"{}: object 'x' not found}}\begin{alltt}
-\hlkwd{ggplot}\hlstd{(x,} \hlkwd{aes}\hlstd{(}\hlkwc{x} \hlstd{= MAPQ))} \hlopt{+}
+\hlkwa{for} \hlstd{(dir} \hlkwa{in} \hlstd{dirs)\{}
+  \hlkwa{for} \hlstd{(x} \hlkwa{in} \hlstd{file_names)\{}
+    \hlstd{mapq} \hlkwb{<-} \hlkwd{read.csv2}\hlstd{(}\hlkwc{file} \hlstd{=} \hlkwd{paste0}\hlstd{(}\hlstr{"/home/lucas/ISGlobal/TestSet/align_tests/"}\hlstd{,dir,}\hlstr{"/"}\hlstd{,x,}\hlstr{"_MAPQ.csv"}\hlstd{),} \hlkwc{sep} \hlstd{=} \hlstr{"\textbackslash{}t"}\hlstd{,} \hlkwc{header} \hlstd{=} \hlnum{FALSE}\hlstd{)}
+    \hlstd{df} \hlkwb{<-} \hlkwd{as.data.frame}\hlstd{(}\hlkwd{as.numeric}\hlstd{(mapq))}
+    \hlkwd{colnames}\hlstd{(df)} \hlkwb{<-} \hlstr{"MAPQ"}
+    \hlstd{title} \hlkwb{<-} \hlstd{x}
+    \hlkwd{print}\hlstd{(}\hlkwd{ggplot}\hlstd{(df,} \hlkwd{aes}\hlstd{(}\hlkwc{x} \hlstd{= MAPQ))} \hlopt{+}
         \hlkwd{geom_histogram}\hlstd{(}\hlkwc{binwidth} \hlstd{=} \hlnum{1}\hlstd{)} \hlopt{+}
         \hlkwd{labs}\hlstd{(}\hlkwc{x} \hlstd{=} \hlstr{"MAPQ"}\hlstd{,} \hlkwc{y} \hlstd{=} \hlstr{"Count"}\hlstd{)} \hlopt{+}
+        \hlkwd{ggtitle}\hlstd{(title)} \hlopt{+}
+        \hlkwd{theme}\hlstd{(}\hlkwc{plot.title} \hlstd{=} \hlkwd{element_text}\hlstd{(}\hlkwc{hjust} \hlstd{=} \hlnum{0.5}\hlstd{))} \hlopt{+}
         \hlkwd{scale_x_continuous}\hlstd{(}\hlkwc{breaks} \hlstd{=} \hlkwd{seq}\hlstd{(}\hlnum{0}\hlstd{,} \hlnum{45}\hlstd{,} \hlkwc{by} \hlstd{=} \hlnum{2}\hlstd{),} \hlkwc{limits} \hlstd{=} \hlkwd{c}\hlstd{(}\hlnum{0}\hlstd{,}\hlnum{48}\hlstd{))} \hlopt{+}
-        \hlkwd{scale_y_continuous}\hlstd{(}\hlkwc{breaks} \hlstd{=} \hlkwd{seq}\hlstd{(}\hlnum{0}\hlstd{,}\hlnum{35000}\hlstd{,} \hlkwc{by} \hlstd{=} \hlnum{2500}\hlstd{))}
+        \hlkwd{scale_y_continuous}\hlstd{(}\hlkwc{breaks} \hlstd{=} \hlkwd{seq}\hlstd{(}\hlnum{0}\hlstd{,}\hlnum{80000}\hlstd{,} \hlkwc{by} \hlstd{=} \hlnum{5000}\hlstd{)))}
+
+    \hlkwd{plot.new}\hlstd{()}
+    \hlkwd{print}\hlstd{(}\hlkwd{table}\hlstd{(df} \hlopt{>} \hlnum{5}\hlstd{))}
+  \hlstd{\}}
+\hlstd{\}}
 \end{alltt}
+\end{kframe}
+\includegraphics[width=\maxwidth]{figure/unnamed-chunk-3-1} 
 
+\includegraphics[width=\maxwidth]{figure/unnamed-chunk-3-2} 
+\begin{kframe}\begin{verbatim}
+## 
+## FALSE  TRUE 
+## 32237 77763
+\end{verbatim}
+\end{kframe}
+\includegraphics[width=\maxwidth]{figure/unnamed-chunk-3-3} 
 
-{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in ggplot(x, aes(x = MAPQ)): object 'x' not found}}\begin{alltt}
-\hlkwd{table}\hlstd{(x} \hlopt{>} \hlnum{5}\hlstd{)}
-\end{alltt}
+\includegraphics[width=\maxwidth]{figure/unnamed-chunk-3-4} 
+\begin{kframe}\begin{verbatim}
+## 
+## FALSE  TRUE 
+## 10747 99253
+\end{verbatim}
+\end{kframe}
+\includegraphics[width=\maxwidth]{figure/unnamed-chunk-3-5} 
 
+\includegraphics[width=\maxwidth]{figure/unnamed-chunk-3-6} 
+\begin{kframe}\begin{verbatim}
+## 
+## FALSE  TRUE 
+## 36833 73167
+\end{verbatim}
+\end{kframe}
+\includegraphics[width=\maxwidth]{figure/unnamed-chunk-3-7} 
 
-{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in eval(expr, envir, enclos): object 'x' not found}}\end{kframe}
+\includegraphics[width=\maxwidth]{figure/unnamed-chunk-3-8} 
+\begin{kframe}\begin{verbatim}
+## 
+## FALSE  TRUE 
+##  2265     5
+\end{verbatim}
+\end{kframe}
+\includegraphics[width=\maxwidth]{figure/unnamed-chunk-3-9} 
+
+\includegraphics[width=\maxwidth]{figure/unnamed-chunk-3-10} 
+\begin{kframe}\begin{verbatim}
+## 
+## FALSE  TRUE 
+## 15355 94645
+\end{verbatim}
+\end{kframe}
+\includegraphics[width=\maxwidth]{figure/unnamed-chunk-3-11} 
+
+\includegraphics[width=\maxwidth]{figure/unnamed-chunk-3-12} 
+\begin{kframe}\begin{verbatim}
+## 
+## FALSE  TRUE 
+## 30779 79221
+\end{verbatim}
+\end{kframe}
+\includegraphics[width=\maxwidth]{figure/unnamed-chunk-3-13} 
+
+\includegraphics[width=\maxwidth]{figure/unnamed-chunk-3-14} 
+\begin{kframe}\begin{verbatim}
+## 
+## FALSE  TRUE 
+## 10396 99604
+\end{verbatim}
+\end{kframe}
+\includegraphics[width=\maxwidth]{figure/unnamed-chunk-3-15} 
+
+\includegraphics[width=\maxwidth]{figure/unnamed-chunk-3-16} 
+\begin{kframe}\begin{verbatim}
+## 
+## FALSE  TRUE 
+## 35707 74293
+\end{verbatim}
+\end{kframe}
+\includegraphics[width=\maxwidth]{figure/unnamed-chunk-3-17} 
+
+\includegraphics[width=\maxwidth]{figure/unnamed-chunk-3-18} 
+\begin{kframe}\begin{verbatim}
+## 
+## FALSE  TRUE 
+##  2265     5
+\end{verbatim}
+\end{kframe}
+\includegraphics[width=\maxwidth]{figure/unnamed-chunk-3-19} 
+
+\includegraphics[width=\maxwidth]{figure/unnamed-chunk-3-20} 
+\begin{kframe}\begin{verbatim}
+## 
+## FALSE  TRUE 
+## 14955 95045
+\end{verbatim}
+\end{kframe}
+\includegraphics[width=\maxwidth]{figure/unnamed-chunk-3-21} 
+
+\includegraphics[width=\maxwidth]{figure/unnamed-chunk-3-22} 
+\begin{kframe}\begin{verbatim}
+## 
+## FALSE  TRUE 
+## 31263 78737
+\end{verbatim}
+\end{kframe}
+\includegraphics[width=\maxwidth]{figure/unnamed-chunk-3-23} 
+
+\includegraphics[width=\maxwidth]{figure/unnamed-chunk-3-24} 
+\begin{kframe}\begin{verbatim}
+## 
+## FALSE  TRUE 
+## 11487 98513
+\end{verbatim}
+\end{kframe}
+\includegraphics[width=\maxwidth]{figure/unnamed-chunk-3-25} 
+
+\includegraphics[width=\maxwidth]{figure/unnamed-chunk-3-26} 
+\begin{kframe}\begin{verbatim}
+## 
+## FALSE  TRUE 
+##  4521  9328
+\end{verbatim}
+\end{kframe}
+\includegraphics[width=\maxwidth]{figure/unnamed-chunk-3-27} 
+
+\includegraphics[width=\maxwidth]{figure/unnamed-chunk-3-28} 
+\begin{kframe}\begin{verbatim}
+## 
+## FALSE  TRUE 
+##  2264     6
+\end{verbatim}
+\end{kframe}
+\includegraphics[width=\maxwidth]{figure/unnamed-chunk-3-29} 
+
+\includegraphics[width=\maxwidth]{figure/unnamed-chunk-3-30} 
+\begin{kframe}\begin{verbatim}
+## 
+## FALSE  TRUE 
+## 15614 94386
+\end{verbatim}
+\end{kframe}
 \end{knitrout}
+
 \clearpage
 \subsection{Fragment Length}
+
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
-\hlstd{x} \hlkwb{<-} \hlkwd{as.data.frame}\hlstd{(purged_lens[purged_lens} \hlopt{!=} \hlnum{0}\hlstd{])}
-\end{alltt}
-
-
-{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in as.data.frame(purged\_lens[purged\_lens != 0]): object 'purged\_lens' not found}}\begin{alltt}
-\hlkwd{colnames}\hlstd{(x)} \hlkwb{<-} \hlstr{"len"}
-\end{alltt}
-
-
-{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in colnames(x) <- "{}len"{}: object 'x' not found}}\begin{alltt}
-\hlkwd{ggplot}\hlstd{(x,} \hlkwd{aes}\hlstd{(}\hlkwc{x} \hlstd{= len))} \hlopt{+}
+\hlkwa{for} \hlstd{(dir} \hlkwa{in} \hlstd{dirs)\{}
+  \hlkwa{for} \hlstd{(x} \hlkwa{in} \hlstd{file_names)\{}
+    \hlstd{lens} \hlkwb{<-} \hlkwd{read.csv2}\hlstd{(}\hlkwc{file} \hlstd{=} \hlkwd{paste0}\hlstd{(}\hlstr{"/home/lucas/ISGlobal/TestSet/align_tests/"}\hlstd{,dir,}\hlstr{"/"}\hlstd{,x,}\hlstr{"_lengths.csv"}\hlstd{),} \hlkwc{sep} \hlstd{=} \hlstr{"\textbackslash{}t"}\hlstd{,} \hlkwc{header} \hlstd{=} \hlnum{FALSE}\hlstd{)}
+    \hlstd{abs_lens} \hlkwb{<-} \hlkwd{abs}\hlstd{(}\hlkwd{as.numeric}\hlstd{(lens))}
+    \hlkwa{for} \hlstd{(element} \hlkwa{in} \hlstd{abs_lens)\{}
+      \hlkwa{if} \hlstd{(element} \hlopt{>} \hlnum{3000}\hlstd{)\{abs_lens[element]} \hlkwb{<-} \hlnum{0}\hlstd{\}}
+    \hlstd{\}}
+    \hlstd{df} \hlkwb{<-} \hlkwd{as.data.frame}\hlstd{(abs_lens[abs_lens} \hlopt{!=} \hlnum{0}\hlstd{])}
+    \hlkwd{colnames}\hlstd{(df)} \hlkwb{<-} \hlstr{"len"}
+    \hlstd{title} \hlkwb{<-} \hlstd{x}
+    \hlkwd{print}\hlstd{(}\hlkwd{ggplot}\hlstd{(df,} \hlkwd{aes}\hlstd{(}\hlkwc{x} \hlstd{= len))} \hlopt{+}
         \hlkwd{geom_histogram}\hlstd{(}\hlkwc{bins} \hlstd{=} \hlnum{100}\hlstd{)} \hlopt{+}
         \hlkwd{labs}\hlstd{(}\hlkwc{x} \hlstd{=} \hlstr{"Lengths"}\hlstd{,} \hlkwc{y} \hlstd{=} \hlstr{"Count"}\hlstd{)} \hlopt{+}
-        \hlkwd{scale_x_continuous}\hlstd{(}\hlkwc{breaks} \hlstd{=} \hlkwd{seq}\hlstd{(}\hlnum{75}\hlstd{,} \hlnum{550}\hlstd{,} \hlkwc{by} \hlstd{=} \hlnum{25}\hlstd{),} \hlkwc{limits} \hlstd{=} \hlkwd{c}\hlstd{(}\hlnum{75}\hlstd{,}\hlnum{550}\hlstd{))}
+        \hlkwd{ggtitle}\hlstd{(title)} \hlopt{+}
+        \hlkwd{theme}\hlstd{(}\hlkwc{plot.title} \hlstd{=} \hlkwd{element_text}\hlstd{(}\hlkwc{hjust} \hlstd{=} \hlnum{0.5}\hlstd{))} \hlopt{+}
+        \hlkwd{scale_x_continuous}\hlstd{(}\hlkwc{breaks} \hlstd{=} \hlkwd{seq}\hlstd{(}\hlnum{75}\hlstd{,} \hlnum{550}\hlstd{,} \hlkwc{by} \hlstd{=} \hlnum{25}\hlstd{),} \hlkwc{limits} \hlstd{=} \hlkwd{c}\hlstd{(}\hlnum{75}\hlstd{,}\hlnum{550}\hlstd{)))}
+    \hlkwd{plot.new}\hlstd{()}
+  \hlstd{\}}
+\hlstd{\}}
 \end{alltt}
 
 
-{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in ggplot(x, aes(x = len)): object 'x' not found}}\end{kframe}
+{\ttfamily\noindent\color{warningcolor}{\#\# Warning: Removed 947157 rows containing non-finite values (stat\_bin).}}
+
+{\ttfamily\noindent\color{warningcolor}{\#\# Warning: Removed 1 rows containing missing values (geom\_bar).}}\end{kframe}
+\includegraphics[width=\maxwidth]{figure/unnamed-chunk-4-1} 
+
+\includegraphics[width=\maxwidth]{figure/unnamed-chunk-4-2} 
+\begin{kframe}
+
+{\ttfamily\noindent\color{warningcolor}{\#\# Warning: Removed 26 rows containing non-finite values (stat\_bin).}}
+
+{\ttfamily\noindent\color{warningcolor}{\#\# Warning: Removed 1 rows containing missing values (geom\_bar).}}\end{kframe}
+\includegraphics[width=\maxwidth]{figure/unnamed-chunk-4-3} 
+
+\includegraphics[width=\maxwidth]{figure/unnamed-chunk-4-4} 
+\begin{kframe}
+
+{\ttfamily\noindent\color{warningcolor}{\#\# Warning: Removed 20 rows containing non-finite values (stat\_bin).}}
+
+{\ttfamily\noindent\color{warningcolor}{\#\# Warning: Removed 1 rows containing missing values (geom\_bar).}}\end{kframe}
+\includegraphics[width=\maxwidth]{figure/unnamed-chunk-4-5} 
+
+\includegraphics[width=\maxwidth]{figure/unnamed-chunk-4-6} 
+\begin{kframe}
+
+{\ttfamily\noindent\color{warningcolor}{\#\# Warning: Removed 1 rows containing missing values (geom\_bar).}}\end{kframe}
+\includegraphics[width=\maxwidth]{figure/unnamed-chunk-4-7} 
+
+\includegraphics[width=\maxwidth]{figure/unnamed-chunk-4-8} 
+\begin{kframe}
+
+{\ttfamily\noindent\color{warningcolor}{\#\# Warning: Removed 1242026 rows containing non-finite values (stat\_bin).}}
+
+{\ttfamily\noindent\color{warningcolor}{\#\# Warning: Removed 1 rows containing missing values (geom\_bar).}}\end{kframe}
+\includegraphics[width=\maxwidth]{figure/unnamed-chunk-4-9} 
+
+\includegraphics[width=\maxwidth]{figure/unnamed-chunk-4-10} 
+\begin{kframe}
+
+{\ttfamily\noindent\color{warningcolor}{\#\# Warning: Removed 948769 rows containing non-finite values (stat\_bin).}}
+
+{\ttfamily\noindent\color{warningcolor}{\#\# Warning: Removed 1 rows containing missing values (geom\_bar).}}\end{kframe}
+\includegraphics[width=\maxwidth]{figure/unnamed-chunk-4-11} 
+
+\includegraphics[width=\maxwidth]{figure/unnamed-chunk-4-12} 
+\begin{kframe}
+
+{\ttfamily\noindent\color{warningcolor}{\#\# Warning: Removed 2966 rows containing non-finite values (stat\_bin).}}
+
+{\ttfamily\noindent\color{warningcolor}{\#\# Warning: Removed 1 rows containing missing values (geom\_bar).}}\end{kframe}
+\includegraphics[width=\maxwidth]{figure/unnamed-chunk-4-13} 
+
+\includegraphics[width=\maxwidth]{figure/unnamed-chunk-4-14} 
+\begin{kframe}
+
+{\ttfamily\noindent\color{warningcolor}{\#\# Warning: Removed 1542 rows containing non-finite values (stat\_bin).}}
+
+{\ttfamily\noindent\color{warningcolor}{\#\# Warning: Removed 1 rows containing missing values (geom\_bar).}}\end{kframe}
+\includegraphics[width=\maxwidth]{figure/unnamed-chunk-4-15} 
+
+\includegraphics[width=\maxwidth]{figure/unnamed-chunk-4-16} 
+\begin{kframe}
+
+{\ttfamily\noindent\color{warningcolor}{\#\# Warning: Removed 2 rows containing non-finite values (stat\_bin).}}
+
+{\ttfamily\noindent\color{warningcolor}{\#\# Warning: Removed 1 rows containing missing values (geom\_bar).}}\end{kframe}
+\includegraphics[width=\maxwidth]{figure/unnamed-chunk-4-17} 
+
+\includegraphics[width=\maxwidth]{figure/unnamed-chunk-4-18} 
+\begin{kframe}
+
+{\ttfamily\noindent\color{warningcolor}{\#\# Warning: Removed 1244840 rows containing non-finite values (stat\_bin).}}
+
+{\ttfamily\noindent\color{warningcolor}{\#\# Warning: Removed 1 rows containing missing values (geom\_bar).}}\end{kframe}
+\includegraphics[width=\maxwidth]{figure/unnamed-chunk-4-19} 
+
+\includegraphics[width=\maxwidth]{figure/unnamed-chunk-4-20} 
+\begin{kframe}
+
+{\ttfamily\noindent\color{warningcolor}{\#\# Warning: Removed 2216571 rows containing non-finite values (stat\_bin).}}
+
+{\ttfamily\noindent\color{warningcolor}{\#\# Warning: Removed 1 rows containing missing values (geom\_bar).}}\end{kframe}
+\includegraphics[width=\maxwidth]{figure/unnamed-chunk-4-21} 
+
+\includegraphics[width=\maxwidth]{figure/unnamed-chunk-4-22} 
+\begin{kframe}
+
+{\ttfamily\noindent\color{warningcolor}{\#\# Warning: Removed 3892 rows containing non-finite values (stat\_bin).}}
+
+{\ttfamily\noindent\color{warningcolor}{\#\# Warning: Removed 1 rows containing missing values (geom\_bar).}}\end{kframe}
+\includegraphics[width=\maxwidth]{figure/unnamed-chunk-4-23} 
+
+\includegraphics[width=\maxwidth]{figure/unnamed-chunk-4-24} 
+\begin{kframe}
+
+{\ttfamily\noindent\color{warningcolor}{\#\# Warning: Removed 268 rows containing non-finite values (stat\_bin).}}
+
+{\ttfamily\noindent\color{warningcolor}{\#\# Warning: Removed 1 rows containing missing values (geom\_bar).}}\end{kframe}
+\includegraphics[width=\maxwidth]{figure/unnamed-chunk-4-25} 
+
+\includegraphics[width=\maxwidth]{figure/unnamed-chunk-4-26} 
+\begin{kframe}
+
+{\ttfamily\noindent\color{warningcolor}{\#\# Warning: Removed 1 rows containing missing values (geom\_bar).}}\end{kframe}
+\includegraphics[width=\maxwidth]{figure/unnamed-chunk-4-27} 
+
+\includegraphics[width=\maxwidth]{figure/unnamed-chunk-4-28} 
+\begin{kframe}
+
+{\ttfamily\noindent\color{warningcolor}{\#\# Warning: Removed 1888585 rows containing non-finite values (stat\_bin).}}
+
+{\ttfamily\noindent\color{warningcolor}{\#\# Warning: Removed 1 rows containing missing values (geom\_bar).}}\end{kframe}
+\includegraphics[width=\maxwidth]{figure/unnamed-chunk-4-29} 
+
+\includegraphics[width=\maxwidth]{figure/unnamed-chunk-4-30} 
+
+\end{knitrout}
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{mapq} \hlkwb{<-} \hlkwd{read.csv2}\hlstd{(}\hlkwc{file} \hlstd{=} \hlstr{"/home/lucas/ISGlobal/TestSet/align_tests/params_1/A7K9_14456_TTAGGC_MAPQ.csv"}\hlstd{,} \hlkwc{sep} \hlstd{=} \hlstr{"\textbackslash{}t"}\hlstd{,} \hlkwc{header} \hlstd{=} \hlnum{FALSE}\hlstd{)}
+\hlstd{df} \hlkwb{<-} \hlkwd{as.data.frame}\hlstd{(}\hlkwd{as.numeric}\hlstd{(mapq))}
+\hlkwd{colnames}\hlstd{(df)} \hlkwb{<-} \hlstr{"MAPQ"}
+\hlstd{title} \hlkwb{<-} \hlstr{"A7K9_14456_TTAGGC"}
+\hlkwd{print}\hlstd{(}\hlkwd{ggplot}\hlstd{(df,} \hlkwd{aes}\hlstd{(}\hlkwc{x} \hlstd{= MAPQ))} \hlopt{+}
+        \hlkwd{geom_histogram}\hlstd{(}\hlkwc{binwidth} \hlstd{=} \hlnum{1}\hlstd{)} \hlopt{+}
+        \hlkwd{labs}\hlstd{(}\hlkwc{x} \hlstd{=} \hlstr{"MAPQ"}\hlstd{,} \hlkwc{y} \hlstd{=} \hlstr{"Count"}\hlstd{)} \hlopt{+}
+        \hlkwd{ggtitle}\hlstd{(title)} \hlopt{+}
+        \hlkwd{theme}\hlstd{(}\hlkwc{plot.title} \hlstd{=} \hlkwd{element_text}\hlstd{(}\hlkwc{hjust} \hlstd{=} \hlnum{0.5}\hlstd{))} \hlopt{+}
+        \hlkwd{scale_x_continuous}\hlstd{(}\hlkwc{breaks} \hlstd{=} \hlkwd{seq}\hlstd{(}\hlnum{0}\hlstd{,} \hlnum{45}\hlstd{,} \hlkwc{by} \hlstd{=} \hlnum{2}\hlstd{),} \hlkwc{limits} \hlstd{=} \hlkwd{c}\hlstd{(}\hlnum{0}\hlstd{,}\hlnum{48}\hlstd{))} \hlopt{+}
+        \hlkwd{scale_y_continuous}\hlstd{(}\hlkwc{breaks} \hlstd{=} \hlkwd{seq}\hlstd{(}\hlnum{0}\hlstd{,}\hlnum{80000}\hlstd{,} \hlkwc{by} \hlstd{=} \hlnum{5000}\hlstd{)))}
+\end{alltt}
+\end{kframe}\begin{figure}[h]
+\includegraphics[width=\maxwidth]{figure/p3-1} \caption[Tralala]{Tralala}\label{fig:p3}
+\end{figure}
+
+
 \end{knitrout}
 
 

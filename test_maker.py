@@ -4,16 +4,26 @@ import sys
 import os
 import subprocess
 from tqdm import tqdm
-from itertools import (takewhile,repeat)
 
-filenames = sys.argv[1:]
-
-for file in tqdm(filenames):
-	if file[-4:] == ".sam":
-		cmd = "head -220000 {} > {}" .format(file, file.replace(".sam", "_sample.sam"))
+def samplify(nsample, rawfile):
+	if rawfile[-4:] == ".sam":
+		cmd = "head -{} {} > {}" .format(nsample, rawfile, rawfile.replace(".sam", "_sample.sam"))
 		subprocess.call(cmd, shell = True)
-	elif file[-4:] == ".bam": 
-		cmd = "head -220000 {} > {}" .format(file, file.replace(".bam", "_sample.bam"))
+	elif rawfile[-4:] == ".bam": 
+		cmd = "head -{} {} > {}" .format(nsample, rawfile, rawfile.replace(".bam", "_sample.bam"))
+		subprocess.call(cmd, shell = True)
+	elif rawfile[-6:] == ".fastq": 
+		cmd = "head -{} {} > {}" .format(nsample, rawfile, rawfile.replace(".fastq", "_sample.fastq"))
 		subprocess.call(cmd, shell = True)
 	else:
-		print "Not a bam or sam file!"
+		print "Not a bam/sam or fastq file!"
+
+sample_size = sys.argv[1]
+filenames = sys.argv[2:]
+
+for file in tqdm(filenames):
+	samplify(sample_size, file)
+
+# USAGE
+#
+# Call "test_maker <int> <file/s>" it will create a file with only first <int> lines for each <file>
