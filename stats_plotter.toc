@@ -1,4 +1,0 @@
-\contentsline {section}{\numberline {1}Importing Data}{2}{section.1}
-\contentsline {section}{\numberline {2}Plots}{2}{section.2}
-\contentsline {subsection}{\numberline {2.1}MAPQ}{2}{subsection.2.1}
-\contentsline {subsection}{\numberline {2.2}Fragment Length}{4}{subsection.2.2}
