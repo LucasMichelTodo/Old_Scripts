@@ -62,7 +62,7 @@ sizes["Pf_M76611"] = sizes.pop("M76611")
 sizes["Pf3D7_API_v3"] = sizes.pop("PFC10_API_IRAB")
 
 
-# Then create dict
+# Then create noncoding dictionary
 noncoding = {}
 
 for key in coding:
@@ -81,14 +81,3 @@ for key in noncoding:
 
 for key in noncoding:
 	noncoding[key] = [i for i in noncoding[key] if i[0] < i[1]] # Remove all (i>i)
-
-
-
-
-
-
-
-
-
-
-
