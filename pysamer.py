@@ -170,9 +170,9 @@ if __name__ == "__main__":
 	filenames = sys.argv[1:]
 	print filenames
 	for element in filenames:
-		get_coding_coverage(element)
+		#get_coding_coverage(element)
 		#get_flags(element)
 		#get_unaligned_mate(element)
 		#get_unaligned(element)
-		#get_frag_len(element)
-		#get_MAPQ(element)
+		get_frag_len(element)
+		get_MAPQ(element)

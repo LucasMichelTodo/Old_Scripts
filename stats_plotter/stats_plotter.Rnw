@@ -6,7 +6,6 @@
 \usepackage[titles]{tocloft}
 \usepackage[affil-it]{authblk}
 
-
 \setlength\parindent{0pt}
 
 \title{\textbf{\Large Alignment Stats}}
@@ -25,7 +24,6 @@ Alfred Cortes and Juan R. Gonzalez}
 <<include=FALSE, eval=TRUE>>=
 source(file = "~/R/Funcions_1.R")
 library(ggplot2)
-setwd("~/ISGlobal/TestSet/align_tests/")
 @
 
 \section{Importing Data}
@@ -33,22 +31,25 @@ setwd("~/ISGlobal/TestSet/align_tests/")
 First we import the data for every alignment:
 <<>>=
 ####  Fetch files and create iterables ####
-file_names <- list.files("/home/lucas/ISGlobal/TestSet/align_tests/inputs/")
+file_names <- list.files("/home/lucas/ISGlobal/TestSet/align_tests2/inputs/")
 file_names <- unique(lapply(file_names, function(x) substr(x,1,17)))
 
-dirs <- list.files("/home/lucas/ISGlobal/TestSet/align_tests/")[substr(list.files("/home/lucas/ISGlobal/TestSet/align_tests/"),1,6) == "params"]
+dirs <- list.files("/home/lucas/ISGlobal/TestSet/align_tests2/")[substr(list.files("/home/lucas/ISGlobal/TestSet/align_tests2/"),1,6) == "params"]
 @
 
+\clearpage
 \section{Plots}
 \subsection{MAPQ}
 
-<<>>=
+
+<<fig.pos="H", out.width='.5\\linewidth', out.height="0.5\\textheight", fig.show="hold", cache=TRUE, results="asis">>=
+par(mfrow = c(1, 2))
 for (dir in dirs){
   for (x in file_names){
-    mapq <- read.csv2(file = paste0("/home/lucas/ISGlobal/TestSet/align_tests/",dir,"/",x,"_MAPQ.csv"), sep = "\t", header = FALSE)
+    mapq <- read.csv2(file = paste0("/home/lucas/ISGlobal/TestSet/align_tests2/",dir,"/",x,"_MAPQ.csv"), sep = "\t", header = FALSE)
     df <- as.data.frame(as.numeric(mapq))
     colnames(df) <- "MAPQ"
-    title <- x
+    title <- paste0(x,"_",dir)
     print(ggplot(df, aes(x = MAPQ)) +
         geom_histogram(binwidth = 1) +
         labs(x = "MAPQ", y = "Count") +
@@ -56,28 +57,27 @@ for (dir in dirs){
         theme(plot.title = element_text(hjust = 0.5)) +
         scale_x_continuous(breaks = seq(0, 45, by = 2), limits = c(0,48)) +
         scale_y_continuous(breaks = seq(0,80000, by = 5000)))
-    
     plot.new()
-    print(table(df > 5))
   }
 }
 @
 
 \clearpage
 \subsection{Fragment Length}
+\noindent
 
-<<eval=TRUE, echo=TRUE, fig.pos="h", fig.height=4>>=
+<<fig.pos="H", out.width='.5\\linewidth', fig.show="hold", cache=TRUE, results="asis">>=
 
 for (dir in dirs){
   for (x in file_names){
-    lens <- read.csv2(file = paste0("/home/lucas/ISGlobal/TestSet/align_tests/",dir,"/",x,"_lengths.csv"), sep = "\t", header = FALSE)
+    lens <- read.csv2(file = paste0("/home/lucas/ISGlobal/TestSet/align_tests2/",dir,"/",x,"_lengths.csv"), sep = "\t", header = FALSE)
     abs_lens <- abs(as.numeric(lens))
     for (element in abs_lens){
       if (element > 3000){abs_lens[element] <- 0}
     }
     df <- as.data.frame(abs_lens[abs_lens != 0])
     colnames(df) <- "len"
-    title <- x
+    title <- paste0(x,"_",dir)
     print(ggplot(df, aes(x = len)) +
         geom_histogram(bins = 100) +
         labs(x = "Lengths", y = "Count") +
@@ -90,19 +90,6 @@ for (dir in dirs){
 
 @
 
-<<p3, fig.pos="h", fig.height=4, fig.width=4, fig.cap="Tralala">>=
-mapq <- read.csv2(file = "/home/lucas/ISGlobal/TestSet/align_tests/params_1/A7K9_14456_TTAGGC_MAPQ.csv", sep = "\t", header = FALSE)
-df <- as.data.frame(as.numeric(mapq))
-colnames(df) <- "MAPQ"
-title <- "A7K9_14456_TTAGGC"
-print(ggplot(df, aes(x = MAPQ)) +
-        geom_histogram(binwidth = 1) +
-        labs(x = "MAPQ", y = "Count") +
-        ggtitle(title) +
-        theme(plot.title = element_text(hjust = 0.5)) +
-        scale_x_continuous(breaks = seq(0, 45, by = 2), limits = c(0,48)) +
-        scale_y_continuous(breaks = seq(0,80000, by = 5000)))
-@
 
 
 And some text after.
