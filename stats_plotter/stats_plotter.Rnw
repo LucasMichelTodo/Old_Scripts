@@ -16,14 +16,15 @@ Alfred Cortes and Juan R. Gonzalez}
 \affil{Barcelona Global Health Institute (ISGlobal), Campus PRBB}
 
 \begin{document}
-	
+
 \maketitle
 \tableofcontents
 \newpage
 
 <<include=FALSE, eval=TRUE>>=
-source(file = "~/R/Funcions_1.R")
 library(ggplot2)
+library(plyr)
+library(dplyr)
 @
 
 \section{Importing Data}
@@ -36,6 +37,40 @@ file_names <- unique(lapply(file_names, function(x) substr(x,1,17)))
 
 dirs <- list.files("/home/lucas/ISGlobal/TestSet/align_tests2/")[substr(list.files("/home/lucas/ISGlobal/TestSet/align_tests2/"),1,6) == "params"]
 @
+\clearpage
+\section{Tables}
+<<>>=
+params <- list()
+rwnames <- list()
+iter <- "First"
+for (dir in dirs){
+  for (x in file_names){
+    df <- read.csv(file = paste0("/home/lucas/ISGlobal/TestSet/align_tests2/", dir, "/",x, "_stats_summary.csv"), header = FALSE, sep = "\t")
+    if (iter == "First"){
+      params <- df[complete.cases(df),]
+      colnames(params) <- c("Stats", paste0(x, "_", dir))
+      iter <- "other"
+    } else {
+      params[,paste0(x, "_", dir)] <- df[complete.cases(df),2]
+    }
+  }
+}
+
+df <- bind_cols(stats)
+data_frame(stats)
+summary <- data.frame()
+for (i in stats){
+  summary <- right_join(summary, i, by = "Stats")
+  #print(data_frame(i))
+}
+
+summary <- right_join(data_frame(stats))
+class(stats)
+class(stats[1])
+class(stats[[1]])
+@
+
+
 
 \clearpage
 \section{Plots}

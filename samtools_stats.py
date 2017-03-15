@@ -18,3 +18,10 @@ for file in tqdm(filenames):
 		subprocess.call(cmd, shell=True)
 	else:
 		print "Not a bam or sam file!"
+
+for file in (filenames):
+	if file[-4:] == ".sam":
+		stats_file = file.replace(".sam", "_stats.txt")
+	else:
+		stats_file = file.replace(".bam", "_stats.txt")
+	subprocess.call("grep ^SN {} | cut -f 2- > {}" .format(stats_file, stats_file.replace(".txt", "_summary.csv")), shell=True)
