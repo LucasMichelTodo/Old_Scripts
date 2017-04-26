@@ -55,6 +55,8 @@
 \usepackage{hyperref}
 \usepackage[titles]{tocloft}
 \usepackage[affil-it]{authblk}
+\usepackage{geometry}
+\geometry{verbose,tmargin=3cm,bmargin=3cm,lmargin=3cm,rmargin=3cm}
 
 \setlength\parindent{0pt}
 
@@ -73,135 +75,103 @@ Alfred Cortes and Juan R. Gonzalez}
 
 
 
-\section{Importing Data}
+\section{Params}
+Params 1: -p 1 --very-sensitive --local -5 4 -3 4 -I 50 -X 250 \\
+Params 2: -p 1 --very-sensitive --local -5 4 -3 4 -I 50 -X 10000 \\
+Params 3: -p 1 --very-sensitive --local -5 12 -3 4 -I 50 -X 10000 \\
+Params 4: -p 1 --very-sensitive --local -N 1 -5 12 -3 4 -I 50 -X 10000 \\
 
-First we import the data for every alignment:
-\begin{knitrout}
+
+
+
+\section{Tables}
+
+
+
+\subsection{Stats}
+\begin{knitrout}\tiny
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
-\hlcom{####  Fetch files and create iterables ####}
-\hlstd{file_names} \hlkwb{<-} \hlkwd{list.files}\hlstd{(}\hlstr{"/home/lucas/ISGlobal/TestSet/align_tests2/inputs/"}\hlstd{)}
-\hlstd{file_names} \hlkwb{<-} \hlkwd{unique}\hlstd{(}\hlkwd{lapply}\hlstd{(file_names,} \hlkwa{function}\hlstd{(}\hlkwc{x}\hlstd{)} \hlkwd{substr}\hlstd{(x,}\hlnum{1}\hlstd{,}\hlnum{17}\hlstd{)))}
-
-\hlstd{dirs} \hlkwb{<-} \hlkwd{list.files}\hlstd{(}\hlstr{"/home/lucas/ISGlobal/TestSet/align_tests2/"}\hlstd{)[}\hlkwd{substr}\hlstd{(}\hlkwd{list.files}\hlstd{(}\hlstr{"/home/lucas/ISGlobal/TestSet/align_tests2/"}\hlstd{),}\hlnum{1}\hlstd{,}\hlnum{6}\hlstd{)} \hlopt{==} \hlstr{"params"}\hlstd{]}
+\hlkwd{print}\hlstd{(params)}
 \end{alltt}
+\begin{verbatim}
+##                              Stats  A7li__1  E5li__1  A7li__2  E5li__2  A7li__3  E5li__3  A7li__4  E5li__4
+## 1             raw total sequences:   110000   110000   110000   110000   110000   110000   110000   110000
+## 2              filtered sequences:        0        0        0        0        0        0        0        0
+## 3                       sequences:   110000   110000   110000   110000   110000   110000   110000   110000
+## 4                       is sorted:        0        0        0        0        0        0        0        0
+## 5                   1st fragments:    55000    55000    55000    55000    55000    55000    55000    55000
+## 6                  last fragments:    55000    55000    55000    55000    55000    55000    55000    55000
+## 7                    reads mapped:   107246   103551   107254   103562   107242   103725   107242   103725
+## 8         reads mapped and paired:   106860   102230   106876   102252   106852   102280   106852   102280
+## 10                 reads unmapped:     2754     6449     2746     6438     2758     6275     2758     6275
+## 11          reads properly paired:    83696    80930    92538    89960    86150    84542    86150    84542
+## 13                   reads paired:   110000   110000   110000   110000   110000   110000   110000   110000
+## 15               reads duplicated:        0        0        0        0        0        0        0        0
+## 17                      reads MQ0:      569      837      551      862      755      983      755      983
+## 19                reads QC failed:        0        0        0        0        0        0        0        0
+## 20         non-primary alignments:        0        0        0        0        0        0        0        0
+## 21                   total length: 12870000 12870000 12870000 12870000 11990000 11990000 11990000 11990000
+## 23                   bases mapped: 12547782 12115467 12548718 12116754 11689378 11306025 11689378 11306025
+## 25           bases mapped (cigar): 11949843 11418154 12033129 11499675 11139112 10656163 11139112 10656163
+## 27                  bases trimmed:        0        0        0        0        0        0        0        0
+## 28               bases duplicated:        0        0        0        0        0        0        0        0
+## 29                     mismatches:   146980   142347   142160   136729   124022   121296   124022   121296
+## 31                     error rate:        0        0        0        0        0        0        0        0
+## 33                 average length:      117      117      117      117      109      109      109      109
+## 34                 maximum length:      117      117      117      117      109      109      109      109
+## 35                average quality:       35       34       35       34       35       34       35       34
+## 36            insert size average:      153      156      185      189      181      186      181      186
+## 37 insert size standard deviation:       42       42      121      125      155      162      155      162
+## 38          inward oriented pairs:    44729    43407    45504    44180    42242    41497    42242    41497
+## 39         outward oriented pairs:     7195     5977     6939     5753    10010     8357    10010     8357
+## 40   pairs with other orientation:       64       62       34       32       49       55       49       55
+## 41 pairs on different chromosomes:      373      607      134      304      207      377      207      377
+\end{verbatim}
 \end{kframe}
 \end{knitrout}
 
-\clearpage
+\subsection{Average Coverage}
+
+\begin{tabular}{l|c|c|c|c|c|c|c|c|c}
+\cline{2-9}
+&\multicolumn{2}{|c|}{Par 1}&\multicolumn{2}{|c|}{Par 2}&\multicolumn{2}{|c|}{Par 3}&\multicolumn{2}{|c|}{Par 4}\\
+\hline
+\multicolumn{1}{|l|}{Coding:}&0.593&0.549 &0.595&0.551 &0.550&0.512 &0.550&0.512\\
+\hline
+\multicolumn{1}{|l|}{Non-Coding:}&0.398&0.373 &0.403&0.378 &0.3670&0.347 &0.3670&0.347\\
+\hline
+\end{tabular}
+
+
 \section{Plots}
 \subsection{MAPQ}
+\noindent
 
 
-\begin{kframe}
-\begin{alltt}
-\hlkwd{par}\hlstd{(}\hlkwc{mfrow} \hlstd{=} \hlkwd{c}\hlstd{(}\hlnum{1}\hlstd{,} \hlnum{2}\hlstd{))}
-\hlkwa{for} \hlstd{(dir} \hlkwa{in} \hlstd{dirs)\{}
-  \hlkwa{for} \hlstd{(x} \hlkwa{in} \hlstd{file_names)\{}
-    \hlstd{mapq} \hlkwb{<-} \hlkwd{read.csv2}\hlstd{(}\hlkwc{file} \hlstd{=} \hlkwd{paste0}\hlstd{(}\hlstr{"/home/lucas/ISGlobal/TestSet/align_tests2/"}\hlstd{,dir,}\hlstr{"/"}\hlstd{,x,}\hlstr{"_MAPQ.csv"}\hlstd{),} \hlkwc{sep} \hlstd{=} \hlstr{"\textbackslash{}t"}\hlstd{,} \hlkwc{header} \hlstd{=} \hlnum{FALSE}\hlstd{)}
-    \hlstd{df} \hlkwb{<-} \hlkwd{as.data.frame}\hlstd{(}\hlkwd{as.numeric}\hlstd{(mapq))}
-    \hlkwd{colnames}\hlstd{(df)} \hlkwb{<-} \hlstr{"MAPQ"}
-    \hlstd{title} \hlkwb{<-} \hlkwd{paste0}\hlstd{(x,}\hlstr{"_"}\hlstd{,dir)}
-    \hlkwd{print}\hlstd{(}\hlkwd{ggplot}\hlstd{(df,} \hlkwd{aes}\hlstd{(}\hlkwc{x} \hlstd{= MAPQ))} \hlopt{+}
-        \hlkwd{geom_histogram}\hlstd{(}\hlkwc{binwidth} \hlstd{=} \hlnum{1}\hlstd{)} \hlopt{+}
-        \hlkwd{labs}\hlstd{(}\hlkwc{x} \hlstd{=} \hlstr{"MAPQ"}\hlstd{,} \hlkwc{y} \hlstd{=} \hlstr{"Count"}\hlstd{)} \hlopt{+}
-        \hlkwd{ggtitle}\hlstd{(title)} \hlopt{+}
-        \hlkwd{theme}\hlstd{(}\hlkwc{plot.title} \hlstd{=} \hlkwd{element_text}\hlstd{(}\hlkwc{hjust} \hlstd{=} \hlnum{0.5}\hlstd{))} \hlopt{+}
-        \hlkwd{scale_x_continuous}\hlstd{(}\hlkwc{breaks} \hlstd{=} \hlkwd{seq}\hlstd{(}\hlnum{0}\hlstd{,} \hlnum{45}\hlstd{,} \hlkwc{by} \hlstd{=} \hlnum{2}\hlstd{),} \hlkwc{limits} \hlstd{=} \hlkwd{c}\hlstd{(}\hlnum{0}\hlstd{,}\hlnum{48}\hlstd{))} \hlopt{+}
-        \hlkwd{scale_y_continuous}\hlstd{(}\hlkwc{breaks} \hlstd{=} \hlkwd{seq}\hlstd{(}\hlnum{0}\hlstd{,}\hlnum{80000}\hlstd{,} \hlkwc{by} \hlstd{=} \hlnum{5000}\hlstd{)))}
-    \hlkwd{plot.new}\hlstd{()}
-  \hlstd{\}}
-\hlstd{\}}
-\end{alltt}
-\end{kframe}
-\includegraphics[width=.5\linewidth,height=0.5\textheight]{figure/unnamed-chunk-3-1} 
-\includegraphics[width=.5\linewidth,height=0.5\textheight]{figure/unnamed-chunk-3-2} 
-\includegraphics[width=.5\linewidth,height=0.5\textheight]{figure/unnamed-chunk-3-3} 
-\includegraphics[width=.5\linewidth,height=0.5\textheight]{figure/unnamed-chunk-3-4} 
-\includegraphics[width=.5\linewidth,height=0.5\textheight]{figure/unnamed-chunk-3-5} 
-\includegraphics[width=.5\linewidth,height=0.5\textheight]{figure/unnamed-chunk-3-6} 
-\includegraphics[width=.5\linewidth,height=0.5\textheight]{figure/unnamed-chunk-3-7} 
-\includegraphics[width=.5\linewidth,height=0.5\textheight]{figure/unnamed-chunk-3-8} 
+\includegraphics[width=.5\linewidth,height=0.5\textheight]{figure/unnamed-chunk-5-1} 
+\includegraphics[width=.5\linewidth,height=0.5\textheight]{figure/unnamed-chunk-5-2} 
+\includegraphics[width=.5\linewidth,height=0.5\textheight]{figure/unnamed-chunk-5-3} 
+\includegraphics[width=.5\linewidth,height=0.5\textheight]{figure/unnamed-chunk-5-4} 
+\includegraphics[width=.5\linewidth,height=0.5\textheight]{figure/unnamed-chunk-5-5} 
+\includegraphics[width=.5\linewidth,height=0.5\textheight]{figure/unnamed-chunk-5-6} 
+\includegraphics[width=.5\linewidth,height=0.5\textheight]{figure/unnamed-chunk-5-7} 
+\includegraphics[width=.5\linewidth,height=0.5\textheight]{figure/unnamed-chunk-5-8} 
 
 
 \clearpage
 \subsection{Fragment Length}
 \noindent
 
-\begin{kframe}
-\begin{alltt}
-\hlkwa{for} \hlstd{(dir} \hlkwa{in} \hlstd{dirs)\{}
-  \hlkwa{for} \hlstd{(x} \hlkwa{in} \hlstd{file_names)\{}
-    \hlstd{lens} \hlkwb{<-} \hlkwd{read.csv2}\hlstd{(}\hlkwc{file} \hlstd{=} \hlkwd{paste0}\hlstd{(}\hlstr{"/home/lucas/ISGlobal/TestSet/align_tests2/"}\hlstd{,dir,}\hlstr{"/"}\hlstd{,x,}\hlstr{"_lengths.csv"}\hlstd{),} \hlkwc{sep} \hlstd{=} \hlstr{"\textbackslash{}t"}\hlstd{,} \hlkwc{header} \hlstd{=} \hlnum{FALSE}\hlstd{)}
-    \hlstd{abs_lens} \hlkwb{<-} \hlkwd{abs}\hlstd{(}\hlkwd{as.numeric}\hlstd{(lens))}
-    \hlkwa{for} \hlstd{(element} \hlkwa{in} \hlstd{abs_lens)\{}
-      \hlkwa{if} \hlstd{(element} \hlopt{>} \hlnum{3000}\hlstd{)\{abs_lens[element]} \hlkwb{<-} \hlnum{0}\hlstd{\}}
-    \hlstd{\}}
-    \hlstd{df} \hlkwb{<-} \hlkwd{as.data.frame}\hlstd{(abs_lens[abs_lens} \hlopt{!=} \hlnum{0}\hlstd{])}
-    \hlkwd{colnames}\hlstd{(df)} \hlkwb{<-} \hlstr{"len"}
-    \hlstd{title} \hlkwb{<-} \hlkwd{paste0}\hlstd{(x,}\hlstr{"_"}\hlstd{,dir)}
-    \hlkwd{print}\hlstd{(}\hlkwd{ggplot}\hlstd{(df,} \hlkwd{aes}\hlstd{(}\hlkwc{x} \hlstd{= len))} \hlopt{+}
-        \hlkwd{geom_histogram}\hlstd{(}\hlkwc{bins} \hlstd{=} \hlnum{100}\hlstd{)} \hlopt{+}
-        \hlkwd{labs}\hlstd{(}\hlkwc{x} \hlstd{=} \hlstr{"Lengths"}\hlstd{,} \hlkwc{y} \hlstd{=} \hlstr{"Count"}\hlstd{)} \hlopt{+}
-        \hlkwd{ggtitle}\hlstd{(title)} \hlopt{+}
-        \hlkwd{theme}\hlstd{(}\hlkwc{plot.title} \hlstd{=} \hlkwd{element_text}\hlstd{(}\hlkwc{hjust} \hlstd{=} \hlnum{0.5}\hlstd{))} \hlopt{+}
-        \hlkwd{scale_x_continuous}\hlstd{(}\hlkwc{breaks} \hlstd{=} \hlkwd{seq}\hlstd{(}\hlnum{75}\hlstd{,} \hlnum{550}\hlstd{,} \hlkwc{by} \hlstd{=} \hlnum{25}\hlstd{),} \hlkwc{limits} \hlstd{=} \hlkwd{c}\hlstd{(}\hlnum{75}\hlstd{,}\hlnum{550}\hlstd{)))}
-    \hlkwd{plot.new}\hlstd{()}
-  \hlstd{\}}
-\hlstd{\}}
-\end{alltt}
+
+\includegraphics[width=.5\linewidth]{figure/unnamed-chunk-6-1} 
+\includegraphics[width=.5\linewidth]{figure/unnamed-chunk-6-2} 
+\includegraphics[width=.5\linewidth]{figure/unnamed-chunk-6-3} 
+\includegraphics[width=.5\linewidth]{figure/unnamed-chunk-6-4} 
+\includegraphics[width=.5\linewidth]{figure/unnamed-chunk-6-5} 
+\includegraphics[width=.5\linewidth]{figure/unnamed-chunk-6-6} 
+\includegraphics[width=.5\linewidth]{figure/unnamed-chunk-6-7} 
+\includegraphics[width=.5\linewidth]{figure/unnamed-chunk-6-8} 
 
 
-{\ttfamily\noindent\color{warningcolor}{\#\# Warning: Removed 26 rows containing non-finite values (stat\_bin).}}
-
-{\ttfamily\noindent\color{warningcolor}{\#\# Warning: Removed 1 rows containing missing values (geom\_bar).}}
-
-{\ttfamily\noindent\color{warningcolor}{\#\# Warning: Removed 1242026 rows containing non-finite values (stat\_bin).}}
-
-{\ttfamily\noindent\color{warningcolor}{\#\# Warning: Removed 1 rows containing missing values (geom\_bar).}}
-
-{\ttfamily\noindent\color{warningcolor}{\#\# Warning: Removed 2966 rows containing non-finite values (stat\_bin).}}
-
-{\ttfamily\noindent\color{warningcolor}{\#\# Warning: Removed 1 rows containing missing values (geom\_bar).}}
-
-{\ttfamily\noindent\color{warningcolor}{\#\# Warning: Removed 1244840 rows containing non-finite values (stat\_bin).}}
-
-{\ttfamily\noindent\color{warningcolor}{\#\# Warning: Removed 1 rows containing missing values (geom\_bar).}}
-
-{\ttfamily\noindent\color{warningcolor}{\#\# Warning: Removed 3892 rows containing non-finite values (stat\_bin).}}
-
-{\ttfamily\noindent\color{warningcolor}{\#\# Warning: Removed 1 rows containing missing values (geom\_bar).}}
-
-{\ttfamily\noindent\color{warningcolor}{\#\# Warning: Removed 1888585 rows containing non-finite values (stat\_bin).}}
-
-{\ttfamily\noindent\color{warningcolor}{\#\# Warning: Removed 1 rows containing missing values (geom\_bar).}}
-
-{\ttfamily\noindent\color{warningcolor}{\#\# Warning: Removed 3892 rows containing non-finite values (stat\_bin).}}
-
-{\ttfamily\noindent\color{warningcolor}{\#\# Warning: Removed 1 rows containing missing values (geom\_bar).}}
-
-{\ttfamily\noindent\color{warningcolor}{\#\# Warning: Removed 1888585 rows containing non-finite values (stat\_bin).}}
-
-{\ttfamily\noindent\color{warningcolor}{\#\# Warning: Removed 1 rows containing missing values (geom\_bar).}}\end{kframe}
-\includegraphics[width=.5\linewidth]{figure/unnamed-chunk-4-1} 
-\includegraphics[width=.5\linewidth]{figure/unnamed-chunk-4-2} 
-\includegraphics[width=.5\linewidth]{figure/unnamed-chunk-4-3} 
-\includegraphics[width=.5\linewidth]{figure/unnamed-chunk-4-4} 
-\includegraphics[width=.5\linewidth]{figure/unnamed-chunk-4-5} 
-\includegraphics[width=.5\linewidth]{figure/unnamed-chunk-4-6} 
-\includegraphics[width=.5\linewidth]{figure/unnamed-chunk-4-7} 
-\includegraphics[width=.5\linewidth]{figure/unnamed-chunk-4-8} 
-\includegraphics[width=.5\linewidth]{figure/unnamed-chunk-4-9} 
-\includegraphics[width=.5\linewidth]{figure/unnamed-chunk-4-10} 
-\includegraphics[width=.5\linewidth]{figure/unnamed-chunk-4-11} 
-\includegraphics[width=.5\linewidth]{figure/unnamed-chunk-4-12} 
-\includegraphics[width=.5\linewidth]{figure/unnamed-chunk-4-13} 
-\includegraphics[width=.5\linewidth]{figure/unnamed-chunk-4-14} 
-\includegraphics[width=.5\linewidth]{figure/unnamed-chunk-4-15} 
-\includegraphics[width=.5\linewidth]{figure/unnamed-chunk-4-16} 
-
-
-
-
-And some text after.
 \end{document}

@@ -6,11 +6,9 @@ from tqdm import tqdm
 from Bio.Seq import Seq
 import subprocess
 import pysam
-from tqdm import tqdm
 import csv
 import pandas
 import numpy
-from Bio.Seq import Seq
 from pf3D7_coding_regions import coding, noncoding
 
 
@@ -170,9 +168,9 @@ if __name__ == "__main__":
 	filenames = sys.argv[1:]
 	print filenames
 	for element in filenames:
-		#get_coding_coverage(element)
+		get_coding_coverage(element)
 		#get_flags(element)
 		#get_unaligned_mate(element)
 		#get_unaligned(element)
-		get_frag_len(element)
-		get_MAPQ(element)
+		#get_frag_len(element)
+		#get_MAPQ(element)

@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2017.3.10)  13 MAR 2017 09:41
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2017.3.10)  17 MAR 2017 10:07
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -567,6 +567,21 @@ Package: authblk 2001/02/27 1.3 (PWD)
 \c@authors=\count106
 \c@affil=\count107
 )
+(/usr/share/texlive/texmf-dist/tex/latex/geometry/geometry.sty
+Package: geometry 2010/09/12 v5.6 Page Geometry
+\Gm@cnth=\count108
+\Gm@cntv=\count109
+\c@Gm@tempcnt=\count110
+\Gm@bindingoffset=\dimen115
+\Gm@wd@mp=\dimen116
+\Gm@odd@mp=\dimen117
+\Gm@even@mp=\dimen118
+\Gm@layoutwidth=\dimen119
+\Gm@layoutheight=\dimen120
+\Gm@layouthoffset=\dimen121
+\Gm@layoutvoffset=\dimen122
+\Gm@dimlist=\toks18
+)
 (/usr/share/texlive/texmf-dist/tex/latex/upquote/upquote.sty
 Package: upquote 2012/04/19 v1.3 upright-quote and grave-accent glyphs in verba
 tim
@@ -574,34 +589,34 @@ tim
 (./stats_plotter.aux)
 \openout1 = `stats_plotter.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 68.
-LaTeX Font Info:    ... okay on input line 68.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 68.
-LaTeX Font Info:    ... okay on input line 68.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 68.
-LaTeX Font Info:    ... okay on input line 68.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 68.
-LaTeX Font Info:    ... okay on input line 68.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 68.
-LaTeX Font Info:    ... okay on input line 68.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 68.
-LaTeX Font Info:    ... okay on input line 68.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 68.
-LaTeX Font Info:    ... okay on input line 68.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 70.
+LaTeX Font Info:    ... okay on input line 70.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 70.
+LaTeX Font Info:    ... okay on input line 70.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 70.
+LaTeX Font Info:    ... okay on input line 70.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 70.
+LaTeX Font Info:    ... okay on input line 70.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 70.
+LaTeX Font Info:    ... okay on input line 70.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 70.
+LaTeX Font Info:    ... okay on input line 70.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 70.
+LaTeX Font Info:    ... okay on input line 70.
 
 (/usr/share/texlive/texmf-dist/tex/context/base/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count108
-\scratchdimen=\dimen115
+\scratchcounter=\count111
+\scratchdimen=\dimen123
 \scratchbox=\box30
-\nofMPsegments=\count109
-\nofMParguments=\count110
-\everyMPshowfont=\toks18
-\MPscratchCnt=\count111
-\MPscratchDim=\dimen116
-\MPnumerator=\count112
-\makeMPintoPDFobject=\count113
-\everyMPtoPDFconversion=\toks19
+\nofMPsegments=\count112
+\nofMParguments=\count113
+\everyMPshowfont=\toks19
+\MPscratchCnt=\count114
+\MPscratchDim=\dimen124
+\MPnumerator=\count115
+\makeMPintoPDFobject=\count116
+\everyMPtoPDFconversion=\toks20
 ) (/usr/share/texlive/texmf-dist/tex/latex/oberdiek/epstopdf-base.sty
 Package: epstopdf-base 2010/02/09 v2.5 Base part for package epstopdf
 
@@ -618,7 +633,7 @@ File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
 e
 ))
 \AtBeginShipoutBox=\box31
-Package hyperref Info: Link coloring OFF on input line 68.
+Package hyperref Info: Link coloring OFF on input line 70.
 
 (/usr/share/texlive/texmf-dist/tex/latex/hyperref/nameref.sty
 Package: nameref 2012/10/27 v2.43 Cross-referencing by name of section
@@ -626,17 +641,52 @@ Package: nameref 2012/10/27 v2.43 Cross-referencing by name of section
 (/usr/share/texlive/texmf-dist/tex/generic/oberdiek/gettitlestring.sty
 Package: gettitlestring 2010/12/03 v1.4 Cleanup title references (HO)
 )
-\c@section@level=\count114
+\c@section@level=\count117
 )
-LaTeX Info: Redefining \ref on input line 68.
-LaTeX Info: Redefining \pageref on input line 68.
-LaTeX Info: Redefining \nameref on input line 68.
+LaTeX Info: Redefining \ref on input line 70.
+LaTeX Info: Redefining \pageref on input line 70.
+LaTeX Info: Redefining \nameref on input line 70.
 
 (./stats_plotter.out) (./stats_plotter.out)
 \@outlinefile=\write3
 \openout3 = `stats_plotter.out'.
 
- (./stats_plotter.toc
+
+*geometry* driver: auto-detecting
+*geometry* detected driver: pdftex
+*geometry* verbose mode - [ preamble ] result:
+* driver: pdftex
+* paper: a4paper
+* layout: <same size as paper>
+* layoutoffset:(h,v)=(0.0pt,0.0pt)
+* modes: 
+* h-part:(L,W,R)=(85.35826pt, 426.79135pt, 85.35826pt)
+* v-part:(T,H,B)=(85.35826pt, 674.33032pt, 85.35826pt)
+* \paperwidth=597.50787pt
+* \paperheight=845.04684pt
+* \textwidth=426.79135pt
+* \textheight=674.33032pt
+* \oddsidemargin=13.08827pt
+* \evensidemargin=13.08827pt
+* \topmargin=-23.91173pt
+* \headheight=12.0pt
+* \headsep=25.0pt
+* \topskip=12.0pt
+* \footskip=30.0pt
+* \marginparwidth=35.0pt
+* \marginparsep=10.0pt
+* \columnsep=10.0pt
+* \skip\footins=10.8pt plus 4.0pt minus 2.0pt
+* \hoffset=0.0pt
+* \voffset=0.0pt
+* \mag=1000
+* \@twocolumnfalse
+* \@twosidefalse
+* \@mparswitchfalse
+* \@reversemarginfalse
+* (1in=72.27pt=25.4mm, 1cm=28.453pt)
+
+(./stats_plotter.toc
 LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <12> on input line 1.
 LaTeX Font Info:    External font `cmex10' loaded for size
@@ -650,436 +700,202 @@ LaTeX Font Info:    External font `cmex10' loaded for size
  [1
 
 {/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}]
-Package color Info: Redefining color shadecolor on input line 80.
-LaTeX Font Info:    Font shape `OT1/cmtt/bx/n' in size <12> not available
-(Font)              Font shape `OT1/cmtt/m/n' tried instead on input line 83.
+Underfull \hbox (badness 10000) in paragraph at lines 79--83
 
-Overfull \hbox (85.47523pt too wide) in paragraph at lines 83--83
-[][]\OT1/cmtt/m/n/12 file_names[] []<-[] []list.files[][]([][]"/home/lucas/ISGl
-obal/TestSet/align_tests2/inputs/"[][])[][] 
  []
 
+Package color Info: Redefining color shadecolor on input line 93.
+LaTeX Font Info:    Font shape `OT1/cmtt/bx/n' in size <6> not available
+(Font)              Font shape `OT1/cmtt/m/n' tried instead on input line 95.
+<figure/unnamed-chunk-5-1.pdf, id=48, 505.89pt x 505.89pt>
+File: figure/unnamed-chunk-5-1.pdf Graphic file (type pdf)
 
-Overfull \hbox (29.9002pt too wide) in paragraph at lines 84--84
-[][]\OT1/cmtt/m/n/12 file_names[] []<-[] []unique[][]([][]lapply[][](file_names
-,[] []function[][]([][]x[][])[] []substr[][](x,[][]1[][],[][]17[][])))[][] 
- []
+<use figure/unnamed-chunk-5-1.pdf>
+Package pdftex.def Info: figure/unnamed-chunk-5-1.pdf used on input line 152.
+(pdftex.def)             Requested size: 213.39865pt x 337.1691pt.
 
+<figure/unnamed-chunk-5-2.pdf, id=49, 505.89pt x 505.89pt>
+File: figure/unnamed-chunk-5-2.pdf Graphic file (type pdf)
 
-Overfull \hbox (511.55045pt too wide) in paragraph at lines 86--86
-[][]\OT1/cmtt/m/n/12 dirs[] []<-[] []list.files[][]([][]"/home/lucas/ISGlobal/T
-estSet/align_tests2/"[][])[[][]substr[][]([][]list.files[][]([][]"/home/lucas/I
-SGlobal/TestSet/align_tests2/"[][]),[][]1[][],[][]6[][])[] []==[] []"params"[][
-]][][] 
- []
+<use figure/unnamed-chunk-5-2.pdf>
+Package pdftex.def Info: figure/unnamed-chunk-5-2.pdf used on input line 153.
+(pdftex.def)             Requested size: 213.39865pt x 337.1691pt.
 
-[2]
-LaTeX Font Info:    Try loading font information for OMS+cmtt on input line 99.
+<figure/unnamed-chunk-5-3.pdf, id=50, 505.89pt x 505.89pt>
+File: figure/unnamed-chunk-5-3.pdf Graphic file (type pdf)
 
- (/usr/share/R/share/texmf/tex/latex/omscmtt.fd
-File: omscmtt.fd 
-)
-LaTeX Font Info:    Font shape `OMS/cmtt/m/n' in size <12> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 99.
+<use figure/unnamed-chunk-5-3.pdf>
+Package pdftex.def Info: figure/unnamed-chunk-5-3.pdf used on input line 154.
+(pdftex.def)             Requested size: 213.39865pt x 337.1691pt.
 
-Overfull \hbox (424.92542pt too wide) in paragraph at lines 101--101
-[]    []\OT1/cmtt/m/n/12 mapq[] []<-[] []read.csv2[][]([][]file[] []=[] []paste
-0[][]([][]"/home/lucas/ISGlobal/TestSet/align_tests2/"[][],dir,[][]"/"[][],x,[]
-[]"_MAPQ.csv"[][]),[] []sep[] []=[] []"\OMS/cmsy/m/n/12 n\OT1/cmtt/m/n/12 t"[][
-],[] []header[] []=[] []FALSE[][])[][] 
- []
+<figure/unnamed-chunk-5-4.pdf, id=51, 505.89pt x 505.89pt>
+File: figure/unnamed-chunk-5-4.pdf Graphic file (type pdf)
 
+<use figure/unnamed-chunk-5-4.pdf>
+Package pdftex.def Info: figure/unnamed-chunk-5-4.pdf used on input line 155.
+(pdftex.def)             Requested size: 213.39865pt x 337.1691pt.
 
-Overfull \hbox (73.12523pt too wide) in paragraph at lines 110--110
-[]        []\OT1/cmtt/m/n/12 scale_x_continuous[][]([][]breaks[] []=[] []seq[][
-]([][]0[][],[] []45[][],[] []by[] []=[] []2[][]),[] []limits[] []=[] []c[][]([]
-[]0[][],[][]48[][]))[] []+[][] 
- []
+<figure/unnamed-chunk-5-5.pdf, id=52, 505.89pt x 505.89pt>
+File: figure/unnamed-chunk-5-5.pdf Graphic file (type pdf)
 
-<figure/unnamed-chunk-3-1.pdf, id=39, 505.89pt x 505.89pt>
-File: figure/unnamed-chunk-3-1.pdf Graphic file (type pdf)
+<use figure/unnamed-chunk-5-5.pdf>
+Package pdftex.def Info: figure/unnamed-chunk-5-5.pdf used on input line 156.
+(pdftex.def)             Requested size: 213.39865pt x 337.1691pt.
 
-<use figure/unnamed-chunk-3-1.pdf>
-Package pdftex.def Info: figure/unnamed-chunk-3-1.pdf used on input line 117.
-(pdftex.def)             Requested size: 195.00368pt x 296.00233pt.
+<figure/unnamed-chunk-5-6.pdf, id=53, 505.89pt x 505.89pt>
+File: figure/unnamed-chunk-5-6.pdf Graphic file (type pdf)
 
-<figure/unnamed-chunk-3-2.pdf, id=40, 505.89pt x 505.89pt>
-File: figure/unnamed-chunk-3-2.pdf Graphic file (type pdf)
+<use figure/unnamed-chunk-5-6.pdf>
+Package pdftex.def Info: figure/unnamed-chunk-5-6.pdf used on input line 157.
+(pdftex.def)             Requested size: 213.39865pt x 337.1691pt.
 
-<use figure/unnamed-chunk-3-2.pdf>
-Package pdftex.def Info: figure/unnamed-chunk-3-2.pdf used on input line 118.
-(pdftex.def)             Requested size: 195.00368pt x 296.00233pt.
+<figure/unnamed-chunk-5-7.pdf, id=54, 505.89pt x 505.89pt>
+File: figure/unnamed-chunk-5-7.pdf Graphic file (type pdf)
 
-<figure/unnamed-chunk-3-3.pdf, id=41, 505.89pt x 505.89pt>
-File: figure/unnamed-chunk-3-3.pdf Graphic file (type pdf)
+<use figure/unnamed-chunk-5-7.pdf>
+Package pdftex.def Info: figure/unnamed-chunk-5-7.pdf used on input line 158.
+(pdftex.def)             Requested size: 213.39865pt x 337.1691pt.
 
-<use figure/unnamed-chunk-3-3.pdf>
-Package pdftex.def Info: figure/unnamed-chunk-3-3.pdf used on input line 119.
-(pdftex.def)             Requested size: 195.00368pt x 296.00233pt.
+<figure/unnamed-chunk-5-8.pdf, id=55, 505.89pt x 505.89pt>
+File: figure/unnamed-chunk-5-8.pdf Graphic file (type pdf)
 
-<figure/unnamed-chunk-3-4.pdf, id=42, 505.89pt x 505.89pt>
-File: figure/unnamed-chunk-3-4.pdf Graphic file (type pdf)
+<use figure/unnamed-chunk-5-8.pdf>
+Package pdftex.def Info: figure/unnamed-chunk-5-8.pdf used on input line 159.
+(pdftex.def)             Requested size: 213.39865pt x 337.1691pt.
 
-<use figure/unnamed-chunk-3-4.pdf>
-Package pdftex.def Info: figure/unnamed-chunk-3-4.pdf used on input line 120.
-(pdftex.def)             Requested size: 195.00368pt x 296.00233pt.
-
-<figure/unnamed-chunk-3-5.pdf, id=43, 505.89pt x 505.89pt>
-File: figure/unnamed-chunk-3-5.pdf Graphic file (type pdf)
-
-<use figure/unnamed-chunk-3-5.pdf>
-Package pdftex.def Info: figure/unnamed-chunk-3-5.pdf used on input line 121.
-(pdftex.def)             Requested size: 195.00368pt x 296.00233pt.
-
-<figure/unnamed-chunk-3-6.pdf, id=44, 505.89pt x 505.89pt>
-File: figure/unnamed-chunk-3-6.pdf Graphic file (type pdf)
-
-<use figure/unnamed-chunk-3-6.pdf>
-Package pdftex.def Info: figure/unnamed-chunk-3-6.pdf used on input line 122.
-(pdftex.def)             Requested size: 195.00368pt x 296.00233pt.
-
-<figure/unnamed-chunk-3-7.pdf, id=45, 505.89pt x 505.89pt>
-File: figure/unnamed-chunk-3-7.pdf Graphic file (type pdf)
-
-<use figure/unnamed-chunk-3-7.pdf>
-Package pdftex.def Info: figure/unnamed-chunk-3-7.pdf used on input line 123.
-(pdftex.def)             Requested size: 195.00368pt x 296.00233pt.
-
-<figure/unnamed-chunk-3-8.pdf, id=46, 505.89pt x 505.89pt>
-File: figure/unnamed-chunk-3-8.pdf Graphic file (type pdf)
-
-<use figure/unnamed-chunk-3-8.pdf>
-Package pdftex.def Info: figure/unnamed-chunk-3-8.pdf used on input line 124.
-(pdftex.def)             Requested size: 195.00368pt x 296.00233pt.
-
-Overfull \hbox (2.61844pt too wide) in paragraph at lines 117--125
+Overfull \hbox (2.61703pt too wide) in paragraph at lines 152--160
 [][] []
  []
 
 
-Overfull \hbox (2.61844pt too wide) in paragraph at lines 117--125
+Overfull \hbox (2.61703pt too wide) in paragraph at lines 152--160
 [] []
  []
 
 
-Overfull \hbox (2.61844pt too wide) in paragraph at lines 117--125
+Overfull \hbox (2.61703pt too wide) in paragraph at lines 152--160
 [] []
  []
 
 
-Overfull \hbox (2.61844pt too wide) in paragraph at lines 117--125
+Overfull \hbox (2.61703pt too wide) in paragraph at lines 152--160
 [] [] 
  []
 
-[3
+[2] [3]
+Overfull \vbox (54.44121pt too high) has occurred while \output is active []
 
-]
-Overfull \vbox (1.00467pt too high) has occurred while \output is active []
 
+[4 <./figure/unnamed-chunk-5-1.pdf> <./figure/unnamed-chunk-5-2.pdf> <./figure/
+unnamed-chunk-5-3.pdf> <./figure/unnamed-chunk-5-4.pdf>] [5 <./figure/unnamed-c
+hunk-5-5.pdf> <./figure/unnamed-chunk-5-6.pdf>] [6 <./figure/unnamed-chunk-5-7.
+pdf> <./figure/unnamed-chunk-5-8.pdf>]
+<figure/unnamed-chunk-6-1.pdf, id=117, 505.89pt x 505.89pt>
+File: figure/unnamed-chunk-6-1.pdf Graphic file (type pdf)
 
-[4 <./figure/unnamed-chunk-3-1.pdf> <./figure/unnamed-chunk-3-2.pdf> <./figure/
-unnamed-chunk-3-3.pdf> <./figure/unnamed-chunk-3-4.pdf>] [5 <./figure/unnamed-c
-hunk-3-5.pdf> <./figure/unnamed-chunk-3-6.pdf>] [6 <./figure/unnamed-chunk-3-7.
-pdf> <./figure/unnamed-chunk-3-8.pdf>]
-Overfull \hbox (443.45042pt too wide) in paragraph at lines 135--135
-[]    []\OT1/cmtt/m/n/12 lens[] []<-[] []read.csv2[][]([][]file[] []=[] []paste
-0[][]([][]"/home/lucas/ISGlobal/TestSet/align_tests2/"[][],dir,[][]"/"[][],x,[]
-[]"_lengths.csv"[][]),[] []sep[] []=[] []"\OMS/cmsy/m/n/12 n\OT1/cmtt/m/n/12 t"
-[][],[] []header[] []=[] []FALSE[][])[][] 
- []
+<use figure/unnamed-chunk-6-1.pdf>
+Package pdftex.def Info: figure/unnamed-chunk-6-1.pdf used on input line 167.
+(pdftex.def)             Requested size: 213.39568pt x 213.39865pt.
 
+<figure/unnamed-chunk-6-2.pdf, id=118, 505.89pt x 505.89pt>
+File: figure/unnamed-chunk-6-2.pdf Graphic file (type pdf)
 
-Overfull \hbox (97.82524pt too wide) in paragraph at lines 148--148
-[]        []\OT1/cmtt/m/n/12 scale_x_continuous[][]([][]breaks[] []=[] []seq[][
-]([][]75[][],[] []550[][],[] []by[] []=[] []25[][]),[] []limits[] []=[] []c[][]
-([][]75[][],[][]550[][])))[][] 
- []
+<use figure/unnamed-chunk-6-2.pdf>
+Package pdftex.def Info: figure/unnamed-chunk-6-2.pdf used on input line 168.
+(pdftex.def)             Requested size: 213.39568pt x 213.39865pt.
 
+<figure/unnamed-chunk-6-3.pdf, id=119, 505.89pt x 505.89pt>
+File: figure/unnamed-chunk-6-3.pdf Graphic file (type pdf)
 
-Overfull \hbox (34.3462pt too wide) in paragraph at lines 155--156
-[]\OT1/cmtt/m/n/12 ## Warning: Removed 26 rows containing non-finite values (st
-at[]bin).[] 
- []
+<use figure/unnamed-chunk-6-3.pdf>
+Package pdftex.def Info: figure/unnamed-chunk-6-3.pdf used on input line 169.
+(pdftex.def)             Requested size: 213.39568pt x 213.39865pt.
 
+<figure/unnamed-chunk-6-4.pdf, id=120, 505.89pt x 505.89pt>
+File: figure/unnamed-chunk-6-4.pdf Graphic file (type pdf)
 
-Overfull \hbox (9.6462pt too wide) in paragraph at lines 157--158
-[]\OT1/cmtt/m/n/12 ## Warning: Removed 1 rows containing missing values (geom[]
-bar).[] 
- []
+<use figure/unnamed-chunk-6-4.pdf>
+Package pdftex.def Info: figure/unnamed-chunk-6-4.pdf used on input line 170.
+(pdftex.def)             Requested size: 213.39568pt x 213.39865pt.
 
+<figure/unnamed-chunk-6-5.pdf, id=121, 505.89pt x 505.89pt>
+File: figure/unnamed-chunk-6-5.pdf Graphic file (type pdf)
 
-Overfull \hbox (65.22122pt too wide) in paragraph at lines 159--160
-[]\OT1/cmtt/m/n/12 ## Warning: Removed 1242026 rows containing non-finite value
-s (stat[]bin).[] 
- []
+<use figure/unnamed-chunk-6-5.pdf>
+Package pdftex.def Info: figure/unnamed-chunk-6-5.pdf used on input line 171.
+(pdftex.def)             Requested size: 213.39568pt x 213.39865pt.
 
+<figure/unnamed-chunk-6-6.pdf, id=122, 505.89pt x 505.89pt>
+File: figure/unnamed-chunk-6-6.pdf Graphic file (type pdf)
 
-Overfull \hbox (9.6462pt too wide) in paragraph at lines 161--162
-[]\OT1/cmtt/m/n/12 ## Warning: Removed 1 rows containing missing values (geom[]
-bar).[] 
- []
+<use figure/unnamed-chunk-6-6.pdf>
+Package pdftex.def Info: figure/unnamed-chunk-6-6.pdf used on input line 172.
+(pdftex.def)             Requested size: 213.39568pt x 213.39865pt.
 
+<figure/unnamed-chunk-6-7.pdf, id=123, 505.89pt x 505.89pt>
+File: figure/unnamed-chunk-6-7.pdf Graphic file (type pdf)
 
-Overfull \hbox (46.69621pt too wide) in paragraph at lines 163--164
-[]\OT1/cmtt/m/n/12 ## Warning: Removed 2966 rows containing non-finite values (
-stat[]bin).[] 
- []
+<use figure/unnamed-chunk-6-7.pdf>
+Package pdftex.def Info: figure/unnamed-chunk-6-7.pdf used on input line 173.
+(pdftex.def)             Requested size: 213.39568pt x 213.39865pt.
 
+<figure/unnamed-chunk-6-8.pdf, id=124, 505.89pt x 505.89pt>
+File: figure/unnamed-chunk-6-8.pdf Graphic file (type pdf)
 
-Overfull \hbox (9.6462pt too wide) in paragraph at lines 165--166
-[]\OT1/cmtt/m/n/12 ## Warning: Removed 1 rows containing missing values (geom[]
-bar).[] 
- []
+<use figure/unnamed-chunk-6-8.pdf>
+Package pdftex.def Info: figure/unnamed-chunk-6-8.pdf used on input line 174.
+(pdftex.def)             Requested size: 213.39568pt x 213.39865pt.
 
-
-Overfull \hbox (65.22122pt too wide) in paragraph at lines 167--168
-[]\OT1/cmtt/m/n/12 ## Warning: Removed 1244840 rows containing non-finite value
-s (stat[]bin).[] 
- []
-
-
-Overfull \hbox (9.6462pt too wide) in paragraph at lines 169--170
-[]\OT1/cmtt/m/n/12 ## Warning: Removed 1 rows containing missing values (geom[]
-bar).[] 
- []
-
-
-Overfull \hbox (46.69621pt too wide) in paragraph at lines 171--172
-[]\OT1/cmtt/m/n/12 ## Warning: Removed 3892 rows containing non-finite values (
-stat[]bin).[] 
- []
-
-
-Overfull \hbox (9.6462pt too wide) in paragraph at lines 173--174
-[]\OT1/cmtt/m/n/12 ## Warning: Removed 1 rows containing missing values (geom[]
-bar).[] 
- []
-
-
-Overfull \hbox (65.22122pt too wide) in paragraph at lines 175--176
-[]\OT1/cmtt/m/n/12 ## Warning: Removed 1888585 rows containing non-finite value
-s (stat[]bin).[] 
- []
-
-
-Overfull \hbox (9.6462pt too wide) in paragraph at lines 177--178
-[]\OT1/cmtt/m/n/12 ## Warning: Removed 1 rows containing missing values (geom[]
-bar).[] 
- []
-
-
-Overfull \hbox (46.69621pt too wide) in paragraph at lines 179--180
-[]\OT1/cmtt/m/n/12 ## Warning: Removed 3892 rows containing non-finite values (
-stat[]bin).[] 
- []
-
-
-Overfull \hbox (9.6462pt too wide) in paragraph at lines 181--182
-[]\OT1/cmtt/m/n/12 ## Warning: Removed 1 rows containing missing values (geom[]
-bar).[] 
- []
-
-
-Overfull \hbox (65.22122pt too wide) in paragraph at lines 183--184
-[]\OT1/cmtt/m/n/12 ## Warning: Removed 1888585 rows containing non-finite value
-s (stat[]bin).[] 
- []
-
-
-Overfull \hbox (9.6462pt too wide) in paragraph at lines 185--185
-[]\OT1/cmtt/m/n/12 ## Warning: Removed 1 rows containing missing values (geom[]
-bar).[] 
- []
-
-<figure/unnamed-chunk-4-1.pdf, id=104, 505.89pt x 505.89pt>
-File: figure/unnamed-chunk-4-1.pdf Graphic file (type pdf)
-
-<use figure/unnamed-chunk-4-1.pdf>
-Package pdftex.def Info: figure/unnamed-chunk-4-1.pdf used on input line 186.
-(pdftex.def)             Requested size: 195.0pt x 195.00368pt.
-
-<figure/unnamed-chunk-4-2.pdf, id=105, 505.89pt x 505.89pt>
-File: figure/unnamed-chunk-4-2.pdf Graphic file (type pdf)
-
-<use figure/unnamed-chunk-4-2.pdf>
-Package pdftex.def Info: figure/unnamed-chunk-4-2.pdf used on input line 187.
-(pdftex.def)             Requested size: 195.0pt x 195.00368pt.
-
-<figure/unnamed-chunk-4-3.pdf, id=106, 505.89pt x 505.89pt>
-File: figure/unnamed-chunk-4-3.pdf Graphic file (type pdf)
-
-<use figure/unnamed-chunk-4-3.pdf>
-Package pdftex.def Info: figure/unnamed-chunk-4-3.pdf used on input line 188.
-(pdftex.def)             Requested size: 195.0pt x 195.00368pt.
-
-<figure/unnamed-chunk-4-4.pdf, id=107, 505.89pt x 505.89pt>
-File: figure/unnamed-chunk-4-4.pdf Graphic file (type pdf)
-
-<use figure/unnamed-chunk-4-4.pdf>
-Package pdftex.def Info: figure/unnamed-chunk-4-4.pdf used on input line 189.
-(pdftex.def)             Requested size: 195.0pt x 195.00368pt.
-
-<figure/unnamed-chunk-4-5.pdf, id=108, 505.89pt x 505.89pt>
-File: figure/unnamed-chunk-4-5.pdf Graphic file (type pdf)
-
-<use figure/unnamed-chunk-4-5.pdf>
-Package pdftex.def Info: figure/unnamed-chunk-4-5.pdf used on input line 190.
-(pdftex.def)             Requested size: 195.0pt x 195.00368pt.
-
-<figure/unnamed-chunk-4-6.pdf, id=109, 505.89pt x 505.89pt>
-File: figure/unnamed-chunk-4-6.pdf Graphic file (type pdf)
-
-<use figure/unnamed-chunk-4-6.pdf>
-Package pdftex.def Info: figure/unnamed-chunk-4-6.pdf used on input line 191.
-(pdftex.def)             Requested size: 195.0pt x 195.00368pt.
-
-<figure/unnamed-chunk-4-7.pdf, id=110, 505.89pt x 505.89pt>
-File: figure/unnamed-chunk-4-7.pdf Graphic file (type pdf)
-
-<use figure/unnamed-chunk-4-7.pdf>
-Package pdftex.def Info: figure/unnamed-chunk-4-7.pdf used on input line 192.
-(pdftex.def)             Requested size: 195.0pt x 195.00368pt.
-
-<figure/unnamed-chunk-4-8.pdf, id=111, 505.89pt x 505.89pt>
-File: figure/unnamed-chunk-4-8.pdf Graphic file (type pdf)
-
-<use figure/unnamed-chunk-4-8.pdf>
-Package pdftex.def Info: figure/unnamed-chunk-4-8.pdf used on input line 193.
-(pdftex.def)             Requested size: 195.0pt x 195.00368pt.
-
-<figure/unnamed-chunk-4-9.pdf, id=112, 505.89pt x 505.89pt>
-File: figure/unnamed-chunk-4-9.pdf Graphic file (type pdf)
-
-<use figure/unnamed-chunk-4-9.pdf>
-Package pdftex.def Info: figure/unnamed-chunk-4-9.pdf used on input line 194.
-(pdftex.def)             Requested size: 195.0pt x 195.00368pt.
-
-<figure/unnamed-chunk-4-10.pdf, id=113, 505.89pt x 505.89pt>
-File: figure/unnamed-chunk-4-10.pdf Graphic file (type pdf)
-
-<use figure/unnamed-chunk-4-10.pdf>
-Package pdftex.def Info: figure/unnamed-chunk-4-10.pdf used on input line 195.
-(pdftex.def)             Requested size: 195.0pt x 195.00368pt.
-
-<figure/unnamed-chunk-4-11.pdf, id=114, 505.89pt x 505.89pt>
-File: figure/unnamed-chunk-4-11.pdf Graphic file (type pdf)
-
-<use figure/unnamed-chunk-4-11.pdf>
-Package pdftex.def Info: figure/unnamed-chunk-4-11.pdf used on input line 196.
-(pdftex.def)             Requested size: 195.0pt x 195.00368pt.
-
-<figure/unnamed-chunk-4-12.pdf, id=115, 505.89pt x 505.89pt>
-File: figure/unnamed-chunk-4-12.pdf Graphic file (type pdf)
-
-<use figure/unnamed-chunk-4-12.pdf>
-Package pdftex.def Info: figure/unnamed-chunk-4-12.pdf used on input line 197.
-(pdftex.def)             Requested size: 195.0pt x 195.00368pt.
-
-<figure/unnamed-chunk-4-13.pdf, id=116, 505.89pt x 505.89pt>
-File: figure/unnamed-chunk-4-13.pdf Graphic file (type pdf)
-
-<use figure/unnamed-chunk-4-13.pdf>
-Package pdftex.def Info: figure/unnamed-chunk-4-13.pdf used on input line 198.
-(pdftex.def)             Requested size: 195.0pt x 195.00368pt.
-
-<figure/unnamed-chunk-4-14.pdf, id=117, 505.89pt x 505.89pt>
-File: figure/unnamed-chunk-4-14.pdf Graphic file (type pdf)
-
-<use figure/unnamed-chunk-4-14.pdf>
-Package pdftex.def Info: figure/unnamed-chunk-4-14.pdf used on input line 199.
-(pdftex.def)             Requested size: 195.0pt x 195.00368pt.
-
-<figure/unnamed-chunk-4-15.pdf, id=118, 505.89pt x 505.89pt>
-File: figure/unnamed-chunk-4-15.pdf Graphic file (type pdf)
-
-<use figure/unnamed-chunk-4-15.pdf>
-Package pdftex.def Info: figure/unnamed-chunk-4-15.pdf used on input line 200.
-(pdftex.def)             Requested size: 195.0pt x 195.00368pt.
-
-<figure/unnamed-chunk-4-16.pdf, id=119, 505.89pt x 505.89pt>
-File: figure/unnamed-chunk-4-16.pdf Graphic file (type pdf)
-
-<use figure/unnamed-chunk-4-16.pdf>
-Package pdftex.def Info: figure/unnamed-chunk-4-16.pdf used on input line 201.
-(pdftex.def)             Requested size: 195.0pt x 195.00368pt.
-
-Overfull \hbox (2.61108pt too wide) in paragraph at lines 186--202
+Overfull \hbox (2.61108pt too wide) in paragraph at lines 167--175
 [][] []
  []
 
 
-Overfull \hbox (2.61108pt too wide) in paragraph at lines 186--202
+Overfull \hbox (2.61108pt too wide) in paragraph at lines 167--175
 [] []
  []
 
 
-Overfull \hbox (2.61108pt too wide) in paragraph at lines 186--202
+Overfull \hbox (2.61108pt too wide) in paragraph at lines 167--175
 [] []
  []
 
 
-Overfull \hbox (2.61108pt too wide) in paragraph at lines 186--202
-[] []
- []
-
-
-Overfull \hbox (2.61108pt too wide) in paragraph at lines 186--202
-[] []
- []
-
-
-Overfull \hbox (2.61108pt too wide) in paragraph at lines 186--202
-[] []
- []
-
-
-Overfull \hbox (2.61108pt too wide) in paragraph at lines 186--202
-[] []
- []
-
-
-Overfull \hbox (2.61108pt too wide) in paragraph at lines 186--202
+Overfull \hbox (2.61108pt too wide) in paragraph at lines 167--175
 [] [] 
  []
 
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 177.
 [7
 
-] [8 <./figure/unnamed-chunk-4-1.pdf> <./figure/unnamed-chunk-4-2.pdf> <./figur
-e/unnamed-chunk-4-3.pdf> <./figure/unnamed-chunk-4-4.pdf> <./figure/unnamed-chu
-nk-4-5.pdf> <./figure/unnamed-chunk-4-6.pdf>] [9 <./figure/unnamed-chunk-4-7.pd
-f> <./figure/unnamed-chunk-4-8.pdf> <./figure/unnamed-chunk-4-9.pdf> <./figure/
-unnamed-chunk-4-10.pdf> <./figure/unnamed-chunk-4-11.pdf> <./figure/unnamed-chu
-nk-4-12.pdf>]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 207.
- [10 <./figure/unnamed-chunk-4-13.pdf> <./figure/unnamed-chunk-4-14.pdf> <./fig
-ure/unnamed-chunk-4-15.pdf> <./figure/unnamed-chunk-4-16.pdf>]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 207.
-
-(./stats_plotter.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 207.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 207.
+ <./figure/unnamed-chunk-6-1.pdf> <./figure/unnamed-chunk-6-2.pdf> <./figure/un
+named-chunk-6-3.pdf> <./figure/unnamed-chunk-6-4.pdf> <./figure/unnamed-chunk-6
+-5.pdf> <./figure/unnamed-chunk-6-6.pdf>] [8 <./figure/unnamed-chunk-6-7.pdf> <
+./figure/unnamed-chunk-6-8.pdf>]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 177.
+ (./stats_plotter.aux)
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 177.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 177.
 Package rerunfilecheck Info: File `stats_plotter.out' has not changed.
-(rerunfilecheck)             Checksum: F0B8987B39C665AAEA8DE49709C7B9D4;206.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 207.
+(rerunfilecheck)             Checksum: 649AE2B270446287B9B70DC56F7E0752;358.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 177.
  ) 
 Here is how much of TeX's memory you used:
- 6075 strings out of 493029
- 89889 string characters out of 6136234
- 177876 words of memory out of 5000000
- 9500 multiletter control sequences out of 15000+600000
- 9184 words of font info for 33 fonts, out of 8000000 for 9000
+ 6451 strings out of 493029
+ 94591 string characters out of 6136234
+ 203672 words of memory out of 5000000
+ 9885 multiletter control sequences out of 15000+600000
+ 9015 words of font info for 32 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 29i,5n,28p,364b,318s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 29i,7n,28p,306b,318s stack positions out of 5000i,500n,10000p,200000b,80000s
 </usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></us
-r/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmitt10.pfb></usr/sha
-re/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/share/texl
-ive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/te
-xmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb></usr/share/texlive/texmf-di
-st/fonts/type1/public/amsfonts/cm/cmtt12.pfb>
-Output written on stats_plotter.pdf (10 pages, 177821 bytes).
+r/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/share
+/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb></usr/share/texli
+ve/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt8.pfb>
+Output written on stats_plotter.pdf (8 pages, 136525 bytes).
 PDF statistics:
- 229 PDF objects out of 1000 (max. 8388607)
- 161 compressed objects within 2 object streams
- 16 named destinations out of 1000 (max. 500000)
- 153 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 196 PDF objects out of 1000 (max. 8388607)
+ 148 compressed objects within 2 object streams
+ 17 named destinations out of 1000 (max. 500000)
+ 137 words of extra memory for PDF output out of 10000 (max. 10000000)
 
