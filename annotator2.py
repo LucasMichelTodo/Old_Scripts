@@ -82,6 +82,52 @@ def annotate_bed(bed_file):
 		print result[result != 0]
 		print "\n------------------------------------------------------------------------------------------"
 
+		for element in result.index:
+			start = chrom_vect.loc[chrom_vect[1] == element].index[0]
+			stop = chrom_vect.loc[chrom_vect[1] == element].index[-1]
+			i = 1
+			pre_cov = 0
+			preregion = 0
+			postregion = 0
+			post_cov = 0
+
+			# Count converage in 1000 bases before gene or previous gene:
+			while i < 1001:
+				if chrom_vect.iloc[start-i,1] == 0:
+					if chrom_vect.iloc[start-i,2] == 1:
+						pre_cov += 1
+						preregion += 1
+						i += 1
+					else:
+						preregion += 1
+						i += 1
+				else:
+					i = 1001
+
+			print "Pre: {} of {}\n" .format(pre_cov, preregion)
+
+			# Count converage in 1000 bases after gene or next gene:
+			i = 1
+
+			while i < 1001:
+				if stop+i < int(sizes[chrom[0].iloc[0]])-1:
+					
+					if chrom_vect.iloc[stop+i,1] == 0:
+						if chrom_vect.iloc[stop+i,2] == 1:
+							post_cov += 1
+							postregion += 1
+							i += 1
+						else:
+							postregion += 1
+							i += 1
+					else:
+						i = 1001
+				else:
+					i = 1001
+
+			print "Post: {} of {}\n" .format(post_cov, postregion)
+				
+
 		#Print results to file.
 		with open(bed_file.replace(bed_file[-4:], "_annotated.txt"), "a+") as result_file:
 			result_file.write("\n{}\n" .format(chrom[0].iloc[0]))
