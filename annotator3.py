@@ -62,7 +62,7 @@ def annotate_bed(bed_file):
 
 		#Span gene names over every position they occupy in the genome. (on empty vector 1)
 		for index, row in chrom_genes.iterrows(): 
-			chrom_vect.iloc[row[3]:row[4],1] = row[8].split(";")[1][12:]
+			chrom_vect.iloc[row[3]:row[4],1] = row[8].split(";")[0:1]
 
 		#Span 1s over every covered region in the genome. (on empty vector 2)
 		for index,row in bed.iterrows():
@@ -77,11 +77,6 @@ def annotate_bed(bed_file):
 
 		#Divide 1s per gene / gene lengths to get coverage percentage.
 		result = gen_cov[2]/gen_total*100
-
-		#Print results to screen.
-		print "\n{}\n" .format(chrom[0].iloc[0])
-		print result[result != 0]
-		print "\n------------------------------------------------------------------------------------------"
 
 		#Look look at pre and post regions of every gene: (1000bp/previous or next gene)
 		surround = []
@@ -139,24 +134,21 @@ def annotate_bed(bed_file):
 		c = [x[0] for x in [y[2] for y in surround]]
 		d = [x[1] for x in [y[2] for y in surround]]
 
-		results_df = pandas.DataFrame({'Gene-Coverage':result, 'Pre_Cov':a, 'Pre_size':b, 'Post_Cov':c, 'Post_size':d}, columns=['Gene-Coverage','Pre_Cov','Pre_size','Post_Cov','Post_size'], index=result.index)
-
-		print results_df
-
-		#Print results to file.
-		with open(bed_file.replace(bed_file[-4:], "_annotated.txt"), "a+") as result_file:
-			result_file.write("\n{}\n" .format(chrom[0].iloc[0]))
-			result[result != 0].to_string(result_file)
-			result_file.write("\n------------------------------------------------------------------------------------------")
+		results_df = pandas.DataFrame({'Gene-Coverage':gen_cov[2].tolist(), 'Gene-size':gen_total, 'Pre_Cov':a, 'Pre_size':b, 'Post_Cov':c, 'Post_size':d}, columns=['Gene-Coverage','Gene-size','Pre_Cov','Pre_size','Post_Cov','Post_size'], index=result.index)
 
 		#Print results_df into a csv:
 		with open(bed_file.replace(bed_file[-4:],"_annotation.csv"), "a+") as csv_file:
 			csv_file.write("\n{}\n" .format(chrom[0].iloc[0]))
 		results_df.to_csv(path_or_buf=bed_file.replace(bed_file[-4:],"_annotation.csv"), sep="\t", mode="a+")
 
-		#Print only rows with a non-zero coverage somwhere:
-		no_zero_results = results_df[('Gene-Coverage' != 0) | ('Pre_Cov' != 0) | ('Post_Cov' != 0)]
-		print no_zero_results
+		#Print only rows with a non-zero coverage somwhere and eliminate first row:
+		no_zero_results = results_df[(results_df['Gene-Coverage'] != 0) | (results_df['Pre_Cov'] != 0) | (results_df['Post_Cov'] != 0)]
+		no_zero_results = no_zero_results.iloc[1:]
+
+		#Print positive results to a csv:
+		with open(bed_file.replace(bed_file[-4:],"_annotation_hits.csv"), "a+") as csv_file:
+			csv_file.write("\n{}\n" .format(chrom[0].iloc[0]))
+		no_zero_results.to_csv(path_or_buf=bed_file.replace(bed_file[-4:],"_annotation_hits.csv"), sep="\t", mode="a+")
 
 
 #If called from command line, execute main function for each file.
