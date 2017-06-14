@@ -19,7 +19,7 @@ def diff_peak_call(bams):
 	if len(bams) < 2:
 		sys.exit('Error! Less than 2 files provided.')
 
-	subprocess.call("mkdir macs2_results_45_g300l350", shell=True)
+	subprocess.call("mkdir macs2_results_45_g250l250", shell=True)
 
 	depths = {}
 	names = set()
@@ -28,10 +28,10 @@ def diff_peak_call(bams):
 		names.add(file.split("_")[0]) # Create a set with the "names" of the alignments.
 
 	for name in names:  #Callpeaks for each alignment vs it's input control.
-		cmd = "macs2 callpeak -g 2.3e+7 -f BAMPE -B -t {}_me_sort.bam -c {}_in_sort.bam -n {} --nomodel --extsize 117 --outdir ./macs2_results_45_g300l350" .format(name, name, name[2:])
+		cmd = "macs2 callpeak -g 2.3e+7 -f BAMPE -B -t {}_me_sort.bam -c {}_in_sort.bam -n {} --nomodel --extsize 117 --outdir ./macs2_results_45_g250l250" .format(name, name, name[2:])
 		subprocess.call(cmd, shell=True)
 		
-		cmd = "egrep \"fragments after filtering in treatment|fragments after filtering in control\" ./macs2_results_45_g300l350/{}_peaks.xls" .format(name[2:]) #Get sequencing depth of the alignment.
+		cmd = "egrep \"fragments after filtering in treatment|fragments after filtering in control\" ./macs2_results_45_g250l250/{}_peaks.xls" .format(name[2:]) #Get sequencing depth of the alignment.
 		depth_info = run(cmd)[0]
 		print depth_info
 
@@ -42,7 +42,7 @@ def diff_peak_call(bams):
 	pairs = itertools.combinations(names, 2) # Create pairwise combinations
 	for pair in pairs:
 		# Run macs2 bdgdiff for each pairwise combination.
-		cmd = "macs2 bdgdiff --t1 ./macs2_results_45_g300l350/{}_treat_pileup.bdg --c1 ./macs2_results_45_g300l350/{}_control_lambda.bdg --t2 ./macs2_results_45_g300l350/{}_treat_pileup.bdg --c2 ./macs2_results_45_g300l350/{}_control_lambda.bdg --d1 {} --d2 {} -C 45 -g 300 -l 350 --o-prefix {} --outdir ./macs2_results_45_g300l350" \
+		cmd = "macs2 bdgdiff --t1 ./macs2_results_45_g250l250/{}_treat_pileup.bdg --c1 ./macs2_results_45_g250l250/{}_control_lambda.bdg --t2 ./macs2_results_45_g250l250/{}_treat_pileup.bdg --c2 ./macs2_results_45_g250l250/{}_control_lambda.bdg --d1 {} --d2 {} -C 45 -g 250 -l 250 --o-prefix {} --outdir ./macs2_results_45_g250l250" \
 		.format(pair[0], pair[0],
 				 pair[1], pair[1], 
 				 depths[pair[0]], depths[pair[1]], 

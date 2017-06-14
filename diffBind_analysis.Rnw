@@ -1,0 +1,32 @@
+\documentclass{article}
+
+\begin{document}
+
+Loading required packages:
+<<>>=
+source("https://bioconductor.org/biocLite.R")
+biocLite("DiffBind")
+library("DiffBind")
+@
+
+Loading allginements and peaks into a DBA object:
+<<>>=
+metilation <- dba(sampleSheet= "/home/lucas/ISGlobal/Sample_Sheet_diffbind2.csv", peakCaller="macs")
+plot(metilation)
+metilation <- dba.count(metilation)
+metilation <- dba.contrast(metilation, group1 = metilation$samples$Factor == "A7", group2 = metilation$samples$Factor == "E5", name1 = "A7", name2 = "E5")
+A7_vs_E5 <- dba.analyze(metilation, bTagwise = FALSE, bReduceObjects = FALSE)
+dba.report(A7_vs_E5)
+A7_E5_result <- dba.report(A7_vs_E5, th = 1, bCount=TRUE,  DataType = DBA_DATA_FRAME)
+write.table(A7_E5_result[,c(1,2,3,7)], sep = "\t", file = "/home/lucas/ISGlobal/A7_E5_diffbind.bed", col.names = FALSE, row.names = FALSE, quote = FALSE)
+
+
+@
+
+
+\section{Session Info}%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+<<session_info, cache=FALSE>>=
+sessionInfo()
+@
+\end{document}
