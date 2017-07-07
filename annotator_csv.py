@@ -47,8 +47,7 @@ chromlist = [chrom1, chrom2, chrom3, chrom4, chrom5, chrom6, chrom7, chrom8, chr
 def annotate_bed(bed_file):
 
 	#Load bedfile
-	bed = pandas.read_csv(filepath_or_buffer= bed_file, sep="\t", header=None, index_col=None, skiprows=1)
-	#bed = pandas.read_csv(filepath_or_buffer=csv_file, sep="\t", header=0, index_col=0)
+	bed = pandas.read_csv(filepath_or_buffer=bed_file, sep="\t", header=0, index_col=0)
 
 	for chrom in chromlist:
 
