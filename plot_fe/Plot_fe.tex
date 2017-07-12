@@ -65,12 +65,12 @@ Plot fold-enrichment histogram:
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
-\hlstd{path} \hlkwb{<-} \hlstr{"/home/lucas/ISGlobal/Chip_Seq/DATA/Aligns/q5/Narrow_fe15/XLS/"}
-\hlstd{files} \hlkwb{<-} \hlkwd{list.files}\hlstd{(}\hlkwc{path} \hlstd{=} \hlstr{"/home/lucas/ISGlobal/Chip_Seq/DATA/Aligns/q5/Narrow_fe15/XLS"}\hlstd{,} \hlkwc{pattern} \hlstd{=} \hlstr{"*.xls"}\hlstd{)}
+\hlstd{path} \hlkwb{<-} \hlstr{"/home/lucas/ISGlobal/Chip_Seq/DATA/Aligns/q5/Narrow_fe15/XLS_contrasts/"}
+\hlstd{files} \hlkwb{<-} \hlkwd{list.files}\hlstd{(}\hlkwc{path} \hlstd{=} \hlstr{"/home/lucas/ISGlobal/Chip_Seq/DATA/Aligns/q5/Narrow_fe15/XLS_contrasts"}\hlstd{,} \hlkwc{pattern} \hlstd{=} \hlstr{"*.xls"}\hlstd{)}
 
 \hlkwa{for} \hlstd{(file} \hlkwa{in} \hlstd{files)\{}
   \hlstd{peaks} \hlkwb{<-} \hlkwd{read.table}\hlstd{(}\hlkwd{paste0}\hlstd{(path,file),} \hlkwc{header} \hlstd{=} \hlnum{TRUE}\hlstd{,} \hlkwc{fileEncoding} \hlstd{=} \hlstr{"UTF-8"}\hlstd{)}
-  \hlkwd{print}\hlstd{(}\hlkwd{qplot}\hlstd{(peaks}\hlopt{$}\hlstd{fold_enrichment,} \hlkwc{geom}\hlstd{=}\hlstr{"histogram"}\hlstd{,} \hlkwc{binwidth} \hlstd{=} \hlnum{0.1}\hlstd{)} \hlopt{+} \hlkwd{scale_x_continuous}\hlstd{(}\hlkwc{breaks} \hlstd{=} \hlkwd{seq}\hlstd{(}\hlnum{0}\hlstd{,}\hlkwd{max}\hlstd{(peaks}\hlopt{$}\hlstd{fold_enrichment),}\hlnum{0.5}\hlstd{))} \hlopt{+} \hlkwd{ggtitle}\hlstd{(file))}
+  \hlkwd{print}\hlstd{(}\hlkwd{qplot}\hlstd{(peaks}\hlopt{$}\hlstd{fold_enrichment,} \hlkwc{geom}\hlstd{=}\hlstr{"histogram"}\hlstd{,} \hlkwc{binwidth} \hlstd{=} \hlnum{0.1}\hlstd{)} \hlopt{+} \hlkwd{scale_x_continuous}\hlstd{(}\hlkwc{breaks} \hlstd{=} \hlkwd{seq}\hlstd{(}\hlnum{1.5}\hlstd{,}\hlnum{6}\hlstd{,}\hlnum{0.25}\hlstd{))} \hlopt{+} \hlkwd{coord_cartesian}\hlstd{(}\hlkwc{xlim} \hlstd{=} \hlkwd{c}\hlstd{(}\hlnum{1.5}\hlstd{,} \hlnum{6}\hlstd{))} \hlopt{+} \hlkwd{ggtitle}\hlstd{(file))}
 \hlstd{\}}
 \end{alltt}
 \end{kframe}
@@ -119,6 +119,5 @@ Plot fold-enrichment histogram:
 \includegraphics[width=\maxwidth]{figure/unnamed-chunk-2-22} 
 
 \end{knitrout}
-
 
 \end{document}

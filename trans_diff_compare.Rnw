@@ -27,16 +27,18 @@ diff_trans <- read.table("/home/lucas/ISGlobal/Llista_diff_10G_12B.txt", fill = 
 diff_trans_all <- read.table("/home/lucas/ISGlobal/Llista_diff_10G_12B_all.txt", fill = TRUE, fileEncoding = "UTF-8")
 
 # Differetial peak calling 10G
-diff_10G_met <- read.table("/home/lucas/ISGlobal/metil_diff_10G_12B_q5.txt", fill = TRUE, fileEncoding = "UTF-8")
-#diff_10G_met <- gsub("ID=", "", diff_10G_met[,1], fixed = TRUE)
+diff_10G_met <- read.table("/home/lucas/ISGlobal/Llista_metildiff_10G_1.2B.txt", fill = TRUE, fileEncoding = "UTF-8")
+diff_10G_met <- gsub("ID=", "", diff_10G_met[,1], fixed = TRUE)
 
 # Differential peak calling 1.2B
-diff_12B_met <- read.table("/home/lucas/ISGlobal/metil_diff_12B_10G_q5.txt", fill = TRUE, fileEncoding = "UTF-8")
+diff_12B_met <- read.table("/home/lucas/ISGlobal/Llista_metildiff_1.2B_10G.txt", fill = TRUE, fileEncoding = "UTF-8")
 diff_12B_met <- gsub("ID=", "", diff_12B_met[,1], fixed = TRUE)
 
 #Comprovant que tots surten al diccionari
-diff_10G_met[,1] %in% rosetta[,1]
-diff_trans[,1] %in% rosetta[,3] | diff_trans[,1] %in% rosetta[,4] | diff_trans[,1] %in% rosetta[,5]
+table(diff_10G_met %in% rosetta[,1])
+diff_10G_met[!diff_10G_met %in% rosetta[,1]]
+
+table(diff_trans[,1] %in% rosetta[,3] | diff_trans[,1] %in% rosetta[,4] | diff_trans[,1] %in% rosetta[,5])
 
 
 #### Traduïr tots els gens de "diff_trans" ####
@@ -64,17 +66,20 @@ for (i in 1:length(diff_trans_all[,1])){
 #### Gens de diff_trans que estan en un o altra llista dels diffential peak callings ####
 
 # Taula
-table(diff_trans[,2] %in% diff_10G_met[,1] | diff_trans[,2] %in% diff_12B_met)
+table(diff_trans[,2] %in% diff_10G_met | diff_trans[,2] %in% diff_12B_met)
 
 # Gens que són a la llista de diff_peaks
-diff_trans[diff_trans[,2] %in% diff_10G_met[,1] | diff_trans[,2] %in% diff_12B_met,]
+diff_trans[diff_trans[,2] %in% diff_10G_met | diff_trans[,2] %in% diff_12B_met,]
 
 # Gens que no són a la llista de diff_peaks
-diff_trans[!(diff_trans[,2] %in% diff_10G_met[,1] | diff_trans[,2] %in% diff_12B_met),]
+diff_trans[!(diff_trans[,2] %in% diff_10G_met | diff_trans[,2] %in% diff_12B_met),]
 
 #### Gens que surten differencialment metilats que són a la llista de trans ####
 
-table(diff_10G_met[,1] %in% diff_trans[,2])
+table(diff_10G_met %in% diff_trans[,2])
+diff_10G_met[diff_10G_met %in% diff_trans[,2]]
+
+
 table(diff_12B_met %in% diff_trans[,2])
 
 #### Gens de diff_trans_all que estan en un o altra llista dels diffential peak callings ####

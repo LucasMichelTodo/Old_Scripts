@@ -9,8 +9,8 @@ library(ggplot2)
 
 Plot fold-enrichment histogram:
 <<>>=
-path <- "/home/lucas/ISGlobal/Chip_Seq/DATA/Aligns/q5/Narrow_fe15/XLS/"
-files <- list.files(path = "/home/lucas/ISGlobal/Chip_Seq/DATA/Aligns/q5/Narrow_fe15/XLS", pattern = "*.xls")
+path <- "/home/lucas/ISGlobal/Chip_Seq/DATA/Aligns/q5/Narrow_fe15/XLS_contrasts/"
+files <- list.files(path = "/home/lucas/ISGlobal/Chip_Seq/DATA/Aligns/q5/Narrow_fe15/XLS_contrasts", pattern = "*.xls")
 
 for (file in files){
   peaks <- read.table(paste0(path,file), header = TRUE, fileEncoding = "UTF-8")
