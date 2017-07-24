@@ -1,4 +1,4 @@
-\documentclass{article}\usepackage[]{graphicx}\usepackage[]{color}
+\documentclass[12pt, a4paper]{article}\usepackage[]{graphicx}\usepackage[]{color}
 %% maxwidth is the original width if it is less than linewidth
 %% otherwise use linewidth (to make sure the graphics do not exceed the margin)
 \makeatletter
@@ -50,19 +50,13 @@
 
 \usepackage{alltt}
 
-\usepackage{listings}
-\usepackage{MnSymbol}
+\author {Carles Hernandez-Ferrer, Cristina Bancells\\
+Alfred Cortes and Juan R. Gonzalez}
 
-\lstset{prebreak=\raisebox{0ex}[0ex][0ex]
-        {\ensuremath{\rhookswarrow}}}
-\lstset{postbreak=\raisebox{0ex}[0ex][0ex]
-        {\ensuremath{\rcurvearrowse\space}}}
-\lstset{breaklines=true, breakatwhitespace=true}
-\lstset{numbers=left, numberstyle=\scriptsize}
+\affil{Barcelona Global Health Institute (ISGlobal), Campus PRBB}
 \IfFileExists{upquote.sty}{\usepackage{upquote}}{}
 \begin{document}
 
-\section{Importar taules}
 Primer importem el diccionari de noms antics i nous:
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
@@ -79,45 +73,62 @@ Després la llista de gens amb màxima differència segons transcripció:
 \end{alltt}
 \end{kframe}
 \end{knitrout}
-
+Alguna diferència segons transcripció:
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
-\hlcom{# alguna diferència segons transcripció}
 \hlstd{diff_trans_all} \hlkwb{<-} \hlkwd{read.table}\hlstd{(}\hlstr{"/home/lucas/ISGlobal/Llista_diff_10G_12B_all.txt"}\hlstd{,} \hlkwc{fill} \hlstd{=} \hlnum{TRUE}\hlstd{,} \hlkwc{fileEncoding} \hlstd{=} \hlstr{"UTF-8"}\hlstd{)}
-
-\hlcom{# Differetial peak calling 10G}
-\hlstd{diff_10G_met} \hlkwb{<-} \hlkwd{read.table}\hlstd{(}\hlstr{"/home/lucas/ISGlobal/metil_diff_10G_12B.txt"}\hlstd{,} \hlkwc{fill} \hlstd{=} \hlnum{TRUE}\hlstd{,} \hlkwc{fileEncoding} \hlstd{=} \hlstr{"UTF-8"}\hlstd{)}
-\hlstd{diff_10G_met} \hlkwb{<-} \hlkwd{gsub}\hlstd{(}\hlstr{"ID="}\hlstd{,} \hlstr{""}\hlstd{, diff_10G_met[,}\hlnum{1}\hlstd{],} \hlkwc{fixed} \hlstd{=} \hlnum{TRUE}\hlstd{)}
-
-\hlcom{# Differential peak calling 1.2B}
-\hlstd{diff_12B_met} \hlkwb{<-} \hlkwd{read.table}\hlstd{(}\hlstr{"/home/lucas/ISGlobal/metil_diff_12B_10G.txt"}\hlstd{,} \hlkwc{fill} \hlstd{=} \hlnum{TRUE}\hlstd{,} \hlkwc{fileEncoding} \hlstd{=} \hlstr{"UTF-8"}\hlstd{)}
-\hlstd{diff_12B_met} \hlkwb{<-} \hlkwd{gsub}\hlstd{(}\hlstr{"ID="}\hlstd{,} \hlstr{""}\hlstd{, diff_12B_met[,}\hlnum{1}\hlstd{],} \hlkwc{fixed} \hlstd{=} \hlnum{TRUE}\hlstd{)}
-
-\hlcom{#Comprovant que tots surten al diccionari}
-\hlstd{diff_10G_met} \hlopt{%in%} \hlstd{rosetta[,}\hlnum{1}\hlstd{]}
+\end{alltt}
+\end{kframe}
+\end{knitrout}
+Differetial peak calling 10G
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{diff_10G_met} \hlkwb{<-} \hlkwd{read.table}\hlstd{(}\hlstr{"/home/lucas/ISGlobal/Chip_Seq/DATA/Aligns/q5/Narrow_fe30/Annotation_hits/Lists/10G_1.2B_annotation_list.txt"}\hlstd{)}
+\end{alltt}
+\end{kframe}
+\end{knitrout}
+# Differential peak calling 1.2B
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{diff_12B_met} \hlkwb{<-} \hlkwd{read.table}\hlstd{(}\hlstr{"/home/lucas/ISGlobal/Chip_Seq/DATA/Aligns/q5/Narrow_fe30/Annotation_hits/Lists/1.2B_10G_annotation_list.txt"}\hlstd{)}
+\end{alltt}
+\end{kframe}
+\end{knitrout}
+Comprovant que tots surten al diccionari
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlkwd{table}\hlstd{(diff_10G_met[,}\hlnum{1}\hlstd{]} \hlopt{%in%} \hlstd{rosetta[,}\hlnum{1}\hlstd{])}
 \end{alltt}
 \begin{verbatim}
-##  [1]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
-## [12]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
-## [23]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE FALSE  TRUE  TRUE  TRUE
-## [34]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE FALSE  TRUE  TRUE
-## [45]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
-## [56]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
-## [67]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
-## [78]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+## 
+## FALSE  TRUE 
+##     2    31
 \end{verbatim}
 \begin{alltt}
-\hlstd{diff_trans[,}\hlnum{1}\hlstd{]} \hlopt{%in%} \hlstd{rosetta[,}\hlnum{3}\hlstd{]} \hlopt{|} \hlstd{diff_trans[,}\hlnum{1}\hlstd{]} \hlopt{%in%} \hlstd{rosetta[,}\hlnum{4}\hlstd{]} \hlopt{|} \hlstd{diff_trans[,}\hlnum{1}\hlstd{]} \hlopt{%in%} \hlstd{rosetta[,}\hlnum{5}\hlstd{]}
+\hlstd{diff_10G_met[}\hlopt{!}\hlstd{diff_10G_met[,}\hlnum{1}\hlstd{]} \hlopt{%in%} \hlstd{rosetta[,}\hlnum{1}\hlstd{],}\hlnum{1}\hlstd{]}
 \end{alltt}
 \begin{verbatim}
-##  [1] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
-## [15] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
-## [29] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
-## [43] TRUE TRUE TRUE TRUE TRUE
+## [1] PF3D7_0701100 PF3D7_0800750
+## 33 Levels: PF3D7_0100200 PF3D7_0100300 PF3D7_0215300 ... PF3D7_1371900
 \end{verbatim}
 \begin{alltt}
-\hlcom{#### Traduïr tots els gens de "diff_trans" ####}
+\hlkwd{table}\hlstd{(diff_trans[,}\hlnum{1}\hlstd{]} \hlopt{%in%} \hlstd{rosetta[,}\hlnum{3}\hlstd{]} \hlopt{|} \hlstd{diff_trans[,}\hlnum{1}\hlstd{]} \hlopt{%in%} \hlstd{rosetta[,}\hlnum{4}\hlstd{]} \hlopt{|} \hlstd{diff_trans[,}\hlnum{1}\hlstd{]} \hlopt{%in%} \hlstd{rosetta[,}\hlnum{5}\hlstd{])}
+\end{alltt}
+\begin{verbatim}
+## 
+## TRUE 
+##   47
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+Traduïr tots els gens de "diff_trans"
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
 \hlkwa{for} \hlstd{(i} \hlkwa{in} \hlnum{1}\hlopt{:}\hlkwd{length}\hlstd{(diff_trans[,}\hlnum{1}\hlstd{]))\{}
   \hlkwa{if} \hlstd{(diff_trans[i,}\hlnum{1}\hlstd{]} \hlopt{%in%} \hlstd{rosetta[,}\hlnum{3}\hlstd{])\{}
     \hlstd{diff_trans[i,}\hlnum{2}\hlstd{]} \hlkwb{<-} \hlstd{rosetta[rosetta[,}\hlnum{3}\hlstd{]} \hlopt{%in%} \hlstd{diff_trans[i,}\hlnum{1}\hlstd{],}\hlnum{1}\hlstd{]}
@@ -127,8 +138,13 @@ Després la llista de gens amb màxima differència segons transcripció:
     \hlstd{diff_trans[i,}\hlnum{2}\hlstd{]} \hlkwb{<-} \hlstd{rosetta[rosetta[,}\hlnum{5}\hlstd{]} \hlopt{%in%} \hlstd{diff_trans[i,}\hlnum{1}\hlstd{],}\hlnum{1}\hlstd{]}
   \hlstd{\}}
 \hlstd{\}}
-
-\hlcom{# Traduïr diff_trans_all ALERTA!!! alguns tenen multiples traduccions!}
+\end{alltt}
+\end{kframe}
+\end{knitrout}
+Traduïr diff_trans_all ALERTA!!! alguns tenen multiples traduccions!
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
 \hlkwa{for} \hlstd{(i} \hlkwa{in} \hlnum{1}\hlopt{:}\hlkwd{length}\hlstd{(diff_trans_all[,}\hlnum{1}\hlstd{]))\{}
   \hlkwa{if} \hlstd{(diff_trans_all[i,}\hlnum{1}\hlstd{]} \hlopt{%in%} \hlstd{rosetta[,}\hlnum{3}\hlstd{])\{}
     \hlstd{diff_trans_all[i,}\hlnum{2}\hlstd{]} \hlkwb{<-} \hlstd{rosetta[rosetta[,}\hlnum{3}\hlstd{]} \hlopt{%in%} \hlstd{diff_trans_all[i,}\hlnum{1}\hlstd{],}\hlnum{1}\hlstd{][}\hlnum{1}\hlstd{]}
@@ -138,20 +154,24 @@ Després la llista de gens amb màxima differència segons transcripció:
     \hlstd{diff_trans_all[i,}\hlnum{2}\hlstd{]} \hlkwb{<-} \hlstd{rosetta[rosetta[,}\hlnum{5}\hlstd{]} \hlopt{%in%} \hlstd{diff_trans_all[i,}\hlnum{1}\hlstd{],}\hlnum{1}\hlstd{][}\hlnum{1}\hlstd{]}
   \hlstd{\}}
 \hlstd{\}}
-
-\hlcom{#### Gens de diff_trans que estan en un o altra llista dels diffential peak callings ####}
-
+\end{alltt}
+\end{kframe}
+\end{knitrout}
+Gens de diff_trans que estan en un o altra llista dels diffential peak callings
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
 \hlcom{# Taula}
-\hlkwd{table}\hlstd{(diff_trans[,}\hlnum{2}\hlstd{]} \hlopt{%in%} \hlstd{diff_10G_met} \hlopt{|} \hlstd{diff_trans[,}\hlnum{2}\hlstd{]} \hlopt{%in%} \hlstd{diff_12B_met)}
+\hlkwd{table}\hlstd{(diff_trans[,}\hlnum{2}\hlstd{]} \hlopt{%in%} \hlstd{diff_10G_met[,}\hlnum{1}\hlstd{]} \hlopt{|} \hlstd{diff_trans[,}\hlnum{2}\hlstd{]} \hlopt{%in%} \hlstd{diff_12B_met[,}\hlnum{1}\hlstd{])}
 \end{alltt}
 \begin{verbatim}
 ## 
 ## FALSE  TRUE 
-##    22    25
+##    26    21
 \end{verbatim}
 \begin{alltt}
 \hlcom{# Gens que són a la llista de diff_peaks}
-\hlstd{diff_trans[diff_trans[,}\hlnum{2}\hlstd{]} \hlopt{%in%} \hlstd{diff_10G_met} \hlopt{|} \hlstd{diff_trans[,}\hlnum{2}\hlstd{]} \hlopt{%in%} \hlstd{diff_12B_met,]}
+\hlstd{diff_trans[diff_trans[,}\hlnum{2}\hlstd{]} \hlopt{%in%} \hlstd{diff_10G_met[,}\hlnum{1}\hlstd{]} \hlopt{|} \hlstd{diff_trans[,}\hlnum{2}\hlstd{]} \hlopt{%in%} \hlstd{diff_12B_met[,}\hlnum{1}\hlstd{],]}
 \end{alltt}
 \begin{verbatim}
 ##            V1            V2
@@ -160,7 +180,6 @@ Després la llista de gens amb màxima differència segons transcripció:
 ## 3    PFB0935w PF3D7_0220800
 ## 4    PFC0110w PF3D7_0302200
 ## 5   MAL13P1.2 PF3D7_1300200
-## 6   PF08_0104 PF3D7_0808900
 ## 7    PFA0010c PF3D7_0100200
 ## 8    PFC0120w PF3D7_0302500
 ## 9    PFD0090c PF3D7_0402000
@@ -172,21 +191,19 @@ Després la llista de gens amb màxima differència segons transcripció:
 ## 17   PFD1240w PF3D7_0425900
 ## 20   PFL1945c PF3D7_1240100
 ## 22   PFC1115w PF3D7_0324800
-## 25   PFD1245c PF3D7_0426000
 ## 28  PF13_0005 PF3D7_1300500
 ## 29   PFI1830c PF3D7_0937800
-## 41 MAL8P1.160 PF3D7_0800900
-## 42   PFL0005w PF3D7_1200100
 ## 44 MAL8P1.161 PF3D7_0800800
 ## 45  MAL7P1.43 PF3D7_0711900
 ## 46  PF11_0007 PF3D7_1100100
 \end{verbatim}
 \begin{alltt}
 \hlcom{# Gens que no són a la llista de diff_peaks}
-\hlstd{diff_trans[}\hlopt{!}\hlstd{(diff_trans[,}\hlnum{2}\hlstd{]} \hlopt{%in%} \hlstd{diff_10G_met} \hlopt{|} \hlstd{diff_trans[,}\hlnum{2}\hlstd{]} \hlopt{%in%} \hlstd{diff_12B_met),]}
+\hlstd{diff_trans[}\hlopt{!}\hlstd{(diff_trans[,}\hlnum{2}\hlstd{]} \hlopt{%in%} \hlstd{diff_10G_met[,}\hlnum{1}\hlstd{]} \hlopt{|} \hlstd{diff_trans[,}\hlnum{2}\hlstd{]} \hlopt{%in%} \hlstd{diff_12B_met[,}\hlnum{1}\hlstd{]),]}
 \end{alltt}
 \begin{verbatim}
 ##                    V1             V2
+## 6           PF08_0104  PF3D7_0808900
 ## 13           PFB0974c      PF02_0205
 ## 15          PF11_0034  PF3D7_1102200
 ## 18           PFI1465w  PF3D7_0930000
@@ -194,6 +211,7 @@ Després la llista de gens amb màxima differència segons transcripció:
 ## 21           PFF1585w  PF3D7_0632600
 ## 23           PFA0020w  PF3D7_0100400
 ## 24        MAL13P1.129  PF3D7_1322900
+## 25           PFD1245c  PF3D7_0426000
 ## 26           PFB0310c  PF3D7_0207000
 ## 27           PFF0060w  PF3D7_0601200
 ## 30        MAL13P1.107  PF3D7_1319900
@@ -207,196 +225,106 @@ Després la llista de gens amb màxima differència segons transcripció:
 ## 38           PFF0390w  PF3D7_0607900
 ## 39     MAL7_tRNA_His1  PF3D7_0706900
 ## 40           PFL2665c  PF3D7_1255200
+## 41         MAL8P1.160  PF3D7_0800900
+## 42           PFL0005w  PF3D7_1200100
 ## 43          MAL7P1.61  PF3D7_0713300
 ## 47 PFC10_API0045:tRNA PF3D7_API01100
 \end{verbatim}
 \begin{alltt}
 \hlcom{#### Gens que surten differencialment metilats que són a la llista de trans ####}
 
-\hlkwd{table}\hlstd{(diff_10G_met} \hlopt{%in%} \hlstd{diff_trans[,}\hlnum{2}\hlstd{])}
+\hlkwd{table}\hlstd{(diff_10G_met[,}\hlnum{1}\hlstd{]} \hlopt{%in%} \hlstd{diff_trans[,}\hlnum{2}\hlstd{])}
 \end{alltt}
 \begin{verbatim}
 ## 
 ## FALSE  TRUE 
-##    69    18
+##    19    14
 \end{verbatim}
 \begin{alltt}
-\hlkwd{table}\hlstd{(diff_12B_met} \hlopt{%in%} \hlstd{diff_trans[,}\hlnum{2}\hlstd{])}
+\hlkwa{for} \hlstd{(i} \hlkwa{in} \hlstd{diff_10G_met[}\hlopt{!}\hlstd{diff_10G_met[,}\hlnum{1}\hlstd{]} \hlopt{%in%} \hlstd{diff_trans[,}\hlnum{2}\hlstd{],}\hlnum{1}\hlstd{])\{}
+  \hlkwd{print}\hlstd{(i)}
+\hlstd{\}}
+\end{alltt}
+\begin{verbatim}
+## [1] "PF3D7_0100300"
+## [1] "PF3D7_0215300"
+## [1] "PF3D7_0300100"
+## [1] "PF3D7_0324700"
+## [1] "PF3D7_0421700"
+## [1] "PF3D7_0601400"
+## [1] "PF3D7_0701000"
+## [1] "PF3D7_0701100"
+## [1] "PF3D7_0711600"
+## [1] "PF3D7_0711800"
+## [1] "PF3D7_0733000"
+## [1] "PF3D7_0800750"
+## [1] "PF3D7_0937700"
+## [1] "PF3D7_1041300"
+## [1] "PF3D7_1240900"
+## [1] "PF3D7_1253500"
+## [1] "PF3D7_1300600"
+## [1] "PF3D7_1301400"
+## [1] "PF3D7_1371900"
+\end{verbatim}
+\begin{alltt}
+\hlkwd{table}\hlstd{(diff_12B_met[,}\hlnum{1}\hlstd{]} \hlopt{%in%} \hlstd{diff_trans[,}\hlnum{2}\hlstd{])}
 \end{alltt}
 \begin{verbatim}
 ## 
 ## FALSE  TRUE 
-##   119    10
+##    26     8
+\end{verbatim}
+\begin{alltt}
+\hlkwa{for} \hlstd{(i} \hlkwa{in} \hlstd{diff_12B_met[}\hlopt{!}\hlstd{diff_12B_met[,}\hlnum{1}\hlstd{]} \hlopt{%in%} \hlstd{diff_trans[,}\hlnum{2}\hlstd{],}\hlnum{1}\hlstd{])\{}
+  \hlkwd{print}\hlstd{(i)}
+\hlstd{\}}
+\end{alltt}
+\begin{verbatim}
+## [1] "PF3D7_0115000"
+## [1] "PF3D7_0115050"
+## [1] "PF3D7_0115100"
+## [1] "PF3D7_0215300"
+## [1] "PF3D7_0221600"
+## [1] "PF3D7_0221650"
+## [1] "PF3D7_0223500"
+## [1] "PF3D7_0300100"
+## [1] "PF3D7_0302100"
+## [1] "PF3D7_0401500"
+## [1] "PF3D7_0425800"
+## [1] "PF3D7_0601100"
+## [1] "PF3D7_0601800"
+## [1] "PF3D7_0731800"
+## [1] "PF3D7_0731900"
+## [1] "PF3D7_1039000"
+## [1] "PF3D7_1039100"
+## [1] "PF3D7_1100400"
+## [1] "PF3D7_1100600"
+## [1] "PF3D7_1101600"
+## [1] "PF3D7_1139000"
+## [1] "PF3D7_1139100"
+## [1] "PF3D7_1200200"
+## [1] "PF3D7_1220700"
+## [1] "PF3D7_1240000"
+## [1] "PF3D7_1301800"
 \end{verbatim}
 \begin{alltt}
 \hlcom{#### Gens de diff_trans_all que estan en un o altra llista dels diffential peak callings ####}
 
 \hlcom{# Taula}
-\hlkwd{table}\hlstd{(diff_trans_all[,}\hlnum{2}\hlstd{]} \hlopt{%in%} \hlstd{diff_10G_met} \hlopt{|} \hlstd{diff_trans_all[,}\hlnum{2}\hlstd{]} \hlopt{%in%} \hlstd{diff_12B_met)}
+\hlkwd{table}\hlstd{(diff_trans_all[,}\hlnum{2}\hlstd{]} \hlopt{%in%} \hlstd{diff_10G_met[,}\hlnum{1}\hlstd{]} \hlopt{|} \hlstd{diff_trans_all[,}\hlnum{2}\hlstd{]} \hlopt{%in%} \hlstd{diff_12B_met[,}\hlnum{1}\hlstd{])}
 \end{alltt}
 \begin{verbatim}
 ## 
 ## FALSE  TRUE 
-##  5115   152
+##  5224    43
 \end{verbatim}
 \begin{alltt}
 \hlcom{# Gens que són a la llista de diff_peaks}
 \hlstd{diff_trans_all[diff_trans_all[,}\hlnum{2}\hlstd{]} \hlopt{%in%} \hlstd{diff_10G_met} \hlopt{|} \hlstd{diff_trans_all[,}\hlnum{2}\hlstd{]} \hlopt{%in%} \hlstd{diff_12B_met,]}
 \end{alltt}
 \begin{verbatim}
-##                  V1            V2
-## 1         PF07_0048 PF3D7_0711700
-## 2        MAL13P1.59 PF3D7_1301500
-## 3          PFB0935w PF3D7_0220800
-## 4          PFC0110w PF3D7_0302200
-## 5         MAL13P1.2 PF3D7_1300200
-## 6         PF08_0104 PF3D7_0808900
-## 7          PFA0010c PF3D7_0100200
-## 8          PFC0120w PF3D7_0302500
-## 9          PFD0090c PF3D7_0402000
-## 10        PF11_0011 PF3D7_1100500
-## 11       MAL13P1.60 PF3D7_1301600
-## 12       MAL13P1.61 PF3D7_1301700
-## 14         PFE1615c PF3D7_0532600
-## 16        PF11_0009 PF3D7_1100300
-## 17         PFD1240w PF3D7_0425900
-## 20         PFL1945c PF3D7_1240100
-## 22         PFC1115w PF3D7_0324800
-## 25         PFD1245c PF3D7_0426000
-## 28        PF13_0005 PF3D7_1300500
-## 29         PFI1830c PF3D7_0937800
-## 41       MAL8P1.160 PF3D7_0800900
-## 42         PFL0005w PF3D7_1200100
-## 44       MAL8P1.161 PF3D7_0800800
-## 45        MAL7P1.43 PF3D7_0711900
-## 46        PF11_0007 PF3D7_1100100
-## 49         PFD0005w PF3D7_0400100
-## 54         PFD1015c PF3D7_0421300
-## 56        PF13_0075 PF3D7_1301800
-## 61      MAL13P1.470 PF3D7_1372000
-## 64         PFB1055c PF3D7_0223500
-## 71         PFD1005c PF3D7_0421100
-## 73         PFE0035c PF3D7_0500700
-## 75         PFD0085c PF3D7_0401900
-## 77        PF11_0521 PF3D7_1150400
-## 78       MAL13P1.58 PF3D7_1301300
-## 88         PFL1970w PF3D7_1240900
-## 100     MAL13P1.356 PF3D7_1373500
-## 101        PFD0095c PF3D7_0402100
-## 118       PF08_0103 PF3D7_0809100
-## 128      MAL7P1.187 PF3D7_0733000
-## 137       PF10_0390 PF3D7_1039700
-## 146       PF07_0049 PF3D7_0712000
-## 147        PFI0275w PF3D7_0905600
-## 155       PF13_0003 PF3D7_1300300
-## 158        PFL0030c PF3D7_1200600
-## 174        PFF1595c PF3D7_0632800
-## 189     MAL13P1.465 PF3D7_1371900
-## 192       PF13_0073 PF3D7_1301400
-## 206      MAL7P1.178 PF3D7_0731800
-## 223       PF07_0138 PF3D7_0732900
-## 239       PF08_0105 PF3D7_0808800
-## 283        PFB0960c PF3D7_0221500
-## 289       PF10_0406 PF3D7_1041300
-## 325        PFE0080c PF3D7_0501600
-## 361       PF08_0141 PF3D7_0800200
-## 387        PFD1025w PF3D7_0421600
-## 390       PF11_0281 PF3D7_1127000
-## 393       PF10_0400 PF3D7_1040700
-## 404      MAL8P1.162 PF3D7_0800700
-## 414       PF08_0142 PF3D7_0800100
-## 415       PF10_0395 PF3D7_1040200
-## 429       PF10_0374 PF3D7_1038400
-## 457        MAL8P1.1 PF3D7_0831100
-## 466       PF13_0004 PF3D7_1300400
-## 475       PF14_0727 PF3D7_1475900
-## 536       PF11_0008 PF3D7_1100200
-## 575        PFA0760w PF3D7_0115600
-## 613        PFL2545c PF3D7_1252900
-## 618       MAL8P1.60 PF3D7_0819800
-## 623        PFL1960w PF3D7_1240600
-## 637        PFE1325w PF3D7_0526600
-## 648        PFD0495c PF3D7_0410000
-## 734      MAL7P1.218 PF3D7_0832900
-## 737        PFC0105w PF3D7_0302100
-## 740        PFB0946c PF3D7_0220900
-## 788        MAL8P1.7 PF3D7_0829500
-## 789       PF11_0402 PF3D7_1139100
-## 790       PF10_0015 PF3D7_1001100
-## 804       PF10_0380 PF3D7_1039000
-## 827       PF10_0265 PF3D7_1027000
-## 848        PFB0695c PF3D7_0215300
-## 856       PF14_0712 PF3D7_1474400
-## 857       PF14_0060 PF3D7_1406300
-## 910       PF11_0322 PF3D7_1131200
-## 939        PFC0005w PF3D7_0300100
-## 1176      PF11_0262 PF3D7_1125100
-## 1224       PFB1050w PF3D7_0223400
-## 1226       PFL1385c PF3D7_1228600
-## 1247       PFL1940w PF3D7_1240000
-## 1255 MAL4_tRNA_Ser1 PF3D7_0410100
-## 1280       PFA0015c PF3D7_0100300
-## 1381     PF14_0739a PF3D7_1476900
-## 1432      MAL13P1.1 PF3D7_1300100
-## 1479      PF08_0078 PF3D7_0813700
-## 1575      PF14_0305 PF3D7_1432400
-## 1600      PF14_0133 PF3D7_1413500
-## 1665       PFD1030c PF3D7_0421700
-## 1777      PF13_0159 PF3D7_1327600
-## 1795      PF10_0402 PF3D7_1040900
-## 1885      PF10_0296 PF3D7_1030300
-## 1949      PF14_0763 PF3D7_1479200
-## 1987       PFD0540c PF3D7_0410900
-## 2255      PF11_0263 PF3D7_1125200
-## 2412       PFL0010c PF3D7_1200200
-## 2642       PFD0230c PF3D7_0404700
-## 2694       PFL1600c PF3D7_1233200
-## 2709      PF11_0321 PF3D7_1131100
-## 2829       PFL0560c PF3D7_1211300
-## 2890      PF14_0454 PF3D7_1447800
-## 2977      PF10_0398 PF3D7_1040500
-## 3090       PFC0600w PF3D7_0314500
-## 3188       PFB0010w PF3D7_0200100
-## 3205       PFB0970c PF3D7_0221700
-## 3286       PFC0255c PF3D7_0305700
-## 3307      PF13_0132 PF3D7_1323400
-## 3311    MAL13P1.148 PF3D7_1329100
-## 3368       PFI1485c PF3D7_0930500
-## 3408       PFD0380c PF3D7_0407700
-## 3460      PF14_0303 PF3D7_1432400
-## 3551      PF08_0137 PF3D7_0801000
-## 3578       PFD0535w PF3D7_0410800
-## 3581       PFL1560c PF3D7_1232400
-## 3620       PFB0540w PF3D7_0212100
-## 3736       PFL1565c PF3D7_1232500
-## 3873       PFD0235c PF3D7_0404800
-## 4162     MAL7P1.134 PF3D7_0724700
-## 4177       PFB0810w PF3D7_0217400
-## 4297    MAL13P1.152 PF3D7_1327500
-## 4319       PFD1010w PF3D7_0421200
-## 4380     MAL7P1.229 PF3D7_0831600
-## 4395      MAL7P1.19 PF3D7_0704600
-## 4424       PFL2160c PF3D7_1245000
-## 4463      PF14_0132 PF3D7_1413400
-## 4591       PFL2335w PF3D7_1248700
-## 4719      PF10_0405 PF3D7_1041200
-## 4731       MAL8P1.8 PF3D7_0829400
-## 4733       PFF0445w PF3D7_0609000
-## 4743      PF13_0006 PF3D7_1300600
-## 5097      PF10_0399 PF3D7_1040600
-## 5143      MAL13P1.4 PF3D7_1300700
-## 5148    MAL13P1.535 PF3D7_1373400
-## 5172      PF10_0394 PF3D7_1040100
-## 5173      PF10_0401 PF3D7_1040800
-## 5176      PF11_0010 PF3D7_1100400
-## 5202       PFA0685c PF3D7_0114200
-## 5205       PFA0725w PF3D7_0115000
-## 5214       PFB0965c PF3D7_0221600
-## 5231       PFD0060w PF3D7_0401400
-## 5232       PFD0065w PF3D7_0401500
-## 5239       PFE0030c PF3D7_0500600
-## 5251       PFI0035c PF3D7_0900700
-## 5267       PFL2660w PF3D7_1255100
+## [1] V1 V2
+## <0 rows> (or 0-length row.names)
 \end{verbatim}
 \begin{alltt}
 \hlcom{# Gens que no són a la llista de diff_peaks}
@@ -404,15 +332,35 @@ Després la llista de gens amb màxima differència segons transcripció:
 \end{alltt}
 \begin{verbatim}
 ##                       V1             V2
+## 1              PF07_0048  PF3D7_0711700
+## 2             MAL13P1.59  PF3D7_1301500
+## 3               PFB0935w  PF3D7_0220800
+## 4               PFC0110w  PF3D7_0302200
+## 5              MAL13P1.2  PF3D7_1300200
+## 6              PF08_0104  PF3D7_0808900
+## 7               PFA0010c  PF3D7_0100200
+## 8               PFC0120w  PF3D7_0302500
+## 9               PFD0090c  PF3D7_0402000
+## 10             PF11_0011  PF3D7_1100500
+## 11            MAL13P1.60  PF3D7_1301600
+## 12            MAL13P1.61  PF3D7_1301700
 ## 13              PFB0974c      PF02_0205
+## 14              PFE1615c  PF3D7_0532600
 ## 15             PF11_0034  PF3D7_1102200
+## 16             PF11_0009  PF3D7_1100300
+## 17              PFD1240w  PF3D7_0425900
 ## 18              PFI1465w  PF3D7_0930000
 ## 19              PFL1000c    MAL12P1.199
+## 20              PFL1945c  PF3D7_1240100
 ## 21              PFF1585w  PF3D7_0632600
+## 22              PFC1115w  PF3D7_0324800
 ## 23              PFA0020w  PF3D7_0100400
 ## 24           MAL13P1.129  PF3D7_1322900
+## 25              PFD1245c  PF3D7_0426000
 ## 26              PFB0310c  PF3D7_0207000
 ## 27              PFF0060w  PF3D7_0601200
+## 28             PF13_0005  PF3D7_1300500
+## 29              PFI1830c  PF3D7_0937800
 ## 30           MAL13P1.107  PF3D7_1319900
 ## 31             PF07_0063  PF3D7_0715700
 ## 32       MAL13_tRNA_Arg1  PF3D7_1341000
@@ -424,29 +372,44 @@ Després la llista de gens amb màxima differència segons transcripció:
 ## 38              PFF0390w  PF3D7_0607900
 ## 39        MAL7_tRNA_His1  PF3D7_0706900
 ## 40              PFL2665c  PF3D7_1255200
+## 41            MAL8P1.160  PF3D7_0800900
+## 42              PFL0005w  PF3D7_1200100
 ## 43             MAL7P1.61  PF3D7_0713300
+## 44            MAL8P1.161  PF3D7_0800800
+## 45             MAL7P1.43  PF3D7_0711900
+## 46             PF11_0007  PF3D7_1100100
 ## 47    PFC10_API0045:tRNA PF3D7_API01100
 ## 48             PF14_0419  PF3D7_1444100
+## 49              PFD0005w  PF3D7_0400100
 ## 50             PF08_0017  PF3D7_0827200
 ## 51             PF14_0537  PF3D7_1456400
 ## 52              PFI0005w  PF3D7_0900100
 ## 53             PF08_0073  PF3D7_0814600
+## 54              PFD1015c  PF3D7_0421300
 ## 55              PFA0065w  PF3D7_0101300
+## 56             PF13_0075  PF3D7_1301800
 ## 57             PF10_0001  PF3D7_1000100
 ## 58             PF13_0349  PF3D7_1366500
 ## 59             PF14_0682  PF3D7_1471500
 ## 60              PFA0005w  PF3D7_0100100
+## 61           MAL13P1.470  PF3D7_1372000
 ## 62              PFL0935c  PF3D7_1219300
 ## 63             PF10_0206  PF3D7_1021200
+## 64              PFB1055c  PF3D7_0223500
 ## 65        MAL5_tRNA_Glu1  PF3D7_0527700
 ## 66              PFF0860c  PF3D7_0617800
 ## 67             PF14_0337  PF3D7_1435600
 ## 68         PFC10_API0014 PF3D7_API04500
 ## 69             PF13_0011  PF3D7_1302100
 ## 70              PFA0240w  PF3D7_0104700
+## 71              PFD1005c  PF3D7_0421100
 ## 72              PFE0730c  PF3D7_0514600
+## 73              PFE0035c  PF3D7_0500700
 ## 74             PF14_0701  PF3D7_1473300
+## 75              PFD0085c  PF3D7_0401900
 ## 76             MAL7P1.50  PF3D7_0712300
+## 77             PF11_0521  PF3D7_1150400
+## 78            MAL13P1.58  PF3D7_1301300
 ## 79             PF11_0468  PF3D7_1145700
 ## 80              PFD1185w  PF3D7_0424900
 ## 81              PFD1020c  PF3D7_0421500
@@ -456,6 +419,7 @@ Després la llista de gens amb màxima differència segons transcripció:
 ## 85         PFC10_API0055           <NA>
 ## 86             PF11_0095  PF3D7_1108200
 ## 87            PFI0175w-a           <NA>
+## 88              PFL1970w  PF3D7_1240900
 ## 89              PFF0845c  PF3D7_0617400
 ## 90              PFD0040c  PF3D7_0400900
 ## 91             PF07_0043  PF3D7_0710600
@@ -467,6 +431,8 @@ Després la llista de gens amb màxima differència segons transcripció:
 ## 97              PFF0020c  PF3D7_0600400
 ## 98              PFB0953w  PF3D7_0221200
 ## 99             PF11_0486  PF3D7_1147800
+## 100          MAL13P1.356  PF3D7_1373500
+## 101             PFD0095c  PF3D7_0402100
 ## 102             PFI0595c  PF3D7_0912200
 ## 103             PFE0565w  PF3D7_0511400
 ## 104            PF11_0454  PF3D7_1144000
@@ -483,6 +449,7 @@ Després la llista de gens amb màxima differència segons transcripció:
 ## 115           MAL7P1.227  PF3D7_0832000
 ## 116             PFB0115w  PF3D7_0202400
 ## 117           MAL13P1.66  PF3D7_1313100
+## 118            PF08_0103  PF3D7_0809100
 ## 119            PF08_0066  PF3D7_0815900
 ## 120             PFL1770c  PF3D7_1236600
 ## 121           MAL13P1.84  PF3D7_1316000
@@ -492,6 +459,7 @@ Després la llista de gens amb màxima differència segons transcripció:
 ## 125            PF14_0706  PF3D7_1473700
 ## 126           MAL7P1.212  PF3D7_0833500
 ## 127             PFF0855c  PF3D7_0617700
+## 128           MAL7P1.187  PF3D7_0733000
 ## 129          MAL13P1.342  PF3D7_1367900
 ## 130             PFL1660c  PF3D7_1234400
 ## 131            PF07_0051  PF3D7_0712600
@@ -500,6 +468,7 @@ Després la llista de gens amb màxima differència segons transcripció:
 ## 134            PF11_0389  PF3D7_1137700
 ## 135             PFB0955w  PF3D7_0221400
 ## 136            MAL7P1.58  PF3D7_0713100
+## 137            PF10_0390  PF3D7_1039700
 ## 138            PF08_0054  PF3D7_0818900
 ## 139    MAL13P1.23-a_only           <NA>
 ## 140            PF08_0106  PF3D7_0808700
@@ -508,6 +477,8 @@ Després la llista de gens amb màxima differència segons transcripció:
 ## 143            PF14_0742  PF3D7_1477100
 ## 144            PF08_0140  PF3D7_0800300
 ## 145             PFD0870w  PF3D7_0417900
+## 146            PF07_0049  PF3D7_0712000
+## 147             PFI0275w  PF3D7_0905600
 ## 148           MAL7P1.222  PF3D7_0832500
 ## 149      MAL13_tRNA_Thr1  PF3D7_1355400
 ## 150             PFI1765c  PF3D7_0936500
@@ -515,8 +486,10 @@ Després la llista de gens amb màxima differència segons transcripció:
 ## 152             PFB0985c  PF3D7_0222100
 ## 153       MAL7_tRNA_Ala1  PF3D7_0702700
 ## 154            PF11_0057  PF3D7_1104600
+## 155            PF13_0003  PF3D7_1300300
 ## 156             PFF1580c  PF3D7_0632500
 ## 157          MAL13P1.305  PF3D7_1361300
+## 158             PFL0030c  PF3D7_1200600
 ## 159            MAL8P1.80  PF3D7_0816300
 ## 160           MAL13P1.62  PF3D7_1301900
 ## 161            PF11_0479  PF3D7_1146800
@@ -532,6 +505,7 @@ Després la llista de gens amb màxima differència segons transcripció:
 ## 171             PFF0470w           <NA>
 ## 172          MAL13P1.312  PF3D7_1362600
 ## 173          MAL13P1.475  PF3D7_1372100
+## 174             PFF1595c  PF3D7_0632800
 ## 175            PF08_0041  PF3D7_0821500
 ## 176             PFA0560c  PF3D7_0111600
 ## 177   PFC10_API0054:tRNA PF3D7_API00200
@@ -546,8 +520,10 @@ Després la llista de gens amb màxima differència segons transcripció:
 ## 186            PF14_0135  PF3D7_1413700
 ## 187            PF14_0684  PF3D7_1471700
 ## 188          MAL13P1.158  PF3D7_1329900
+## 189          MAL13P1.465  PF3D7_1371900
 ## 190            PF14_0031  PF3D7_1403300
 ## 191             PFA0615w  PF3D7_0112900
+## 192            PF13_0073  PF3D7_1301400
 ## 193            PF11_0422  PF3D7_1141100
 ## 194             PFF0510w  PF3D7_0610400
 ## 195            PF11_0297  PF3D7_1128600
@@ -561,6 +537,7 @@ Després la llista de gens amb màxima differència segons transcripció:
 ## 203            MAL8P1.45  PF3D7_0822700
 ## 204            PF14_0708  PF3D7_1474000
 ## 205        PFC10_API0043           <NA>
+## 206           MAL7P1.178  PF3D7_0731800
 ## 207            PF14_0592  PF3D7_1462200
 ## 208          MAL13P1.200  PF3D7_1339500
 ## 209             PFC0045w  PF3D7_0300900
@@ -577,6 +554,7 @@ Després la llista de gens amb màxima differència segons transcripció:
 ## 220            PF11_0222  PF3D7_1121400
 ## 221             PFI1395w  PF3D7_0928400
 ## 222            PF14_0527  PF3D7_1455300
+## 223            PF07_0138  PF3D7_0732900
 ## 224             PFE1610w  PF3D7_0532500
 ## 225            PF10_0027  PF3D7_1002300
 ## 226            PF10_0365  PF3D7_1037200
@@ -592,6 +570,7 @@ Després la llista de gens amb màxima differència segons transcripció:
 ## 236            PF07_0107  PF3D7_0726100
 ## 237            PF10_0270  PF3D7_1027500
 ## 238            PF08_0107  PF3D7_0808600
+## 239            PF08_0105  PF3D7_0808800
 ## 240             PFF0110w  PF3D7_0602300
 ## 241             PFE0120c  PF3D7_0502400
 ## 242             PFL0720w  PF3D7_1214900
@@ -635,11 +614,13 @@ Després la llista de gens amb màxima differència segons transcripció:
 ## 280           MAL8P1.146  PF3D7_0803200
 ## 281            MAL7P1.55  PF3D7_0712800
 ## 282        PFC10_API0040           <NA>
+## 283             PFB0960c  PF3D7_0221500
 ## 284            PF07_0029  PF3D7_0708400
 ## 285            PF07_0025  PF3D7_0707600
 ## 286             PFF0265c  PF3D7_0605400
 ## 287          MAL13P1.177  PF3D7_1335500
 ## 288             PFL1805c  PF3D7_1237300
+## 289            PF10_0406  PF3D7_1041300
 ## 290             PFA0265c  PF3D7_0105400
 ## 291          MAL13P1.350  PF3D7_1369300
 ## 292             PFL0545w  PF3D7_1211000
@@ -675,6 +656,7 @@ Després la llista de gens amb màxima differència segons transcripció:
 ## 322            PF11_0061  PF3D7_1105000
 ## 323   PFC10_API0009:tRNA PF3D7_API05000
 ## 324            PF08_0006  PF3D7_0829200
+## 325             PFE0080c  PF3D7_0501600
 ## 326             PFF0847w  PF3D7_0617500
 ## 327            PF10_0155  PF3D7_1015900
 ## 328             PFE0510c  PF3D7_0510300
@@ -710,6 +692,7 @@ Després la llista de gens amb màxima differència segons transcripció:
 ## 358             PFB0570w  PF3D7_0212600
 ## 359             PFC0260w  PF3D7_0305800
 ## 360            PF10_0356  PF3D7_1036400
+## 361            PF08_0141  PF3D7_0800200
 ## 362             PFF0730c  PF3D7_0615100
 ## 363            PF13_0226  PF3D7_1341800
 ## 364             PFD0755c  PF3D7_0415600
@@ -735,10 +718,13 @@ Després la llista de gens amb màxima differència segons transcripció:
 ## 384            PF14_0220  PF3D7_1422900
 ## 385      MAL13_tRNA_Arg3  PF3D7_1370000
 ## 386             PFA0190c  PF3D7_0103800
+## 387             PFD1025w  PF3D7_0421600
 ## 388             PFF0275c  PF3D7_0605600
 ## 389             MAL7P1.5  PF3D7_0701600
+## 390            PF11_0281  PF3D7_1127000
 ## 391            PF14_0040  PF3D7_1404300
 ## 392            PF14_0539  PF3D7_1456600
+## 393            PF10_0400  PF3D7_1040700
 ## 394          MAL13P1.195  PF3D7_1338800
 ## 395            PF13_0202  PF3D7_1336100
 ## 396            PF10_0337  PF3D7_1034700
@@ -749,6 +735,7 @@ Després la llista de gens amb màxima differència segons transcripció:
 ## 401            PF14_0617  PF3D7_1465000
 ## 402             PFI0105c  PF3D7_0902200
 ## 403            PF14_0010  PF3D7_1401000
+## 404           MAL8P1.162  PF3D7_0800700
 ## 405            PF13_0300  PF3D7_1356200
 ## 406            PF08_0122  PF3D7_0804700
 ## 407            PF13_0269  PF3D7_1351600
@@ -758,6 +745,8 @@ Després la llista de gens amb màxima differència segons transcripció:
 ## 411            PF10_0377  PF3D7_1038700
 ## 412            PF11_0482  PF3D7_1147300
 ## 413             PFD0700c  PF3D7_0414500
+## 414            PF08_0142  PF3D7_0800100
+## 415            PF10_0395  PF3D7_1040200
 ## 416             PFE1440c  PF3D7_0528900
 ## 417             PFL1950w  PF3D7_1240300
 ## 418             PFL0195w  PF3D7_1204000
@@ -771,6 +760,7 @@ Després la llista de gens amb màxima differència segons transcripció:
 ## 426            PF13_0066  PF3D7_1312000
 ## 427             PFD0520c  PF3D7_0410500
 ## 428             PFC0416w  PF3D7_0310000
+## 429            PF10_0374  PF3D7_1038400
 ## 430   PFC10_API0005:tRNA PF3D7_API05400
 ## 431           MAL7P1.123  PF3D7_0722900
 ## 432            PF14_0404  PF3D7_1442600
@@ -798,6 +788,7 @@ Després la llista de gens amb màxima differència segons transcripció:
 ## 454           mal_mito_3           <NA>
 ## 455             PFB0340c  PF3D7_0207600
 ## 456            PF11_0155  PF3D7_1114600
+## 457             MAL8P1.1  PF3D7_0831100
 ## 458             PFB0227c  PF3D7_0205100
 ## 459             PFF0960c           <NA>
 ## 460   PFC10_API0053:tRNA PF3D7_API00300
@@ -806,6 +797,7 @@ Després la llista de gens amb màxima differència segons transcripció:
 ## 463             PFF0235c  PF3D7_0604800
 ## 464             PFL1975c  PF3D7_1241100
 ## 465             PFL2080c  PF3D7_1243300
+## 466            PF13_0004  PF3D7_1300400
 ## 467             PFB0732c  PF3D7_0216100
 ## 468             PFE0070w  PF3D7_0501400
 ## 469             PFI1805w  PF3D7_0937300
@@ -814,6 +806,7 @@ Després la llista de gens amb màxima differència segons transcripció:
 ## 472             PFE0230w  PF3D7_0504700
 ## 473           MAL7P1.111  PF3D7_0720900
 ## 474           MAL8P1.112  PF3D7_0809800
+## 475            PF14_0727  PF3D7_1475900
 ## 476           MAL8P1.205  PF3D7_0831300
 ## 477            PF11_0431  PF3D7_1141900
 ## 478            PF10_0072  PF3D7_1007300
@@ -874,6 +867,7 @@ Després la llista de gens amb màxima differència segons transcripció:
 ## 533          MAL13P1.130  PF3D7_1323700
 ## 534             PFB0675w  PF3D7_0214800
 ## 535            MAL8P1.70  PF3D7_0818100
+## 536            PF11_0008  PF3D7_1100200
 ## 537            PF13_0201  PF3D7_1335900
 ## 538            PF14_0333  PF3D7_1435200
 ## 539           PFI1740c-a           <NA>
@@ -912,6 +906,7 @@ Després la llista de gens amb màxima differència segons transcripció:
 ## 572             PFD0367w  PF3D7_0407500
 ## 573            PF08_0060  PF3D7_0817300
 ## 574            PF14_0644  PF3D7_1467600
+## 575             PFA0760w  PF3D7_0115600
 ## 576            PF10_0267  PF3D7_1027200
 ## 577             PFF0280w  PF3D7_0605700
 ## 578            PF14_0180  PF3D7_1418200
@@ -949,14 +944,17 @@ Després la llista de gens amb màxima differència segons transcripció:
 ## 610            PF08_0082  PF3D7_0813100
 ## 611             PFL0080c  PF3D7_1201600
 ## 612            PF13_0193  PF3D7_1334600
+## 613             PFL2545c  PF3D7_1252900
 ## 614             PFB0926c  PF3D7_0220500
 ## 615            PF14_0371  PF3D7_1439200
 ## 616            PF11_0503  PF3D7_1148700
 ## 617            PF14_0508  PF3D7_1453500
+## 618            MAL8P1.60  PF3D7_0819800
 ## 619        PFC10_API0038           <NA>
 ## 620           MAL13P1.14  PF3D7_1302700
 ## 621             PFI1760w  PF3D7_0936400
 ## 622             PFL0420w  PF3D7_1208400
+## 623             PFL1960w  PF3D7_1240600
 ## 624            PF11_0515  PF3D7_1149800
 ## 625             PFL1055c  PF3D7_1221900
 ## 626            PF11_0342  PF3D7_1133200
@@ -970,6 +968,7 @@ Després la llista de gens amb màxima differència segons transcripció:
 ## 634             PFI0115c  PF3D7_0902400
 ## 635            PF11_0251  PF3D7_1124000
 ## 636             PFL2190c  PF3D7_1245600
+## 637             PFE1325w  PF3D7_0526600
 ## 638        PFC10_API0041           <NA>
 ## 639             PFI0185w  PF3D7_0903800
 ## 640             PFL1415w  PF3D7_1229300
@@ -980,6 +979,7 @@ Després la llista de gens amb màxima differència segons transcripció:
 ## 645            PF11_0320  PF3D7_1131000
 ## 646             PFI1035w  PF3D7_0921100
 ## 647             PFC0610c  PF3D7_0314700
+## 648             PFD0495c  PF3D7_0410000
 ## 649            PF13_0185  PF3D7_1333700
 ## 650             PFC0701w  PF3D7_0316100
 ## 651            PF14_0536  PF3D7_1456300
@@ -1065,10 +1065,13 @@ Després la llista de gens amb màxima differència segons transcripció:
 ## 731            PF13_0127  PF3D7_1322600
 ## 732             PFD0270c  PF3D7_0405500
 ## 733             PFF0585c  PF3D7_0612000
+## 734           MAL7P1.218  PF3D7_0832900
 ## 735            PF14_0044  PF3D7_1404700
 ## 736            PF10_0184  PF3D7_1019100
+## 737             PFC0105w  PF3D7_0302100
 ## 738            PF11_0480  PF3D7_1147000
 ## 739            PF07_0061  PF3D7_0715200
+## 740             PFB0946c  PF3D7_0220900
 ## 741          MAL13P1.413  PF3D7_1370300
 ## 742             PFI0880c  PF3D7_0918000
 ## 743             PFE0610c  PF3D7_0512300
@@ -1116,6 +1119,9 @@ Després la llista de gens amb màxima differència segons transcripció:
 ## 785             PFI1450c  PF3D7_0929500
 ## 786             PFI1110w  PF3D7_0922600
 ## 787            PF11_0147  PF3D7_1113900
+## 788             MAL8P1.7  PF3D7_0829500
+## 789            PF11_0402  PF3D7_1139100
+## 790            PF10_0015  PF3D7_1001100
 ## 791            PF11_0174  PF3D7_1116700
 ## 792            PF14_0168  PF3D7_1417000
 ## 793            PF14_0564  PF3D7_1459100
@@ -1129,6 +1135,7 @@ Després la llista de gens amb màxima differència segons transcripció:
 ## 801  1399.pre-tRNA-Leu-1           <NA>
 ## 802             PFC0210c  PF3D7_0304600
 ## 803             PFB0235w  PF3D7_0205300
+## 804            PF10_0380  PF3D7_1039000
 ## 805            PF14_0250  PF3D7_1427100
 ## 806             PFE0855c  PF3D7_0517100
 ## 807            PF14_0001  PF3D7_1400100
@@ -1151,6 +1158,7 @@ Després la llista de gens amb màxima differència segons transcripció:
 ## 824             PFL0860c  PF3D7_1217800
 ## 825            PF11_0130  PF3D7_1112400
 ## 826            PF07_0109  PF3D7_0726700
+## 827            PF10_0265  PF3D7_1027000
 ## 828            PF10_0053  PF3D7_1005000
 ## 829           MAL8P1.149  PF3D7_0802700
 ## 830            PF10_0021  PF3D7_1001700
@@ -1171,6 +1179,7 @@ Després la llista de gens amb màxima differència segons transcripció:
 ## 845            MAL8P1.95  PF3D7_0813300
 ## 846             PFL1875w  PF3D7_1238700
 ## 847            PF10_0282  PF3D7_1028800
+## 848             PFB0695c  PF3D7_0215300
 ## 849            MAL8P1.53  PF3D7_0821000
 ## 850            PF14_0317  PF3D7_1433600
 ## 851             PFC0355c  PF3D7_0308300
@@ -1178,6 +1187,8 @@ Després la llista de gens amb màxima differència segons transcripció:
 ## 853             PFL2005w  PF3D7_1241700
 ## 854            PF11_0470  PF3D7_1145900
 ## 855            PF08_0102  PF3D7_0809200
+## 856            PF14_0712  PF3D7_1474400
+## 857            PF14_0060  PF3D7_1406300
 ## 858       MAL4_tRNA_Ile1  PF3D7_0410200
 ## 859             MAL8P1.2  PF3D7_0831000
 ## 860            PF14_0710  PF3D7_1474200
@@ -1230,6 +1241,7 @@ Després la llista de gens amb màxima differència segons transcripció:
 ## 907            PF10_0023  PF3D7_1001900
 ## 908             PFF1025c  PF3D7_0621200
 ## 909            PF10_0367  PF3D7_1037400
+## 910            PF11_0322  PF3D7_1131200
 ## 911            PF11_0124  PF3D7_1111800
 ## 912             PFI1315c  PF3D7_0926800
 ## 913             PFL1755w  PF3D7_1236300
@@ -1258,6 +1270,7 @@ Després la llista de gens amb màxima differència segons transcripció:
 ## 936             PFL2230c  PF3D7_1246500
 ## 937            PF11_0207  PF3D7_1120000
 ## 938          MAL13P1.157  PF3D7_1329800
+## 939             PFC0005w  PF3D7_0300100
 ## 940          MAL13P1.121  PF3D7_1322000
 ## 941            PF13_0255  PF3D7_1348600
 ## 942            PF10_0359  PF3D7_1036700
@@ -1494,6 +1507,7 @@ Després la llista de gens amb màxima differència segons transcripció:
 ## 1173           PF11_0437  PF3D7_1142500
 ## 1174           PF13_0293  PF3D7_1355300
 ## 1175           MAL7P1.32  PF3D7_0710400
+## 1176           PF11_0262  PF3D7_1125100
 ## 1177           PF08_0035  PF3D7_0822900
 ## 1178           PF10_0181  PF3D7_1018800
 ## 1179           PF11_0165  PF3D7_1115700
@@ -1541,7 +1555,9 @@ Després la llista de gens amb màxima differència segons transcripció:
 ## 1221           PF07_0070  PF3D7_0716900
 ## 1222           PF08_0094  PF3D7_0811000
 ## 1223            PFF0405c  PF3D7_0608200
+## 1224            PFB1050w  PF3D7_0223400
 ## 1225          MAL7P1.163  PF3D7_0730000
+## 1226            PFL1385c  PF3D7_1228600
 ## 1227            PFB0690w  PF3D7_0215200
 ## 1228            PFD0745c  PF3D7_0415400
 ## 1229            PFI1720w  PF3D7_0935600
@@ -1562,6 +1578,7 @@ Després la llista de gens amb màxima differència segons transcripció:
 ## 1244         MAL13P1.311  PF3D7_1362500
 ## 1245           PF11_0458  PF3D7_1144600
 ## 1246         MAL13P1.102  PF3D7_1318700
+## 1247            PFL1940w  PF3D7_1240000
 ## 1248            PFF0645c  PF3D7_0613300
 ## 1249            PFL2515c  PF3D7_1252300
 ## 1250            PFE0900w  PF3D7_0518000
@@ -1569,6 +1586,7 @@ Després la llista de gens amb màxima differència segons transcripció:
 ## 1252           PF11_0275  PF3D7_1126500
 ## 1253            PFL1790w  PF3D7_1237000
 ## 1254            PFF0745c  PF3D7_0615400
+## 1255      MAL4_tRNA_Ser1  PF3D7_0410100
 ## 1256            PFI0675w  PF3D7_0913800
 ## 1257            PFL0485w  PF3D7_1209700
 ## 1258            PFL1885c  PF3D7_1238900
@@ -1593,6 +1611,7 @@ Després la llista de gens amb màxima differència segons transcripció:
 ## 1277          MAL8P1.154  PF3D7_0801900
 ## 1278            PFI0825w  PF3D7_0916900
 ## 1279           PF14_0396  PF3D7_1441700
+## 1280            PFA0015c  PF3D7_0100300
 ## 1281            PFD1205w  PF3D7_0425200
 ## 1282            PFE0045c  PF3D7_0500900
 ## 1283            PFA0245w  PF3D7_0104800
@@ -1693,6 +1712,7 @@ Després la llista de gens amb màxima differència segons transcripció:
 ## 1378         MAL8P1.136a  PF3D7_0805800
 ## 1379            PFB0880w  PF3D7_0219100
 ## 1380         MAL13P1.154  PF3D7_1327100
+## 1381          PF14_0739a  PF3D7_1476900
 ## 1382            PFA0565c  PF3D7_0111700
 ## 1383            PFC0280c  PF3D7_0306500
 ## 1384            PFA0325w  PF3D7_0106600
@@ -1743,6 +1763,7 @@ Després la llista de gens amb màxima differència segons transcripció:
 ## 1429           PF10_0295  PF3D7_1030200
 ## 1430           PF13_0271  PF3D7_1352100
 ## 1431           PF14_0586  PF3D7_1461400
+## 1432           MAL13P1.1  PF3D7_1300100
 ## 1433            PFI0540w  PF3D7_0911100
 ## 1434            PFD0872w  PF3D7_0418000
 ## 1435           PF14_0284  PF3D7_1430500
@@ -1789,6 +1810,7 @@ Després la llista de gens amb màxima differència segons transcripció:
 ## 1476  MAL13P1.306-a_only           <NA>
 ## 1477           PF13_0142  PF3D7_1325000
 ## 1478           PF13_0192  PF3D7_1334500
+## 1479           PF08_0078  PF3D7_0813700
 ## 1480            PFC0912w  PF3D7_0320700
 ## 1481           PF11_0443  PF3D7_1143200
 ## 1482           PF11_0166  PF3D7_1115800
@@ -1884,6 +1906,7 @@ Després la llista de gens amb màxima differència segons transcripció:
 ## 1572           PF14_0057  PF3D7_1406000
 ## 1573           PF14_0070  PF3D7_1407300
 ## 1574           PF14_0356  PF3D7_1437600
+## 1575           PF14_0305  PF3D7_1432400
 ## 1576           PF14_0232  PF3D7_1425200
 ## 1577            PFD0465c  PF3D7_0409500
 ## 1578            PFF0565c  PF3D7_0611500
@@ -1908,6 +1931,7 @@ Després la llista de gens amb màxima differència segons transcripció:
 ## 1597           PF10_0345  PF3D7_1035400
 ## 1598           PF13_0168  PF3D7_1331400
 ## 1599            PFF1320c  PF3D7_0627200
+## 1600           PF14_0133  PF3D7_1413500
 ## 1601            PFC0281w  PF3D7_0306600
 ## 1602            PFL1205c  PF3D7_1225000
 ## 1603           PF14_0634  PF3D7_1466600
@@ -1972,6 +1996,7 @@ Després la llista de gens amb màxima differència segons transcripció:
 ## 1662           PF13_0307  PF3D7_1357400
 ## 1663           PF11_0065  PF3D7_1105400
 ## 1664      MAL5_tRNA_Leu2  PF3D7_0527800
+## 1665            PFD1030c  PF3D7_0421700
 ## 1666            PFI0830c  PF3D7_0917000
 ## 1667           PF13_0093  PF3D7_1316700
 ## 1668         PF11_0377-a           <NA>
@@ -2083,6 +2108,7 @@ Després la llista de gens amb màxima differència segons transcripció:
 ## 1774         MAL13P1.318  PF3D7_1363300
 ## 1775           PF14_0726  PF3D7_1475800
 ## 1776          MAL7P1.120  PF3D7_0722300
+## 1777           PF13_0159  PF3D7_1327600
 ## 1778            PFD0285c  PF3D7_0405700
 ## 1779            PFL2055w  PF3D7_1242700
 ## 1780           PF14_0124  PF3D7_1412500
@@ -2100,6 +2126,7 @@ Després la llista de gens amb màxima differència segons transcripció:
 ## 1792            PFL2295w  PF3D7_1247900
 ## 1793            PFC0371w  PF3D7_0308800
 ## 1794            PFI1300c  PF3D7_0926500
+## 1795           PF10_0402  PF3D7_1040900
 ## 1796           PF11_0314  PF3D7_1130400
 ## 1797            PFB0285c  PF3D7_0206500
 ## 1798           PF14_0486  PF3D7_1451100
@@ -2189,6 +2216,7 @@ Després la llista de gens amb màxima differència segons transcripció:
 ## 1882           PF13_0154  PF3D7_1328300
 ## 1883            PFD0590c  PF3D7_0411900
 ## 1884            PFA0590w  PF3D7_0112200
+## 1885           PF10_0296  PF3D7_1030300
 ## 1886           PF11_0488  PF3D7_1148000
 ## 1887           PF10_0088  PF3D7_1009100
 ## 1888            PFB0185w  PF3D7_0204000
@@ -2252,6 +2280,7 @@ Després la llista de gens amb màxima differència segons transcripció:
 ## 1946           PF11_0481  PF3D7_1147200
 ## 1947            PFL2435w  PF3D7_1250700
 ## 1948            PFL0305c  PF3D7_1206100
+## 1949           PF14_0763  PF3D7_1479200
 ## 1950           PF10_0225  PF3D7_1023200
 ## 1951            PFD0290w  PF3D7_0405800
 ## 1952           MAL7P1.69  PF3D7_0714400
@@ -2289,6 +2318,7 @@ Després la llista de gens amb màxima differència segons transcripció:
 ## 1984          MAL7P1.100  PF3D7_0719200
 ## 1985            PFL1175w  PF3D7_1224400
 ## 1986           PF13_0038  PF3D7_1307400
+## 1987            PFD0540c  PF3D7_0410900
 ## 1988           PF13_0129  PF3D7_1323100
 ## 1989            PFL1005c  PF3D7_1220900
 ## 1990           PF10_0130  PF3D7_1013300
@@ -2556,6 +2586,7 @@ Després la llista de gens amb màxima differència segons transcripció:
 ## 2252            PFI0575c  PF3D7_0911800
 ## 2253           PF13_0174  PF3D7_1332300
 ## 2254           PF10_0324  PF3D7_1033300
+## 2255           PF11_0263  PF3D7_1125200
 ## 2256            PFE0915c  PF3D7_0518300
 ## 2257           PF07_0017  PF3D7_0704400
 ## 2258            PFD0695w  PF3D7_0414400
@@ -2712,6 +2743,7 @@ Després la llista de gens amb màxima differència segons transcripció:
 ## 2409            PFL2210w  PF3D7_1246100
 ## 2410            PFC0860w  PF3D7_0319400
 ## 2411           PF10_0125  PF3D7_1012800
+## 2412            PFL0010c  PF3D7_1200200
 ## 2413           PF10_0292  PF3D7_1029900
 ## 2414           PF14_0541  PF3D7_1456800
 ## 2415           PF07_0058  PF3D7_0714600
@@ -2941,6 +2973,7 @@ Després la llista de gens amb màxima differència segons transcripció:
 ## 2639           MAL8P1.57  PF3D7_0820500
 ## 2640           PF11_0331  PF3D7_1132200
 ## 2641            PFL0040c  PF3D7_1200800
+## 2642            PFD0230c  PF3D7_0404700
 ## 2643            PFI1235w  PF3D7_0925200
 ## 2644           PF14_0296  PF3D7_1431700
 ## 2645            PFE0575c  PF3D7_0511600
@@ -2992,6 +3025,7 @@ Després la llista de gens amb màxima differència segons transcripció:
 ## 2691            PFD0735c  PF3D7_0415200
 ## 2692           PF13_0072  PF3D7_1312800
 ## 2693         MAL13P1.293  PF3D7_1359000
+## 2694            PFL1600c  PF3D7_1233200
 ## 2695            PFF1290c  PF3D7_0626600
 ## 2696            PFC0745c  PF3D7_0317000
 ## 2697           PF10_0157  PF3D7_1016100
@@ -3006,6 +3040,7 @@ Després la llista de gens amb màxima differència segons transcripció:
 ## 2706            PFL1410c  PF3D7_1229100
 ## 2707           PF11_0142  PF3D7_1113400
 ## 2708         MAL13P1.155  PF3D7_1327000
+## 2709           PF11_0321  PF3D7_1131100
 ## 2710         MAL13P1.215  PF3D7_1343100
 ## 2711           PF14_0301  PF3D7_1432100
 ## 2712           MAL7P1.47  PF3D7_0712200
@@ -3125,6 +3160,7 @@ Després la llista de gens amb màxima differència segons transcripció:
 ## 2826            PFL2155w  PF3D7_1244900
 ## 2827            PFL0705c  PF3D7_1214600
 ## 2828            PFB0875c  PF3D7_0218700
+## 2829            PFL0560c  PF3D7_1211300
 ## 2830            PFE0145w  PF3D7_0503000
 ## 2831            PFL1685w  PF3D7_1234900
 ## 2832           PF11_0078  PF3D7_1106700
@@ -3185,6 +3221,7 @@ Després la llista de gens amb màxima differència segons transcripció:
 ## 2887            PFE0150c  PF3D7_0503100
 ## 2888            PFI0255c  PF3D7_0905200
 ## 2889           PF14_0047  PF3D7_1405000
+## 2890           PF14_0454  PF3D7_1447800
 ## 2891            PFB0790c  PF3D7_0217000
 ## 2892            PFE0245c  PF3D7_0505000
 ## 2893           PF10_0361  PF3D7_1036900
@@ -3271,6 +3308,7 @@ Després la llista de gens amb màxima differència segons transcripció:
 ## 2974            PFE0235c  PF3D7_0504800
 ## 2975            PFL2065c  PF3D7_1242900
 ## 2976            PFL1035w  PF3D7_1221500
+## 2977           PF10_0398  PF3D7_1040500
 ## 2978           PF13_0076  PF3D7_1302000
 ## 2979           PF13_0181  PF3D7_1333100
 ## 2980           PF08_0076  PF3D7_0813900
@@ -3383,6 +3421,7 @@ Després la llista de gens amb màxima differència segons transcripció:
 ## 3087          PFL1015w-a           <NA>
 ## 3088           PF11_0111  PF3D7_1110400
 ## 3089            PFD0100c           <NA>
+## 3090            PFC0600w  PF3D7_0314500
 ## 3091           PF07_0046  PF3D7_0710900
 ## 3092         MAL13P1.221  PF3D7_1344800
 ## 3093            PFE0430w  PF3D7_0508700
@@ -3480,6 +3519,7 @@ Després la llista de gens amb màxima differència segons transcripció:
 ## 3185            PFI0570w  PF3D7_0911700
 ## 3186           MAL8P1.15  PF3D7_0828100
 ## 3187           PF14_0368  PF3D7_1438900
+## 3188            PFB0010w  PF3D7_0200100
 ## 3189            PFA0480w  PF3D7_0109800
 ## 3190         MAL13P1.304  PF3D7_1361200
 ## 3191            PFA0395w  PF3D7_0107900
@@ -3496,6 +3536,7 @@ Després la llista de gens amb màxima differència segons transcripció:
 ## 3202            PFC0245c  PF3D7_0305500
 ## 3203            PFE1445c  PF3D7_0529000
 ## 3204           PF10_0070  PF3D7_1007000
+## 3205            PFB0970c  PF3D7_0221700
 ## 3206            PFL0280c  PF3D7_1205600
 ## 3207           PF11_0250  PF3D7_1123900
 ## 3208            PFF0900c  PF3D7_0618600
@@ -3576,6 +3617,7 @@ Després la llista de gens amb màxima differència segons transcripció:
 ## 3283           PF07_0019  PF3D7_0704800
 ## 3284            PFA0430c  PF3D7_0108700
 ## 3285           MAL8P1.91  PF3D7_0814400
+## 3286            PFC0255c  PF3D7_0305700
 ## 3287           PF14_0694  PF3D7_1472600
 ## 3288           PF13_0083  PF3D7_1314600
 ## 3289            PFE1010w  PF3D7_0520100
@@ -3596,9 +3638,11 @@ Després la llista de gens amb màxima differència segons transcripció:
 ## 3304            PFE1210c  PF3D7_0524300
 ## 3305          MAL7P1.208  PF3D7_0707300
 ## 3306            PFI0920c  PF3D7_0918800
+## 3307           PF13_0132  PF3D7_1323400
 ## 3308            PFC0435w  PF3D7_0310400
 ## 3309           PF11_0276  PF3D7_1126600
 ## 3310            PFI0440w  PF3D7_0909100
+## 3311         MAL13P1.148  PF3D7_1329100
 ## 3312         MAL13P1.337  PF3D7_1367000
 ## 3313          MAL8P1.148  PF3D7_0802900
 ## 3314          MAL7P1.149  PF3D7_0727100
@@ -3655,6 +3699,7 @@ Després la llista de gens amb màxima differència segons transcripció:
 ## 3365           MAL8P1.10  PF3D7_0829100
 ## 3366          MAL8P1.203  PF3D7_0805700
 ## 3367            PFL2340w  PF3D7_1248800
+## 3368            PFI1485c  PF3D7_0930500
 ## 3369         MAL13P1.244  PF3D7_1348500
 ## 3370         MAL13P1.281  PF3D7_1357200
 ## 3371           PF08_0043  PF3D7_0821200
@@ -3694,6 +3739,7 @@ Després la llista de gens amb màxima differència segons transcripció:
 ## 3405          MAL13P1.21  PF3D7_1304000
 ## 3406            PFL1255c  PF3D7_1226000
 ## 3407           PF14_0715  PF3D7_1474700
+## 3408            PFD0380c  PF3D7_0407700
 ## 3409            PFL2050w  PF3D7_1242600
 ## 3410            PFA0490w  PF3D7_0110000
 ## 3411           PF11_0127  PF3D7_1112100
@@ -3745,6 +3791,7 @@ Després la llista de gens amb màxima differència segons transcripció:
 ## 3457           PF11_0051  PF3D7_1104000
 ## 3458            PFF0655c  PF3D7_0613500
 ## 3459           PF14_0280  PF3D7_1430100
+## 3460           PF14_0303  PF3D7_1432400
 ## 3461           PF14_0150  PF3D7_1415200
 ## 3462            PFF1360w  PF3D7_0628000
 ## 3463            PFC0760c  PF3D7_0317300
@@ -3835,6 +3882,7 @@ Després la llista de gens amb màxima differència segons transcripció:
 ## 3548            PFL1240c  PF3D7_1225700
 ## 3549            PFF0660w  PF3D7_0613600
 ## 3550            PFE1070c  PF3D7_0521300
+## 3551           PF08_0137  PF3D7_0801000
 ## 3552           PF14_0571  PF3D7_1459800
 ## 3553           PF11_0274  PF3D7_1126400
 ## 3554           PF11_0243  PF3D7_1123200
@@ -3861,8 +3909,10 @@ Després la llista de gens amb màxima differència segons transcripció:
 ## 3575           PF10_0120  PF3D7_1012300
 ## 3576           PF13_0355  PF3D7_1367800
 ## 3577           PF13_0017  PF3D7_1303300
+## 3578            PFD0535w  PF3D7_0410800
 ## 3579            PFI0165c  PF3D7_0903400
 ## 3580            PFI0670w  PF3D7_0913700
+## 3581            PFL1560c  PF3D7_1232400
 ## 3582            PFE0925c  PF3D7_0518500
 ## 3583           PF14_0082  PF3D7_1408500
 ## 3584           PF14_0065  PF3D7_1406800
@@ -3901,6 +3951,7 @@ Després la llista de gens amb màxima differència segons transcripció:
 ## 3617           PF08_0042  PF3D7_0821300
 ## 3618            PFE0560c  PF3D7_0511300
 ## 3619           PF14_0496  PF3D7_1452100
+## 3620            PFB0540w  PF3D7_0212100
 ## 3621           PF14_0423  PF3D7_1444500
 ## 3622           PF14_0555  PF3D7_1458200
 ## 3623           PF14_0063  PF3D7_1406600
@@ -4016,6 +4067,7 @@ Després la llista de gens amb màxima differència segons transcripció:
 ## 3733            PFL1680w  PF3D7_1234800
 ## 3734            PFI0385c  PF3D7_0908000
 ## 3735            PFI0390c  PF3D7_0908100
+## 3736            PFL1565c  PF3D7_1232500
 ## 3737          PFB0305c-a           <NA>
 ## 3738            PFE0795c  PF3D7_0515900
 ## 3739           PF08_0052  PF3D7_0819200
@@ -4152,6 +4204,7 @@ Després la llista de gens amb màxima differència segons transcripció:
 ## 3870            PFL2445c  PF3D7_1250900
 ## 3871           PF14_0582  PF3D7_1461000
 ## 3872           PF14_0039  PF3D7_1404200
+## 3873            PFD0235c  PF3D7_0404800
 ## 3874            PFB0640c  PF3D7_0214100
 ## 3875            PFB0330c  PF3D7_0207400
 ## 3876            PFE1000c  PF3D7_0519900
@@ -4440,6 +4493,7 @@ Després la llista de gens amb màxima differència segons transcripció:
 ## 4159            PFE1250w  PF3D7_0525100
 ## 4160            PFC0900w  PF3D7_0320300
 ## 4161           PF14_0113  PF3D7_1411500
+## 4162          MAL7P1.134  PF3D7_0724700
 ## 4163           PF11_0189  PF3D7_1118300
 ## 4164         MAL13P1.233  PF3D7_1346300
 ## 4165            PFD0415c  PF3D7_0408400
@@ -4454,6 +4508,7 @@ Després la llista de gens amb màxima differència segons transcripció:
 ## 4174           PF10_0127  PF3D7_1013000
 ## 4175           PF14_0424  PF3D7_1444700
 ## 4176         MAL13P1.227  PF3D7_1345500
+## 4177            PFB0810w  PF3D7_0217400
 ## 4178            PFD1060w  PF3D7_0422500
 ## 4179           PF14_0580  PF3D7_1460800
 ## 4180            PFL1080c  PF3D7_1222500
@@ -4573,6 +4628,7 @@ Després la llista de gens amb màxima differència segons transcripció:
 ## 4294            PFE1240w  PF3D7_0524900
 ## 4295            PFF1005w  PF3D7_0620600
 ## 4296            PFL1575w  PF3D7_1232700
+## 4297         MAL13P1.152  PF3D7_1327500
 ## 4298           PF13_0353  PF3D7_1367500
 ## 4299            PFL0515w  PF3D7_1210300
 ## 4300            PFC0510w  PF3D7_0312100
@@ -4594,6 +4650,7 @@ Després la llista de gens amb màxima differència segons transcripció:
 ## 4316           MAL7P1.10  PF3D7_0702900
 ## 4317            PFC0930c  PF3D7_0321100
 ## 4318            PFI1605w  PF3D7_0933100
+## 4319            PFD1010w  PF3D7_0421200
 ## 4320            PFF1045w  PF3D7_0621700
 ## 4321           PF14_0393  PF3D7_1441400
 ## 4322            PFF0650w  PF3D7_0613400
@@ -4654,6 +4711,7 @@ Després la llista de gens amb màxima differència segons transcripció:
 ## 4377            PFB0210c  PF3D7_0204700
 ## 4378           PF14_0336  PF3D7_1435500
 ## 4379        MAL8P1.143-a           <NA>
+## 4380          MAL7P1.229  PF3D7_0831600
 ## 4381          MAL7P1.138  PF3D7_0725100
 ## 4382            PFF1180w  PF3D7_0624500
 ## 4383           PF14_0208  PF3D7_1421500
@@ -4668,6 +4726,7 @@ Després la llista de gens amb màxima differència segons transcripció:
 ## 4392           PF14_0050  PF3D7_1405300
 ## 4393            PFL1380w  PF3D7_1228500
 ## 4394           PF10_0097  PF3D7_1010000
+## 4395           MAL7P1.19  PF3D7_0704600
 ## 4396            PFC0080c  PF3D7_0301600
 ## 4397            PFL0790w  PF3D7_1216400
 ## 4398           MAL8P1.59  PF3D7_0820100
@@ -4696,6 +4755,7 @@ Després la llista de gens amb màxima differència segons transcripció:
 ## 4421            PFL0250w  PF3D7_1205000
 ## 4422            PFL0355c  PF3D7_1207100
 ## 4423            PFC0870w  PF3D7_0319600
+## 4424            PFL2160c  PF3D7_1245000
 ## 4425            PFC0375c  PF3D7_0308900
 ## 4426           PF10_0215  PF3D7_1022100
 ## 4427            PFI0720w  PF3D7_0914700
@@ -4734,6 +4794,7 @@ Després la llista de gens amb màxima differència segons transcripció:
 ## 4460           PF08_0051  PF3D7_0819300
 ## 4461            PFB0175c  PF3D7_0203700
 ## 4462            PFL0235w  PF3D7_1204700
+## 4463           PF14_0132  PF3D7_1413400
 ## 4464            PFB0380c  PF3D7_0208400
 ## 4465            PFL0925w  PF3D7_1219000
 ## 4466            PFF0750w  PF3D7_0615500
@@ -4861,6 +4922,7 @@ Després la llista de gens amb màxima differència segons transcripció:
 ## 4588            PFI0740c  PF3D7_0915100
 ## 4589            PFL0460w  PF3D7_1209200
 ## 4590            PFF0395c  PF3D7_0608000
+## 4591            PFL2335w  PF3D7_1248700
 ## 4592          MAL13P1.71  PF3D7_1313900
 ## 4593           PF10_0326  PF3D7_1033500
 ## 4594            PFE0515w  PF3D7_0510400
@@ -4988,6 +5050,7 @@ Després la llista de gens amb màxima differència segons transcripció:
 ## 4716           MAL8P1.17  PF3D7_0827900
 ## 4717           PF14_0483  PF3D7_1450800
 ## 4718            PFL0815w  PF3D7_1216900
+## 4719           PF10_0405  PF3D7_1041200
 ## 4720           PF08_0089  PF3D7_0812100
 ## 4721            PFE0195w  PF3D7_0504000
 ## 4722       PFC10_API0016           <NA>
@@ -4999,7 +5062,9 @@ Després la llista de gens amb màxima differència segons transcripció:
 ## 4728           PF10_0103  PF3D7_1010600
 ## 4729            PFD0680c  PF3D7_0413900
 ## 4730           PF13_0262  PF3D7_1350100
+## 4731            MAL8P1.8  PF3D7_0829400
 ## 4732         MAL13P1.270  PF3D7_1353900
+## 4733            PFF0445w  PF3D7_0609000
 ## 4734           PF13_0237  PF3D7_1343300
 ## 4735          PF11_0168a  PF3D7_1116100
 ## 4736           PF14_0585  PF3D7_1461300
@@ -5009,6 +5074,7 @@ Després la llista de gens amb màxima differència segons transcripció:
 ## 4740            PFF0220w  PF3D7_0604500
 ## 4741           MAL7P1.16  PF3D7_0704000
 ## 4742            PFB0770c  PF3D7_0216800
+## 4743           PF13_0006  PF3D7_1300600
 ## 4744           PF13_0178  PF3D7_1332800
 ## 4745            PFI1060w  PF3D7_0921600
 ## 4746           PF14_0601  PF3D7_1463200
@@ -5362,6 +5428,7 @@ Després la llista de gens amb màxima differència segons transcripció:
 ## 5094            PFL2390c  PF3D7_1249800
 ## 5095            PFI0520w  PF3D7_0910700
 ## 5096           PF08_0010  PF3D7_0828300
+## 5097           PF10_0399  PF3D7_1040600
 ## 5098           MAL7P1.25  PF3D7_0708000
 ## 5099         MAL13P1.190  PF3D7_1338100
 ## 5100           PF08_0110  PF3D7_0807300
@@ -5407,10 +5474,12 @@ Després la llista de gens amb màxima differència segons transcripció:
 ## 5140     MAL13_tRNA_Ser1  PF3D7_1337600
 ## 5141         MAL13P1.276  PF3D7_1356500
 ## 5142         MAL13P1.339  PF3D7_1367200
+## 5143           MAL13P1.4  PF3D7_1300700
 ## 5144         MAL13P1.505  PF3D7_1372800
 ## 5145         MAL13P1.515  PF3D7_1373000
 ## 5146         MAL13P1.520  PF3D7_1373100
 ## 5147         MAL13P1.530  PF3D7_1373300
+## 5148         MAL13P1.535  PF3D7_1373400
 ## 5149          MAL13P1.85  PF3D7_1316400
 ## 5150          MAL7P1.185  PF3D7_0732500
 ## 5151          MAL7P1.217  PF3D7_0833000
@@ -5434,8 +5503,11 @@ Després la llista de gens amb màxima differència segons transcripció:
 ## 5169           PF10_0007  PF3D7_1000700
 ## 5170           PF10_0012  PF3D7_1000900
 ## 5171           PF10_0302  PF3D7_1030900
+## 5172           PF10_0394  PF3D7_1040100
+## 5173           PF10_0401  PF3D7_1040800
 ## 5174           PF10_0403  PF3D7_1041000
 ## 5175           PF10_0404  PF3D7_1041100
+## 5176           PF11_0010  PF3D7_1100400
 ## 5177           PF11_0020  PF3D7_1101200
 ## 5178           PF11_0050  PF3D7_1103900
 ## 5179           PF11_0148  PF3D7_1114000
@@ -5461,8 +5533,10 @@ Després la llista de gens amb màxima differència segons transcripció:
 ## 5199            PFA0090c  PF3D7_0101800
 ## 5200            PFA0095c  PF3D7_0101900
 ## 5201            PFA0645c           <NA>
+## 5202            PFA0685c  PF3D7_0114200
 ## 5203            PFA0695c  PF3D7_0114400
 ## 5204            PFA0705c  PF3D7_0114600
+## 5205            PFA0725w  PF3D7_0115000
 ## 5206            PFA0755w           <NA>
 ## 5207            PFB0025c  PF3D7_0200400
 ## 5208            PFB0030c  PF3D7_0200500
@@ -5471,6 +5545,7 @@ Després la llista de gens amb màxima differència segons transcripció:
 ## 5211            PFB0065w  PF3D7_0201300
 ## 5212            PFB0070w  PF3D7_0201400
 ## 5213            PFB0950w  PF3D7_0221000
+## 5214            PFB0965c  PF3D7_0221600
 ## 5215            PFB0973c      PF02_0205
 ## 5216            PFB1005w  PF3D7_0222500
 ## 5217            PFB1010w  PF3D7_0222600
@@ -5487,12 +5562,15 @@ Després la llista de gens amb màxima differència segons transcripció:
 ## 5228            PFD0030c  PF3D7_0400700
 ## 5229            PFD0035c  PF3D7_0400800
 ## 5230            PFD0050w  PF3D7_0401200
+## 5231            PFD0060w  PF3D7_0401400
+## 5232            PFD0065w  PF3D7_0401500
 ## 5233            PFD0135c           <NA>
 ## 5234            PFD0645w  PF3D7_0413300
 ## 5235            PFD1210w  PF3D7_0425300
 ## 5236            PFE0015c  PF3D7_0500300
 ## 5237            PFE0020c  PF3D7_0500400
 ## 5238            PFE0025c  PF3D7_0500500
+## 5239            PFE0030c  PF3D7_0500600
 ## 5240            PFE0220w  PF3D7_0504500
 ## 5241            PFE0315c  PF3D7_0506400
 ## 5242            PFE0530w  PF3D7_0510700
@@ -5504,6 +5582,7 @@ Després la llista de gens amb màxima differència segons transcripció:
 ## 5248            PFF1455c  PF3D7_0630000
 ## 5249            PFF1545w  PF3D7_0631800
 ## 5250            PFI0010c  PF3D7_0900200
+## 5251            PFI0035c  PF3D7_0900700
 ## 5252            PFI0070w  PF3D7_0901400
 ## 5253            PFI0075w  PF3D7_0901500
 ## 5254            PFI1115c  PF3D7_0922700
@@ -5519,24 +5598,63 @@ Després la llista de gens amb màxima differència segons transcripció:
 ## 5264            PFL2625w  PF3D7_1254400
 ## 5265            PFL2640c  PF3D7_1254700
 ## 5266            PFL2655w  PF3D7_1255000
+## 5267            PFL2660w  PF3D7_1255100
 \end{verbatim}
 \begin{alltt}
 \hlcom{#### Gens que surten differencialment metilats que són a la llista de trans ####}
 
-\hlkwd{table}\hlstd{(diff_10G_met} \hlopt{%in%} \hlstd{diff_trans_all[,}\hlnum{2}\hlstd{])}
+\hlkwd{table}\hlstd{(diff_10G_met[,}\hlnum{1}\hlstd{]} \hlopt{%in%} \hlstd{diff_trans_all[,}\hlnum{2}\hlstd{])}
 \end{alltt}
 \begin{verbatim}
 ## 
 ## FALSE  TRUE 
-##    18    69
+##     9    24
 \end{verbatim}
 \begin{alltt}
-\hlkwd{table}\hlstd{(diff_12B_met} \hlopt{%in%} \hlstd{diff_trans_all[,}\hlnum{2}\hlstd{])}
+\hlkwd{table}\hlstd{(diff_12B_met[,}\hlnum{1}\hlstd{]} \hlopt{%in%} \hlstd{diff_trans_all[,}\hlnum{2}\hlstd{])}
 \end{alltt}
 \begin{verbatim}
 ## 
 ## FALSE  TRUE 
-##    30    99
+##    12    22
+\end{verbatim}
+\begin{alltt}
+\hlcom{#### Importar "taules" de gens metilats ####}
+\hlstd{df_10G} \hlkwb{<-} \hlkwd{read.table}\hlstd{(}\hlstr{"/home/lucas/ISGlobal/Chip_Seq/DATA/Aligns/q5/Narrow_fe30/Annotation_hits/Tables/10G_1.2B_annotation_table.csv"}\hlstd{,} \hlkwc{header} \hlstd{=} \hlnum{TRUE}\hlstd{)}
+\hlstd{df_1.2B} \hlkwb{<-} \hlkwd{read.table}\hlstd{(}\hlstr{"/home/lucas/ISGlobal/Chip_Seq/DATA/Aligns/q5/Narrow_fe30/Annotation_hits/Tables/1.2B_10G_annotation_table.csv"}\hlstd{,} \hlkwc{header} \hlstd{=} \hlnum{TRUE}\hlstd{)}
+
+\hlstd{trueMET_10G} \hlkwb{<-} \hlstd{df_10G[df_10G}\hlopt{$}\hlstd{Gene.Coverage}\hlopt{/}\hlstd{df_10G}\hlopt{$}\hlstd{Gene.size} \hlopt{>=} \hlnum{0.5}\hlstd{,]}
+\hlstd{trueMET_1.2B} \hlkwb{<-} \hlstd{df_1.2B[df_1.2B}\hlopt{$}\hlstd{Gene.Coverage}\hlopt{/}\hlstd{df_1.2B}\hlopt{$}\hlstd{Gene.size} \hlopt{>=} \hlnum{0.5}\hlstd{,]}
+
+\hlkwd{table}\hlstd{(trueMET_10G}\hlopt{$}\hlstd{Gene} \hlopt{%in%} \hlstd{diff_trans[,}\hlnum{2}\hlstd{])}
+\end{alltt}
+\begin{verbatim}
+## 
+## FALSE  TRUE 
+##     8    11
+\end{verbatim}
+\begin{alltt}
+\hlstd{trueMET_10G}\hlopt{$}\hlstd{Gene[}\hlopt{!}\hlstd{trueMET_10G}\hlopt{$}\hlstd{Gene} \hlopt{%in%} \hlstd{diff_trans[,}\hlnum{2}\hlstd{]]}
+\end{alltt}
+\begin{verbatim}
+## [1] PF3D7_0421700 PF3D7_0701100 PF3D7_0711600 PF3D7_0711800 PF3D7_0800750
+## [6] PF3D7_1253500 PF3D7_1300600 PF3D7_1371900
+## 33 Levels: PF3D7_0100200 PF3D7_0100300 PF3D7_0215300 ... PF3D7_1371900
+\end{verbatim}
+\begin{alltt}
+\hlkwd{table}\hlstd{(trueMET_1.2B}\hlopt{$}\hlstd{Gene} \hlopt{%in%} \hlstd{diff_trans[,}\hlnum{2}\hlstd{])}
+\end{alltt}
+\begin{verbatim}
+## 
+## FALSE  TRUE 
+##     5     7
+\end{verbatim}
+\begin{alltt}
+\hlstd{trueMET_1.2B}\hlopt{$}\hlstd{Gene[}\hlopt{!}\hlstd{trueMET_1.2B}\hlopt{$}\hlstd{Gene} \hlopt{%in%} \hlstd{diff_trans[,}\hlnum{2}\hlstd{]]}
+\end{alltt}
+\begin{verbatim}
+## [1] PF3D7_0115050 PF3D7_0221600 PF3D7_0221650 PF3D7_0401500 PF3D7_0601800
+## 34 Levels: PF3D7_0115000 PF3D7_0115050 PF3D7_0115100 ... PF3D7_1301800
 \end{verbatim}
 \end{kframe}
 \end{knitrout}

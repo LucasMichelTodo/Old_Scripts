@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2017.3.10)  16 JUN 2017 11:04
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2017.3.10)  12 JUL 2017 13:15
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -8,8 +8,8 @@ LaTeX2e <2016/02/01>
 Babel <3.9q> and hyphenation patterns for 81 language(s) loaded.
 (/usr/share/texlive/texmf-dist/tex/latex/base/article.cls
 Document Class: article 2014/09/29 v1.4h Standard LaTeX document class
-(/usr/share/texlive/texmf-dist/tex/latex/base/size10.clo
-File: size10.clo 2014/09/29 v1.4h Standard LaTeX file (size option)
+(/usr/share/texlive/texmf-dist/tex/latex/base/size12.clo
+File: size12.clo 2014/09/29 v1.4h Standard LaTeX file (size option)
 )
 \c@part=\count79
 \c@section=\count80
@@ -74,243 +74,27 @@ Package: framed 2011/10/22 v 0.96: framed or shaded text with page breaks
 (/usr/share/texlive/texmf-dist/tex/latex/base/alltt.sty
 Package: alltt 1997/06/16 v2.0g defines alltt environment
 )
-(/usr/share/texlive/texmf-dist/tex/latex/listings/listings.sty
-\lst@mode=\count88
-\lst@gtempboxa=\box26
-\lst@token=\toks15
-\lst@length=\count89
-\lst@currlwidth=\dimen109
-\lst@column=\count90
-\lst@pos=\count91
-\lst@lostspace=\dimen110
-\lst@width=\dimen111
-\lst@newlines=\count92
-\lst@lineno=\count93
-\lst@maxwidth=\dimen112
+! Undefined control sequence.
+l.56 \affil
+           {Barcelona Global Health Institute (ISGlobal), Campus PRBB}
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
 
-(/usr/share/texlive/texmf-dist/tex/latex/listings/lstmisc.sty
-File: lstmisc.sty 2015/06/04 1.6 (Carsten Heinz)
-\c@lstnumber=\count94
-\lst@skipnumbers=\count95
-\lst@framebox=\box27
-)
-(/usr/share/texlive/texmf-dist/tex/latex/listings/listings.cfg
-File: listings.cfg 2015/06/04 1.6 listings configuration
-))
-Package: listings 2015/06/04 1.6 (Carsten Heinz)
 
-(/usr/share/texlive/texmf-dist/tex/latex/mnsymbol/MnSymbol.sty
-Package: MnSymbol 2007/01/21 v1.4 support for the MnSymbol font
+! LaTeX Error: Missing \begin{document}.
 
-(/usr/share/texlive/texmf-dist/tex/latex/amsmath/amsmath.sty
-Package: amsmath 2016/03/03 v2.15a AMS math features
-\@mathmargin=\skip44
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.56 \affil{B
+             arcelona Global Health Institute (ISGlobal), Campus PRBB}
+You're in trouble here.  Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
 
-For additional information on amsmath, use the `?' option.
-(/usr/share/texlive/texmf-dist/tex/latex/amsmath/amstext.sty
-Package: amstext 2000/06/29 v2.01 AMS text
-
-(/usr/share/texlive/texmf-dist/tex/latex/amsmath/amsgen.sty
-File: amsgen.sty 1999/11/30 v2.0 generic functions
-\@emptytoks=\toks16
-\ex@=\dimen113
-))
-(/usr/share/texlive/texmf-dist/tex/latex/amsmath/amsbsy.sty
-Package: amsbsy 1999/11/29 v1.2d Bold Symbols
-\pmbraise@=\dimen114
-)
-(/usr/share/texlive/texmf-dist/tex/latex/amsmath/amsopn.sty
-Package: amsopn 1999/12/14 v2.01 operator names
-)
-\inf@bad=\count96
-LaTeX Info: Redefining \frac on input line 199.
-\uproot@=\count97
-\leftroot@=\count98
-LaTeX Info: Redefining \overline on input line 297.
-\classnum@=\count99
-\DOTSCASE@=\count100
-LaTeX Info: Redefining \ldots on input line 394.
-LaTeX Info: Redefining \dots on input line 397.
-LaTeX Info: Redefining \cdots on input line 518.
-\Mathstrutbox@=\box28
-\strutbox@=\box29
-\big@size=\dimen115
-LaTeX Font Info:    Redeclaring font encoding OML on input line 630.
-LaTeX Font Info:    Redeclaring font encoding OMS on input line 631.
-\macc@depth=\count101
-\c@MaxMatrixCols=\count102
-\dotsspace@=\muskip10
-\c@parentequation=\count103
-\dspbrk@lvl=\count104
-\tag@help=\toks17
-\row@=\count105
-\column@=\count106
-\maxfields@=\count107
-\andhelp@=\toks18
-\eqnshift@=\dimen116
-\alignsep@=\dimen117
-\tagshift@=\dimen118
-\tagwidth@=\dimen119
-\totwidth@=\dimen120
-\lineht@=\dimen121
-\@envbody=\toks19
-\multlinegap=\skip45
-\multlinetaggap=\skip46
-\mathdisplay@stack=\toks20
-LaTeX Info: Redefining \[ on input line 2735.
-LaTeX Info: Redefining \] on input line 2736.
-)
-(/usr/share/texlive/texmf-dist/tex/latex/base/textcomp.sty
-Package: textcomp 2005/09/27 v1.99g Standard LaTeX package
-Package textcomp Info: Sub-encoding information:
-(textcomp)               5 = only ISO-Adobe without \textcurrency
-(textcomp)               4 = 5 + \texteuro
-(textcomp)               3 = 4 + \textohm
-(textcomp)               2 = 3 + \textestimated + \textcurrency
-(textcomp)               1 = TS1 - \textcircled - \t
-(textcomp)               0 = TS1 (full)
-(textcomp)             Font families with sub-encoding setting implement
-(textcomp)             only a restricted character set as indicated.
-(textcomp)             Family '?' is the default used for unknown fonts.
-(textcomp)             See the documentation for details.
-Package textcomp Info: Setting ? sub-encoding to TS1/1 on input line 79.
-
-(/usr/share/texlive/texmf-dist/tex/latex/base/ts1enc.def
-File: ts1enc.def 2001/06/05 v3.0e (jk/car/fm) Standard LaTeX file
-)
-LaTeX Info: Redefining \oldstylenums on input line 334.
-Package textcomp Info: Setting cmr sub-encoding to TS1/0 on input line 349.
-Package textcomp Info: Setting cmss sub-encoding to TS1/0 on input line 350.
-Package textcomp Info: Setting cmtt sub-encoding to TS1/0 on input line 351.
-Package textcomp Info: Setting cmvtt sub-encoding to TS1/0 on input line 352.
-Package textcomp Info: Setting cmbr sub-encoding to TS1/0 on input line 353.
-Package textcomp Info: Setting cmtl sub-encoding to TS1/0 on input line 354.
-Package textcomp Info: Setting ccr sub-encoding to TS1/0 on input line 355.
-Package textcomp Info: Setting ptm sub-encoding to TS1/4 on input line 356.
-Package textcomp Info: Setting pcr sub-encoding to TS1/4 on input line 357.
-Package textcomp Info: Setting phv sub-encoding to TS1/4 on input line 358.
-Package textcomp Info: Setting ppl sub-encoding to TS1/3 on input line 359.
-Package textcomp Info: Setting pag sub-encoding to TS1/4 on input line 360.
-Package textcomp Info: Setting pbk sub-encoding to TS1/4 on input line 361.
-Package textcomp Info: Setting pnc sub-encoding to TS1/4 on input line 362.
-Package textcomp Info: Setting pzc sub-encoding to TS1/4 on input line 363.
-Package textcomp Info: Setting bch sub-encoding to TS1/4 on input line 364.
-Package textcomp Info: Setting put sub-encoding to TS1/5 on input line 365.
-Package textcomp Info: Setting uag sub-encoding to TS1/5 on input line 366.
-Package textcomp Info: Setting ugq sub-encoding to TS1/5 on input line 367.
-Package textcomp Info: Setting ul8 sub-encoding to TS1/4 on input line 368.
-Package textcomp Info: Setting ul9 sub-encoding to TS1/4 on input line 369.
-Package textcomp Info: Setting augie sub-encoding to TS1/5 on input line 370.
-Package textcomp Info: Setting dayrom sub-encoding to TS1/3 on input line 371.
-Package textcomp Info: Setting dayroms sub-encoding to TS1/3 on input line 372.
-
-Package textcomp Info: Setting pxr sub-encoding to TS1/0 on input line 373.
-Package textcomp Info: Setting pxss sub-encoding to TS1/0 on input line 374.
-Package textcomp Info: Setting pxtt sub-encoding to TS1/0 on input line 375.
-Package textcomp Info: Setting txr sub-encoding to TS1/0 on input line 376.
-Package textcomp Info: Setting txss sub-encoding to TS1/0 on input line 377.
-Package textcomp Info: Setting txtt sub-encoding to TS1/0 on input line 378.
-Package textcomp Info: Setting lmr sub-encoding to TS1/0 on input line 379.
-Package textcomp Info: Setting lmdh sub-encoding to TS1/0 on input line 380.
-Package textcomp Info: Setting lmss sub-encoding to TS1/0 on input line 381.
-Package textcomp Info: Setting lmssq sub-encoding to TS1/0 on input line 382.
-Package textcomp Info: Setting lmvtt sub-encoding to TS1/0 on input line 383.
-Package textcomp Info: Setting lmtt sub-encoding to TS1/0 on input line 384.
-Package textcomp Info: Setting qhv sub-encoding to TS1/0 on input line 385.
-Package textcomp Info: Setting qag sub-encoding to TS1/0 on input line 386.
-Package textcomp Info: Setting qbk sub-encoding to TS1/0 on input line 387.
-Package textcomp Info: Setting qcr sub-encoding to TS1/0 on input line 388.
-Package textcomp Info: Setting qcs sub-encoding to TS1/0 on input line 389.
-Package textcomp Info: Setting qpl sub-encoding to TS1/0 on input line 390.
-Package textcomp Info: Setting qtm sub-encoding to TS1/0 on input line 391.
-Package textcomp Info: Setting qzc sub-encoding to TS1/0 on input line 392.
-Package textcomp Info: Setting qhvc sub-encoding to TS1/0 on input line 393.
-Package textcomp Info: Setting futs sub-encoding to TS1/4 on input line 394.
-Package textcomp Info: Setting futx sub-encoding to TS1/4 on input line 395.
-Package textcomp Info: Setting futj sub-encoding to TS1/4 on input line 396.
-Package textcomp Info: Setting hlh sub-encoding to TS1/3 on input line 397.
-Package textcomp Info: Setting hls sub-encoding to TS1/3 on input line 398.
-Package textcomp Info: Setting hlst sub-encoding to TS1/3 on input line 399.
-Package textcomp Info: Setting hlct sub-encoding to TS1/5 on input line 400.
-Package textcomp Info: Setting hlx sub-encoding to TS1/5 on input line 401.
-Package textcomp Info: Setting hlce sub-encoding to TS1/5 on input line 402.
-Package textcomp Info: Setting hlcn sub-encoding to TS1/5 on input line 403.
-Package textcomp Info: Setting hlcw sub-encoding to TS1/5 on input line 404.
-Package textcomp Info: Setting hlcf sub-encoding to TS1/5 on input line 405.
-Package textcomp Info: Setting pplx sub-encoding to TS1/3 on input line 406.
-Package textcomp Info: Setting pplj sub-encoding to TS1/3 on input line 407.
-Package textcomp Info: Setting ptmx sub-encoding to TS1/4 on input line 408.
-Package textcomp Info: Setting ptmj sub-encoding to TS1/4 on input line 409.
-)
-(/usr/share/texlive/texmf-dist/tex/latex/amsfonts/eufrak.sty
-Package: eufrak 2009/06/22 v3.00 Euler Fraktur fonts
-LaTeX Font Info:    Overwriting math alphabet `\EuFrak' in version `bold'
-(Font)                  U/euf/m/n --> U/euf/b/n on input line 39.
-)
-LaTeX Info: Redefining \dagger on input line 84.
-LaTeX Info: Redefining \ddagger on input line 84.
-LaTeX Info: Redefining \mathparagraph on input line 84.
-LaTeX Info: Redefining \mathsection on input line 84.
-LaTeX Info: Redefining \mathdollar on input line 84.
-LaTeX Info: Redefining \mathsterling on input line 84.
-LaTeX Info: Redefining \Re on input line 84.
-LaTeX Info: Redefining \Im on input line 84.
-\symMnSyA=\mathgroup4
-\symMnSyB=\mathgroup5
-\symMnSyC=\mathgroup6
-\symMnSyD=\mathgroup7
-LaTeX Font Info:    Redeclaring symbol font `largesymbols' on input line 119.
-LaTeX Font Info:    Overwriting symbol font `largesymbols' in version `normal'
-(Font)                  OMX/cmex/m/n --> OMX/MnSymbolE/m/n on input line 119.
-LaTeX Font Info:    Overwriting symbol font `largesymbols' in version `bold'
-(Font)                  OMX/cmex/m/n --> OMX/MnSymbolE/m/n on input line 119.
-LaTeX Font Info:    Redeclaring symbol font `symbols' on input line 120.
-LaTeX Font Info:    Encoding `OMS' has changed to `U' for symbol font
-(Font)              `symbols' in the math version `normal' on input line 120.
-LaTeX Font Info:    Overwriting symbol font `symbols' in version `normal'
-(Font)                  OMS/cmsy/m/n --> U/MnSymbolF/m/n on input line 120.
-LaTeX Font Info:    Encoding `OMS' has changed to `U' for symbol font
-(Font)              `symbols' in the math version `bold' on input line 120.
-LaTeX Font Info:    Overwriting symbol font `symbols' in version `bold'
-(Font)                  OMS/cmsy/b/n --> U/MnSymbolF/m/n on input line 120.
-LaTeX Font Info:    Overwriting symbol font `MnSyA' in version `bold'
-(Font)                  U/MnSymbolA/m/n --> U/MnSymbolA/b/n on input line 121.
-LaTeX Font Info:    Overwriting symbol font `MnSyB' in version `bold'
-(Font)                  U/MnSymbolB/m/n --> U/MnSymbolB/b/n on input line 122.
-LaTeX Font Info:    Overwriting symbol font `MnSyC' in version `bold'
-(Font)                  U/MnSymbolC/m/n --> U/MnSymbolC/b/n on input line 123.
-LaTeX Font Info:    Overwriting symbol font `MnSyD' in version `bold'
-(Font)                  U/MnSymbolD/m/n --> U/MnSymbolD/b/n on input line 124.
-LaTeX Font Info:    Overwriting symbol font `largesymbols' in version `bold'
-(Font)                  OMX/MnSymbolE/m/n --> OMX/MnSymbolE/b/n on input line 1
-25.
-LaTeX Font Info:    Overwriting symbol font `symbols' in version `bold'
-(Font)                  U/MnSymbolF/m/n --> U/MnSymbolF/b/n on input line 126.
-LaTeX Font Info:    Redeclaring math alphabet \mathcal on input line 241.
-LaTeX Font Info:    Overwriting math alphabet `\mathcal' in version `bold'
-(Font)                  OMS/MnSymbolS/m/n --> OMS/MnSymbolS/b/n on input line 2
-41.
-LaTeX Info: Redefining \longrightarrow on input line 548.
-LaTeX Info: Redefining \longleftarrow on input line 549.
-LaTeX Info: Redefining \longleftrightarrow on input line 550.
-LaTeX Info: Redefining \Longrightarrow on input line 551.
-LaTeX Info: Redefining \Longleftarrow on input line 552.
-LaTeX Info: Redefining \Longleftrightarrow on input line 553.
-LaTeX Info: Redefining \longmapsto on input line 554.
-LaTeX Info: Redefining \vdots on input line 868.
-LaTeX Font Info:    Redeclaring math symbol \braceld on input line 1721.
-LaTeX Font Info:    Redeclaring math symbol \bracelu on input line 1722.
-LaTeX Font Info:    Redeclaring math symbol \bracerd on input line 1723.
-LaTeX Font Info:    Redeclaring math symbol \braceru on input line 1724.
-LaTeX Info: Redefining \downbracefill on input line 1799.
-LaTeX Info: Redefining \upbracefill on input line 1800.
-LaTeX Info: Redefining \overbrace on input line 1819.
-LaTeX Info: Redefining \underbrace on input line 1820.
-LaTeX Info: Redefining \surd on input line 1843.
-LaTeX Font Info:    Redeclaring math accent \widehat on input line 1845.
-LaTeX Font Info:    Redeclaring math accent \widetilde on input line 1846.
-LaTeX Font Info:    Redeclaring math accent \vec on input line 1848.
-)
 (/usr/share/texlive/texmf-dist/tex/latex/upquote/upquote.sty
 Package: upquote 2012/04/19 v1.3 upright-quote and grave-accent glyphs in verba
 tim
@@ -318,39 +102,32 @@ tim
 (./trans_diff_compare.aux)
 \openout1 = `trans_diff_compare.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 63.
-LaTeX Font Info:    ... okay on input line 63.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 63.
-LaTeX Font Info:    ... okay on input line 63.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 63.
-LaTeX Font Info:    ... okay on input line 63.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 63.
-LaTeX Font Info:    ... okay on input line 63.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 63.
-LaTeX Font Info:    ... okay on input line 63.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 63.
-LaTeX Font Info:    ... okay on input line 63.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 63.
-LaTeX Font Info:    Try loading font information for TS1+cmr on input line 63.
-
-(/usr/share/texlive/texmf-dist/tex/latex/base/ts1cmr.fd
-File: ts1cmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
-)
-LaTeX Font Info:    ... okay on input line 63.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 58.
+LaTeX Font Info:    ... okay on input line 58.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 58.
+LaTeX Font Info:    ... okay on input line 58.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 58.
+LaTeX Font Info:    ... okay on input line 58.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 58.
+LaTeX Font Info:    ... okay on input line 58.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 58.
+LaTeX Font Info:    ... okay on input line 58.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 58.
+LaTeX Font Info:    ... okay on input line 58.
 
 (/usr/share/texlive/texmf-dist/tex/context/base/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count108
-\scratchdimen=\dimen122
-\scratchbox=\box30
-\nofMPsegments=\count109
-\nofMParguments=\count110
-\everyMPshowfont=\toks21
-\MPscratchCnt=\count111
-\MPscratchDim=\dimen123
-\MPnumerator=\count112
-\makeMPintoPDFobject=\count113
-\everyMPtoPDFconversion=\toks22
+\scratchcounter=\count88
+\scratchdimen=\dimen109
+\scratchbox=\box26
+\nofMPsegments=\count89
+\nofMParguments=\count90
+\everyMPshowfont=\toks15
+\MPscratchCnt=\count91
+\MPscratchDim=\dimen110
+\MPnumerator=\count92
+\makeMPintoPDFobject=\count93
+\everyMPtoPDFconversion=\toks16
 ) (/usr/share/texlive/texmf-dist/tex/generic/oberdiek/pdftexcmds.sty
 Package: pdftexcmds 2011/11/29 v0.20 Utility functions of pdfTeX for LuaTeX (HO
 )
@@ -399,241 +176,425 @@ G,.JBIG2,.JB2,.eps]
 File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
 e
 ))
-\c@lstlisting=\count114
-Package color Info: Redefining color shadecolor on input line 68.
-LaTeX Font Info:    Font shape `OT1/cmtt/bx/n' in size <10> not available
-(Font)              Font shape `OT1/cmtt/m/n' tried instead on input line 70.
+Package color Info: Redefining color shadecolor on input line 62.
+LaTeX Font Info:    Font shape `OT1/cmtt/bx/n' in size <12> not available
+(Font)              Font shape `OT1/cmtt/m/n' tried instead on input line 64.
 
-Overfull \hbox (316.49423pt too wide) in paragraph at lines 70--70
-[][]\OT1/cmtt/m/n/10 rosetta[] []<-[] []read.table[][]([][]"/home/lucas/ISGloba
+Overfull \hbox (388.05038pt too wide) in paragraph at lines 64--64
+[][]\OT1/cmtt/m/n/12 rosetta[] []<-[] []read.table[][]([][]"/home/lucas/ISGloba
 l/Gen_Referencies/Gene_references_rosetta.txt"[][],[] []fill[] []=[] []TRUE[][]
 ,[] []fileEncoding[] []=[] []"UTF-8"[][])[][] 
  []
 
-Missing character: There is no √ in font cmr10!
-Missing character: There is no © in font cmr10!
-Missing character: There is no √ in font cmr10!
-Missing character: There is no † in font cmr10!
-Missing character: There is no √ in font cmr10!
-Missing character: There is no ® in font cmr10!
-Missing character: There is no √ in font cmr10!
-Missing character: There is no ≥ in font cmr10!
-Package color Info: Redefining color shadecolor on input line 76.
+Missing character: There is no √ in font cmr12!
+Missing character: There is no © in font cmr12!
+Missing character: There is no √ in font cmr12!
+Missing character: There is no † in font cmr12!
+Missing character: There is no √ in font cmr12!
+Missing character: There is no ® in font cmr12!
+Missing character: There is no √ in font cmr12!
+Missing character: There is no ≥ in font cmr12!
+Package color Info: Redefining color shadecolor on input line 70.
 
-Overfull \hbox (227.24501pt too wide) in paragraph at lines 78--78
-[][]\OT1/cmtt/m/n/10 diff_trans[] []<-[] []read.table[][]([][]"/home/lucas/ISGl
+Overfull \hbox (283.07533pt too wide) in paragraph at lines 72--72
+[][]\OT1/cmtt/m/n/12 diff_trans[] []<-[] []read.table[][]([][]"/home/lucas/ISGl
 obal/Llista_diff_10G_12B.txt"[][],[] []fill[] []=[] []TRUE[][],[] []fileEncodin
 g[] []=[] []"UTF-8"[][])[][] 
  []
 
-Package color Info: Redefining color shadecolor on input line 84.
-Missing character: There is no √ in font cmitt10!
-Missing character: There is no ® in font cmitt10!
-Missing character: There is no √ in font cmitt10!
-Missing character: There is no ≥ in font cmitt10!
+Missing character: There is no √ in font cmr12!
+Missing character: There is no ® in font cmr12!
+Missing character: There is no √ in font cmr12!
+Missing character: There is no ≥ in font cmr12!
+Package color Info: Redefining color shadecolor on input line 78.
 
-Overfull \hbox (269.24464pt too wide) in paragraph at lines 87--87
-[][]\OT1/cmtt/m/n/10 diff_trans_all[] []<-[] []read.table[][]([][]"/home/lucas/
+Overfull \hbox (332.47536pt too wide) in paragraph at lines 80--80
+[][]\OT1/cmtt/m/n/12 diff_trans_all[] []<-[] []read.table[][]([][]"/home/lucas/
 ISGlobal/Llista_diff_10G_12B_all.txt"[][],[] []fill[] []=[] []TRUE[][],[] []fil
 eEncoding[] []=[] []"UTF-8"[][])[][] 
  []
 
+Package color Info: Redefining color shadecolor on input line 86.
 
-Overfull \hbox (232.49496pt too wide) in paragraph at lines 90--90
-[][]\OT1/cmtt/m/n/10 diff_10G_met[] []<-[] []read.table[][]([][]"/home/lucas/IS
-Global/metil_diff_10G_12B.txt"[][],[] []fill[] []=[] []TRUE[][],[] []fileEncodi
-ng[] []=[] []"UTF-8"[][])[][] 
+Overfull \hbox (455.97542pt too wide) in paragraph at lines 88--88
+[][]\OT1/cmtt/m/n/12 diff_10G_met[] []<-[] []read.table[][]([][]"/home/lucas/IS
+Global/Chip_Seq/DATA/Aligns/q5/Narrow_fe30/Annotation_hits/Lists/10G_1.2B_annot
+ation_list.txt"[][])[][] 
+ []
+
+! You can't use `macro parameter character #' in vertical mode.
+l.92 #
+       Differential peak calling 1.2B
+Sorry, but I'm not programmed to handle this case;
+I'll just pretend that you didn't ask for it.
+If you're in the wrong mode, you might be able to
+return to the right one by typing `I}' or `I$' or `I\par'.
+
+Package color Info: Redefining color shadecolor on input line 94.
+
+Overfull \hbox (455.97542pt too wide) in paragraph at lines 96--96
+[][]\OT1/cmtt/m/n/12 diff_12B_met[] []<-[] []read.table[][]([][]"/home/lucas/IS
+Global/Chip_Seq/DATA/Aligns/q5/Narrow_fe30/Annotation_hits/Lists/1.2B_10G_annot
+ation_list.txt"[][])[][] 
+ []
+
+Package color Info: Redefining color shadecolor on input line 102.
+
+Overfull \hbox (60.77522pt too wide) in paragraph at lines 117--117
+[]\OT1/cmtt/m/n/12 ## 33 Levels: PF3D7_0100200 PF3D7_0100300 PF3D7_0215300 ... 
+PF3D7_1371900[] 
  []
 
 
-Overfull \hbox (232.49496pt too wide) in paragraph at lines 94--94
-[][]\OT1/cmtt/m/n/10 diff_12B_met[] []<-[] []read.table[][]([][]"/home/lucas/IS
-Global/metil_diff_12B_10G.txt"[][],[] []fill[] []=[] []TRUE[][],[] []fileEncodi
-ng[] []=[] []"UTF-8"[][])[][] 
+Overfull \hbox (264.55032pt too wide) in paragraph at lines 119--119
+[][]\OT1/cmtt/m/n/12 table[][](diff_trans[,[][]1[][]][] []%in%[] []rosetta[,[][
+]3[][]][] []|[] []diff_trans[,[][]1[][]][] []%in%[] []rosetta[,[][]4[][]][] []|
+[] []diff_trans[,[][]1[][]][] []%in%[] []rosetta[,[][]5[][]])[][] 
  []
 
+Missing character: There is no √ in font cmr12!
+Missing character: There is no Ø in font cmr12!
+! Missing $ inserted.
+<inserted text> 
+                $
+l.128 Tradu√Ør tots els gens de "diff_
+                                      trans"
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
 
-Overfull \hbox (38.24666pt too wide) in paragraph at lines 109--109
-[]\OT1/cmtt/m/n/10 ##  [1]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRU
-E  TRUE  TRUE[] 
- []
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <12> on input line 128.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <8> on input line 128.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <6> on input line 128.
+Package color Info: Redefining color shadecolor on input line 130.
+! Missing $ inserted.
+<inserted text> 
+                $
+l.130 ....969, 0.969}\color{fgcolor}\begin{kframe}
+                                                  
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
 
+! Missing \endgroup inserted.
+<inserted text> 
+                \endgroup 
+l.130 ....969, 0.969}\color{fgcolor}\begin{kframe}
+                                                  
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
 
-Overfull \hbox (38.24666pt too wide) in paragraph at lines 109--109
-[]\OT1/cmtt/m/n/10 ## [12]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRU
-E  TRUE  TRUE[] 
- []
+! Missing \endgroup inserted.
+<inserted text> 
+                \endgroup 
+l.130 ....969, 0.969}\color{fgcolor}\begin{kframe}
+                                                  
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
 
-
-Overfull \hbox (38.24666pt too wide) in paragraph at lines 109--109
-[]\OT1/cmtt/m/n/10 ## [23]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE FALSE  TRU
-E  TRUE  TRUE[] 
- []
-
-
-Overfull \hbox (38.24666pt too wide) in paragraph at lines 109--109
-[]\OT1/cmtt/m/n/10 ## [34]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE FALS
-E  TRUE  TRUE[] 
- []
-
-
-Overfull \hbox (38.24666pt too wide) in paragraph at lines 109--109
-[]\OT1/cmtt/m/n/10 ## [45]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRU
-E  TRUE  TRUE[] 
- []
-
-
-Overfull \hbox (38.24666pt too wide) in paragraph at lines 109--109
-[]\OT1/cmtt/m/n/10 ## [56]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRU
-E  TRUE  TRUE[] 
- []
-
-
-Overfull \hbox (38.24666pt too wide) in paragraph at lines 109--109
-[]\OT1/cmtt/m/n/10 ## [67]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRU
-E  TRUE  TRUE[] 
- []
-
-
-Overfull \hbox (6.74693pt too wide) in paragraph at lines 109--109
-[]\OT1/cmtt/m/n/10 ## [78]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRU
-E  TRUE[] 
- []
-
-
-Overfull \hbox (174.74547pt too wide) in paragraph at lines 111--111
-[][]\OT1/cmtt/m/n/10 diff_trans[,[][]1[][]][] []%in%[] []rosetta[,[][]3[][]][] 
-[]|[] []diff_trans[,[][]1[][]][] []%in%[] []rosetta[,[][]4[][]][] []|[] []diff_
-trans[,[][]1[][]][] []%in%[] []rosetta[,[][]5[][]][][] 
- []
-
-
-Overfull \hbox (59.24648pt too wide) in paragraph at lines 118--118
-[]\OT1/cmtt/m/n/10 ##  [1] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TR
-UE TRUE TRUE TRUE[] 
- []
-
-
-Overfull \hbox (59.24648pt too wide) in paragraph at lines 118--118
-[]\OT1/cmtt/m/n/10 ## [15] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TR
-UE TRUE TRUE TRUE[] 
- []
-
-
-Overfull \hbox (59.24648pt too wide) in paragraph at lines 118--118
-[]\OT1/cmtt/m/n/10 ## [29] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TR
-UE TRUE TRUE TRUE[] 
- []
-
-Missing character: There is no √ in font cmitt10!
-Missing character: There is no Ø in font cmitt10!
-LaTeX Font Info:    Try loading font information for OMS+cmtt on input line 121
+LaTeX Font Info:    Try loading font information for OMS+cmtt on input line 132
 .
 (/usr/share/R/share/texmf/tex/latex/omscmtt.fd
 File: omscmtt.fd 
 )
-LaTeX Font Info:    Font shape `OMS/cmtt/m/n' in size <10> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 121.
+LaTeX Font Info:    Font shape `OMS/cmtt/m/n' in size <12> not available
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 132.
 
-Overfull \hbox (1.49698pt too wide) in paragraph at lines 123--123
-[]    []\OT1/cmtt/m/n/10 diff_trans[i,[][]2[][]][] []<-[] []rosetta[rosetta[,[]
+Overfull \hbox (36.35019pt too wide) in paragraph at lines 134--134
+[]    []\OT1/cmtt/m/n/12 diff_trans[i,[][]2[][]][] []<-[] []rosetta[rosetta[,[]
 []3[][]][] []%in%[] []diff_trans[i,[][]1[][]],[][]1[][]][][] 
  []
 
 
-Overfull \hbox (1.49698pt too wide) in paragraph at lines 125--125
-[]    []\OT1/cmtt/m/n/10 diff_trans[i,[][]2[][]][] []<-[] []rosetta[rosetta[,[]
+Overfull \hbox (36.35019pt too wide) in paragraph at lines 136--136
+[]    []\OT1/cmtt/m/n/12 diff_trans[i,[][]2[][]][] []<-[] []rosetta[rosetta[,[]
 []4[][]][] []%in%[] []diff_trans[i,[][]1[][]],[][]1[][]][][] 
  []
 
 
-Overfull \hbox (1.49698pt too wide) in paragraph at lines 127--127
-[]    []\OT1/cmtt/m/n/10 diff_trans[i,[][]2[][]][] []<-[] []rosetta[rosetta[,[]
+Overfull \hbox (36.35019pt too wide) in paragraph at lines 138--138
+[]    []\OT1/cmtt/m/n/12 diff_trans[i,[][]2[][]][] []<-[] []rosetta[rosetta[,[]
 []5[][]][] []%in%[] []diff_trans[i,[][]1[][]],[][]1[][]][][] 
  []
 
-Missing character: There is no √ in font cmitt10!
-Missing character: There is no Ø in font cmitt10!
+[1
 
-Overfull \hbox (18.98296pt too wide) in paragraph at lines 131--131
-[][]\OT1/cmtt/m/it/10 # Tradur diff_trans_all ALERTA!!! alguns tenen multiples 
-traduccions![][] 
- []
+{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}]
+! Undefined control sequence.
+\endkframe ...ip \endMakeFramed \at@end@of@kframe 
+                                                  
+l.142 \end{kframe}
+                  
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
 
 
-Overfull \hbox (59.24648pt too wide) in paragraph at lines 134--134
-[]    []\OT1/cmtt/m/n/10 diff_trans_all[i,[][]2[][]][] []<-[] []rosetta[rosetta
+! LaTeX Error: \begin{document} ended by \end{kframe}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.142 \end{kframe}
+                  
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+! Extra \endgroup.
+<recently read> \endgroup 
+                          
+l.142 \end{kframe}
+                  
+Things are pretty mixed up, but I think the worst is over.
+
+
+! LaTeX Error: \begin{document} ended by \end{knitrout}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.143 \end{knitrout}
+                    
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+! Extra \endgroup.
+<recently read> \endgroup 
+                          
+l.143 \end{knitrout}
+                    
+Things are pretty mixed up, but I think the worst is over.
+
+Missing character: There is no √ in font cmr12!
+Missing character: There is no Ø in font cmr12!
+! Missing $ inserted.
+<inserted text> 
+                $
+l.144 Tradu√Ør diff_
+                    trans_all ALERTA!!! alguns tenen multiples traduccions!
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+Package color Info: Redefining color shadecolor on input line 146.
+! Missing $ inserted.
+<inserted text> 
+                $
+l.146 ....969, 0.969}\color{fgcolor}\begin{kframe}
+                                                  
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+! Missing \endgroup inserted.
+<inserted text> 
+                \endgroup 
+l.146 ....969, 0.969}\color{fgcolor}\begin{kframe}
+                                                  
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+! Missing \endgroup inserted.
+<inserted text> 
+                \endgroup 
+l.146 ....969, 0.969}\color{fgcolor}\begin{kframe}
+                                                  
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+
+Overfull \hbox (104.27522pt too wide) in paragraph at lines 150--150
+[]    []\OT1/cmtt/m/n/12 diff_trans_all[i,[][]2[][]][] []<-[] []rosetta[rosetta
 [,[][]3[][]][] []%in%[] []diff_trans_all[i,[][]1[][]],[][]1[][]][[][]1[][]][][]
  
  []
 
 
-Overfull \hbox (59.24648pt too wide) in paragraph at lines 136--136
-[]    []\OT1/cmtt/m/n/10 diff_trans_all[i,[][]2[][]][] []<-[] []rosetta[rosetta
+Overfull \hbox (104.27522pt too wide) in paragraph at lines 152--152
+[]    []\OT1/cmtt/m/n/12 diff_trans_all[i,[][]2[][]][] []<-[] []rosetta[rosetta
 [,[][]4[][]][] []%in%[] []diff_trans_all[i,[][]1[][]],[][]1[][]][[][]1[][]][][]
  
  []
 
 
-Overfull \hbox (59.24648pt too wide) in paragraph at lines 138--138
-[]    []\OT1/cmtt/m/n/10 diff_trans_all[i,[][]2[][]][] []<-[] []rosetta[rosetta
+Overfull \hbox (104.27522pt too wide) in paragraph at lines 154--154
+[]    []\OT1/cmtt/m/n/12 diff_trans_all[i,[][]2[][]][] []<-[] []rosetta[rosetta
 [,[][]5[][]][] []%in%[] []diff_trans_all[i,[][]1[][]],[][]1[][]][[][]1[][]][][]
  
  []
 
+! Undefined control sequence.
+\endkframe ...ip \endMakeFramed \at@end@of@kframe 
+                                                  
+l.158 \end{kframe}
+                  
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
 
-Overfull \hbox (123.98204pt too wide) in paragraph at lines 142--142
-[][]\OT1/cmtt/m/it/10 #### Gens de diff_trans que estan en un o altra llista de
-ls diffential peak callings ####[][] 
- []
+
+! LaTeX Error: \begin{document} ended by \end{kframe}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.158 \end{kframe}
+                  
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+! Extra \endgroup.
+<recently read> \endgroup 
+                          
+l.158 \end{kframe}
+                  
+Things are pretty mixed up, but I think the worst is over.
 
 
-Overfull \hbox (43.49661pt too wide) in paragraph at lines 145--145
-[][]\OT1/cmtt/m/n/10 table[][](diff_trans[,[][]2[][]][] []%in%[] []diff_10G_met
-[] []|[] []diff_trans[,[][]2[][]][] []%in%[] []diff_12B_met)[][] 
+! LaTeX Error: \begin{document} ended by \end{knitrout}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.159 \end{knitrout}
+                    
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+! Extra \endgroup.
+<recently read> \endgroup 
+                          
+l.159 \end{knitrout}
+                    
+Things are pretty mixed up, but I think the worst is over.
+
+! Missing $ inserted.
+<inserted text> 
+                $
+l.160 Gens de diff_
+                   trans que estan en un o altra llista dels diffential peak...
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+Package color Info: Redefining color shadecolor on input line 162.
+! Missing $ inserted.
+<inserted text> 
+                $
+l.162 ....969, 0.969}\color{fgcolor}\begin{kframe}
+                                                  
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+! Missing \endgroup inserted.
+<inserted text> 
+                \endgroup 
+l.162 ....969, 0.969}\color{fgcolor}\begin{kframe}
+                                                  
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+! Missing \endgroup inserted.
+<inserted text> 
+                \endgroup 
+l.162 ....969, 0.969}\color{fgcolor}\begin{kframe}
+                                                  
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+
+Overfull \hbox (135.15024pt too wide) in paragraph at lines 165--165
+[][]\OT1/cmtt/m/n/12 table[][](diff_trans[,[][]2[][]][] []%in%[] []diff_10G_met
+[,[][]1[][]][] []|[] []diff_trans[,[][]2[][]][] []%in%[] []diff_12B_met[,[][]1[
+][]])[][] 
  []
 
 Missing character: There is no √ in font cmitt10!
 Missing character: There is no ≥ in font cmitt10!
 
-Overfull \hbox (74.99634pt too wide) in paragraph at lines 154--154
-[][]\OT1/cmtt/m/n/10 diff_trans[diff_trans[,[][]2[][]][] []%in%[] []diff_10G_me
-t[] []|[] []diff_trans[,[][]2[][]][] []%in%[] []diff_12B_met,][][] 
+Overfull \hbox (172.20026pt too wide) in paragraph at lines 174--174
+[][]\OT1/cmtt/m/n/12 diff_trans[diff_trans[,[][]2[][]][] []%in%[] []diff_10G_me
+t[,[][]1[][]][] []|[] []diff_trans[,[][]2[][]][] []%in%[] []diff_12B_met[,[][]1
+[][]],][][] 
  []
 
 Missing character: There is no √ in font cmitt10!
 Missing character: There is no ≥ in font cmitt10!
 
-Overfull \hbox (90.7462pt too wide) in paragraph at lines 186--186
-[][]\OT1/cmtt/m/n/10 diff_trans[[][]![][](diff_trans[,[][]2[][]][] []%in%[] []d
-iff_10G_met[] []|[] []diff_trans[,[][]2[][]][] []%in%[] []diff_12B_met),][][] 
+Overfull \hbox (190.72527pt too wide) in paragraph at lines 202--202
+[][]\OT1/cmtt/m/n/12 diff_trans[[][]![][](diff_trans[,[][]2[][]][] []%in%[] []d
+iff_10G_met[,[][]1[][]][] []|[] []diff_trans[,[][]2[][]][] []%in%[] []diff_12B_
+met[,[][]1[][]]),][][] 
  []
 
 Missing character: There is no √ in font cmitt10!
 Missing character: There is no ≥ in font cmitt10!
 
-Overfull \hbox (71.4825pt too wide) in paragraph at lines 214--214
-[][]\OT1/cmtt/m/it/10 #### Gens que surten differencialment metilats que sn a l
+Overfull \hbox (128.57874pt too wide) in paragraph at lines 234--234
+[][]\OT1/cmtt/m/it/12 #### Gens que surten differencialment metilats que sn a l
 a llista de trans ####[][] 
  []
 
 
-Overfull \hbox (144.98186pt too wide) in paragraph at lines 232--232
-[][]\OT1/cmtt/m/it/10 #### Gens de diff_trans_all que estan en un o altra llist
+Overfull \hbox (30.0002pt too wide) in paragraph at lines 244--244
+[][]\OT1/cmtt/m/n/12 for[] [](i[] []in[] []diff_10G_met[[][]![][]diff_10G_met[,
+[][]1[][]][] []%in%[] []diff_trans[,[][]2[][]],[][]1[][]])\OMS/cmsy/m/n/12 f[][
+] 
+ []
+
+
+Overfull \hbox (30.0002pt too wide) in paragraph at lines 278--278
+[][]\OT1/cmtt/m/n/12 for[] [](i[] []in[] []diff_12B_met[[][]![][]diff_12B_met[,
+[][]1[][]][] []%in%[] []diff_trans[,[][]2[][]],[][]1[][]])\OMS/cmsy/m/n/12 f[][
+] 
+ []
+
+
+Overfull \hbox (216.77792pt too wide) in paragraph at lines 311--311
+[][]\OT1/cmtt/m/it/12 #### Gens de diff_trans_all que estan en un o altra llist
 a dels diffential peak callings ####[][] 
  []
 
 
-Overfull \hbox (85.49625pt too wide) in paragraph at lines 235--235
-[][]\OT1/cmtt/m/n/10 table[][](diff_trans_all[,[][]2[][]][] []%in%[] []diff_10G
-_met[] []|[] []diff_trans_all[,[][]2[][]][] []%in%[] []diff_12B_met)[][] 
+Overfull \hbox (184.55026pt too wide) in paragraph at lines 314--314
+[][]\OT1/cmtt/m/n/12 table[][](diff_trans_all[,[][]2[][]][] []%in%[] []diff_10G
+_met[,[][]1[][]][] []|[] []diff_trans_all[,[][]2[][]][] []%in%[] []diff_12B_met
+[,[][]1[][]])[][] 
  []
 
 Missing character: There is no √ in font cmitt10!
 Missing character: There is no ≥ in font cmitt10!
 
-Overfull \hbox (137.99579pt too wide) in paragraph at lines 244--244
-[][]\OT1/cmtt/m/n/10 diff_trans_all[diff_trans_all[,[][]2[][]][] []%in%[] []dif
+Overfull \hbox (196.90027pt too wide) in paragraph at lines 323--323
+[][]\OT1/cmtt/m/n/12 diff_trans_all[diff_trans_all[,[][]2[][]][] []%in%[] []dif
 f_10G_met[] []|[] []diff_trans_all[,[][]2[][]][] []%in%[] []diff_12B_met,][][] 
 
  []
@@ -641,8 +602,8 @@ f_10G_met[] []|[] []diff_trans_all[,[][]2[][]][] []%in%[] []diff_12B_met,][][]
 Missing character: There is no √ in font cmitt10!
 Missing character: There is no ≥ in font cmitt10!
 
-Overfull \hbox (153.74565pt too wide) in paragraph at lines 403--403
-[][]\OT1/cmtt/m/n/10 diff_trans_all[[][]![][](diff_trans_all[,[][]2[][]][] []%i
+Overfull \hbox (215.42528pt too wide) in paragraph at lines 331--331
+[][]\OT1/cmtt/m/n/12 diff_trans_all[[][]![][](diff_trans_all[,[][]2[][]][] []%i
 n%[] []diff_10G_met[] []|[] []diff_trans_all[,[][]2[][]][] []%in%[] []diff_12B_
 met),][][] 
  []
@@ -650,45 +611,298 @@ met),][][]
 Missing character: There is no √ in font cmitt10!
 Missing character: There is no ≥ in font cmitt10!
 
-Overfull \hbox (71.4825pt too wide) in paragraph at lines 5524--5524
-[][]\OT1/cmtt/m/it/10 #### Gens que surten differencialment metilats que sn a l
+Overfull \hbox (128.57874pt too wide) in paragraph at lines 5604--5604
+[][]\OT1/cmtt/m/it/12 #### Gens que surten differencialment metilats que sn a l
 a llista de trans ####[][] 
  []
 
-Package color Info: Redefining color shadecolor on input line 5547.
 
-Overfull \hbox (27.74675pt too wide) in paragraph at lines 5573--5573
-[]\OT1/cmtt/m/n/10 ## [1] stats     graphics  grDevices utils     datasets  met
+Overfull \hbox (542.70044pt too wide) in paragraph at lines 5623--5623
+[][]\OT1/cmtt/m/n/12 df_10G[] []<-[] []read.table[][]([][]"/home/lucas/ISGlobal
+/Chip_Seq/DATA/Aligns/q5/Narrow_fe30/Annotation_hits/Tables/10G_1.2B_annotation
+_table.csv"[][],[] []header[] []=[] []TRUE[][])[][] 
+ []
+
+
+Overfull \hbox (548.87544pt too wide) in paragraph at lines 5624--5624
+[][]\OT1/cmtt/m/n/12 df_1.2B[] []<-[] []read.table[][]([][]"/home/lucas/ISGloba
+l/Chip_Seq/DATA/Aligns/q5/Narrow_fe30/Annotation_hits/Tables/1.2B_10G_annotatio
+n_table.csv"[][],[] []header[] []=[] []TRUE[][])[][] 
+ []
+
+
+Overfull \hbox (48.7002pt too wide) in paragraph at lines 5626--5626
+[][]\OT1/cmtt/m/n/12 trueMET_10G[] []<-[] []df_10G[df_10G[][]$[][]Gene.Coverage
+[][]/[][]df_10G[][]$[][]Gene.size[] []>=[] []0.5[][],][][] 
+ []
+
+
+Overfull \hbox (73.4002pt too wide) in paragraph at lines 5627--5627
+[][]\OT1/cmtt/m/n/12 trueMET_1.2B[] []<-[] []df_1.2B[df_1.2B[][]$[][]Gene.Cover
+age[][]/[][]df_1.2B[][]$[][]Gene.size[] []>=[] []0.5[][],][][] 
+ []
+
+
+Overfull \hbox (98.10022pt too wide) in paragraph at lines 5643--5643
+[]\OT1/cmtt/m/n/12 ## [1] PF3D7_0421700 PF3D7_0701100 PF3D7_0711600 PF3D7_07118
+00 PF3D7_0800750[] 
+ []
+
+
+Overfull \hbox (79.57521pt too wide) in paragraph at lines 5643--5643
+[]\OT1/cmtt/m/n/12 ## 33 Levels: PF3D7_0100200 PF3D7_0100300 PF3D7_0215300 ... 
+PF3D7_1371900[] 
+ []
+
+
+Overfull \hbox (98.10022pt too wide) in paragraph at lines 5658--5658
+[]\OT1/cmtt/m/n/12 ## [1] PF3D7_0115050 PF3D7_0221600 PF3D7_0221650 PF3D7_04015
+00 PF3D7_0601800[] 
+ []
+
+
+Overfull \hbox (79.57521pt too wide) in paragraph at lines 5658--5658
+[]\OT1/cmtt/m/n/12 ## 34 Levels: PF3D7_0115000 PF3D7_0115050 PF3D7_0115100 ... 
+PF3D7_1301800[] 
+ []
+
+[2] [3] [4] [5] [6]
+Underfull \vbox (badness 10000) detected at line 5659
+ []
+
+
+Underfull \vbox (badness 10000) detected at line 5659
+ []
+
+[7]
+Underfull \vbox (badness 10000) detected at line 5659
+ []
+
+
+Underfull \vbox (badness 10000) detected at line 5659
+ []
+
+[8]
+Underfull \vbox (badness 10000) detected at line 5659
+ []
+
+
+Underfull \vbox (badness 10000) detected at line 5659
+ []
+
+[9]
+Underfull \vbox (badness 10000) detected at line 5659
+ []
+
+
+Underfull \vbox (badness 10000) detected at line 5659
+ []
+
+[10]
+Underfull \vbox (badness 10000) detected at line 5659
+ []
+
+
+Underfull \vbox (badness 10000) detected at line 5659
+ []
+
+[11]
+Underfull \vbox (badness 10000) detected at line 5659
+ []
+
+
+Underfull \vbox (badness 10000) detected at line 5659
+ []
+
+[12]
+Underfull \vbox (badness 10000) detected at line 5659
+ []
+
+
+Underfull \vbox (badness 10000) detected at line 5659
+ []
+
+[13]
+Underfull \vbox (badness 10000) detected at line 5659
+ []
+
+
+Underfull \vbox (badness 10000) detected at line 5659
+ []
+
+[14]
+Underfull \vbox (badness 10000) detected at line 5659
+ []
+
+
+Underfull \vbox (badness 10000) detected at line 5659
+ []
+
+[15]
+Underfull \vbox (badness 10000) detected at line 5659
+ []
+
+
+Underfull \vbox (badness 10000) detected at line 5659
+ []
+
+[16]
+Underfull \vbox (badness 10000) detected at line 5659
+ []
+
+
+Underfull \vbox (badness 10000) detected at line 5659
+ []
+
+[17]
+Underfull \vbox (badness 10000) detected at line 5659
+ []
+
+
+Underfull \vbox (badness 10000) detected at line 5659
+ []
+
+[18]
+Underfull \vbox (badness 10000) detected at line 5659
+ []
+
+
+Underfull \vbox (badness 10000) detected at line 5659
+ []
+
+[19]
+Underfull \vbox (badness 10000) detected at line 5659
+ []
+
+
+Underfull \vbox (badness 10000) detected at line 5659
+ []
+
+[20]
+Underfull \vbox (badness 10000) detected at line 5659
+ []
+
+
+Underfull \vbox (badness 10000) detected at line 5659
+ []
+
+[21]
+Underfull \vbox (badness 10000) detected at line 5659
+ []
+
+
+Underfull \vbox (badness 10000) detected at line 5659
+ []
+
+[22]
+Underfull \vbox (badness 10000) detected at line 5659
+ []
+
+
+Underfull \vbox (badness 10000) detected at line 5659
+ []
+
+[23]
+Underfull \vbox (badness 10000) detected at line 5659
+ []
+
+
+Underfull \vbox (badness 10000) detected at line 5659
+ []
+
+[24]
+Underfull \vbox (badness 10000) detected at line 5659
+ []
+
+
+Underfull \vbox (badness 10000) detected at line 5659
+ []
+
+[25]
+! Undefined control sequence.
+\endkframe ...ip \endMakeFramed \at@end@of@kframe 
+                                                  
+l.5659 \end{kframe}
+                   
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+
+! LaTeX Error: \begin{document} ended by \end{kframe}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.5659 \end{kframe}
+                   
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+! Extra \endgroup.
+<recently read> \endgroup 
+                          
+l.5659 \end{kframe}
+                   
+Things are pretty mixed up, but I think the worst is over.
+
+
+! LaTeX Error: \begin{document} ended by \end{knitrout}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.5660 \end{knitrout}
+                     
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+! Extra \endgroup.
+<recently read> \endgroup 
+                          
+l.5660 \end{knitrout}
+                     
+Things are pretty mixed up, but I think the worst is over.
+
+Package color Info: Redefining color shadecolor on input line 5665.
+
+Overfull \hbox (48.42522pt too wide) in paragraph at lines 5691--5691
+[]\OT1/cmtt/m/n/12 ## [1] stats     graphics  grDevices utils     datasets  met
 hods   base[] 
  []
 
 
-Overfull \hbox (53.99652pt too wide) in paragraph at lines 5573--5573
-[]\OT1/cmtt/m/n/10 ## [1] magrittr_1.5  tools_3.3.3   stringi_1.1.5 highr_0.6  
+Overfull \hbox (79.30023pt too wide) in paragraph at lines 5691--5691
+[]\OT1/cmtt/m/n/12 ## [1] magrittr_1.5  tools_3.3.3   stringi_1.1.5 highr_0.6  
    stringr_1.2.0[] 
  []
 
-[1
-
-{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}]
-(./trans_diff_compare.aux) ) 
+[26] [27] (./trans_diff_compare.aux) ) 
 Here is how much of TeX's memory you used:
- 5283 strings out of 493029
- 72511 string characters out of 6136234
- 1452708 words of memory out of 5000000
- 8772 multiletter control sequences out of 15000+600000
- 4581 words of font info for 18 fonts, out of 8000000 for 9000
+ 1646 strings out of 493029
+ 23683 string characters out of 6136234
+ 1426663 words of memory out of 5000000
+ 5172 multiletter control sequences out of 15000+600000
+ 7319 words of font info for 27 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 38i,5n,32p,318b,289s stack positions out of 5000i,500n,10000p,200000b,80000s
-</usr/share/texlive/texmf-dist/fonts/type1/public/a
-msfonts/cm/cmbx12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfont
-s/cm/cmitt10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/
-cmr10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.
-pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb>
-Output written on trans_diff_compare.pdf (1 page, 113967 bytes).
+ 38i,6n,57p,340b,252s stack positions out of 5000i,500n,10000p,200000b,80000s
+</usr/share/texlive/texmf-dist/fonts/type
+1/public/amsfonts/cm/cmbx12.pfb></usr/share/texlive/texmf-dist/fonts/type1/publ
+ic/amsfonts/cm/cmitt10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/am
+sfonts/cm/cmmi12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts
+/cm/cmmi8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr
+12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb
+></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt12.pfb>
+Output written on trans_diff_compare.pdf (27 pages, 142378 bytes).
 PDF statistics:
- 28 PDF objects out of 1000 (max. 8388607)
- 19 compressed objects within 1 object stream
+ 119 PDF objects out of 1000 (max. 8388607)
+ 82 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
  1 words of extra memory for PDF output out of 10000 (max. 10000000)
 
