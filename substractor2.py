@@ -107,4 +107,4 @@ def compare_to_input(treat, control):
 if __name__ == "__main__":
 	filenames = sys.argv[1:]
 	print filenames
-	compare_to_input(filenames[0], filenames[1])
+	susbstract_norm_cov(filenames[0], filenames[1])

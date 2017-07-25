@@ -6,7 +6,7 @@ import numpy
 import csv
 import pandas as pd
 
-depths = {"10G":4535787, "1.2B":4997472, "A7K9": 10915415, "C2": 5176848, "E5K9": 9366386}
+depths = {"10G":4535787, "1.2B":4997472, "A7K9": 10915415, "C2": 5176848, "E5K9": 9366386} # comprovar que corespon a q5
 
 def get_coverage(bamfile, chrom, start, stop):
 	bam = pysam.AlignmentFile(bamfile, "rb")
@@ -35,6 +35,11 @@ def check_peaks(csv_file):
 
 	input_file = pd.read_csv(csv_file, sep='\t')
 	input_file["Calculated_FE"] = calc_fe
+	input_file = input_file.drop("Unnamed: 0", axis=1)
+
+	#Filtrat:
+	input_file = input_file[input_file['Calculated_FE'] >= 1.5]
+
 	input_file.to_csv(csv_file.replace(".csv", "_calcFE.csv"), index=False, sep='\t')
 
 if __name__ == "__main__":

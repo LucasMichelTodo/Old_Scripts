@@ -13,7 +13,7 @@ gene_ref = ref.filter(lambda x: x[2] == "gene")
 def annotate_bed(bed_file):
 
 	with open(bed_file.replace(".bed", "_annotated.csv"), "a+") as file:
-		file.write("Gene\tGene-Coverage\t5-cov\t3-cov\tDist\tChrom\tAnnotations\n")
+		file.write("Gene\tGene-Coverage\tGene-Length\t5-cov\t3-cov\tDist\tChrom\tAnnotations\n")
 
 	bed = py.BedTool(bed_file)
 
@@ -32,8 +32,8 @@ def annotate_bed(bed_file):
 
 			with open(bed_file.replace(".bed", "_annotated.csv"), "a+") as file:
 				file.write(peak["gene"].split(";")[0].replace("ID=","")+"\t")
-				file.write(peak["overlap"]+"\t")
-
+				file.write(peak["overlap"]+"\t"+str(peak["gstop"]-peak["gstart"])+"\t")
+ 
 				if peak["gstart"] - peak["start"] >= 0:
 					if peak["gstrand"] == "+":
 						tss = str(peak["gstart"] - peak["start"])
@@ -61,7 +61,7 @@ def annotate_bed(bed_file):
 
 			for line in nearest_gene_up:
 				with open(bed_file.replace(".bed", "_annotated.csv"), "a+") as file:
-					file.write(line[28].split(";")[0].replace("ID=","")+"\t"+str(0)+"\t")
+					file.write(line[28].split(";")[0].replace("ID=","")+"\t"+str(0)+"\t"+str(int(line[24])-int(line[23]))+"\t")
 					
 					if line[26] == "+":
 						tss = str(0)
@@ -77,7 +77,7 @@ def annotate_bed(bed_file):
 
 			for line in nearest_gene_dw:
 				with open(bed_file.replace(".bed", "_annotated.csv"), "a+") as file:
-					file.write(line[28].split(";")[0].replace("ID=","")+"\t"+str(0)+"\t")
+					file.write(line[28].split(";")[0].replace("ID=","")+"\t"+str(0)+"\t"+str(int(line[24])-int(line[23]))+"\t")
 					
 					if line[26] == "-":
 						tss = str(0)
