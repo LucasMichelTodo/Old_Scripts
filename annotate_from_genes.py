@@ -27,11 +27,14 @@ def annotate_from_genes(bed_file):
 		post = round(overlap(int(line[4])-1000, int(line[4]), int(line[10]), int(line[11])) / float(10), 2)
 		
 		if line[6] == "+":
-			with open(bed_file.replace(".bed", "_annotated.csv"), "a+") as file:
-				file.write(line[8].split(";")[0].replace("ID=","")+"\t"+str(gene)+"\t"+str(pre)+"\t"+str(post)+"\t"+line[0]+"\t"+line[8]+"\n")
+			cov5 = pre
+			cov3 = post
 		else:
-			with open(bed_file.replace(".bed", "_annotated.csv"), "a+") as file:
-				file.write(line[8].split(";")[0].replace("ID=","")+"\t"+str(gene)+"\t"+str(post)+"\t"+str(pre)+"\t"+line[0]+"\t"+line[8]+"\n")
+			cov5 = post
+			cov3 = pre
+
+		with open(bed_file.replace(".bed", "_annotated.csv"), "a+") as file:
+			file.write(line[8].split(";")[0].replace("ID=","")+"\t"+str(gene)+"\t"+str(cov5)+"\t"+str(cov3)+"\t"+line[0]+"\t"+line[8]+"\n")
 
 
 if __name__ == "__main__":
