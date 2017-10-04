@@ -11,7 +11,7 @@ if __name__ == "__main__":
 	pairs = itertools.permutations(samples, 2)
 
 	for pair in pairs:
-		cmd = "peak_overlapper.py -p1 {} -p2 {} -f 3" .format(pair[0]+"_"+pair[1]+"_"+"peaks.xls", pair[0]+"_"+"peaks.xls")
+		cmd = "peak_overlapper.py -p1 {} -p2 {}" .format(pair[0]+"_"+pair[1]+"_"+"peaks.xls", "/home/lucas/ISGlobal/Chip_Seq/DATA/Aligns/q5/Narrow_fe15/XLS_individuals/"+pair[0]+"_"+"peaks.xls")
 		print cmd
 		sp.call(cmd, shell=True)
 		

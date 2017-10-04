@@ -27,6 +27,7 @@ def check_peaks(csv_file):
 
 	with open(csv_file.replace(".csv", ".bed"), 'rb') as csvfile:
 		peaks = csv.reader(csvfile, delimiter='\t')
+
 		calc_fe = []
 		for line in peaks:		
 			cov1 = get_coverage(bam1, line[0], int(line[1]), int(line[2]))
