@@ -70,7 +70,8 @@
 \clearpage
 
 
-
+\section{Generalitats}
+En tots els gràfics la columna de més a l'esquerra correspon als valors de diferència de transcripció (1.2B - 10G). Les columnes següents corresponen a algun paràmetre relacionat amb la metilació (percentatge del gen metilat, coverage mitjà...). En alguns casos hi ha valor de metilació per a 1.2B i per a 10G i en altres una sola columna que correspon a la diferència de metilació.
 \section{Heatmaps Percentatge de Coverge}
 \subsection{Gene-body}
 \begin{knitrout}
@@ -195,6 +196,54 @@
 
 \end{knitrout}
 \clearpage
+\subsection{Diferència de Coverage a 5', filtrat per diferència de transcripció}
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
+
+{\centering \includegraphics[width=.9\linewidth]{figure/minimal-_heat_cov_diff_5-1} 
+
+}
+
+
+
+\end{knitrout}
+\clearpage
+\subsection{Diferència de Coverage a genebody, filtrat per diferència de transcripció}
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
+
+{\centering \includegraphics[width=.9\linewidth]{figure/minimal-_heat_cov_diff_body-1} 
+
+}
+
+
+
+\end{knitrout}
+\clearpage
+\subsection{Diferència de Coverage 5'genebody, filtrat per diferència de transcripció}
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
+
+{\centering \includegraphics[width=.9\linewidth]{figure/minimal-_heat_cov_diff_body5-1} 
+
+}
+
+
+
+\end{knitrout}
+\clearpage
+\subsection{Diferència de Coverage a 3', filtrat per diferència de transcripció}
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
+
+{\centering \includegraphics[width=.9\linewidth]{figure/minimal-_heat_cov_diff_3-1} 
+
+}
+
+
+
+\end{knitrout}
+\clearpage
 \subsection{Diferència de Coverage, filtrat per diferència de metilació}
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
@@ -207,8 +256,64 @@
 
 \end{knitrout}
 
+\clearpage
+\section{Coverage a pics diferencials}
+
+\subsection{Heatmaps}
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
+
+{\centering \includegraphics[width=.9\linewidth]{figure/minimal-heat_difpeak_cov-1} 
+
+}
 
 
+
+\end{knitrout}
+\clearpage
+\subsection{Diferència de Metilació}
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
+
+{\centering \includegraphics[width=.9\linewidth]{figure/minimal-heat_difpeak_cov_dif-1} 
+
+}
+
+
+
+\end{knitrout}
+\clearpage
+\section{Multiple-regression Model}
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in `[<-.data.frame`(`*tmp*`, "{}10G\_cov"{}, value = c(219.498997996, : replacement has 94 rows, data has 93}}
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in `[<-.data.frame`(`*tmp*`, "{}1.2B\_cov"{}, value = c(95.9679358717, : replacement has 94 rows, data has 93}}
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in model.frame.default(formula = met\_cov\_df\$Trans \textasciitilde{} met\_cov\_df\$`10G` + : invalid type (NULL) for variable 'met\_cov\_df\$`10G\_cov`'}}
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in model.frame.default(formula = met\_cov\_df\$Trans \textasciitilde{} met\_cov\_df\$`10G` + : invalid type (NULL) for variable 'met\_cov\_df\$`10G\_cov`'}}
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in model.frame.default(formula = met\_cov\_df\$Trans \textasciitilde{} met\_cov\_df\$`1.2B` + : invalid type (NULL) for variable 'met\_cov\_df\$`1.2B\_cov`'}}
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in fitted(fit\_all): object 'fit\_all' not found}}
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in fitted(fit\_10G): object 'fit\_10G' not found}}
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in fitted(fit\_12B): object 'fit\_12B' not found}}
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in plot(fit\_all\_df): object 'fit\_all\_df' not found}}
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in plot(fit\_10G\_df): object 'fit\_10G\_df' not found}}
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in plot(fit\_12B\_df): object 'fit\_12B\_df' not found}}
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in rownames(fit\_all\_df) <- met\_cov\_df\$id: object 'fit\_all\_df' not found}}
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in as.matrix(fit\_all\_df): object 'fit\_all\_df' not found}}\end{kframe}
+\end{knitrout}
 
 
 \end{document}

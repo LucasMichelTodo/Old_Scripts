@@ -1,9 +1,9 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2017.9.8)  12 OCT 2017 10:17
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2017.9.8)  12 OCT 2017 10:48
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
-**Results.tex
-(./Results.tex
+**Results2.tex
+(./Results2.tex
 LaTeX2e <2016/02/01>
 Babel <3.9q> and hyphenation patterns for 81 language(s) loaded.
 (/usr/share/texlive/texmf-dist/tex/latex/base/article.cls
@@ -507,8 +507,8 @@ Package hyperref Info: Option `colorlinks' set `true' on input line 61.
 (/usr/share/texlive/texmf-dist/tex/latex/upquote/upquote.sty
 Package: upquote 2012/04/19 v1.3 upright-quote and grave-accent glyphs in verba
 tim
-) (./Results.aux)
-\openout1 = `Results.aux'.
+) (./Results2.aux)
+\openout1 = `Results2.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 63.
 LaTeX Font Info:    ... okay on input line 63.
@@ -568,9 +568,9 @@ LaTeX Info: Redefining \ref on input line 63.
 LaTeX Info: Redefining \pageref on input line 63.
 LaTeX Info: Redefining \nameref on input line 63.
 
-(./Results.out) (./Results.out)
+(./Results2.out) (./Results2.out)
 \@outlinefile=\write3
-\openout3 = `Results.out'.
+\openout3 = `Results2.out'.
 
 LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <12> on input line 69.
@@ -578,289 +578,297 @@ LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <8> on input line 69.
 LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <6> on input line 69.
- (./Results.toc
+ (./Results2.toc
 LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <7> on input line 3.
 LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <5> on input line 3.
 )
 \tf@toc=\write4
-\openout4 = `Results.toc'.
+\openout4 = `Results2.toc'.
 
  [1
 
-{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}]
-Package color Info: Redefining color shadecolor on input line 78.
+{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}] [2] [3
 
-<figure/minimal-heatmap_gene-1.pdf, id=125, 722.7pt x 722.7pt>
-File: figure/minimal-heatmap_gene-1.pdf Graphic file (type pdf)
+]
+Package color Info: Redefining color shadecolor on input line 87.
 
-<use figure/minimal-heatmap_gene-1.pdf>
-Package pdftex.def Info: figure/minimal-heatmap_gene-1.pdf used on input line 8
-0.
-(pdftex.def)             Requested size: 310.4979pt x 310.5013pt.
- [2
-
- <./figure/minimal-heatmap_gene-1.pdf>]
-Package color Info: Redefining color shadecolor on input line 90.
- <figure/minimal-heatmap_tss-1.pdf, id=136, 722.7pt x 722.7pt>
-File: figure/minimal-heatmap_tss-1.pdf Graphic file (type pdf)
-
-<use figure/minimal-heatmap_tss-1.pdf>
-Package pdftex.def Info: figure/minimal-heatmap_tss-1.pdf used on input line 92
-.
-(pdftex.def)             Requested size: 310.4979pt x 310.5013pt.
- [3
-
- <./figure/minimal-heatmap_tss-1.pdf>]
-Package color Info: Redefining color shadecolor on input line 102.
-<figure/minimal-heatmap_gene_tss-1.pdf, id=147, 722.7pt x 722.7pt>
-File: figure/minimal-heatmap_gene_tss-1.pdf Graphic file (type pdf)
-
-<use figure/minimal-heatmap_gene_tss-1.pdf>
-Package pdftex.def Info: figure/minimal-heatmap_gene_tss-1.pdf used on input li
-ne 104.
-(pdftex.def)             Requested size: 310.4979pt x 310.5013pt.
- [4
-
- <./figure/minimal-heatmap_gene_tss-1.pdf>]
-Package color Info: Redefining color shadecolor on input line 114.
- <figure/minimal-heatmap_tts-1.pdf, id=159, 722.7pt x 722.7pt>
-File: figure/minimal-heatmap_tts-1.pdf Graphic file (type pdf)
-
-<use figure/minimal-heatmap_tts-1.pdf>
-Package pdftex.def Info: figure/minimal-heatmap_tts-1.pdf used on input line 11
-6.
-(pdftex.def)             Requested size: 310.4979pt x 310.5013pt.
- [5
-
- <./figure/minimal-heatmap_tts-1.pdf>]
-Package color Info: Redefining color shadecolor on input line 126.
-<figure/minimal-heatmap_all-1.pdf, id=170, 722.7pt x 722.7pt>
+<figure/minimal-heatmap_all-1.pdf, id=153, 722.7pt x 722.7pt>
 File: figure/minimal-heatmap_all-1.pdf Graphic file (type pdf)
 
 <use figure/minimal-heatmap_all-1.pdf>
-Package pdftex.def Info: figure/minimal-heatmap_all-1.pdf used on input line 12
-8.
+Package pdftex.def Info: figure/minimal-heatmap_all-1.pdf used on input line 89
+.
 (pdftex.def)             Requested size: 310.4979pt x 310.5013pt.
- [6
+ [4
 
  <./figure/minimal-heatmap_all-1.pdf>]
-Package color Info: Redefining color shadecolor on input line 141.
-<figure/minimal-heat_cov_gene-1.pdf, id=181, 722.7pt x 722.7pt>
-File: figure/minimal-heat_cov_gene-1.pdf Graphic file (type pdf)
-
-<use figure/minimal-heat_cov_gene-1.pdf>
-Package pdftex.def Info: figure/minimal-heat_cov_gene-1.pdf used on input line 
-143.
-(pdftex.def)             Requested size: 310.4979pt x 310.5013pt.
- [7
-
- <./figure/minimal-heat_cov_gene-1.pdf>]
-Package color Info: Redefining color shadecolor on input line 153.
- <figure/minimal-heat_cov_tss-1.pdf, id=193, 722.7pt x 722.7pt>
-File: figure/minimal-heat_cov_tss-1.pdf Graphic file (type pdf)
-
-<use figure/minimal-heat_cov_tss-1.pdf>
-Package pdftex.def Info: figure/minimal-heat_cov_tss-1.pdf used on input line 1
-55.
-(pdftex.def)             Requested size: 310.4979pt x 310.5013pt.
- [8
-
- <./figure/minimal-heat_cov_tss-1.pdf>]
-Package color Info: Redefining color shadecolor on input line 165.
- <figure/minimal-heat_cov_tss_gene-1.pdf, id=204, 722.7pt x 722.7pt>
+Package color Info: Redefining color shadecolor on input line 105.
+<figure/minimal-heat_cov_tss_gene-1.pdf, id=165, 722.7pt x 722.7pt>
 File: figure/minimal-heat_cov_tss_gene-1.pdf Graphic file (type pdf)
 
 <use figure/minimal-heat_cov_tss_gene-1.pdf>
 Package pdftex.def Info: figure/minimal-heat_cov_tss_gene-1.pdf used on input l
-ine 167.
+ine 107.
 (pdftex.def)             Requested size: 310.4979pt x 310.5013pt.
- [9
+ [5
 
  <./figure/minimal-heat_cov_tss_gene-1.pdf>]
-Package color Info: Redefining color shadecolor on input line 177.
- <figure/minimal-heat_cov_tts-1.pdf, id=215, 722.7pt x 722.7pt>
-File: figure/minimal-heat_cov_tts-1.pdf Graphic file (type pdf)
-
-<use figure/minimal-heat_cov_tts-1.pdf>
-Package pdftex.def Info: figure/minimal-heat_cov_tts-1.pdf used on input line 1
-79.
-(pdftex.def)             Requested size: 310.4979pt x 310.5013pt.
- [10
-
- <./figure/minimal-heat_cov_tts-1.pdf>]
-Package color Info: Redefining color shadecolor on input line 189.
- <figure/minimal-_heat_cov_diff-1.pdf, id=226, 722.7pt x 722.7pt>
+Package color Info: Redefining color shadecolor on input line 122.
+ <figure/minimal-_heat_cov_diff-1.pdf, id=176, 722.7pt x 722.7pt>
 File: figure/minimal-_heat_cov_diff-1.pdf Graphic file (type pdf)
 
 <use figure/minimal-_heat_cov_diff-1.pdf>
 Package pdftex.def Info: figure/minimal-_heat_cov_diff-1.pdf used on input line
- 191.
+ 124.
 (pdftex.def)             Requested size: 310.4979pt x 310.5013pt.
- [11
+ [6
 
  <./figure/minimal-_heat_cov_diff-1.pdf>]
-Package color Info: Redefining color shadecolor on input line 201.
- <figure/minimal-_heat_cov_diff_5-1.pdf, id=237, 722.7pt x 722.7pt>
-File: figure/minimal-_heat_cov_diff_5-1.pdf Graphic file (type pdf)
-
-<use figure/minimal-_heat_cov_diff_5-1.pdf>
-Package pdftex.def Info: figure/minimal-_heat_cov_diff_5-1.pdf used on input li
-ne 203.
-(pdftex.def)             Requested size: 310.4979pt x 310.5013pt.
- [12
-
- <./figure/minimal-_heat_cov_diff_5-1.pdf>]
-Overfull \hbox (10.37637pt too wide) in paragraph at lines 211--211
-[]\OT1/cmr/bx/n/12 Difer^^Rencia de Cov-er-age a gene-body, fil-trat per difer^
-^Rencia
- []
-
-Package color Info: Redefining color shadecolor on input line 213.
-<figure/minimal-_heat_cov_diff_body-1.pdf, id=248, 722.7pt x 722.7pt>
-File: figure/minimal-_heat_cov_diff_body-1.pdf Graphic file (type pdf)
-
-<use figure/minimal-_heat_cov_diff_body-1.pdf>
-Package pdftex.def Info: figure/minimal-_heat_cov_diff_body-1.pdf used on input
- line 215.
-(pdftex.def)             Requested size: 310.4979pt x 310.5013pt.
- [13
-
- <./figure/minimal-_heat_cov_diff_body-1.pdf>]
-Overfull \hbox (11.31387pt too wide) in paragraph at lines 223--223
-[]\OT1/cmr/bx/n/12 Difer^^Rencia de Cov-er-age 5'gene-body, fil-trat per difer^
-^Rencia
- []
-
-Package color Info: Redefining color shadecolor on input line 225.
-<figure/minimal-_heat_cov_diff_body5-1.pdf, id=260, 722.7pt x 722.7pt>
-File: figure/minimal-_heat_cov_diff_body5-1.pdf Graphic file (type pdf)
-
-<use figure/minimal-_heat_cov_diff_body5-1.pdf>
-Package pdftex.def Info: figure/minimal-_heat_cov_diff_body5-1.pdf used on inpu
-t line 227.
-(pdftex.def)             Requested size: 310.4979pt x 310.5013pt.
- [14
-
- <./figure/minimal-_heat_cov_diff_body5-1.pdf>]
-Package color Info: Redefining color shadecolor on input line 237.
-
-<figure/minimal-_heat_cov_diff_3-1.pdf, id=271, 722.7pt x 722.7pt>
-File: figure/minimal-_heat_cov_diff_3-1.pdf Graphic file (type pdf)
-
-<use figure/minimal-_heat_cov_diff_3-1.pdf>
-Package pdftex.def Info: figure/minimal-_heat_cov_diff_3-1.pdf used on input li
-ne 239.
-(pdftex.def)             Requested size: 310.4979pt x 310.5013pt.
- [15
-
- <./figure/minimal-_heat_cov_diff_3-1.pdf>]
-Package color Info: Redefining color shadecolor on input line 249.
-
-<figure/minimal-heat_cov_diff_filter-1.pdf, id=283, 722.7pt x 722.7pt>
+Package color Info: Redefining color shadecolor on input line 135.
+ <figure/minimal-heat_cov_diff_filter-1.pdf, id=187, 722.7pt x 722.7pt>
 File: figure/minimal-heat_cov_diff_filter-1.pdf Graphic file (type pdf)
 
 <use figure/minimal-heat_cov_diff_filter-1.pdf>
 Package pdftex.def Info: figure/minimal-heat_cov_diff_filter-1.pdf used on inpu
-t line 251.
+t line 137.
 (pdftex.def)             Requested size: 310.4979pt x 310.5013pt.
- [16
+ [7
 
  <./figure/minimal-heat_cov_diff_filter-1.pdf>]
-Package color Info: Redefining color shadecolor on input line 264.
+Package color Info: Redefining color shadecolor on input line 155.
 
-<figure/minimal-heat_difpeak_cov-1.pdf, id=294, 722.7pt x 722.7pt>
+<figure/minimal-heat_difpeak_cov-1.pdf, id=199, 722.7pt x 722.7pt>
 File: figure/minimal-heat_difpeak_cov-1.pdf Graphic file (type pdf)
 
 <use figure/minimal-heat_difpeak_cov-1.pdf>
 Package pdftex.def Info: figure/minimal-heat_difpeak_cov-1.pdf used on input li
-ne 266.
+ne 157.
 (pdftex.def)             Requested size: 310.4979pt x 310.5013pt.
- [17
+ [8
 
  <./figure/minimal-heat_difpeak_cov-1.pdf>]
-Package color Info: Redefining color shadecolor on input line 276.
+Package color Info: Redefining color shadecolor on input line 168.
 
-<figure/minimal-heat_difpeak_cov_dif-1.pdf, id=305, 722.7pt x 722.7pt>
+Overfull \hbox (0.55612pt too wide) in paragraph at lines 166--169
+\OT1/cmr/m/n/10 En aque-sts gr^^Rafics tenim una sola columna a la dreta que co
+r-re-spon a la difer^^Rencia
+ []
+
+<figure/minimal-heat_difpeak_cov_dif-1.pdf, id=210, 722.7pt x 722.7pt>
 File: figure/minimal-heat_difpeak_cov_dif-1.pdf Graphic file (type pdf)
 
 <use figure/minimal-heat_difpeak_cov_dif-1.pdf>
 Package pdftex.def Info: figure/minimal-heat_difpeak_cov_dif-1.pdf used on inpu
-t line 278.
+t line 170.
+(pdftex.def)             Requested size: 310.4979pt x 310.5013pt.
+ [9
+
+ <./figure/minimal-heat_difpeak_cov_dif-1.pdf>]
+Package color Info: Redefining color shadecolor on input line 185.
+
+<figure/minimal-heatmap_gene-1.pdf, id=221, 722.7pt x 722.7pt>
+File: figure/minimal-heatmap_gene-1.pdf Graphic file (type pdf)
+
+<use figure/minimal-heatmap_gene-1.pdf>
+Package pdftex.def Info: figure/minimal-heatmap_gene-1.pdf used on input line 1
+87.
+(pdftex.def)             Requested size: 310.4979pt x 310.5013pt.
+ [10
+
+ <./figure/minimal-heatmap_gene-1.pdf>]
+Package color Info: Redefining color shadecolor on input line 197.
+ <figure/minimal-heatmap_tss-1.pdf, id=232, 722.7pt x 722.7pt>
+File: figure/minimal-heatmap_tss-1.pdf Graphic file (type pdf)
+
+<use figure/minimal-heatmap_tss-1.pdf>
+Package pdftex.def Info: figure/minimal-heatmap_tss-1.pdf used on input line 19
+9.
+(pdftex.def)             Requested size: 310.4979pt x 310.5013pt.
+ [11
+
+ <./figure/minimal-heatmap_tss-1.pdf>]
+Package color Info: Redefining color shadecolor on input line 209.
+ <figure/minimal-heatmap_gene_tss-1.pdf, id=243, 722.7pt x 722.7pt>
+File: figure/minimal-heatmap_gene_tss-1.pdf Graphic file (type pdf)
+
+<use figure/minimal-heatmap_gene_tss-1.pdf>
+Package pdftex.def Info: figure/minimal-heatmap_gene_tss-1.pdf used on input li
+ne 211.
+(pdftex.def)             Requested size: 310.4979pt x 310.5013pt.
+ [12
+
+ <./figure/minimal-heatmap_gene_tss-1.pdf>]
+Package color Info: Redefining color shadecolor on input line 221.
+ <figure/minimal-heatmap_tts-1.pdf, id=254, 722.7pt x 722.7pt>
+File: figure/minimal-heatmap_tts-1.pdf Graphic file (type pdf)
+
+<use figure/minimal-heatmap_tts-1.pdf>
+Package pdftex.def Info: figure/minimal-heatmap_tts-1.pdf used on input line 22
+3.
+(pdftex.def)             Requested size: 310.4979pt x 310.5013pt.
+ [13
+
+ <./figure/minimal-heatmap_tts-1.pdf>]
+Package color Info: Redefining color shadecolor on input line 235.
+ <figure/minimal-heat_cov_gene-1.pdf, id=266, 722.7pt x 722.7pt>
+File: figure/minimal-heat_cov_gene-1.pdf Graphic file (type pdf)
+
+<use figure/minimal-heat_cov_gene-1.pdf>
+Package pdftex.def Info: figure/minimal-heat_cov_gene-1.pdf used on input line 
+237.
+(pdftex.def)             Requested size: 310.4979pt x 310.5013pt.
+ [14
+
+ <./figure/minimal-heat_cov_gene-1.pdf>]
+Package color Info: Redefining color shadecolor on input line 247.
+ <figure/minimal-heat_cov_tss-1.pdf, id=277, 722.7pt x 722.7pt>
+File: figure/minimal-heat_cov_tss-1.pdf Graphic file (type pdf)
+
+<use figure/minimal-heat_cov_tss-1.pdf>
+Package pdftex.def Info: figure/minimal-heat_cov_tss-1.pdf used on input line 2
+49.
+(pdftex.def)             Requested size: 310.4979pt x 310.5013pt.
+ [15
+
+ <./figure/minimal-heat_cov_tss-1.pdf>]
+Package color Info: Redefining color shadecolor on input line 260.
+ <figure/minimal-heat_cov_tts-1.pdf, id=289, 722.7pt x 722.7pt>
+File: figure/minimal-heat_cov_tts-1.pdf Graphic file (type pdf)
+
+<use figure/minimal-heat_cov_tts-1.pdf>
+Package pdftex.def Info: figure/minimal-heat_cov_tts-1.pdf used on input line 2
+62.
+(pdftex.def)             Requested size: 310.4979pt x 310.5013pt.
+ [16
+
+
+ <./figure/minimal-heat_cov_tts-1.pdf>]
+Package color Info: Redefining color shadecolor on input line 274.
+ <figure/minimal-_heat_cov_diff_5-1.pdf, id=300, 722.7pt x 722.7pt>
+File: figure/minimal-_heat_cov_diff_5-1.pdf Graphic file (type pdf)
+
+<use figure/minimal-_heat_cov_diff_5-1.pdf>
+Package pdftex.def Info: figure/minimal-_heat_cov_diff_5-1.pdf used on input li
+ne 276.
+(pdftex.def)             Requested size: 310.4979pt x 310.5013pt.
+ [17
+
+ <./figure/minimal-_heat_cov_diff_5-1.pdf>]
+Overfull \hbox (10.37637pt too wide) in paragraph at lines 284--284
+[]\OT1/cmr/bx/n/12 Difer^^Rencia de Cov-er-age a gene-body, fil-trat per difer^
+^Rencia
+ []
+
+Package color Info: Redefining color shadecolor on input line 286.
+<figure/minimal-_heat_cov_diff_body-1.pdf, id=311, 722.7pt x 722.7pt>
+File: figure/minimal-_heat_cov_diff_body-1.pdf Graphic file (type pdf)
+
+<use figure/minimal-_heat_cov_diff_body-1.pdf>
+Package pdftex.def Info: figure/minimal-_heat_cov_diff_body-1.pdf used on input
+ line 288.
 (pdftex.def)             Requested size: 310.4979pt x 310.5013pt.
  [18
 
- <./figure/minimal-heat_difpeak_cov_dif-1.pdf>]
-Package color Info: Redefining color shadecolor on input line 288.
-LaTeX Font Info:    Font shape `OT1/cmtt/bx/n' in size <10> not available
-(Font)              Font shape `OT1/cmtt/m/n' tried instead on input line 291.
+ <./figure/minimal-_heat_cov_diff_body-1.pdf>]
+Overfull \hbox (11.31387pt too wide) in paragraph at lines 296--296
+[]\OT1/cmr/bx/n/12 Difer^^Rencia de Cov-er-age 5'gene-body, fil-trat per difer^
+^Rencia
+ []
 
-Overfull \hbox (36.77666pt too wide) in paragraph at lines 291--292
+Package color Info: Redefining color shadecolor on input line 298.
+<figure/minimal-_heat_cov_diff_body5-1.pdf, id=322, 722.7pt x 722.7pt>
+File: figure/minimal-_heat_cov_diff_body5-1.pdf Graphic file (type pdf)
+
+<use figure/minimal-_heat_cov_diff_body5-1.pdf>
+Package pdftex.def Info: figure/minimal-_heat_cov_diff_body5-1.pdf used on inpu
+t line 300.
+(pdftex.def)             Requested size: 310.4979pt x 310.5013pt.
+ [19
+
+ <./figure/minimal-_heat_cov_diff_body5-1.pdf>]
+Package color Info: Redefining color shadecolor on input line 310.
+
+<figure/minimal-_heat_cov_diff_3-1.pdf, id=334, 722.7pt x 722.7pt>
+File: figure/minimal-_heat_cov_diff_3-1.pdf Graphic file (type pdf)
+
+<use figure/minimal-_heat_cov_diff_3-1.pdf>
+Package pdftex.def Info: figure/minimal-_heat_cov_diff_3-1.pdf used on input li
+ne 312.
+(pdftex.def)             Requested size: 310.4979pt x 310.5013pt.
+ [20
+
+ <./figure/minimal-_heat_cov_diff_3-1.pdf>]
+Package color Info: Redefining color shadecolor on input line 325.
+LaTeX Font Info:    Font shape `OT1/cmtt/bx/n' in size <10> not available
+(Font)              Font shape `OT1/cmtt/m/n' tried instead on input line 328.
+
+Overfull \hbox (36.77666pt too wide) in paragraph at lines 328--329
 []\OT1/cmtt/m/n/10 ## Error in `[<-.data.frame`(`*tmp*`, "10G[]cov", value = c(
 219.498997996,
  []
 
 
-Overfull \hbox (42.02661pt too wide) in paragraph at lines 293--294
+Overfull \hbox (42.02661pt too wide) in paragraph at lines 330--331
 []\OT1/cmtt/m/n/10 ## Error in `[<-.data.frame`(`*tmp*`, "1.2B[]cov", value = c
 (95.9679358717,
  []
 
 
-Overfull \hbox (53.36647pt too wide) in paragraph at lines 295--296
+Overfull \hbox (53.36647pt too wide) in paragraph at lines 332--333
 []\OT1/cmtt/m/n/10 ## Error in model.frame.default(formula = met[]cov[]df$Trans
  ~ met[]cov[]df$`10G`
  []
 
 
-Overfull \hbox (53.36647pt too wide) in paragraph at lines 297--298
+Overfull \hbox (53.36647pt too wide) in paragraph at lines 334--335
 []\OT1/cmtt/m/n/10 ## Error in model.frame.default(formula = met[]cov[]df$Trans
  ~ met[]cov[]df$`10G`
  []
 
 
-Overfull \hbox (58.61642pt too wide) in paragraph at lines 299--300
+Overfull \hbox (58.61642pt too wide) in paragraph at lines 336--337
 []\OT1/cmtt/m/n/10 ## Error in model.frame.default(formula = met[]cov[]df$Trans
  ~ met[]cov[]df$`1.2B`
  []
 
 
-Overfull \hbox (18.92674pt too wide) in paragraph at lines 313--314
+Overfull \hbox (18.92674pt too wide) in paragraph at lines 350--351
 []\OT1/cmtt/m/n/10 ## Error in rownames(fit[]all[]df) <- met[]cov[]df$id: objec
 t 'fit[]all[]df'
  []
 
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 319.
-[19
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 356.
+[21
 
 ]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 319.
- (./Results.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 319.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 319.
-Package rerunfilecheck Info: File `Results.out' has not changed.
-(rerunfilecheck)             Checksum: 3A92E2E3BFA73516C912671C05FB236F;1726.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 319.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 356.
+ (./Results2.aux)
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 356.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 356.
+Package rerunfilecheck Info: File `Results2.out' has not changed.
+(rerunfilecheck)             Checksum: 19C94F5917A6BD717720E8D13F70B7CD;1985.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 356.
  ) 
 Here is how much of TeX's memory you used:
- 5647 strings out of 493029
- 83745 string characters out of 6136235
- 167887 words of memory out of 5000000
- 9073 multiletter control sequences out of 15000+600000
+ 5658 strings out of 493029
+ 83860 string characters out of 6136235
+ 168887 words of memory out of 5000000
+ 9078 multiletter control sequences out of 15000+600000
  8063 words of font info for 29 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 29i,7n,28p,416b,320s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 29i,7n,28p,676b,320s stack positions out of 5000i,500n,10000p,200000b,80000s
 </usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></us
 r/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/shar
 e/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texli
 ve/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/share/texlive/texm
 f-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/share/texlive/texmf-dist/
 fonts/type1/public/amsfonts/cm/cmtt10.pfb>
-Output written on Results.pdf (19 pages, 193157 bytes).
+Output written on Results2.pdf (21 pages, 199075 bytes).
 PDF statistics:
- 356 PDF objects out of 1000 (max. 8388607)
- 292 compressed objects within 3 object streams
- 43 named destinations out of 1000 (max. 500000)
- 262 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 386 PDF objects out of 1000 (max. 8388607)
+ 319 compressed objects within 4 object streams
+ 49 named destinations out of 1000 (max. 500000)
+ 294 words of extra memory for PDF output out of 10000 (max. 10000000)
 
