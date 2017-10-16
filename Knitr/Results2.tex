@@ -81,7 +81,7 @@ En TOTS els gràfics la columna de més a l'esquerra correspon als valors de dif
 %---------------------------------------------------------PERCENATGE-----------------------------------------------------------------------
 
 \section{Heatmaps Percentatge de Coverage}
-En aquest gràfics els valors corresponents a les columnes 1.2B i 10G corresponen al percentatge del gen covert en pics diferencials. Per a obtenir aquests valors s'han unificat les dues llistes de pics differencials annotats. Tant per a 1.2B com a 10G els gens que corresponen a "pics de l'altra llista" tenen valors de 0.
+En aquest gràfics els valors corresponents a les columnes 1.2B i 10G corresponen al percentatge del gen cobert en pics diferencials. Per a obtenir aquests valors s'han unificat les dues llistes de pics differencials annotats. Tant per a 1.2B com a 10G els gens que corresponen a "pics de l'altra llista" tenen valors de 0.
 \subsection{TSS+Gene+TTS}
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
@@ -93,11 +93,22 @@ En aquest gràfics els valors corresponents a les columnes 1.2B i 10G correspone
 
 
 \end{knitrout}
+\clearpage
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
+
+{\centering \includegraphics[width=.9\linewidth]{figure/minimal-heatmap_all_metord-1} 
+
+}
+
+
+
+\end{knitrout}
 
 %------------------------------------------------------------------------------------------------------------------------------------------
 %---------------------------------------------------------COVERAGE-------------------------------------------------------------------------
 \clearpage
-\section{Heatmaps Coverge}
+\section{Heatmaps Coverage}
 En aquests gràfics el valors de les columnes 1.2B i 10G corresponen al valor de coverage de cada gen. El coverage s'ha calculat per a tots els gens i s'ha "normalitzat" tant per nombre de reads (per a compensar el fet que els alineaments amb més reads tenen més coverage en general) com pel tamany del gen (per compensar el fet que els gens més llargs tenen més reads). Els gens que es mostren al gràfic estàn filtrats: només apareixen aquells que tenen una diferència de transcripció (primera columna) major a 0.7 (en valor absolut).
 
 \subsection{Coverage Gene Body + 5'}
@@ -129,8 +140,19 @@ En aquests gràfics hi ha una sola columna corresponent a metilació que corresp
 
 \end{knitrout}
 \clearpage
-Aquest gràfic és el mateix que l'anterior però en comptes de filtrar per valors de transcripció els gens que hi apareixen estàn filtrats per valors de metilació. Els gens que apreixen al gràfic són aquells en què la diferència de metilació (segona columna) és superior a 20 (en valor absolut).
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
+
+{\centering \includegraphics[width=.9\linewidth]{figure/minimal-_heat_cov_diff_metord-1} 
+
+}
+
+
+
+\end{knitrout}
+\clearpage
 \subsection{Diferència de Coverage, filtrat per diferència de metilació}
+Aquest gràfic és el mateix que l'anterior però en comptes de filtrar per valors de transcripció els gens que hi apareixen estàn filtrats per valors de metilació. Els gens que apreixen al gràfic són aquells què apareixen a alguna de les llistes de gens pics diferencials.
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
 
@@ -141,7 +163,42 @@ Aquest gràfic és el mateix que l'anterior però en comptes de filtrar per valo
 
 
 \end{knitrout}
+\clearpage
+En aquest cas hem deixat els gens per als que no tenim valors de transcripció.
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
 
+{\centering \includegraphics[width=.9\linewidth]{figure/minimal-heat_cov_diff_filter_metord-1} 
+
+}
+
+
+
+\end{knitrout}
+\clearpage
+\subsection{Diferència de Coverage: auto-clustering}
+En aquest cas hem deixat que els gens s'ordeni "sol" fent servir l'algoritme de clustering de la funció "heatmap2" d'R.
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
+
+{\centering \includegraphics[width=.9\linewidth]{figure/minimal-heat_cov_diff_filter_cluster-1} 
+
+}
+
+
+
+\end{knitrout}
+\clearpage
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
+
+{\centering \includegraphics[width=.9\linewidth]{figure/minimal-heat_cov_met_filter_cluster-1} 
+
+}
+
+
+
+\end{knitrout}
 %------------------------------------------------------------------------------------------------------------------------------------------
 %---------------------------------------------------------COVERAGE A PICS DIFERENCIALS-----------------------------------------------------
 
@@ -150,7 +207,7 @@ Aquest gràfic és el mateix que l'anterior però en comptes de filtrar per valo
 En aquests gràfics s'ha calculat el coverage mitjà de la mateixa manera que en els anteriors, però l'anàlisi s'ha restringit a aquells gens que apareixen a qualsevol de les dues llistes de pics diferencials (pics diferencials a 1.2B i a 10G). 
 
 \subsection{Coverage a pics diferencials}
-En aquests gràfics els valors de les columnes 1.2B i 10G corresponen al coverage mitjà de cada gen.
+En aquests gràfics els valors de les columnes 1.2B i 10G corresponen al coverage mitjà de cada gen només a les zones on hi ha pics diferencials (de metilació).
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
 
@@ -163,7 +220,7 @@ En aquests gràfics els valors de les columnes 1.2B i 10G corresponen al coverag
 \end{knitrout}
 \clearpage
 \subsection{Diferència de coverage a pics diferencials}
-En aquests gràfics tenim una sola columna a la dreta que correspon a la diferència de coverage entre 1.2B i 10G.
+En aquests gràfics tenim una sola columna a la dreta que correspon a la diferència de coverage entre 1.2B i 10G només a les zones on hi ha pics.
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
 
@@ -174,7 +231,17 @@ En aquests gràfics tenim una sola columna a la dreta que correspon a la diferè
 
 
 \end{knitrout}
+\clearpage
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
 
+{\centering \includegraphics[width=.9\linewidth]{figure/minimal-heat_difpeak_cov_dif_metord-1} 
+
+}
+
+
+
+\end{knitrout}
 % -----------------------------------------------------------------------------------------------------------------------------------------
 % ---------------------------------------------------------  RESTA DE GRÀFICS -------------------------------------------------------------
 \clearpage
@@ -193,6 +260,7 @@ En aquests gràfics tenim una sola columna a la dreta que correspon a la diferè
 \end{knitrout}
 \clearpage
 \subsection{TSS}
+En aquest gràfic en comptes d'ordenar els gens en funció de la primera columna s'han ordenat "sols" seguint l'algoritme de clustering de la funció "heatmap" de R.
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
 
@@ -322,35 +390,20 @@ En aquests gràfics tenim una sola columna a la dreta que correspon a la diferè
 \clearpage
 \section{Multiple-regression Model}
 \begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
+
+{\centering \includegraphics[width=.9\linewidth]{figure/minimal-heat_fitted_model-1} 
+\includegraphics[width=.9\linewidth]{figure/minimal-heat_fitted_model-2} 
+\includegraphics[width=.9\linewidth]{figure/minimal-heat_fitted_model-3} 
+\includegraphics[width=.9\linewidth]{figure/minimal-heat_fitted_model-4} 
+
+}
 
 
-{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in `[<-.data.frame`(`*tmp*`, "{}10G\_cov"{}, value = c(219.498997996, : replacement has 94 rows, data has 93}}
 
-{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in `[<-.data.frame`(`*tmp*`, "{}1.2B\_cov"{}, value = c(95.9679358717, : replacement has 94 rows, data has 93}}
-
-{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in model.frame.default(formula = met\_cov\_df\$Trans \textasciitilde{} met\_cov\_df\$`10G` + : invalid type (NULL) for variable 'met\_cov\_df\$`10G\_cov`'}}
-
-{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in model.frame.default(formula = met\_cov\_df\$Trans \textasciitilde{} met\_cov\_df\$`10G` + : invalid type (NULL) for variable 'met\_cov\_df\$`10G\_cov`'}}
-
-{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in model.frame.default(formula = met\_cov\_df\$Trans \textasciitilde{} met\_cov\_df\$`1.2B` + : invalid type (NULL) for variable 'met\_cov\_df\$`1.2B\_cov`'}}
-
-{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in fitted(fit\_all): object 'fit\_all' not found}}
-
-{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in fitted(fit\_10G): object 'fit\_10G' not found}}
-
-{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in fitted(fit\_12B): object 'fit\_12B' not found}}
-
-{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in plot(fit\_all\_df): object 'fit\_all\_df' not found}}
-
-{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in plot(fit\_10G\_df): object 'fit\_10G\_df' not found}}
-
-{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in plot(fit\_12B\_df): object 'fit\_12B\_df' not found}}
-
-{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in rownames(fit\_all\_df) <- met\_cov\_df\$id: object 'fit\_all\_df' not found}}
-
-{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in as.matrix(fit\_all\_df): object 'fit\_all\_df' not found}}\end{kframe}
 \end{knitrout}
+
+
 
 
 \end{document}

@@ -1,26 +1,27 @@
 \contentsline {section}{\numberline {1}Generalitats}{3}{section.1}
 \contentsline {section}{\numberline {2}Heatmaps Percentatge de Coverage}{4}{section.2}
 \contentsline {subsection}{\numberline {2.1}TSS+Gene+TTS}{4}{subsection.2.1}
-\contentsline {section}{\numberline {3}Heatmaps Coverge}{5}{section.3}
-\contentsline {subsection}{\numberline {3.1}Coverage Gene Body + 5'}{5}{subsection.3.1}
-\contentsline {subsection}{\numberline {3.2}Difer\IeC {\`e}ncia de Coverage, filtrat per difer\IeC {\`e}ncia de transcripci\IeC {\'o}}{6}{subsection.3.2}
-\contentsline {subsection}{\numberline {3.3}Difer\IeC {\`e}ncia de Coverage, filtrat per difer\IeC {\`e}ncia de metilaci\IeC {\'o}}{7}{subsection.3.3}
-\contentsline {section}{\numberline {4}Coverage a pics diferencials}{8}{section.4}
-\contentsline {subsection}{\numberline {4.1}Coverage a pics diferencials}{8}{subsection.4.1}
-\contentsline {subsection}{\numberline {4.2}Difer\IeC {\`e}ncia de coverage a pics diferencials}{9}{subsection.4.2}
-\contentsline {section}{\numberline {5}Resta de gr\IeC {\`a}fics}{10}{section.5}
-\contentsline {section}{\numberline {6}Percentatge de metilaci\IeC {\'o}}{10}{section.6}
-\contentsline {subsection}{\numberline {6.1}Gene-body}{10}{subsection.6.1}
-\contentsline {subsection}{\numberline {6.2}TSS}{11}{subsection.6.2}
-\contentsline {subsection}{\numberline {6.3}Gene + TSS}{12}{subsection.6.3}
-\contentsline {subsection}{\numberline {6.4}TTS}{13}{subsection.6.4}
-\contentsline {section}{\numberline {7}Coverage}{14}{section.7}
-\contentsline {subsection}{\numberline {7.1}Coverage Gene Body}{14}{subsection.7.1}
-\contentsline {subsection}{\numberline {7.2}Coverage 5'}{15}{subsection.7.2}
-\contentsline {subsection}{\numberline {7.3}Coverage 3'}{16}{subsection.7.3}
-\contentsline {section}{\numberline {8}Difer\IeC {\`e}ncia de coverage}{17}{section.8}
-\contentsline {subsection}{\numberline {8.1}Difer\IeC {\`e}ncia de Coverage a 5', filtrat per difer\IeC {\`e}ncia de transcripci\IeC {\'o}}{17}{subsection.8.1}
-\contentsline {subsection}{\numberline {8.2}Difer\IeC {\`e}ncia de Coverage a genebody, filtrat per difer\IeC {\`e}ncia de transcripci\IeC {\'o}}{18}{subsection.8.2}
-\contentsline {subsection}{\numberline {8.3}Difer\IeC {\`e}ncia de Coverage 5'genebody, filtrat per difer\IeC {\`e}ncia de transcripci\IeC {\'o}}{19}{subsection.8.3}
-\contentsline {subsection}{\numberline {8.4}Difer\IeC {\`e}ncia de Coverage a 3', filtrat per difer\IeC {\`e}ncia de transcripci\IeC {\'o}}{20}{subsection.8.4}
-\contentsline {section}{\numberline {9}Multiple-regression Model}{21}{section.9}
+\contentsline {section}{\numberline {3}Heatmaps Coverage}{6}{section.3}
+\contentsline {subsection}{\numberline {3.1}Coverage Gene Body + 5'}{6}{subsection.3.1}
+\contentsline {subsection}{\numberline {3.2}Difer\IeC {\`e}ncia de Coverage, filtrat per difer\IeC {\`e}ncia de transcripci\IeC {\'o}}{7}{subsection.3.2}
+\contentsline {subsection}{\numberline {3.3}Difer\IeC {\`e}ncia de Coverage, filtrat per difer\IeC {\`e}ncia de metilaci\IeC {\'o}}{9}{subsection.3.3}
+\contentsline {subsection}{\numberline {3.4}Difer\IeC {\`e}ncia de Coverage: auto-clustering}{11}{subsection.3.4}
+\contentsline {section}{\numberline {4}Coverage a pics diferencials}{13}{section.4}
+\contentsline {subsection}{\numberline {4.1}Coverage a pics diferencials}{13}{subsection.4.1}
+\contentsline {subsection}{\numberline {4.2}Difer\IeC {\`e}ncia de coverage a pics diferencials}{14}{subsection.4.2}
+\contentsline {section}{\numberline {5}Resta de gr\IeC {\`a}fics}{16}{section.5}
+\contentsline {section}{\numberline {6}Percentatge de metilaci\IeC {\'o}}{16}{section.6}
+\contentsline {subsection}{\numberline {6.1}Gene-body}{16}{subsection.6.1}
+\contentsline {subsection}{\numberline {6.2}TSS}{17}{subsection.6.2}
+\contentsline {subsection}{\numberline {6.3}Gene + TSS}{18}{subsection.6.3}
+\contentsline {subsection}{\numberline {6.4}TTS}{19}{subsection.6.4}
+\contentsline {section}{\numberline {7}Coverage}{20}{section.7}
+\contentsline {subsection}{\numberline {7.1}Coverage Gene Body}{20}{subsection.7.1}
+\contentsline {subsection}{\numberline {7.2}Coverage 5'}{21}{subsection.7.2}
+\contentsline {subsection}{\numberline {7.3}Coverage 3'}{22}{subsection.7.3}
+\contentsline {section}{\numberline {8}Difer\IeC {\`e}ncia de coverage}{23}{section.8}
+\contentsline {subsection}{\numberline {8.1}Difer\IeC {\`e}ncia de Coverage a 5', filtrat per difer\IeC {\`e}ncia de transcripci\IeC {\'o}}{23}{subsection.8.1}
+\contentsline {subsection}{\numberline {8.2}Difer\IeC {\`e}ncia de Coverage a genebody, filtrat per difer\IeC {\`e}ncia de transcripci\IeC {\'o}}{24}{subsection.8.2}
+\contentsline {subsection}{\numberline {8.3}Difer\IeC {\`e}ncia de Coverage 5'genebody, filtrat per difer\IeC {\`e}ncia de transcripci\IeC {\'o}}{25}{subsection.8.3}
+\contentsline {subsection}{\numberline {8.4}Difer\IeC {\`e}ncia de Coverage a 3', filtrat per difer\IeC {\`e}ncia de transcripci\IeC {\'o}}{26}{subsection.8.4}
+\contentsline {section}{\numberline {9}Multiple-regression Model}{27}{section.9}

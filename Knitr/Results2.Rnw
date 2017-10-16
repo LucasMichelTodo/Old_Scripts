@@ -72,14 +72,14 @@ df_1.2B_colapsed["Chrom"] <- apply(df_1.2B_colapsed, 1, function(x) df_1.2B[df_1
 df_1.2B_colapsed["Annotations"] <- apply(df_1.2B_colapsed, 1, function(x) df_1.2B[df_1.2B$Gene == x[1], "Annotations"][1])
 @
 \section{Generalitats}
-En TOTS els gràfics la columna de més a l'esquerra correspon als valors de diferència de transcripció (1.2B - 10G) i és la columna per la qual s'ha ordenat el gràfic. Les columnes següents corresponen a algun paràmetre relacionat amb la metilació (percentatge del gen metilat, coverage mitjà...). En alguns casos hi ha valor de metilació per a 1.2B i per a 10G i en altres una sola columna que correspon a la diferència de metilació. Per a cada tipus de gràfic se n'han fet diversos tenint en compte la metilació a tres zones diferents: TSS, gene-body i TTS. Per a cada tipus de gràfic he posat el més representatiu a tall d'exemple. Al final del document hi ha tota la resta de gràfics.
+En TOTS els gràfics la columna de més a l'esquerra correspon als valors de diferència de transcripció (1.2B - 10G). Les columnes següents corresponen a algun paràmetre relacionat amb la metilació (percentatge del gen metilat, coverage mitjà...). En alguns casos hi ha valor de metilació per a 1.2B i per a 10G i en altres una sola columna que correspon a la diferència de metilació. Per a cada tipus de gràfic se n'han fet diversos tenint en compte la metilació a tres zones diferents: TSS, gene-body i TTS. Per a cada tipus de gràfic he posat el més representatiu a tall d'exemple. Al final del document hi ha tota la resta de gràfics.
 \clearpage
 
 %------------------------------------------------------------------------------------------------------------------------------------------
 %---------------------------------------------------------PERCENATGE-----------------------------------------------------------------------
 
 \section{Heatmaps Percentatge de Coverage}
-En aquest gràfics els valors corresponents a les columnes 1.2B i 10G corresponen al percentatge del gen covert en pics diferencials. Per a obtenir aquests valors s'han unificat les dues llistes de pics differencials annotats. Tant per a 1.2B com a 10G els gens que corresponen a "pics de l'altra llista" tenen valors de 0.
+En aquest gràfics els valors corresponents a les columnes 1.2B i 10G corresponen al percentatge del gen cobert en pics diferencials. Per a obtenir aquests valors s'han unificat les dues llistes de pics differencials annotats. Tant per a 1.2B com a 10G els gens que corresponen a "pics de l'altra llista" tenen valors de 0.
 \subsection{TSS+Gene+TTS}
 <<heatmap_all, warning=FALSE, fig.width=10, fig.height=10, out.width='.9\\linewidth', echo = FALSE>>=
 g10_g <- df_10G_colapsed$X3.cov + df_10G_colapsed$Gene.cov + df_10G_colapsed$X5.cov
@@ -91,27 +91,59 @@ rownames(heatmap_df) <- c(as.character(df_10G_colapsed$Gene), as.character(df_1.
 heatmap_df["PF3D7_1301600","1.2B"] <- df_1.2B_colapsed$X3.cov[df_1.2B_colapsed$Gene == "PF3D7_1301600"]
 heatmap_df["id"] <- rownames(heatmap_df)
 heatmap_df["Trans"] <- apply(heatmap_df, 1, function(x) Trans[Trans$ID == x[3],]$`Dif_1.2-10`[1])
+heatmap_df["Met"] <- heatmap_df$`1.2B` - heatmap_df$`10G`
 heatmap_df <- arrange(heatmap_df, -Trans)
 rownames(heatmap_df) <- heatmap_df$id
 
 #native plot
-my_palette <- colorRampPalette(c("red", "yellow", "green"))(n = 299)
-heatmap.2(as.matrix(heatmap_df[,c(4,2,1)]), 
+my_palette <- colorRampPalette(c("red", "black", "green"))(n = 500)
+heatmap.2(as.matrix(heatmap_df[,c(4,5)]), 
           scale="column", 
           Rowv = NA, 
           Colv = NA, 
           col = my_palette, 
           dendrogram = "none", 
           trace = "none", 
-          key = FALSE,
+          srtCol = 0,
+          adjCol = c(0.5,1),
+          lmat = rbind(c(0,3),c(2,1),c(0,4)),
+          lwid = c(1,5),
+          lhei = c(1,6,1),
+          na.color = "grey",
+          key = TRUE,
+          density.info = "none",
           margins = c(8,8),
-          main="TSS")
+          main="TSS+Gene-body+TTS: Ordered by transcription")
+@
+\clearpage
+<<heatmap_all_metord, warning=FALSE, fig.width=10, fig.height=10, out.width='.9\\linewidth', echo = FALSE>>=
+heatmap_df <- arrange(heatmap_df, Met)
+rownames(heatmap_df) <- heatmap_df$id
+
+my_palette <- colorRampPalette(c("red", "black", "green"))(n = 500)
+heatmap.2(as.matrix(heatmap_df[,c(4,5)]), 
+          scale="column", 
+          Rowv = NA, 
+          Colv = NA, 
+          col = my_palette, 
+          dendrogram = "none", 
+          trace = "none", 
+          srtCol = 0,
+          adjCol = c(0.5,1),
+          lmat = rbind(c(0,3),c(2,1),c(0,4)),
+          lwid = c(1,5),
+          lhei = c(1,6,1),
+          key = TRUE,
+          density.info = "none",
+          margins = c(8,8),
+          na.color = "grey",
+          main="TSS+Gene-body+TTS: Ordered by methylation")
 @
 
 %------------------------------------------------------------------------------------------------------------------------------------------
 %---------------------------------------------------------COVERAGE-------------------------------------------------------------------------
 \clearpage
-\section{Heatmaps Coverge}
+\section{Heatmaps Coverage}
 En aquests gràfics el valors de les columnes 1.2B i 10G corresponen al valor de coverage de cada gen. El coverage s'ha calculat per a tots els gens i s'ha "normalitzat" tant per nombre de reads (per a compensar el fet que els alineaments amb més reads tenen més coverage en general) com pel tamany del gen (per compensar el fet que els gens més llargs tenen més reads). Els gens que es mostren al gràfic estàn filtrats: només apareixen aquells que tenen una diferència de transcripció (primera columna) major a 0.7 (en valor absolut).
 <<Import-cov, echo=FALSE, warning=FALSE>>=
 cov_10G <- read.table("/home/lucas/ISGlobal/Chip_Seq/DATA/Aligns/q5/10G_met_cov.csv", header = TRUE, sep ="\t")
@@ -120,7 +152,7 @@ cov_1.2B <- read.table("/home/lucas/ISGlobal/Chip_Seq/DATA/Aligns/q5/1.2B_met_co
 \subsection{Coverage Gene Body + 5'}
 <<heat_cov_tss_gene, warning=FALSE, fig.width=10, fig.height=10, out.width='.9\\linewidth', echo = FALSE>>=
 #plot(Trans$`Dif_1.2-10`)
-Trans2 <- Trans[abs(Trans$`Dif_1.2-10`) >= 0.7,]
+Trans2 <- arrange(Trans, -abs(Trans$`Dif_1.2-10`))[1:30,]
   
 g10_g <- as.numeric(cov_10G$Gene.cov) + as.numeric(cov_10G$X5.cov)
 b12_g <- as.numeric(cov_1.2B$Gene.cov) + as.numeric(cov_1.2B$X5.cov)
@@ -134,7 +166,7 @@ rownames(heatmap_df) <- heatmap_df$id
 
 heatmap_df <- heatmap_df[!is.na(heatmap_df$Trans),]
 #native plot
-my_palette <- colorRampPalette(c("red", "yellow", "green"))(n = 3000)
+my_palette <- colorRampPalette(c("red", "black", "green"))(n = 500)
 heatmap.2(as.matrix(heatmap_df[,c(4,2,1)]), 
           scale="column", 
           Rowv = NA, 
@@ -142,8 +174,15 @@ heatmap.2(as.matrix(heatmap_df[,c(4,2,1)]),
           col = my_palette, 
           dendrogram = "none", 
           trace = "none", 
-          key = FALSE,
+          srtCol = 0,
+          adjCol = c(0.5,1),
+          lmat = rbind(c(0,3),c(2,1),c(0,4)),
+          lwid = c(1,5),
+          lhei = c(1,6,1),
+          key = TRUE,
+          density.info = "none",
           margins = c(8,8),
+          na.color = "grey",
           main="Coverage Gene Body + 5'")
 @
 \clearpage
@@ -154,7 +193,7 @@ heatmap.2(as.matrix(heatmap_df[,c(4,2,1)]),
 \subsection{Diferència de Coverage, filtrat per diferència de transcripció}
 En aquests gràfics hi ha una sola columna corresponent a metilació que correspon a diferència de coverage. Aquesta diferència és simplement la resta (1.2B - 10G) dels valors obtinguts en l'apartat anterior.
 <<<heat_cov_diff, warning=FALSE, fig.width=10, fig.height=10, out.width='.9\\linewidth', echo = FALSE>>=
-Trans2 <- Trans[abs(Trans$`Dif_1.2-10`) >= 0.7,]
+Trans2 <- arrange(Trans, -abs(Trans$`Dif_1.2-10`))[1:30,]
 diff <- (as.numeric(cov_1.2B$Gene.cov)+as.numeric(cov_1.2B$X5.cov)+as.numeric(cov_1.2B$X3.cov)) - (as.numeric(cov_10G$Gene.cov)+as.numeric(cov_10G$X5.cov)+as.numeric(cov_10G$X3.cov)) 
 heatmap_df <- data.frame(diff)
 colnames(heatmap_df) <- ("Met_diff")
@@ -165,7 +204,7 @@ heatmap_df <- arrange(heatmap_df, -Trans)
 rownames(heatmap_df) <- heatmap_df$id
 heatmap_df <- heatmap_df[!is.na(heatmap_df$Trans),]
 
-my_palette <- colorRampPalette(c("red", "yellow", "green"))(n = 3000)
+my_palette <- colorRampPalette(c("red", "black", "green"))(n = 500)
 heatmap.2(as.matrix(heatmap_df[,c(3,1)]), 
           scale="column", 
           Rowv = NA, 
@@ -173,13 +212,52 @@ heatmap.2(as.matrix(heatmap_df[,c(3,1)]),
           col = my_palette, 
           dendrogram = "none", 
           trace = "none", 
-          key = FALSE,
+          srtCol = 0,
+          adjCol = c(0.5,1),
+          lmat = rbind(c(0,3),c(2,1),c(0,4)),
+          lwid = c(1,5),
+          lhei = c(1,6,1),
+          key = TRUE,
+          density.info = "none",
           margins = c(8,8),
-          main="Diferència de Coverage")
+          na.color = "grey",
+          main="Diferència de Coverage ordenat per transcripció")
+@
+\clearpage
+<<<heat_cov_diff_metord, warning=FALSE, fig.width=10, fig.height=10, out.width='.9\\linewidth', echo = FALSE>>=
+Trans2 <- arrange(Trans, -abs(Trans$`Dif_1.2-10`))[1:30,]
+diff <- (as.numeric(cov_1.2B$Gene.cov)+as.numeric(cov_1.2B$X5.cov)+as.numeric(cov_1.2B$X3.cov)) - (as.numeric(cov_10G$Gene.cov)+as.numeric(cov_10G$X5.cov)+as.numeric(cov_10G$X3.cov)) 
+heatmap_df <- data.frame(diff)
+colnames(heatmap_df) <- ("Met_diff")
+rownames(heatmap_df) <- cov_10G$Gene
+heatmap_df["id"] <- rownames(heatmap_df)
+heatmap_df["Trans"] <- apply(heatmap_df, 1, function(x) Trans2[Trans2$ID == x[2],]$`Dif_1.2-10`[1])
+heatmap_df <- arrange(heatmap_df, Met_diff)
+rownames(heatmap_df) <- heatmap_df$id
+heatmap_df <- heatmap_df[!is.na(heatmap_df$Trans),]
+
+my_palette <- colorRampPalette(c("red", "black", "green"))(n = 500)
+heatmap.2(as.matrix(heatmap_df[,c(3,1)]), 
+          scale="column", 
+          Rowv = NA, 
+          Colv = NA, 
+          col = my_palette, 
+          dendrogram = "none", 
+          trace = "none", 
+          srtCol = 0,
+          adjCol = c(0.5,1),
+          lmat = rbind(c(0,3),c(2,1),c(0,4)),
+          lwid = c(1,5),
+          lhei = c(1,6,1),
+          key = TRUE,
+          density.info = "none",
+          margins = c(8,8),
+          na.color = "grey",
+          main="Diferència de Coverage ordenat per Metilació")
 @
 \clearpage
 \subsection{Diferència de Coverage, filtrat per diferència de metilació}
-Aquest gràfic és el mateix que l'anterior però en comptes de filtrar per valors de transcripció els gens que hi apareixen estàn filtrats per valors de metilació. Els gens que apreixen al gràfic són aquells en què la diferència de metilació (segona columna) és superior a 20 (en valor absolut).
+Aquest gràfic és el mateix que l'anterior però en comptes de filtrar per valors de transcripció els gens que hi apareixen estàn filtrats per valors de metilació. Els gens que apreixen al gràfic són aquells què apareixen a alguna de les llistes de gens pics diferencials.
 <<heat_cov_diff_filter, warning=FALSE, fig.width=10, fig.height=10, out.width='.9\\linewidth', echo = FALSE>>=
 Trans2 <- Trans
 diff <- (as.numeric(cov_1.2B$Gene.cov)+as.numeric(cov_1.2B$X5.cov)+as.numeric(cov_1.2B$X3.cov)) - (as.numeric(cov_10G$Gene.cov)+as.numeric(cov_10G$X5.cov)+as.numeric(cov_10G$X3.cov)) 
@@ -192,9 +270,10 @@ heatmap_df <- arrange(heatmap_df, -Trans)
 rownames(heatmap_df) <- heatmap_df$id
 
 heatmap_df <- heatmap_df[!is.na(heatmap_df$Trans),]
-heatmap_df <- heatmap_df[abs(heatmap_df$Met_diff) >= 20,]
+heatmap_df <- heatmap_df[heatmap_df$id %in% df_10G_colapsed$Gene | heatmap_df$id %in% df_1.2B_colapsed$Gene,]
+#heatmap_df <- heatmap_df[abs(heatmap_df$Met_diff) >= 20,]
 
-my_palette <- colorRampPalette(c("red", "yellow", "green"))(n = 3000)
+my_palette <- colorRampPalette(c("red", "black", "green"))(n = 500)
 heatmap.2(as.matrix(heatmap_df[,c(3,1)]), 
           scale="column", 
           Rowv = NA, 
@@ -202,11 +281,122 @@ heatmap.2(as.matrix(heatmap_df[,c(3,1)]),
           col = my_palette, 
           dendrogram = "none", 
           trace = "none", 
-          key = FALSE,
+          srtCol = 0,
+          adjCol = c(0.5,1),
+          lmat = rbind(c(0,3),c(2,1),c(0,4)),
+          lwid = c(1,5),
+          lhei = c(1,6,1),
+          key = TRUE,
+          density.info = "none",
           margins = c(8,8),
-          main="Diferència de Coverage")
+          na.color = "grey",
+          main="Diferència de Coverage, ordenat per transcripció")
 @
+\clearpage
+En aquest cas hem deixat els gens per als que no tenim valors de transcripció.
+<<heat_cov_diff_filter_metord, warning=FALSE, fig.width=10, fig.height=10, out.width='.9\\linewidth', echo = FALSE>>=
+Trans2 <- Trans
+diff <- (as.numeric(cov_1.2B$Gene.cov)+as.numeric(cov_1.2B$X5.cov)+as.numeric(cov_1.2B$X3.cov)) - (as.numeric(cov_10G$Gene.cov)+as.numeric(cov_10G$X5.cov)+as.numeric(cov_10G$X3.cov)) 
+heatmap_df <- data.frame(diff)
+colnames(heatmap_df) <- ("Met_diff")
+rownames(heatmap_df) <- cov_10G$Gene
+heatmap_df["id"] <- rownames(heatmap_df)
+heatmap_df["Trans"] <- apply(heatmap_df, 1, function(x) Trans2[Trans2$ID == x[2],]$`Dif_1.2-10`[1])
+heatmap_df <- arrange(heatmap_df, Met_diff)
+rownames(heatmap_df) <- heatmap_df$id
 
+#heatmap_df <- heatmap_df[!is.na(heatmap_df$Trans),]
+heatmap_df <- heatmap_df[heatmap_df$id %in% df_10G_colapsed$Gene | heatmap_df$id %in% df_1.2B_colapsed$Gene,]
+#heatmap_df <- heatmap_df[abs(heatmap_df$Met_diff) >= 20,]
+
+my_palette <- colorRampPalette(c("red", "black", "green"))(n = 500)
+heatmap.2(as.matrix(heatmap_df[,c(3,1)]), 
+          scale="column", 
+          Rowv = NA, 
+          Colv = NA, 
+          col = my_palette, 
+          dendrogram = "none", 
+          trace = "none", 
+          srtCol = 0,
+          adjCol = c(0.5,1),
+          lmat = rbind(c(0,3),c(2,1),c(0,4)),
+          lwid = c(1,5),
+          lhei = c(1,6,1),
+          key = TRUE,
+          density.info = "none",
+          margins = c(8,8),
+          na.color = "grey",
+          main="Diferència de Coverage, odenada per metilació")
+@
+\clearpage
+\subsection{Diferència de Coverage: auto-clustering}
+En aquest cas hem deixat que els gens s'ordeni "sol" fent servir l'algoritme de clustering de la funció "heatmap2" d'R.
+<<heat_cov_diff_filter_cluster, warning=FALSE, fig.width=10, fig.height=10, out.width='.9\\linewidth', echo = FALSE>>=
+Trans2 <- arrange(Trans, -abs(Trans$`Dif_1.2-10`))[1:30,]
+diff <- (as.numeric(cov_1.2B$Gene.cov)+as.numeric(cov_1.2B$X5.cov)+as.numeric(cov_1.2B$X3.cov)) - (as.numeric(cov_10G$Gene.cov)+as.numeric(cov_10G$X5.cov)+as.numeric(cov_10G$X3.cov)) 
+heatmap_df <- data.frame(diff)
+colnames(heatmap_df) <- ("Met_diff")
+rownames(heatmap_df) <- cov_10G$Gene
+heatmap_df["id"] <- rownames(heatmap_df)
+heatmap_df["Trans"] <- apply(heatmap_df, 1, function(x) Trans2[Trans2$ID == x[2],]$`Dif_1.2-10`[1])
+heatmap_df <- arrange(heatmap_df, -Trans)
+rownames(heatmap_df) <- heatmap_df$id
+heatmap_df <- heatmap_df[!is.na(heatmap_df$Trans),]
+
+my_palette <- colorRampPalette(c("red", "black", "green"))(n = 500)
+heatmap.2(as.matrix(heatmap_df[,c(3,1)]), 
+          scale="column", 
+          #Rowv = NA, 
+          Colv = NA, 
+          col = my_palette, 
+          #dendrogram = "none", 
+          trace = "none", 
+          srtCol = 0,
+          adjCol = c(0.5,1),
+          lmat = rbind(c(0,3),c(2,1),c(0,4)),
+          lwid = c(1,5),
+          lhei = c(1,6,1),
+          key = TRUE,
+          density.info = "none",
+          margins = c(8,8),
+          na.color = "grey",
+          main="Diferència de Coverage filtrat per transcripció, clustering")
+@
+\clearpage
+<<heat_cov_met_filter_cluster, warning=FALSE, fig.width=10, fig.height=10, out.width='.9\\linewidth', echo = FALSE>>=
+Trans2 <- Trans
+diff <- (as.numeric(cov_1.2B$Gene.cov)+as.numeric(cov_1.2B$X5.cov)+as.numeric(cov_1.2B$X3.cov)) - (as.numeric(cov_10G$Gene.cov)+as.numeric(cov_10G$X5.cov)+as.numeric(cov_10G$X3.cov)) 
+heatmap_df <- data.frame(diff)
+colnames(heatmap_df) <- ("Met_diff")
+rownames(heatmap_df) <- cov_10G$Gene
+heatmap_df["id"] <- rownames(heatmap_df)
+heatmap_df["Trans"] <- apply(heatmap_df, 1, function(x) Trans2[Trans2$ID == x[2],]$`Dif_1.2-10`[1])
+heatmap_df <- arrange(heatmap_df, -Trans)
+rownames(heatmap_df) <- heatmap_df$id
+
+heatmap_df <- heatmap_df[!is.na(heatmap_df$Trans),]
+heatmap_df <- heatmap_df[heatmap_df$id %in% df_10G_colapsed$Gene | heatmap_df$id %in% df_1.2B_colapsed$Gene,]
+#heatmap_df <- heatmap_df[abs(heatmap_df$Met_diff) >= 20,]
+
+my_palette <- colorRampPalette(c("red", "black", "green"))(n = 500)
+heatmap.2(as.matrix(heatmap_df[,c(3,1)]), 
+          scale="column", 
+          #Rowv = NA, 
+          Colv = NA, 
+          col = my_palette, 
+          #dendrogram = "none", 
+          trace = "none", 
+          srtCol = 0,
+          adjCol = c(0.5,1),
+          lmat = rbind(c(0,3),c(2,1),c(0,4)),
+          lwid = c(1,5),
+          lhei = c(1,6,1),
+          key = TRUE,
+          density.info = "none",
+          margins = c(8,8),
+          na.color = "grey",
+          main="Diferència de Coverage filtrat per metilació, clustering")
+@
 %------------------------------------------------------------------------------------------------------------------------------------------
 %---------------------------------------------------------COVERAGE A PICS DIFERENCIALS-----------------------------------------------------
 
@@ -228,7 +418,7 @@ dif_1.2B_cov_colapsed["Chrom"] <- apply(dif_1.2B_cov_colapsed, 1, function(x) di
 dif_1.2B_cov_colapsed["Annotations"] <- apply(dif_1.2B_cov_colapsed, 1, function(x) dif_1.2B_cov[dif_1.2B_cov$Gene == x[1], "Annotations"][1])
 @
 \subsection{Coverage a pics diferencials}
-En aquests gràfics els valors de les columnes 1.2B i 10G corresponen al coverage mitjà de cada gen.
+En aquests gràfics els valors de les columnes 1.2B i 10G corresponen al coverage mitjà de cada gen només a les zones on hi ha pics diferencials (de metilació).
 <<heat_difpeak_cov, warning=FALSE, fig.width=10, fig.height=10, out.width='.9\\linewidth', echo = FALSE>>=
 g10_g <- dif_10G_cov_colapsed$Gene.cov
 b12_g <- dif_1.2B_cov_colapsed$Gene.cov
@@ -243,7 +433,7 @@ rownames(heatmap_df) <- heatmap_df$id
 heatmap_df <- heatmap_df[!is.na(heatmap_df$Trans),]
 
 #native plot
-my_palette <- colorRampPalette(c("red", "yellow", "green"))(n = 299)
+my_palette <- colorRampPalette(c("red", "black", "green"))(n = 500)
 heatmap.2(as.matrix(heatmap_df[,c(4,2,1)]), 
           scale="column", 
           Rowv = NA, 
@@ -251,13 +441,20 @@ heatmap.2(as.matrix(heatmap_df[,c(4,2,1)]),
           col = my_palette, 
           dendrogram = "none", 
           trace = "none", 
-          key = FALSE,
+          srtCol = 0,
+          adjCol = c(0.5,1),
+          lmat = rbind(c(0,3),c(2,1),c(0,4)),
+          lwid = c(1,5),
+          lhei = c(1,6,1),
+          key = TRUE,
+          density.info = "none",
           margins = c(8,8),
-          main="Gene-Body")
+          na.color = "grey",
+          main="Coverage a pics: Gene-Body, ordenat per transcripció")
 @
 \clearpage
 \subsection{Diferència de coverage a pics diferencials}
-En aquests gràfics tenim una sola columna a la dreta que correspon a la diferència de coverage entre 1.2B i 10G.
+En aquests gràfics tenim una sola columna a la dreta que correspon a la diferència de coverage entre 1.2B i 10G només a les zones on hi ha pics.
 <<heat_difpeak_cov_dif, warning=FALSE, fig.width=10, fig.height=10, out.width='.9\\linewidth', echo = FALSE>>=
 g10_g <- dif_10G_cov_colapsed$Gene.cov
 b12_g <- dif_1.2B_cov_colapsed$Gene.cov
@@ -272,7 +469,7 @@ rownames(heatmap_df) <- heatmap_df$id
 #heatmap_df <- heatmap_df[!is.na(heatmap_df$Trans),]
 
 #native plot
-my_palette <- colorRampPalette(c("red", "yellow", "green"))(n = 299)
+my_palette <- colorRampPalette(c("red", "black", "green"))(n = 500)
 heatmap.2(as.matrix(heatmap_df[,c(3,1)]), 
           scale="column", 
           Rowv = NA, 
@@ -280,11 +477,51 @@ heatmap.2(as.matrix(heatmap_df[,c(3,1)]),
           col = my_palette, 
           dendrogram = "none", 
           trace = "none", 
-          key = FALSE,
+          srtCol = 0,
+          adjCol = c(0.5,1),
+          lmat = rbind(c(0,3),c(2,1),c(0,4)),
+          lwid = c(1,5),
+          lhei = c(1,6,1),
+          key = TRUE,
+          density.info = "none",
           margins = c(8,8),
-          main="Gene-Body")
+          na.color = "grey",
+          main="Diferència de coverage a pics: Gene-Body, ordenat per transcripció")
 @
+\clearpage
+<<heat_difpeak_cov_dif_metord, warning=FALSE, fig.width=10, fig.height=10, out.width='.9\\linewidth', echo = FALSE>>=
+g10_g <- dif_10G_cov_colapsed$Gene.cov
+b12_g <- dif_1.2B_cov_colapsed$Gene.cov
+Diff <- b12_g - g10_g
+heatmap_df <- data.frame(Diff)
+colnames(heatmap_df) <- "Diff"
+rownames(heatmap_df) <- c(as.character(dif_10G_cov_colapsed$Gene))
+heatmap_df["id"] <- rownames(heatmap_df)
+heatmap_df["Trans"] <- apply(heatmap_df, 1, function(x) Trans[Trans$ID == x[2],]$`Dif_1.2-10`[1])
+heatmap_df <- arrange(heatmap_df, Diff)
+rownames(heatmap_df) <- heatmap_df$id
+#heatmap_df <- heatmap_df[!is.na(heatmap_df$Trans),]
 
+#native plot
+my_palette <- colorRampPalette(c("red", "black", "green"))(n = 500)
+heatmap.2(as.matrix(heatmap_df[,c(3,1)]), 
+          scale="column", 
+          Rowv = NA, 
+          Colv = NA, 
+          col = my_palette, 
+          dendrogram = "none", 
+          trace = "none", 
+          srtCol = 0,
+          adjCol = c(0.5,1),
+          lmat = rbind(c(0,3),c(2,1),c(0,4)),
+          lwid = c(1,5),
+          lhei = c(1,6,1),
+          key = TRUE,
+          density.info = "none",
+          margins = c(8,8),
+          na.color = "grey",
+          main="Diferència de coverage a pics: Gene-Body, ordenat per metilació")
+@
 % -----------------------------------------------------------------------------------------------------------------------------------------
 % ---------------------------------------------------------  RESTA DE GRÀFICS -------------------------------------------------------------
 \clearpage
@@ -304,7 +541,7 @@ heatmap_df <- arrange(heatmap_df, -Trans)
 rownames(heatmap_df) <- heatmap_df$id
 
 #native plot
-my_palette <- colorRampPalette(c("red", "yellow", "green"))(n = 299)
+my_palette <- colorRampPalette(c("red", "black", "green"))(n = 500)
 heatmap.2(as.matrix(heatmap_df[,c(4,2,1)]), 
           scale="column", 
           Rowv = NA, 
@@ -312,8 +549,15 @@ heatmap.2(as.matrix(heatmap_df[,c(4,2,1)]),
           col = my_palette, 
           dendrogram = "none", 
           trace = "none", 
-          key = FALSE,
-          margins = c(8,8),
+          srtCol = 0,
+          adjCol = c(0.5,1),
+          lmat = rbind(c(0,3),c(2,1),c(0,4)),
+          lwid = c(1,5),
+          lhei = c(1,6,1),
+          key = TRUE,
+          density.info = "none",
+          margins = c(8,1),
+          na.color = "grey",
           main="Gene-Body")
 @
 \clearpage
@@ -332,7 +576,7 @@ heatmap_df <- arrange(heatmap_df, -Trans)
 rownames(heatmap_df) <- heatmap_df$id
 
 #native plot
-my_palette <- colorRampPalette(c("red", "yellow", "green"))(n = 299)
+my_palette <- colorRampPalette(c("red", "black", "green"))(n = 500)
 heatmap.2(as.matrix(heatmap_df[,c(4,2,1)]), 
           scale="column", 
           #Rowv = NA, 
@@ -340,8 +584,15 @@ heatmap.2(as.matrix(heatmap_df[,c(4,2,1)]),
           col = my_palette, 
           #dendrogram = "none", 
           trace = "none", 
-          key = FALSE,
-          margins = c(8,8),
+          srtCol = 0,
+          adjCol = c(0.5,1),
+          lmat = rbind(c(0,3),c(2,1),c(0,4)),
+          lwid = c(1,5),
+          lhei = c(1,6,1),
+          key = TRUE,
+          density.info = "none",
+          margins = c(8,1),
+          na.color = "grey",
           main="TSS")
 @
 \clearpage
@@ -359,7 +610,7 @@ heatmap_df <- arrange(heatmap_df, -Trans)
 rownames(heatmap_df) <- heatmap_df$id
 
 #native plot
-my_palette <- colorRampPalette(c("red", "yellow", "green"))(n = 299)
+my_palette <- colorRampPalette(c("red", "black", "green"))(n = 500)
 heatmap.2(as.matrix(heatmap_df[,c(4,2,1)]), 
           scale="column", 
           Rowv = NA, 
@@ -367,8 +618,15 @@ heatmap.2(as.matrix(heatmap_df[,c(4,2,1)]),
           col = my_palette, 
           dendrogram = "none", 
           trace = "none", 
-          key = FALSE,
-          margins = c(8,8),
+          srtCol = 0,
+          adjCol = c(0.5,1),
+          lmat = rbind(c(0,3),c(2,1),c(0,4)),
+          lwid = c(1,5),
+          lhei = c(1,6,1),
+          key = TRUE,
+          density.info = "none",
+          margins = c(8,1),
+          na.color = "grey",
           main="Gene-Body + TSS")
 @
 \clearpage
@@ -386,7 +644,7 @@ heatmap_df <- arrange(heatmap_df, -Trans)
 rownames(heatmap_df) <- heatmap_df$id
 
 #native plot
-my_palette <- colorRampPalette(c("red", "yellow", "green"))(n = 299)
+my_palette <- colorRampPalette(c("red", "black", "green"))(n = 500)
 heatmap.2(as.matrix(heatmap_df[,c(4,2,1)]), 
           scale="column", 
           Rowv = NA, 
@@ -394,8 +652,15 @@ heatmap.2(as.matrix(heatmap_df[,c(4,2,1)]),
           col = my_palette, 
           dendrogram = "none", 
           trace = "none", 
-          key = FALSE,
-          margins = c(8,8),
+          srtCol = 0,
+          adjCol = c(0.5,1),
+          lmat = rbind(c(0,3),c(2,1),c(0,4)),
+          lwid = c(1,5),
+          lhei = c(1,6,1),
+          key = TRUE,
+          density.info = "none",
+          margins = c(8,1),
+          na.color = "grey",
           main="TSS")
 @
 
@@ -417,7 +682,7 @@ rownames(heatmap_df) <- heatmap_df$id
 
 heatmap_df <- heatmap_df[!is.na(heatmap_df$Trans),]
 #native plot
-my_palette <- colorRampPalette(c("red", "yellow", "green"))(n = 3000)
+my_palette <- colorRampPalette(c("red", "black", "green"))(n = 500)
 heatmap.2(as.matrix(heatmap_df[,c(4,2,1)]), 
           scale="column", 
           Rowv = NA, 
@@ -425,8 +690,15 @@ heatmap.2(as.matrix(heatmap_df[,c(4,2,1)]),
           col = my_palette, 
           dendrogram = "none", 
           trace = "none", 
-          key = FALSE,
-          margins = c(8,8),
+          srtCol = 0,
+          adjCol = c(0.5,1),
+          lmat = rbind(c(0,3),c(2,1),c(0,4)),
+          lwid = c(1,5),
+          lhei = c(1,6,1),
+          key = TRUE,
+          density.info = "none",
+          margins = c(8,1),
+          na.color = "grey",
           main="Gene Coverage")
 @
 \clearpage
@@ -447,7 +719,7 @@ rownames(heatmap_df) <- heatmap_df$id
 
 heatmap_df <- heatmap_df[!is.na(heatmap_df$Trans),]
 #native plot
-my_palette <- colorRampPalette(c("red", "yellow", "green"))(n = 3000)
+my_palette <- colorRampPalette(c("red", "black", "green"))(n = 500)
 heatmap.2(as.matrix(heatmap_df[,c(4,2,1)]), 
           scale="column", 
           Rowv = NA, 
@@ -455,8 +727,15 @@ heatmap.2(as.matrix(heatmap_df[,c(4,2,1)]),
           col = my_palette, 
           dendrogram = "none", 
           trace = "none", 
-          key = FALSE,
-          margins = c(8,8),
+          srtCol = 0,
+          adjCol = c(0.5,1),
+          lmat = rbind(c(0,3),c(2,1),c(0,4)),
+          lwid = c(1,5),
+          lhei = c(1,6,1),
+          key = TRUE,
+          density.info = "none",
+          margins = c(8,1),
+          na.color = "grey",
           main="Coverage 5'")
 @
 \clearpage
@@ -478,7 +757,7 @@ rownames(heatmap_df) <- heatmap_df$id
 
 heatmap_df <- heatmap_df[!is.na(heatmap_df$Trans),]
 #native plot
-my_palette <- colorRampPalette(c("red", "yellow", "green"))(n = 3000)
+my_palette <- colorRampPalette(c("red", "black", "green"))(n = 500)
 heatmap.2(as.matrix(heatmap_df[,c(4,2,1)]), 
           scale="column", 
           Rowv = NA, 
@@ -486,8 +765,15 @@ heatmap.2(as.matrix(heatmap_df[,c(4,2,1)]),
           col = my_palette, 
           dendrogram = "none", 
           trace = "none", 
-          key = FALSE,
-          margins = c(8,8),
+          srtCol = 0,
+          adjCol = c(0.5,1),
+          lmat = rbind(c(0,3),c(2,1),c(0,4)),
+          lwid = c(1,5),
+          lhei = c(1,6,1),
+          key = TRUE,
+          density.info = "none",
+          margins = c(8,1),
+          na.color = "grey",
           main="Coverage 3'")
 @
 \clearpage
@@ -506,7 +792,7 @@ heatmap_df <- arrange(heatmap_df, -Trans)
 rownames(heatmap_df) <- heatmap_df$id
 heatmap_df <- heatmap_df[!is.na(heatmap_df$Trans),]
 
-my_palette <- colorRampPalette(c("red", "yellow", "green"))(n = 3000)
+my_palette <- colorRampPalette(c("red", "black", "green"))(n = 500)
 heatmap.2(as.matrix(heatmap_df[,c(3,1)]), 
           scale="column", 
           Rowv = NA, 
@@ -514,8 +800,15 @@ heatmap.2(as.matrix(heatmap_df[,c(3,1)]),
           col = my_palette, 
           dendrogram = "none", 
           trace = "none", 
-          key = FALSE,
-          margins = c(8,8),
+          srtCol = 0,
+          adjCol = c(0.5,1),
+          lmat = rbind(c(0,3),c(2,1),c(0,4)),
+          lwid = c(1,5),
+          lhei = c(1,6,1),
+          key = TRUE,
+          density.info = "none",
+          margins = c(8,1),
+          na.color = "grey",
           main="Diferència de Coverage a 5'")
 @
 \clearpage
@@ -532,7 +825,7 @@ heatmap_df <- arrange(heatmap_df, -Trans)
 rownames(heatmap_df) <- heatmap_df$id
 heatmap_df <- heatmap_df[!is.na(heatmap_df$Trans),]
 
-my_palette <- colorRampPalette(c("red", "yellow", "green"))(n = 3000)
+my_palette <- colorRampPalette(c("red", "black", "green"))(n = 500)
 heatmap.2(as.matrix(heatmap_df[,c(3,1)]), 
           scale="column", 
           Rowv = NA, 
@@ -540,8 +833,15 @@ heatmap.2(as.matrix(heatmap_df[,c(3,1)]),
           col = my_palette, 
           dendrogram = "none", 
           trace = "none", 
-          key = FALSE,
-          margins = c(8,8),
+          srtCol = 0,
+          adjCol = c(0.5,1),
+          lmat = rbind(c(0,3),c(2,1),c(0,4)),
+          lwid = c(1,5),
+          lhei = c(1,6,1),
+          key = TRUE,
+          density.info = "none",
+          margins = c(8,1),
+          na.color = "grey",
           main="Diferència de Coverage a gene-body")
 @
 \clearpage
@@ -558,7 +858,7 @@ heatmap_df <- arrange(heatmap_df, -Trans)
 rownames(heatmap_df) <- heatmap_df$id
 heatmap_df <- heatmap_df[!is.na(heatmap_df$Trans),]
 
-my_palette <- colorRampPalette(c("red", "yellow", "green"))(n = 3000)
+my_palette <- colorRampPalette(c("red", "black", "green"))(n = 500)
 heatmap.2(as.matrix(heatmap_df[,c(3,1)]), 
           scale="column", 
           Rowv = NA, 
@@ -566,8 +866,15 @@ heatmap.2(as.matrix(heatmap_df[,c(3,1)]),
           col = my_palette, 
           dendrogram = "none", 
           trace = "none", 
-          key = FALSE,
-          margins = c(8,8),
+          srtCol = 0,
+          adjCol = c(0.5,1),
+          lmat = rbind(c(0,3),c(2,1),c(0,4)),
+          lwid = c(1,5),
+          lhei = c(1,6,1),
+          key = TRUE,
+          density.info = "none",
+          margins = c(8,1),
+          na.color = "grey",
           main="Diferència de Coverage 5'+Gene_body")
 @
 \clearpage
@@ -584,7 +891,7 @@ heatmap_df <- arrange(heatmap_df, -Trans)
 rownames(heatmap_df) <- heatmap_df$id
 heatmap_df <- heatmap_df[!is.na(heatmap_df$Trans),]
 
-my_palette <- colorRampPalette(c("red", "yellow", "green"))(n = 3000)
+my_palette <- colorRampPalette(c("red", "black", "green"))(n = 500)
 heatmap.2(as.matrix(heatmap_df[,c(3,1)]), 
           scale="column", 
           Rowv = NA, 
@@ -592,8 +899,15 @@ heatmap.2(as.matrix(heatmap_df[,c(3,1)]),
           col = my_palette, 
           dendrogram = "none", 
           trace = "none", 
-          key = FALSE,
+          srtCol = 0,
+          adjCol = c(0.5,1),
+          lmat = rbind(c(0,3),c(2,1),c(0,4)),
+          lwid = c(1,5),
+          lhei = c(1,6,1),
+          key = TRUE,
+          density.info = "none",
           margins = c(8,8),
+          na.color = "grey",
           main="Diferència de Coverage a 3'")
 @
 
@@ -614,8 +928,8 @@ met_df["Trans"] <- apply(met_df, 1, function(x) Trans[Trans$ID == x[3],]$`Dif_1.
 met_df <- arrange(met_df, -Trans)
 
 met_cov_df <- met_df
-met_cov_df["10G_cov"] <- dif_10G_cov_colapsed$Total.cov
-met_cov_df["1.2B_cov"] <- dif_1.2B_cov_colapsed$Total.cov
+met_cov_df["10G_cov"] <- dif_10G_cov_colapsed[dif_10G_cov_colapsed$Gene %in% met_cov_df$id,]$Total.cov
+met_cov_df["1.2B_cov"] <- dif_1.2B_cov_colapsed[dif_1.2B_cov_colapsed$Gene %in% met_cov_df$id,]$Total.cov
 met_cov_df <- met_cov_df[!is.na(met_cov_df$Trans),]
 met_cov_df[met_cov_df == 0] <-1
 
@@ -632,7 +946,8 @@ plot(fit_10G_df)
 plot(fit_12B_df)
 
 rownames(fit_all_df) <- met_cov_df$id
-my_palette <- colorRampPalette(c("red", "yellow", "green"))(n = 299)
+colnames(fit_all_df) <- c("Predicted", "Trans")
+my_palette <- colorRampPalette(c("red", "black", "green"))(n = 500)
 heatmap.2(as.matrix(fit_all_df), 
           scale="column", 
           Rowv = NA, 
@@ -640,11 +955,24 @@ heatmap.2(as.matrix(fit_all_df),
           col = my_palette, 
           dendrogram = "none", 
           trace = "none", 
-          key = FALSE,
+          srtCol = 0,
+          adjCol = c(0.5,1),
+          lmat = rbind(c(0,3),c(2,1),c(0,4)),
+          lwid = c(1,5),
+          lhei = c(1,6,1),
+          key = TRUE,
+          density.info = "none",
           margins = c(8,8),
-          main="Gene-Body")
-
+          na.color = "grey",
+          main="Diferència de Coverage a 3'")
 @
 
+
+<<create_names_table, echo = FALSE, warning=FALSE>>=
+x <- strsplit(as.character(cov_10G[,6]), ";")
+gnames <- lapply(x, function(x) gsub("description=", "", x[2], fixed = TRUE))
+cov_10G["Gene_Names"] <- unlist(gnames)
+write.table(cov_10G[,c(1,7)], file = "/home/lucas/ISGlobal/Gen_Referencies/Taula_IDs_Noms.csv", sep=",", row.names = FALSE)
+@
 
 \end{document}
