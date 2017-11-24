@@ -74,6 +74,26 @@ def susbstract_norm_cov(bam1, bam2):
 	return sub_cov
 
 
+def ratio_norm_cov(bam1, bam2):
+	
+	ratio_cov = {}
+	dict1 = normalize_coverage(bam1)
+	dict2 = normalize_coverage(bam2)
+
+	for key in dict1:
+		ratio_cov[key] = dict1[key] / dict2[key]
+
+	for key in ratio_cov:
+		i = 0
+		for element in ratio_cov[key]:
+			with open(bam1+"_RATIO_"+bam2+".txt", "a+") as bed_file:
+				bed_file.write("{}\t{}\t{}\t{}\n" .format(key, i, i+1, element))
+				i += 1
+
+	return ratio_cov
+
+
+
 def compare_to_input(treat, control):
 
 	input_cov = {}
@@ -102,9 +122,9 @@ def compare_to_input(treat, control):
 
 
 
-
+###### Change this part to use whatever function you like.
 
 if __name__ == "__main__":
 	filenames = sys.argv[1:]
 	print filenames
-	susbstract_norm_cov(filenames[0], filenames[1])
+	ratio_norm_cov(filenames[0], filenames[1])

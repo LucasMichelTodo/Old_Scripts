@@ -35,7 +35,7 @@ def annotate_from_genes(bed_file):
 	bed = py.BedTool(bed_file) # Load bed file with peaks. 
 	intersect = gene_ref.intersect(bed, wo=True) # Intersect each gene in the gff with the peaks in the bed file.
 
-	for line in intersect: # Calculate overlap between first 1kb, gene ORF and last 1kb with the intersecting peak.
+	for line in intersect: # Calculate overlap between first 1kb/previous gene, gene ORF and last 1kb/next gene with the intersecting peak.
 		pre = round(overlap(int(line[3]), int(line[3])+int(line[9]), int(line[12]), int(line[13])) / float(10), 2)
 		gene = round(overlap(int(line[3])+int(line[9]), int(line[4])-int(line[10]), int(line[12]), int(line[13])) / float((int(line[4])-int(line[10])) - (int(line[3])+int(line[9])))*100, 2)
 		post = round(overlap(int(line[4])-int(line[10]), int(line[4]), int(line[12]), int(line[13])) / float(10), 2)
