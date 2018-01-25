@@ -1,0 +1,392 @@
+\documentclass{article}\usepackage[]{graphicx}\usepackage[]{color}
+%% maxwidth is the original width if it is less than linewidth
+%% otherwise use linewidth (to make sure the graphics do not exceed the margin)
+\makeatletter
+\def\maxwidth{ %
+  \ifdim\Gin@nat@width>\linewidth
+    \linewidth
+  \else
+    \Gin@nat@width
+  \fi
+}
+\makeatother
+
+\definecolor{fgcolor}{rgb}{0.345, 0.345, 0.345}
+\newcommand{\hlnum}[1]{\textcolor[rgb]{0.686,0.059,0.569}{#1}}%
+\newcommand{\hlstr}[1]{\textcolor[rgb]{0.192,0.494,0.8}{#1}}%
+\newcommand{\hlcom}[1]{\textcolor[rgb]{0.678,0.584,0.686}{\textit{#1}}}%
+\newcommand{\hlopt}[1]{\textcolor[rgb]{0,0,0}{#1}}%
+\newcommand{\hlstd}[1]{\textcolor[rgb]{0.345,0.345,0.345}{#1}}%
+\newcommand{\hlkwa}[1]{\textcolor[rgb]{0.161,0.373,0.58}{\textbf{#1}}}%
+\newcommand{\hlkwb}[1]{\textcolor[rgb]{0.69,0.353,0.396}{#1}}%
+\newcommand{\hlkwc}[1]{\textcolor[rgb]{0.333,0.667,0.333}{#1}}%
+\newcommand{\hlkwd}[1]{\textcolor[rgb]{0.737,0.353,0.396}{\textbf{#1}}}%
+\let\hlipl\hlkwb
+
+\usepackage{framed}
+\makeatletter
+\newenvironment{kframe}{%
+ \def\at@end@of@kframe{}%
+ \ifinner\ifhmode%
+  \def\at@end@of@kframe{\end{minipage}}%
+  \begin{minipage}{\columnwidth}%
+ \fi\fi%
+ \def\FrameCommand##1{\hskip\@totalleftmargin \hskip-\fboxsep
+ \colorbox{shadecolor}{##1}\hskip-\fboxsep
+     % There is no \\@totalrightmargin, so:
+     \hskip-\linewidth \hskip-\@totalleftmargin \hskip\columnwidth}%
+ \MakeFramed {\advance\hsize-\width
+   \@totalleftmargin\z@ \linewidth\hsize
+   \@setminipage}}%
+ {\par\unskip\endMakeFramed%
+ \at@end@of@kframe}
+\makeatother
+
+\definecolor{shadecolor}{rgb}{.97, .97, .97}
+\definecolor{messagecolor}{rgb}{0, 0, 0}
+\definecolor{warningcolor}{rgb}{1, 0, 1}
+\definecolor{errorcolor}{rgb}{1, 0, 0}
+\newenvironment{knitrout}{}{} % an empty environment to be redefined in TeX
+
+\usepackage{alltt}
+\usepackage[utf8]{inputenc}
+\usepackage{hyperref}
+\hypersetup{
+  linktocpage,
+  colorlinks=true, 
+  linkcolor=blue,
+  citecolor=blue,
+  filecolor=blue,
+  urlcolor=blue,
+}
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\begin{document}
+
+\title{Metilació i Acetilació a 10G i 1.2B}
+\author{Alfred Cortés i Lucas Michel Todó}
+\maketitle
+\tableofcontents
+\clearpage
+\section{Introducció}
+Les dades representades en aquest set de gràfiques representen l'acetilació i meilació de de les mostres 10G i 1.2B del nostre estudi de Chip-Seq. El genoma sencer de les dues mostres s'ha partit en fragments de 200bp que s'on els que conformen la base de les dades representades. Cada fragment de 200bp porta associada informació respecte el gen a què correspon, l'estat d'acetilació i metilació i si correspon a una zona 3',5' o ORF. 
+\clearpage
+
+
+
+
+
+
+
+
+\section{Histogrames}
+En primer lloc hem representat la distribució dels valors d'acetilació i de metilació als fragments.
+\subsection{log(Ac) All}
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
+
+{\centering \includegraphics[width=1\linewidth]{figure/minimal-dens_all-1} 
+
+}
+
+
+
+\end{knitrout}
+\clearpage
+\subsection{log(Ac) 5'}
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
+
+{\centering \includegraphics[width=1\linewidth]{figure/minimal-dens_5-1} 
+
+}
+
+
+
+\end{knitrout}
+\clearpage
+\subsection{log(Ac) 3'}
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
+
+{\centering \includegraphics[width=1\linewidth]{figure/minimal-dens_3-1} 
+
+}
+
+
+
+\end{knitrout}
+\clearpage
+\subsection{log(Ac) ORF}
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
+
+{\centering \includegraphics[width=1\linewidth]{figure/minimal-dens_ORF-1} 
+
+}
+
+
+
+\end{knitrout}
+\clearpage
+\subsection{log(Met) All}
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
+
+{\centering \includegraphics[width=1\linewidth]{figure/minimal-dens_all_met-1} 
+
+}
+
+
+
+\end{knitrout}
+\clearpage
+\subsection{log(Met) 5'}
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
+
+{\centering \includegraphics[width=1\linewidth]{figure/minimal-dens_5_met-1} 
+
+}
+
+
+
+\end{knitrout}
+\clearpage
+\subsection{log(Met) ORF}
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
+
+{\centering \includegraphics[width=1\linewidth]{figure/minimal-dens_ORF_met-1} 
+
+}
+
+
+
+\end{knitrout}
+\clearpage
+\subsection{log(Ac) 3'}
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
+
+{\centering \includegraphics[width=1\linewidth]{figure/minimal-dens_3_met-1} 
+
+}
+
+
+
+\end{knitrout}
+\clearpage
+
+\section{Acetilació vs Metilació}
+A continuació hem volgut dilucidar si la combinació de l'estat de metilació i acetilació dels fragments ens permet diferenciar entre gens variants/no-variants i entre els gens variants actius/incatius.
+
+Hem classificat els gens com a variants utilitzant una llista obtiniguda en un estudi anterior.
+\clearpage
+\subsection{Transcripció i Metilació}
+Per a poder classificar els gens com a variants actius/inactius peimer hem mirat la distribució de les dades de transcripció i les de metilació. (amb l'idea de trobar llindars per a expressat/no expressat, metilat/no metilat).
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
+
+{\centering \includegraphics[width=1\linewidth]{figure/minimal-trans_histo-1} 
+
+}
+
+
+
+\end{knitrout}
+\clearpage
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
+
+{\centering \includegraphics[width=1\linewidth]{figure/minimal-met_histo-1} 
+
+}
+
+
+
+\end{knitrout}
+\clearpage
+\subsection{Classificació segons Metilació}
+En un primer intent de diferenciar variants actius d'inactius hem creat el paremetre "silenced" que hem considerat "TRUE" si el valor de metilació del fragment està per sobre d'un llindar ($>$3)
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{verbatim}
+## 
+##          Regular   Variant-Active Variant-Silenced 
+##           105873             5317             5467
+\end{verbatim}
+\end{kframe}
+
+{\centering \includegraphics[width=1\linewidth]{figure/minimal-ac_met_log_status-1} 
+
+}
+
+
+
+\end{knitrout}
+\clearpage
+\subsection{Classificació segons Metilació i estat Transcripcional}
+En un segon intent hem afegit la variable "noexprs" que hem considerat "TRUE" quan el valor d'expressió d'un fragment està per sota d'un llindar ($<$4)
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
+
+{\centering \includegraphics[width=1\linewidth]{figure/minimal-ac_met_log-1} 
+
+}
+
+
+
+\end{knitrout}
+\clearpage
+\subsection{Gens diferencials}
+Finalment, vist que els anterior mètodes no enc classificaven satisfactòriament els gens com a variants actius o inactius, hem decidit centrar-nos en aquells gens que s'expressen diferencialment entre 10G i 1.2B. 
+Els gens variants que estàn sobreexpressats en una soca respecte una altra els hem classificat com a actius i viceversa.
+Al fons del gràfic hem afegit la resta de gens (tots aquells que no tenen una expressió diferencial.)
+El que hi ha representat al gràfic són fragments de 200bp (tota la informació respectiva a gens s'ha traslladat als fragments que els representen).
+\clearpage
+\subsubsection{Gràfic de Gens diferencials: ORF}
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
+
+{\centering \includegraphics[width=1\linewidth]{figure/minimal-ac_met_log_status_10G_12B_ORF-1} 
+
+}
+
+
+
+\end{knitrout}
+\clearpage
+\subsubsection{Gràfic de Gens diferencials: 5'}
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
+
+{\centering \includegraphics[width=1\linewidth]{figure/minimal-ac_met_log_status_10G_12B_5-1} 
+
+}
+
+
+
+\end{knitrout}
+\clearpage
+\subsubsection{Gràfic de Gens diferencials: 3'}
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
+
+{\centering \includegraphics[width=1\linewidth]{figure/minimal-ac_met_log_status_10G_12B_3-1} 
+
+}
+
+
+
+\end{knitrout}
+\clearpage
+\subsubsection{Gràfic de Gens diferencials: Només Var i Rifin}
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
+
+{\centering \includegraphics[width=1\linewidth]{figure/minimal-ac_met_log_status_10G_12B_varifin-1} 
+
+}
+
+
+
+\end{knitrout}
+\clearpage
+\subsubsection{Gràfic de Gens diferencials: Excepte Var i Rifin}
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
+
+{\centering \includegraphics[width=1\linewidth]{figure/minimal-ac_met_log_status_10G_12B_novarifin-1} 
+
+}
+
+
+
+\end{knitrout}
+\clearpage
+
+
+\section{Model}
+Finalment hem volgut comprovar si amb les dades de metilació i acetilació podiem crear un model basat en regressió logística que fós capaç de classificar correctament gens variants i no variants.
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{verbatim}
+## 
+##  FALSE   TRUE 
+## 105873  10784
+## Analysis of Deviance Table
+## 
+## Model 1: Variant ~ Ac + Met + Type + Start + Stop + silenced + noexprs
+## Model 2: Variant ~ Ac + Met + Type + Start + Stop
+##   Resid. Df Resid. Dev Df Deviance  Pr(>Chi)    
+## 1      8477     5653.9                          
+## 2      8479     6269.6 -2  -615.74 < 2.2e-16 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Call:
+## glm(formula = Variant ~ Ac + Met + Type + Start + Stop + silenced + 
+##     noexprs, family = binomial(link = "logit"), data = train_df)
+## 
+## Deviance Residuals: 
+##     Min       1Q   Median       3Q      Max  
+## -5.3357  -0.7504   0.0032   0.1817   2.7477  
+## 
+## Coefficients: (1 not defined because of singularities)
+##                Estimate Std. Error z value Pr(>|z|)    
+## (Intercept)   8.257e-01  1.010e-01   8.178 2.90e-16 ***
+## Ac           -1.332e-04  9.463e-06 -14.078  < 2e-16 ***
+## Met           3.536e-04  2.901e-05  12.188  < 2e-16 ***
+## Type5prima   -3.967e-01  1.002e-01  -3.960 7.50e-05 ***
+## TypeORF      -1.218e+00  8.835e-02 -13.791  < 2e-16 ***
+## Typeother    -3.701e+01  2.211e+02  -0.167    0.867    
+## Start        -2.251e-07  4.223e-08  -5.330 9.81e-08 ***
+## Stop                 NA         NA      NA       NA    
+## silencedTRUE  3.738e+00  2.709e-01  13.796  < 2e-16 ***
+## noexprsTRUE   1.394e+00  2.456e-01   5.678 1.37e-08 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## (Dispersion parameter for binomial family taken to be 1)
+## 
+##     Null deviance: 11224.7  on 8485  degrees of freedom
+## Residual deviance:  5653.9  on 8477  degrees of freedom
+## AIC: 5671.9
+## 
+## Number of Fisher Scoring iterations: 14
+##        
+##         FALSE TRUE
+##   FALSE  2872  314
+##   TRUE    989 4488
+## [1] "Accuracy 0.849590211243218"
+## [1] "Accuracy of null model 0.498787948747547"
+\end{verbatim}
+
+
+{\ttfamily\noindent\itshape\color{messagecolor}{\#\# Loading required package: gplots}}
+
+{\ttfamily\noindent\itshape\color{messagecolor}{\#\# \\\#\# Attaching package: 'gplots'}}
+
+{\ttfamily\noindent\itshape\color{messagecolor}{\#\# The following object is masked from 'package:stats':\\\#\# \\\#\#\ \ \ \  lowess}}\begin{verbatim}
+## 
+## 3prima 5prima    ORF 
+##    194     99     21
+## 
+## 3prima 5prima    ORF 
+##    125    186    678
+##           llh       llhNull            G2      McFadden          r2ML          r2CU 
+## -2826.9266696 -5612.3628000  5570.8722609     0.4963036     0.4813251     0.6561190
+\end{verbatim}
+\end{kframe}
+
+{\centering \includegraphics[width=\maxwidth]{figure/minimal-model-1} 
+
+}
+
+
+
+\end{knitrout}
+
+
+
+\end{document}

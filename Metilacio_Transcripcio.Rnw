@@ -1,0 +1,183 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{hyperref}
+\hypersetup{
+    linktocpage,
+    colorlinks=true, 
+    linkcolor=blue,
+    citecolor=blue,
+    filecolor=blue,
+    urlcolor=blue
+}
+
+
+\begin{document}
+
+<<setup, include=FALSE, cache=FALSE>>=
+library(knitr)
+library(XLConnect)
+library(ggplot2)
+
+# set global chunk options
+opts_chunk$set(fig.path='figure/minimal-', fig.align='center', fig.show='hold')
+options(formatR.arrow=TRUE,width=90)
+@
+
+\title{Transcription vs Metilation}
+\author{Lucas Michel Todó}
+\maketitle
+\tableofcontents
+
+\section{Importar llistes i diccionari}
+
+\begin{itemize}
+\item trans\_df: Diferències de transcripci\'{o}.
+\item df\_10G: Llista de gens metilats diferencialment a 10G.
+\item df\_1.2B: Llista de gens metilats diferencialment a 1.2B.
+\item rosetta: Diccionari amb nomenclatura antiga i nova dels gens.
+\end{itemize}
+
+
+<<importar_llistes, warning=FALSE, echo=FALSE, results='hide'>>=
+xls <- readWorksheetFromFile("/home/lucas/ISGlobal/Chip_Seq/Transcripció_CSV/3D7_Variantome_AllData_withGam.xls", sheet = 2)
+colnames(xls)
+trans_df <- xls[,c(3,5,6,10,11,15,16,20,21)]
+colnames(trans_df)[1] <- "Gene"
+
+#Convert NAs to 0
+trans_df[trans_df == "NA"] <- NA
+
+#Calculate max diference and add column
+trans_df["Max_diff"] <- apply(trans_df[,-1], 1, function(x) max(c(abs(as.numeric(x[1]) - as.numeric(x[2])), 
+                                                                  (abs(as.numeric(x[3])) - as.numeric(x[4])), 
+                                                                  abs(as.numeric(x[5]) - as.numeric(x[6])), 
+                                                                  abs(as.numeric(x[7]) - as.numeric(x[8])))))
+
+df_10G <- read.table("/home/lucas/ISGlobal/Chip_Seq/DATA/Aligns/q5/Narrow_fe15/XLS_contrasts/Overlapped_and_filetred/calcFE/bed/annotated/10G_1.2B_peaks_overlappandfilter_calcFE_annotated.csv", header = TRUE, sep ="\t") 
+df_1.2B <- read.table("/home/lucas/ISGlobal/Chip_Seq/DATA/Aligns/q5/Narrow_fe15/XLS_contrasts/Overlapped_and_filetred/calcFE/bed/annotated/1.2B_10G_peaks_overlappandfilter_calcFE_annotated.csv", header = TRUE, sep ="\t")
+
+rosetta <- read.table("/home/lucas/ISGlobal/Gen_Referencies/Gene_references_rosetta.txt", fill = TRUE, fileEncoding = "UTF-8")
+@
+
+\section{Calcular FC}
+Un cop importades trans\_df calculem el FC que correspon al les diferències màximes de transcripció:
+
+<<calcFE>>=
+get_max_fc <- function(x){
+  l <- abs(as.numeric(x[1]) - as.numeric(x[2]))
+  m <- abs(as.numeric(x[3]) - as.numeric(x[4]))
+  r <- abs(as.numeric(x[5]) - as.numeric(x[6]))
+  s <- abs(as.numeric(x[7]) - as.numeric(x[8]))
+  top <- which.max(c(l,m,r,s))
+  if (length(top) > 0){
+    if (top == 1) {
+      fc = as.numeric(x[1])/as.numeric(x[2])
+    } else if (top == 2) {
+      fc = as.numeric(x[3])/as.numeric(x[4])
+    } else if (top == 3) {
+      fc = as.numeric(x[5])/as.numeric(x[6])
+    } else if (top == 4) {
+      fc = as.numeric(x[7])/as.numeric(x[8])
+    }
+  } else {
+    fc = NA
+  }
+  return(fc)
+}
+
+trans_df["FC"] <- apply(trans_df[,-1], 1, get_max_fc)
+@
+
+\section{Editar noms de gens}
+"Traduïm" els noms dels gens:
+
+<<traduir>>=
+for (i in 1:length(trans_df[,1])){
+  if (trans_df[i,1] %in% rosetta[,3]){
+    trans_df[i,"ID"] <- rosetta[rosetta[,3] %in% trans_df[i,1],1][1]
+  } else if (trans_df[i,1] %in% rosetta[,4]){
+    trans_df[i,"ID"] <- rosetta[rosetta[,4] %in% trans_df[i,1],1][1]
+  } else if (trans_df[i,1] %in% rosetta[,5]){
+    trans_df[i,"ID"] <- rosetta[rosetta[,5] %in% trans_df[i,1],1][1]
+  }
+}
+@
+
+\section{Plots}
+I fem alguns plots:
+
+<<plots, warning=FALSE, fig.width=8, fig.height=8, out.width='.4\\linewidth'>>=
+h <- ggplot(trans_df, aes(x = trans_df$Max_dif))
+h + geom_histogram(binwidth = 1) + 
+  scale_x_continuous(breaks = seq(0, max(trans_df$Max_dif, na.rm = TRUE), 2)) +
+  coord_cartesian(ylim = c(0,100))
+
+fc <- ggplot(trans_df, aes(x = trans_df$FC))
+fc + geom_histogram(binwidth = 0.01) +
+  scale_x_continuous(breaks = seq(0, 3, by = 0.1)) +
+  coord_cartesian(xlim = c(0,3))
+@
+
+\section{Llistes}
+I comencem les comparacions:
+
+<<comparisons, warning=FALSE>>=
+trans_df_FC <- trans_df[!is.na(trans_df$FC),]
+
+df_10G_tss <- df_10G[df_10G$X5.cov > 10,]
+df_10G_ORF <- df_10G[df_10G$Gene.cov > 10,]
+df_10G_tts <- df_10G[df_10G$X3.cov > 10,]
+df_10G_filtered <- df_10G[df_10G$X5.cov > 10 | df_10G$Gene.cov > 10,]
+
+table(df_10G_tts[!is.na(df_10G_tts$FC),]$Gene %in% trans_df_FC$ID[trans_df_FC$FC > 1])
+df_10G_tts[df_10G_tts$Gene %in% trans_df_FC$ID[trans_df_FC$FC > 1],"Annotations"]
+df_10G_tts[df_10G_tts$Gene %in% trans_df_FC$ID[trans_df_FC$FC < 1],"Annotations"]
+
+table(df_10G_tss[!is.na(df_10G_tss$FC),]$Gene %in% trans_df_FC$ID[trans_df_FC$FC > 1])
+df_10G_tss[df_10G_tss$Gene %in% trans_df_FC$ID[trans_df_FC$FC > 1],"Annotations"]
+df_10G_tss[df_10G_tss$Gene %in% trans_df_FC$ID[trans_df_FC$FC < 1],"Annotations"]
+
+table(df_10G_ORF[!is.na(df_10G_ORF$FC),]$Gene %in% trans_df_FC$ID[trans_df_FC$FC > 1])
+df_10G_ORF[df_10G_ORF$Gene %in% trans_df_FC$ID[trans_df_FC$FC > 1],"Annotations"]
+df_10G_ORF[df_10G_ORF$Gene %in% trans_df_FC$ID[trans_df_FC$FC < 1],"Annotations"]
+
+table(df_10G_filtered[!is.na(df_10G_filtered$FC),]$Gene %in% trans_df_FC$ID[trans_df_FC$FC > 1])
+df_10G_filtered[df_10G_filtered$Gene %in% trans_df_FC$ID[trans_df_FC$FC > 1],"Annotations"]
+df_10G_filtered[df_10G_filtered$Gene %in% trans_df_FC$ID[trans_df_FC$FC < 1],"Annotations"]
+
+
+
+df_1.2B_tss <- df_1.2B[df_1.2B$X5.cov > 10,]
+df_1.2B_ORF <- df_1.2B[df_1.2B$Gene.cov > 10,]
+df_1.2B_tts <- df_1.2B[df_1.2B$X3.cov> 10,]
+df_1.2B_filtered <- df_1.2B[df_1.2B$X5.cov > 10 | df_1.2B$Gene.cov > 10,]
+
+table(df_1.2B_tss[!is.na(df_1.2B_tss$FC),]$Gene %in% trans_df_FC$ID[trans_df_FC$FC < 1])
+df_1.2B_tss[df_1.2B_tss$Gene %in% trans_df_FC$ID[trans_df_FC$FC < 1],"Annotations"]
+df_1.2B_tss[df_1.2B_tss$Gene %in% trans_df_FC$ID[trans_df_FC$FC > 1],"Annotations"]
+
+table(df_1.2B_tts[!is.na(df_1.2B_tts$FC),]$Gene %in% trans_df_FC$ID[trans_df_FC$FC < 1])
+df_1.2B_tts[df_1.2B_tts$Gene %in% trans_df_FC$ID[trans_df_FC$FC < 1],"Annotations"]
+df_1.2B_tts[df_1.2B_tts$Gene %in% trans_df_FC$ID[trans_df_FC$FC > 1],"Annotations"]
+
+table(df_1.2B_ORF[!is.na(df_1.2B_ORF$FC),]$Gene %in% trans_df_FC$ID[trans_df_FC$FC < 1])
+df_1.2B_ORF[df_1.2B_ORF$Gene %in% trans_df_FC$ID[trans_df_FC$FC < 1],"Annotations"]
+df_1.2B_ORF[df_1.2B_ORF$Gene %in% trans_df_FC$ID[trans_df_FC$FC > 1],"Annotations"]
+
+table(df_1.2B_filtered[!is.na(df_1.2B_filtered$FC),]$Gene %in% trans_df_FC$ID[trans_df_FC$FC < 1])
+df_1.2B_ORF[df_1.2B_filtered$Gene %in% trans_df_FC$ID[trans_df_FC$FC < 1],"Annotations"]
+df_1.2B_ORF[df_1.2B_filtered$Gene %in% trans_df_FC$ID[trans_df_FC$FC > 1],"Annotations"]
+@
+
+
+
+<<>>=
+length(trans_df$ID[trans_df$FC > 1])
+length(trans_df$ID[trans_df$FC < 1])
+length(trans_df$ID)
+2449+2947
+@
+
+
+
+\end{document}

@@ -1,0 +1,351 @@
+\documentclass{article}\usepackage[]{graphicx}\usepackage[]{color}
+%% maxwidth is the original width if it is less than linewidth
+%% otherwise use linewidth (to make sure the graphics do not exceed the margin)
+\makeatletter
+\def\maxwidth{ %
+  \ifdim\Gin@nat@width>\linewidth
+    \linewidth
+  \else
+    \Gin@nat@width
+  \fi
+}
+\makeatother
+
+\definecolor{fgcolor}{rgb}{0.345, 0.345, 0.345}
+\newcommand{\hlnum}[1]{\textcolor[rgb]{0.686,0.059,0.569}{#1}}%
+\newcommand{\hlstr}[1]{\textcolor[rgb]{0.192,0.494,0.8}{#1}}%
+\newcommand{\hlcom}[1]{\textcolor[rgb]{0.678,0.584,0.686}{\textit{#1}}}%
+\newcommand{\hlopt}[1]{\textcolor[rgb]{0,0,0}{#1}}%
+\newcommand{\hlstd}[1]{\textcolor[rgb]{0.345,0.345,0.345}{#1}}%
+\newcommand{\hlkwa}[1]{\textcolor[rgb]{0.161,0.373,0.58}{\textbf{#1}}}%
+\newcommand{\hlkwb}[1]{\textcolor[rgb]{0.69,0.353,0.396}{#1}}%
+\newcommand{\hlkwc}[1]{\textcolor[rgb]{0.333,0.667,0.333}{#1}}%
+\newcommand{\hlkwd}[1]{\textcolor[rgb]{0.737,0.353,0.396}{\textbf{#1}}}%
+\let\hlipl\hlkwb
+
+\usepackage{framed}
+\makeatletter
+\newenvironment{kframe}{%
+ \def\at@end@of@kframe{}%
+ \ifinner\ifhmode%
+  \def\at@end@of@kframe{\end{minipage}}%
+  \begin{minipage}{\columnwidth}%
+ \fi\fi%
+ \def\FrameCommand##1{\hskip\@totalleftmargin \hskip-\fboxsep
+ \colorbox{shadecolor}{##1}\hskip-\fboxsep
+     % There is no \\@totalrightmargin, so:
+     \hskip-\linewidth \hskip-\@totalleftmargin \hskip\columnwidth}%
+ \MakeFramed {\advance\hsize-\width
+   \@totalleftmargin\z@ \linewidth\hsize
+   \@setminipage}}%
+ {\par\unskip\endMakeFramed%
+ \at@end@of@kframe}
+\makeatother
+
+\definecolor{shadecolor}{rgb}{.97, .97, .97}
+\definecolor{messagecolor}{rgb}{0, 0, 0}
+\definecolor{warningcolor}{rgb}{1, 0, 1}
+\definecolor{errorcolor}{rgb}{1, 0, 0}
+\newenvironment{knitrout}{}{} % an empty environment to be redefined in TeX
+
+\usepackage{alltt}
+\usepackage[utf8]{inputenc}
+\usepackage{hyperref}
+\hypersetup{
+    linktocpage,
+    colorlinks=true, 
+    linkcolor=blue,
+    citecolor=blue,
+    filecolor=blue,
+    urlcolor=blue
+}
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\begin{document}
+
+
+\title{Transcription vs Metilation}
+\author{Lucas Michel Todó}
+\maketitle
+\tableofcontents
+\clearpage
+
+
+%------------------------------------------------------------------------------------------------------------------------------------------
+%---------------------------------------------------------INTRO----------------------------------------------------------------------------
+
+
+
+
+
+%------------------------------------------------------------------------------------------------------------------------------------------
+%-------------------------------------------------FILTRATS PER TRANSCRIPCIÓ----------------------------------------------------------------
+
+\section{Heatmaps filtrats i ordenats per Transcripció}
+\subsection{Percentatge de gen covert}
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{verbatim}
+## null device 
+##           1
+\end{verbatim}
+\end{kframe}
+
+{\centering \includegraphics[width=.9\linewidth]{figure/minimal-trans_percent-1} 
+
+}
+
+
+
+\end{knitrout}
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
+
+{\centering \includegraphics[width=20cm,height=13cm,angle=90]{figure/minimal-percentatge_nou-1} 
+
+}
+
+
+
+\end{knitrout}
+\clearpage
+\subsection{Coverage}
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
+
+{\centering \includegraphics[width=.9\linewidth]{figure/minimal-trans_cov-1} 
+
+}
+
+
+
+\end{knitrout}
+\clearpage
+\subsection{Coverage en Pics}
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
+
+{\centering \includegraphics[width=.9\linewidth]{figure/minimal-trans_covapics-1} 
+
+}
+
+
+
+\end{knitrout}
+\clearpage
+
+%------------------------------------------------------------------------------------------------------------------------------------------
+%-------------------------------------------------FILTRATS PER METILACIÓ-------------------------------------------------------------------
+
+\section{Heatmaps filtrats i ordenats per Metilació}
+\subsection{Percentatge de gen covert}
+\subsubsection{Percentatge de gen covert 5}
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
+
+{\centering \includegraphics[width=.9\linewidth]{figure/minimal-met_percent_5-1} 
+
+}
+
+
+
+\end{knitrout}
+\clearpage
+\subsubsection{Percentatge de gen covert ORF}
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
+
+{\centering \includegraphics[width=.9\linewidth]{figure/minimal-met_percent_ORF-1} 
+
+}
+
+
+
+\end{knitrout}
+\clearpage
+\subsubsection{Percentatge de gen covert 3}
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
+
+{\centering \includegraphics[width=.9\linewidth]{figure/minimal-met_percent_3-1} 
+
+}
+
+
+
+\end{knitrout}
+\clearpage
+
+\subsection{Coverage}
+\subsubsection{Coverage 5}
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
+
+{\centering \includegraphics[width=.9\linewidth]{figure/minimal-met_cov_5-1} 
+
+}
+
+
+
+\end{knitrout}
+\clearpage
+\subsubsection{Coverage ORF}
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
+
+{\centering \includegraphics[width=.9\linewidth]{figure/minimal-met_cov_ORF-1} 
+
+}
+
+
+
+\end{knitrout}
+\clearpage
+\subsubsection{Coverage 3}
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
+
+{\centering \includegraphics[width=.9\linewidth]{figure/minimal-met_cov_3-1} 
+
+}
+
+
+
+\end{knitrout}
+\clearpage
+
+\subsection{Coverage en Pics}
+S'han exclòs els 0s (gens als quals no hi ha pic a 5'/ORF/3').
+\subsubsection{Coverage en Pics 5}
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
+
+{\centering \includegraphics[width=.9\linewidth]{figure/minimal-met_covapics_5-1} 
+
+}
+
+
+
+\end{knitrout}
+\clearpage
+\subsubsection{Coverage en Pics ORF}
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
+
+{\centering \includegraphics[width=.9\linewidth]{figure/minimal-met_covapics_ORF-1} 
+
+}
+
+
+
+\end{knitrout}
+\clearpage
+\subsubsection{Coverage en Pics 3}
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
+
+{\centering \includegraphics[width=.9\linewidth]{figure/minimal-met_covapics_3-1} 
+
+}
+
+
+
+\end{knitrout}
+\clearpage
+
+
+% %------------------------------------------------------------------------------------------------------------------------------------------
+% %-------------------------------------------------CORRELACIONS..........-------------------------------------------------------------------
+
+\section{Anàlisi de correlació}
+\subsection{Shapiro-Wilk Normality Test}
+El test de Shapiro-Wilk parteix de l'hipòtesi nula que la distribució és normal. Un pval $<$ 0.05 ens permet rebutjar la hipòtesi nula i per tant implica que la mostra no segueix una distribució nomal.
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlkwd{shapiro.test}\hlstd{(met_df}\hlopt{$}\hlstd{Met_5)}
+\end{alltt}
+\begin{verbatim}
+## 
+## 	Shapiro-Wilk normality test
+## 
+## data:  met_df$Met_5
+## W = 0.80658, p-value = 9.182e-10
+\end{verbatim}
+\begin{alltt}
+\hlkwd{shapiro.test}\hlstd{(}\hlkwd{sample}\hlstd{(cov_10G}\hlopt{$}\hlstd{X5.cov,} \hlnum{5000}\hlstd{))}
+\end{alltt}
+\begin{verbatim}
+## 
+## 	Shapiro-Wilk normality test
+## 
+## data:  sample(cov_10G$X5.cov, 5000)
+## W = 0.30189, p-value < 2.2e-16
+\end{verbatim}
+\begin{alltt}
+\hlkwd{shapiro.test}\hlstd{(}\hlkwd{sample}\hlstd{(Trans}\hlopt{$}\hlstd{`Dif_1.2-10`,} \hlnum{5000}\hlstd{))}
+\end{alltt}
+\begin{verbatim}
+## 
+## 	Shapiro-Wilk normality test
+## 
+## data:  sample(Trans$`Dif_1.2-10`, 5000)
+## W = 0.73435, p-value < 2.2e-16
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+\clearpage
+\subsection{Gràfics}
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
+
+{\centering \includegraphics[width=.9\linewidth]{figure/minimal-cor_graf-1} 
+\includegraphics[width=.9\linewidth]{figure/minimal-cor_graf-2} 
+\includegraphics[width=.9\linewidth]{figure/minimal-cor_graf-3} 
+
+}
+
+
+
+\end{knitrout}
+\clearpage
+
+
+
+\subsection{Taula}
+\subsubsection{Filtrats per Transcripció}
+\begin{tabular}{ccc|ccc|ccc}
+\hline
+\multicolumn{3}{c}{Percentatge} &
+\multicolumn{3}{c}{Coverage} &
+\multicolumn{3}{c}{Coverage a Pics} \\
+\cline{1-3}
+\cline{4-6}
+\cline{7-9}
+5' & ORF & 3' & 5' & ORF & 3' & 5' & ORF & 3' \\
+\hline
+-0.832 & -0.851 & -0.458 &
+-0.875 & -0.836 & -0.438 &
+-0.859 & -0.786 & -0.394\\
+\hline
+\end{tabular} \\\\
+
+\subsubsection{Filtrats per Metilació}
+\begin{tabular}{ccc|ccc|ccc}
+\hline
+\multicolumn{3}{c}{Percentatge} &
+\multicolumn{3}{c}{Coverage} &
+\multicolumn{3}{c}{Coverage a Pics} \\
+\cline{1-3}
+\cline{4-6}
+\cline{7-9}
+5' & ORF & 3' & 5' & ORF & 3' & 5' & ORF & 3' \\
+\hline
+-0.705 & -0.679 & -0.536 &
+-0.755 & -0.579 & -0.367 &
+-0.79 & -0.419 & -0.324\\
+\hline
+\end{tabular} \\\\
+
+
+\end{document}

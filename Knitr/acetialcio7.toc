@@ -1,0 +1,21 @@
+\contentsline {section}{\numberline {1}Introducci\IeC {\'o}}{2}{section.1}
+\contentsline {section}{\numberline {2}Histogrames}{3}{section.2}
+\contentsline {subsection}{\numberline {2.1}log(Ac) All}{3}{subsection.2.1}
+\contentsline {subsection}{\numberline {2.2}log(Ac) 5'}{4}{subsection.2.2}
+\contentsline {subsection}{\numberline {2.3}log(Ac) 3'}{5}{subsection.2.3}
+\contentsline {subsection}{\numberline {2.4}log(Ac) ORF}{6}{subsection.2.4}
+\contentsline {subsection}{\numberline {2.5}log(Met) All}{7}{subsection.2.5}
+\contentsline {subsection}{\numberline {2.6}log(Met) 5'}{8}{subsection.2.6}
+\contentsline {subsection}{\numberline {2.7}log(Met) ORF}{9}{subsection.2.7}
+\contentsline {subsection}{\numberline {2.8}log(Ac) 3'}{10}{subsection.2.8}
+\contentsline {section}{\numberline {3}Acetilaci\IeC {\'o} vs Metilaci\IeC {\'o}}{11}{section.3}
+\contentsline {subsection}{\numberline {3.1}Transcripci\IeC {\'o} i Metilaci\IeC {\'o}}{12}{subsection.3.1}
+\contentsline {subsection}{\numberline {3.2}Classificaci\IeC {\'o} segons Metilaci\IeC {\'o}}{14}{subsection.3.2}
+\contentsline {subsection}{\numberline {3.3}Classificaci\IeC {\'o} segons Metilaci\IeC {\'o} i estat Transcripcional}{15}{subsection.3.3}
+\contentsline {subsection}{\numberline {3.4}Gens diferencials}{16}{subsection.3.4}
+\contentsline {subsubsection}{\numberline {3.4.1}Gr\IeC {\`a}fic de Gens diferencials: ORF}{17}{subsubsection.3.4.1}
+\contentsline {subsubsection}{\numberline {3.4.2}Gr\IeC {\`a}fic de Gens diferencials: 5'}{18}{subsubsection.3.4.2}
+\contentsline {subsubsection}{\numberline {3.4.3}Gr\IeC {\`a}fic de Gens diferencials: 3'}{19}{subsubsection.3.4.3}
+\contentsline {subsubsection}{\numberline {3.4.4}Gr\IeC {\`a}fic de Gens diferencials: Nom\IeC {\'e}s Var i Rifin}{20}{subsubsection.3.4.4}
+\contentsline {subsubsection}{\numberline {3.4.5}Gr\IeC {\`a}fic de Gens diferencials: Excepte Var i Rifin}{21}{subsubsection.3.4.5}
+\contentsline {section}{\numberline {4}Model}{22}{section.4}

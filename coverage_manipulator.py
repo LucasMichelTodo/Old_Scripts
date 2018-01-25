@@ -29,10 +29,10 @@ def coverage(bamfile):
 	for key in sizes:
 		coverage = []
 		cov = sam.count_coverage(reference=key, start=1, end=int(sizes[key]))
-		total_cov = numpy.sum(cov, axis=0)
+		total_cov = numpy.sum(cov, axis=0)+1
 		print "total_cov"
 		print total_cov
-		smooth_cov = numpy.array(pd.Series(total_cov).rolling(2000, min_periods=1).mean().tolist())
+		smooth_cov = numpy.array(pd.Series(total_cov).rolling(200, min_periods=1).mean().tolist())
 		chrom_cov[key] = smooth_cov
 		print "smooth_cov"
 		print smooth_cov
@@ -86,7 +86,7 @@ def ratio_norm_cov(bam1, bam2):
 	for key in ratio_cov:
 		i = 0
 		for element in ratio_cov[key]:
-			with open(bam1+"_RATIO_"+bam2+".txt", "a+") as bed_file:
+			with open(bam1+"_RATIO5_"+bam2+".txt", "a+") as bed_file:
 				bed_file.write("{}\t{}\t{}\t{}\n" .format(key, i, i+1, element))
 				i += 1
 
@@ -120,11 +120,31 @@ def compare_to_input(treat, control):
 	return input_cov
 
 
+def print_coverage_at_intervals(bamfile, inter):
 
+	dict1 = normalize_coverage(bamfile)
+	
+	for key in dict1:
+		pos = 0
+		i = 0
+		cov = 0
+
+		for element in dict1[key]:
+			cov += element
+			i += 1
+			pos += 1
+
+			if i == int(inter):
+
+				with open(bamfile.replace(".bam", "_fullcoverage.bed"), "a+") as bed_file:
+					print bamfile.replace(".bam", "_fullcoverage.bed")
+					bed_file.write("{}\t{}\t{}\t{}\n" .format(key, pos-i, pos, cov))
+					i = 0
+					cov = 0
+					pos = pos+i
 
 ###### Change this part to use whatever function you like.
 
 if __name__ == "__main__":
 	filenames = sys.argv[1:]
-	print filenames
-	ratio_norm_cov(filenames[0], filenames[1])
+	print_coverage_at_intervals(filenames[0], filenames[1])

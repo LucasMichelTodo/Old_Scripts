@@ -1,0 +1,10 @@
+\contentsline {section}{\numberline {1}All regions}{2}{section.1}
+\contentsline {section}{\numberline {2}Only "genes" (5', ORF and 3' regions)}{5}{section.2}
+\contentsline {section}{\numberline {3}5' regions}{8}{section.3}
+\contentsline {section}{\numberline {4}ORF regions}{9}{section.4}
+\contentsline {section}{\numberline {5}3' regions}{10}{section.5}
+\contentsline {section}{\numberline {6}All regions logscale}{11}{section.6}
+\contentsline {section}{\numberline {7}Only "genes" (5', ORF and 3' regions) logscale}{12}{section.7}
+\contentsline {section}{\numberline {8}5' regions logscale}{13}{section.8}
+\contentsline {section}{\numberline {9}ORF regions logscale}{14}{section.9}
+\contentsline {section}{\numberline {10}3' regions logscale}{15}{section.10}

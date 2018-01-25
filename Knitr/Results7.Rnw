@@ -1,0 +1,899 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{hyperref}
+\hypersetup{
+    linktocpage,
+    colorlinks=true, 
+    linkcolor=blue,
+    citecolor=blue,
+    filecolor=blue,
+    urlcolor=blue
+}
+
+
+\begin{document}
+<<setup, include=FALSE, cache=FALSE>>=
+library(knitr)
+library(XLConnect)
+library(ggplot2)
+library(gplots)
+library(plyr)
+library(reshape2)
+library(VennDiagram)
+library(gridExtra)
+library(cowplot)
+
+# set global chunk options
+opts_chunk$set(fig.path='figure/minimal-', fig.align='center', fig.show='hold')
+options(formatR.arrow=TRUE, width=90)
+@
+
+\title{Transcription vs Metilation}
+\author{Lucas Michel Todó}
+\maketitle
+\tableofcontents
+\clearpage
+
+
+%------------------------------------------------------------------------------------------------------------------------------------------
+%---------------------------------------------------------INTRO----------------------------------------------------------------------------
+
+<<imports, echo=FALSE, warning=FALSE>>=
+
+### Importar taula per traduïr noms ###
+rosetta <- read.table("/home/lucas/ISGlobal/Gen_Referencies/Gene_references_rosetta.txt", fill = TRUE, fileEncoding = "UTF-8")
+
+### Importar dades de transcripció ###
+Trans <- xls <- readWorksheetFromFile("/home/lucas/ISGlobal/Chip_Seq/Transcripció_CSV/Dif_10G_12B_HSphenotype.xls", sheet = 4)
+Trans <- Trans[!is.na(Trans$X1.2B) & !is.na(Trans$X10G), c(1,5,6)] #Seleccionar columnes i trure NAs.
+
+for (i in 1:length(Trans[,1])){ # Traduïr noms.
+  if (Trans[i,1] %in% rosetta[,3]){
+    Trans[i,"ID"] <- rosetta[rosetta[,3] %in% Trans[i,1],1][1]
+  } else if (Trans[i,1] %in% rosetta[,4]){
+    Trans[i,"ID"] <- rosetta[rosetta[,4] %in% Trans[i,1],1][1]
+  } else if (Trans[i,1] %in% rosetta[,5]){
+    Trans[i,"ID"] <- rosetta[rosetta[,5] %in% Trans[i,1],1][1]
+  }
+}
+
+Trans <-Trans[!is.na(Trans$ID),] # Treure files sense nom.
+Trans[!startsWith(as.character(Trans$ID), "PF3D7"),]$ID <- c("PF3D7_0221900", "PF3D7_1220700", "PF3D7_1220700", "PF3D7_0203800")
+Trans["Dif_1.2-10"] <- Trans$X1.2B - Trans$X10G # Calcular diferències.
+
+### Importar dades de metilació ###
+df_10G <- read.table("/home/lucas/ISGlobal/Chip_Seq/DATA/Aligns/q5/Narrow_fe15/XLS_contrasts/Overlapped_and_filetred/calcFE/bed/annotated2/10G_1.2B_peaks_overlappandfilter_calcFE_annotated.csv", header = TRUE, sep ="\t") 
+df_1.2B <- read.table("/home/lucas/ISGlobal/Chip_Seq/DATA/Aligns/q5/Narrow_fe15/XLS_contrasts/Overlapped_and_filetred/calcFE/bed/annotated2/1.2B_10G_peaks_overlappandfilter_calcFE_annotated.csv", header = TRUE, sep ="\t")
+
+### Colapsar files (ajuntar diferents pics en un mateix gen) ###
+df_10G_colapsed <- ddply(df_10G, .(Gene), summarise, Gene.cov = sum(Gene.cov), X5.cov = sum(X5.cov), X3.cov = sum(X3.cov))
+df_10G_colapsed["Total.cov"] <- apply(df_10G_colapsed[,2:4], 1, function(x) sum(x))
+df_10G_colapsed["Chrom"] <- apply(df_10G_colapsed, 1, function(x) df_10G[df_10G$Gene == x[1], "Chrom"][1])
+df_10G_colapsed["Annotations"] <- apply(df_10G_colapsed, 1, function(x) df_10G[df_10G$Gene == x[1], "Annotations"][1])
+
+df_1.2B_colapsed <- ddply(df_1.2B, .(Gene), summarise, Gene.cov = sum(Gene.cov), X5.cov = sum(X5.cov), X3.cov = sum(X3.cov))
+df_1.2B_colapsed["Total.cov"] <- apply(df_1.2B_colapsed[,2:4], 1, function(x) sum(x))
+df_1.2B_colapsed["Chrom"] <- apply(df_1.2B_colapsed, 1, function(x) df_1.2B[df_1.2B$Gene == x[1], "Chrom"][1])
+df_1.2B_colapsed["Annotations"] <- apply(df_1.2B_colapsed, 1, function(x) df_1.2B[df_1.2B$Gene == x[1], "Annotations"][1])
+
+Trans2 <- arrange(Trans, -abs(Trans$`Dif_1.2-10`))[1:30,]
+colnames(Trans2)[5] <- "Trans"
+
+### Importar dades de coverage
+cov_10G <- read.table("/home/lucas/ISGlobal/Chip_Seq/DATA/Aligns/q5/Coverage/10G_met_cov.csv", header = TRUE, sep ="\t", quote = "")
+cov_1.2B <- read.table("/home/lucas/ISGlobal/Chip_Seq/DATA/Aligns/q5/Coverage/1.2B_met_cov.csv", header = TRUE, sep ="\t", quote = "")
+
+### Importar dades de coverage de multimapping:
+multi_10G <- read.table("/home/lucas/ISGlobal/Chip_Seq/DATA/Aligns/Multialigned/10G_me_multialign_cov.csv", header = TRUE, sep ="\t", quote = "")
+multi_1.2B <- read.table("/home/lucas/ISGlobal/Chip_Seq/DATA/Aligns/Multialigned/1.2B_me_multialign_cov.csv", header = TRUE, sep ="\t", quote = "")
+
+### Importar dades d'acetilació 
+ac_10G <- read.table("/home/lucas/ISGlobal/Chip_Seq/DATA/Aligns/q5/Coverage/10G_ac_cov.csv", header = TRUE, sep ="\t", quote = "")
+ac_1.2B <- read.table("/home/lucas/ISGlobal/Chip_Seq/DATA/Aligns/q5/Coverage/1.2B_ac_cov.csv", header = TRUE, sep ="\t", quote = "")
+
+### Afegir columnes de ratios cov/multicov:
+cov_10G["Ratio_multi_5"] <- cov_10G$X5.cov / multi_10G$X5.cov
+cov_10G["Ratio_multi_ORF"] <- cov_10G$Gene.cov / multi_10G$Gene.cov
+cov_10G["Ratio_multi_3"] <- cov_10G$X3.cov / multi_10G$X3.cov
+
+cov_1.2B["Ratio_multi_5"] <- cov_1.2B$X5.cov / multi_1.2B$X5.cov
+cov_1.2B["Ratio_multi_ORF"] <- cov_1.2B$Gene.cov / multi_1.2B$Gene.cov
+cov_1.2B["Ratio_multi_3"] <- cov_1.2B$X3.cov / multi_1.2B$X3.cov
+
+### Importar coverage a pics diferencials
+dif_10G_cov <- read.table("/home/lucas/ISGlobal/Diff_Peaks_12B_10G_annotated_cov10G.csv", header = TRUE, sep ="\t")
+dif_1.2B_cov <- read.table("/home/lucas/ISGlobal/Diff_Peaks_12B_10G_annotated_cov1.2B.csv", header = TRUE, sep ="\t")
+
+dif_10G_cov_colapsed <- aggregate(.~ Gene, data=dif_10G_cov, FUN=sum)
+dif_10G_cov_colapsed["Total.cov"] <- apply(dif_10G_cov_colapsed[,2:4], 1, function(x) sum(x))
+dif_10G_cov_colapsed["Chrom"] <- apply(dif_10G_cov_colapsed, 1, function(x) dif_10G_cov[dif_10G_cov$Gene == x[1], "Chrom"][1])
+dif_10G_cov_colapsed["Annotations"] <- apply(dif_10G_cov_colapsed, 1, function(x) dif_10G_cov[dif_10G_cov$Gene == x[1], "Annotations"][1])
+
+dif_1.2B_cov_colapsed <- aggregate(.~ Gene, data=dif_1.2B_cov, FUN=sum)
+dif_1.2B_cov_colapsed["Total.cov"] <- apply(dif_1.2B_cov_colapsed[,2:4], 1, function(x) sum(x))
+dif_1.2B_cov_colapsed["Chrom"] <- apply(dif_1.2B_cov_colapsed, 1, function(x) dif_1.2B_cov[dif_1.2B_cov$Gene == x[1], "Chrom"][1])
+dif_1.2B_cov_colapsed["Annotations"] <- apply(dif_1.2B_cov_colapsed, 1, function(x) dif_1.2B_cov[dif_1.2B_cov$Gene == x[1], "Annotations"][1])
+
+@
+<<multialigned, echo=FALSE, warning=FALSE>>=
+met_genes <-  c(as.character(df_10G_colapsed$Gene), as.character(df_1.2B_colapsed$Gene))
+
+multi_10G_5 <- cov_10G[cov_10G$Ratio_multi_5 <= 0.5,"Gene"]
+multi_10G_5 <- multi_10G_5[!multi_10G_5 %in% met_genes]
+multi_10G_ORF <- cov_10G[cov_10G$Ratio_multi_ORF <= 0.5,"Gene"]
+multi_10G_ORF <- multi_10G_ORF[!multi_10G_ORF %in% met_genes]
+multi_10G_3 <- cov_10G[cov_10G$Ratio_multi_3 <= 0.5,"Gene"]
+multi_10G_3 <- multi_10G_3[!multi_10G_3 %in% met_genes]
+
+multi_1.2B_5 <- cov_1.2B[cov_1.2B$Ratio_multi_5 <= 0.5,"Gene"]
+multi_1.2B_5 <- multi_1.2B_5[!multi_1.2B_5 %in% met_genes]
+multi_1.2B_ORF <- cov_1.2B[cov_1.2B$Ratio_multi_ORF <= 0.5,"Gene"]
+multi_1.2B_ORF <- multi_1.2B_ORF[!multi_1.2B_ORF %in% met_genes]
+multi_1.2B_3 <- cov_1.2B[cov_1.2B$Ratio_multi_3 <= 0.5,"Gene"]
+multi_1.2B_3 <- multi_1.2B_3[!multi_1.2B_3 %in% met_genes]
+
+#for (i in multi_10G_3){
+#  print(i)
+#}
+
+@
+<<multiplot, echo=FALSE, warning=FALSE>>=
+# Multiple plot function
+#
+# ggplot objects can be passed in ..., or to plotlist (as a list of ggplot objects)
+# - cols:   Number of columns in layout
+# - layout: A matrix specifying the layout. If present, 'cols' is ignored.
+#
+# If the layout is something like matrix(c(1,2,3,3), nrow=2, byrow=TRUE),
+# then plot 1 will go in the upper left, 2 will go in the upper right, and
+# 3 will go all the way across the bottom.
+#
+multiplot <- function(..., plotlist=NULL, file, cols=1, layout=NULL) {
+  library(grid)
+
+  # Make a list from the ... arguments and plotlist
+  plots <- c(list(...), plotlist)
+
+  numPlots = length(plots)
+
+  # If layout is NULL, then use 'cols' to determine layout
+  if (is.null(layout)) {
+    # Make the panel
+    # ncol: Number of columns of plots
+    # nrow: Number of rows needed, calculated from # of cols
+    layout <- matrix(seq(1, cols * ceiling(numPlots/cols)),
+                    ncol = cols, nrow = ceiling(numPlots/cols))
+  }
+
+ if (numPlots==1) {
+    print(plots[[1]])
+
+  } else {
+    # Set up the page
+    grid.newpage()
+    pushViewport(viewport(layout = grid.layout(nrow(layout), ncol(layout))))
+
+    # Make each plot, in the correct location
+    for (i in 1:numPlots) {
+      # Get the i,j matrix positions of the regions that contain this subplot
+      matchidx <- as.data.frame(which(layout == i, arr.ind = TRUE))
+
+      print(plots[[i]], vp = viewport(layout.pos.row = matchidx$row,
+                                      layout.pos.col = matchidx$col))
+    }
+  }
+}
+@
+
+%------------------------------------------------------------------------------------------------------------------------------------------
+%-------------------------------------------------FILTRATS PER TRANSCRIPCIÓ----------------------------------------------------------------
+
+\section{Heatmaps filtrats i ordenats per Transcripció}
+\subsection{Percentatge de gen covert}
+<<trans_percent, warning=FALSE, fig.width=10, fig.height=10, out.width='.9\\linewidth', echo = FALSE>>=
+g10_g5 <- df_10G_colapsed$X5.cov
+b12_g5 <- df_1.2B_colapsed$X5.cov[df_1.2B_colapsed$Gene != "PF3D7_1301600"]
+
+g10_gORF <- df_10G_colapsed$Gene.cov
+b12_gORF <- df_1.2B_colapsed$Gene.cov[df_1.2B_colapsed$Gene != "PF3D7_1301600"]
+
+g10_g3 <- df_10G_colapsed$X3.cov
+b12_g3 <- df_1.2B_colapsed$X3.cov[df_1.2B_colapsed$Gene != "PF3D7_1301600"]
+
+met_df <- data.frame(c(g10_g5, (b12_g5*(0))), c((g10_g5*(0)), b12_g5), c(g10_gORF, (b12_gORF*(0))), c((g10_gORF*(0)), b12_gORF), c(g10_g3, (b12_g3*(0))), c((g10_g3*(0)), b12_g3))
+colnames(met_df) <- c("10G_5", "1.2B_5", "10G_ORF", "1.2B_ORF", "10G_3", "1.2B_3")
+
+rownames(met_df) <- c(as.character(df_10G_colapsed$Gene), as.character(df_1.2B_colapsed$Gene[df_1.2B_colapsed$Gene != "PF3D7_1301600"]))
+met_df["PF3D7_1301600",c("1.2B_5", "1.2B_ORF", "1.2B_3")] <- c(df_1.2B_colapsed$X5.cov[df_1.2B_colapsed$Gene == "PF3D7_1301600"], df_1.2B_colapsed$Gene.cov[df_1.2B_colapsed$Gene == "PF3D7_1301600"], df_1.2B_colapsed$X3.cov[df_1.2B_colapsed$Gene == "PF3D7_1301600"])
+
+met_df["Met_5"] <- met_df$`1.2B_5` - met_df$`10G_5`
+met_df["Met_ORF"] <- met_df$`1.2B_ORF` - met_df$`10G_ORF`
+met_df["Met_3"] <- met_df$`1.2B_3` - met_df$`10G_3`
+
+heatmap_df <- Trans2
+heatmap_df["Met_5"] <- apply(heatmap_df, 1, function(x) met_df[rownames(met_df) == x[4],]$Met_5[1])
+heatmap_df["Met_ORF"] <- apply(heatmap_df, 1, function(x) met_df[rownames(met_df) == x[4],]$Met_ORF[1])
+heatmap_df["Met_3"] <- apply(heatmap_df, 1, function(x) met_df[rownames(met_df) == x[4],]$Met_3[1])
+
+heatmap_df <- arrange(heatmap_df, -Trans)
+rownames(heatmap_df) <- heatmap_df$ID
+heatmap_df <- heatmap_df[,c(5:8)]
+heatmap_df[is.na(heatmap_df)] <- 0
+
+heatmap_df[rownames(heatmap_df) %in% multi_10G_5,]$Met_5 <- NA
+heatmap_df[rownames(heatmap_df) %in% multi_10G_ORF,]$Met_ORF <- NA
+heatmap_df[rownames(heatmap_df) %in% multi_10G_3,]$Met_3 <- NA
+trans_percent <- heatmap_df
+
+for (i in 1:length(rownames(heatmap_df))){
+  rownames(heatmap_df)[i] <- paste(rownames(heatmap_df)[i], gsub("description=", "", strsplit(as.character(cov_10G[cov_10G$Gene == rownames(heatmap_df)[i],]$Annotations[1]), split = ";")[[1]][2]), sep = "-->")
+}
+
+# is0 <- heatmap_df == 0
+# for (i in 1:4){
+#   heatmap_df[,i] <- scale(heatmap_df[,i])
+# }
+# heatmap_df[is0] <- 0
+
+#heatmap_df$Trans <- heatmap_df$Trans*15
+
+my_palette <- colorRampPalette(c("red", "black", "green"))(n = 500)
+heatmap.2(as.matrix(heatmap_df),
+          #scale="column", 
+          Rowv = NA, 
+          Colv = NA, 
+          col = my_palette, 
+          dendrogram = "none", 
+          trace = "none", 
+          srtCol = 0,
+          adjCol = c(0.5,1),
+          lmat = rbind(c(0,3),c(2,1),c(0,4)),
+          lwid = c(1,5),
+          lhei = c(1,6,1),
+          key = TRUE,
+          density.info = "none",
+          margins = c(8,30),
+          na.color = "grey",
+          main="Percentatge de Metilació")
+
+dev.off()
+@
+
+<<percentatge_nou, warning=FALSE, fig.align='center', out.width="20cm", out.height="13cm", echo = FALSE, out.extra='angle=90'>>=
+
+heatmap_df <- trans_percent
+
+for (i in 1:length(rownames(heatmap_df))){
+  rownames(heatmap_df)[i] <- paste(rownames(heatmap_df)[i], gsub("description=", "", strsplit(as.character(cov_10G[cov_10G$Gene == rownames(heatmap_df)[i],]$Annotations[1]), split = ";")[[1]][2]), sep = "-->")
+}
+
+heatmap_df["id"] <- rownames(heatmap_df)
+heatmap_df$id <- factor(heatmap_df$id, levels=unique(as.character(heatmap_df$id)))
+
+heatmap_df_m <- melt(heatmap_df[,-1], id ="id")
+
+hm_trans <- as.data.frame(heatmap_df[,1])
+hm_trans["id"] <- rownames(heatmap_df)
+hm_trans$id <- factor(hm_trans$id, levels=unique(as.character(hm_trans$id)))
+colnames(hm_trans)[1] <- "Trans"
+
+hm_trans_m <- melt(hm_trans, id ="id")
+
+plot_met <- ggplot(heatmap_df_m, aes(x = variable, y = id, fill = value)) + 
+  geom_tile() + 
+  scale_fill_gradient2(low = "red", high = "green", mid = "black") +
+  scale_x_discrete(expand = c(0, 0)) + scale_y_discrete(expand = c(0,0), position = "right") +
+  labs(x=NULL, y=NULL, title="") +
+  theme(axis.text.y = element_text(size = rel(0.5))) +
+  theme(axis.line.y = element_blank(), axis.line.x = element_blank(), axis.ticks=element_blank()) +
+  theme(legend.position="bottom", legend.justification="left") +
+  theme(legend.key.width = unit(2.6,"line"),  legend.title = element_blank(), legend.text = element_text(size = 6))
+
+
+plot_trans <- ggplot(hm_trans_m, aes(x = variable, y = id, fill = value)) + 
+  geom_tile() + 
+  scale_fill_gradient2(low = "red", high = "green", mid = "black") +
+  scale_x_discrete(expand = c(0, 0)) + scale_y_discrete(expand = c(0,0)) +
+  labs(x=NULL, y=NULL, title="Percentatge de gen cobert") +
+  theme(plot.title=element_text(hjust=0)) +
+  theme(axis.text.y = element_blank(), axis.line.y = element_blank(), axis.line.x = element_blank(), axis.ticks=element_blank()) +
+  theme(legend.position="bottom", legend.justification="left") +
+  theme(legend.key.width = unit(0.75,"line"), legend.title = element_blank(), legend.text = element_text(size = 6))
+
+plot_grid(plot_trans, plot_met, align = "h", rel_widths = c(0.1, 0.6))
+#reorder(id, value)
+@
+\clearpage
+\subsection{Coverage}
+<<trans_cov, warning=FALSE, fig.width=10, fig.height=10, out.width='.9\\linewidth', echo = FALSE>>=
+diff_5 <- (as.numeric(cov_1.2B$X5.cov) - as.numeric(cov_10G$X5.cov))
+diff_ORF <- (as.numeric(cov_1.2B$Gene.cov) - as.numeric(cov_10G$Gene.cov))
+diff_3 <- (as.numeric(cov_1.2B$X3.cov) - as.numeric(cov_10G$X3.cov))
+
+diff_5_ac <- (as.numeric(ac_1.2B$X5.cov) - as.numeric(ac_10G$X5.cov))
+diff_ORF_ac <- (as.numeric(ac_1.2B$Gene.cov) - as.numeric(ac_10G$Gene.cov))
+diff_3_ac <- (as.numeric(ac_1.2B$X3.cov) - as.numeric(ac_10G$X3.cov))
+
+
+diff <- data.frame(cov_1.2B$Gene, diff_5, diff_ORF, diff_3, diff_5_ac, diff_ORF_ac, diff_3_ac)
+
+heatmap_df <- Trans2
+
+heatmap_df["Met_5"] <- apply(heatmap_df, 1, function(x) diff[diff$cov_1.2B.Gene == x[4],]$diff_5[1])
+heatmap_df["Met_ORF"] <- apply(heatmap_df, 1, function(x) diff[diff$cov_1.2B.Gene == x[4],]$diff_ORF[1])
+heatmap_df["Met_3"] <- apply(heatmap_df, 1, function(x) diff[diff$cov_1.2B.Gene == x[4],]$diff_3[1])
+
+heatmap_df["Ac_5"] <- apply(heatmap_df, 1, function(x) diff[diff$cov_1.2B.Gene == x[4],]$diff_5_ac[1])
+heatmap_df["Ac_ORF"] <- apply(heatmap_df, 1, function(x) diff[diff$cov_1.2B.Gene == x[4],]$diff_ORF_ac[1])
+heatmap_df["Ac_3"] <- apply(heatmap_df, 1, function(x) diff[diff$cov_1.2B.Gene == x[4],]$diff_3_ac[1])
+
+#heatmap_df["Ac/Met_5"] <- heatmap_df$Ac_5 / heatmap_df$Met_5
+#heatmap_df["Ac/Met_ORF"] <- heatmap_df$Ac_ORF / heatmap_df$Met_ORF
+#heatmap_df["Ac/Met_3"] <- heatmap_df$Ac_3 / heatmap_df$Met_3
+
+heatmap_df <- arrange(heatmap_df, -Trans)
+rownames(heatmap_df) <- heatmap_df$ID
+heatmap_df <- heatmap_df[,c(5:11)]  
+#heatmap_df <- na.omit(heatmap_df)
+
+heatmap_df[rownames(heatmap_df) %in% multi_10G_5,]$Met_5 <- NA
+heatmap_df[rownames(heatmap_df) %in% multi_10G_5,]$Ac_5 <- NA
+heatmap_df[rownames(heatmap_df) %in% multi_10G_ORF,]$Met_ORF <- NA
+heatmap_df[rownames(heatmap_df) %in% multi_10G_ORF,]$Ac_ORF <- NA
+heatmap_df[rownames(heatmap_df) %in% multi_10G_3,]$Met_3 <- NA
+heatmap_df[rownames(heatmap_df) %in% multi_10G_3,]$Ac_3 <- NA
+
+trans_cov <- heatmap_df
+for (i in 1:length(rownames(heatmap_df))){
+  rownames(heatmap_df)[i] <- paste(rownames(heatmap_df)[i], gsub("description=", "", strsplit(as.character(cov_10G[cov_10G$Gene == rownames(heatmap_df)[i],]$Annotations[1]), split = ";")[[1]][2]), sep = "-->")
+}
+
+
+my_palette <- colorRampPalette(c("red", "black", "green"))(n = 500)
+heatmap.2(as.matrix(heatmap_df), 
+          scale="column", 
+          Rowv = NA, 
+          Colv = NA,
+          colsep = c(1,4),
+          col = my_palette, 
+          dendrogram = "none", 
+          trace = "none", 
+          srtCol = -90,
+          offsetCol = 0,
+          adjCol = c(0,1),
+          lmat = rbind(c(0,3),c(2,1),c(0,4)),
+          lwid = c(1,5),
+          lhei = c(1,6,1),
+          key = TRUE,
+          density.info = "none",
+          margins = c(8,30),
+          na.color = "grey",
+          main="Coverage")
+@
+\clearpage
+\subsection{Coverage en Pics}
+<<trans_covapics, warning=FALSE, fig.width=10, fig.height=10, out.width='.9\\linewidth', echo = FALSE>>=
+diff_5 <- (as.numeric(dif_1.2B_cov_colapsed$X5.cov) - as.numeric(dif_10G_cov_colapsed$X5.cov))
+diff_ORF <- (as.numeric(dif_1.2B_cov_colapsed$Gene.cov) - as.numeric(dif_10G_cov_colapsed$Gene.cov))
+diff_3 <- (as.numeric(dif_1.2B_cov_colapsed$X3.cov) - as.numeric(dif_10G_cov_colapsed$X3.cov))
+
+diff <- data.frame(dif_1.2B_cov_colapsed$Gene, diff_5, diff_ORF, diff_3)
+
+heatmap_df <- Trans2
+heatmap_df["Met_5"] <- apply(heatmap_df, 1, function(x) diff[diff$dif_1.2B_cov_colapsed.Gene == x[4],]$diff_5[1])
+heatmap_df["Met_ORF"] <- apply(heatmap_df, 1, function(x) diff[diff$dif_1.2B_cov_colapsed.Gene == x[4],]$diff_ORF[1])
+heatmap_df["Met_3"] <- apply(heatmap_df, 1, function(x) diff[diff$dif_1.2B_cov_colapsed.Gene == x[4],]$diff_3[1])
+heatmap_df <- arrange(heatmap_df, -Trans)
+rownames(heatmap_df) <- heatmap_df$ID
+heatmap_df <- heatmap_df[,c(5:8)]  
+heatmap_df <- na.omit(heatmap_df)
+trans_picscov <- heatmap_df
+for (i in 1:length(rownames(heatmap_df))){
+  rownames(heatmap_df)[i] <- paste(rownames(heatmap_df)[i], gsub("description=", "", strsplit(as.character(cov_10G[cov_10G$Gene == rownames(heatmap_df)[i],]$Annotations[1]), split = ";")[[1]][2]), sep = "-->")
+}
+
+my_palette <- colorRampPalette(c("red", "black", "green"))(n = 500)
+heatmap.2(as.matrix(heatmap_df), 
+          scale="column", 
+          Rowv = NA, 
+          Colv = NA, 
+          col = my_palette, 
+          dendrogram = "none", 
+          trace = "none", 
+          srtCol = 0,
+          adjCol = c(0.5,1),
+          lmat = rbind(c(0,3),c(2,1),c(0,4)),
+          lwid = c(1,5),
+          lhei = c(1,6,1),
+          key = TRUE,
+          density.info = "none",
+          margins = c(8,30),
+          na.color = "grey",
+          main="Coverage a Pics")
+@
+\clearpage
+
+%------------------------------------------------------------------------------------------------------------------------------------------
+%-------------------------------------------------FILTRATS PER METILACIÓ-------------------------------------------------------------------
+
+\section{Heatmaps filtrats i ordenats per Metilació}
+\subsection{Percentatge de gen covert}
+\subsubsection{Percentatge de gen covert 5}
+<<met_percent_5, warning=FALSE, fig.width=10, fig.height=10, out.width='.9\\linewidth', echo = FALSE>>=
+g10_g <- df_10G_colapsed$X5.cov
+b12_g <- df_1.2B_colapsed$X5.cov[df_1.2B_colapsed$Gene != "PF3D7_1301600"]
+
+heatmap_df <- data.frame(c(g10_g, (b12_g*(0))), c((g10_g*(0)), b12_g))
+colnames(heatmap_df) <- c("10G", "1.2B")
+rownames(heatmap_df) <- c(as.character(df_10G_colapsed$Gene), as.character(df_1.2B_colapsed$Gene[df_1.2B_colapsed$Gene != "PF3D7_1301600"]))
+heatmap_df["PF3D7_1301600","1.2B"] <- df_1.2B_colapsed$X3.cov[df_1.2B_colapsed$Gene == "PF3D7_1301600"]
+heatmap_df["id"] <- rownames(heatmap_df)
+heatmap_df["Trans"] <- apply(heatmap_df, 1, function(x) Trans[Trans$ID == x[3],]$`Dif_1.2-10`[1])
+heatmap_df["Met"] <- heatmap_df$`1.2B` - heatmap_df$`10G`
+heatmap_df <- heatmap_df[heatmap_df$Met != 0,]
+df_percent_5 <- heatmap_df
+
+heatmap_df <- arrange(heatmap_df, Met)
+rownames(heatmap_df) <- heatmap_df$id
+heatmap_df <- heatmap_df[,c(4,5)]
+heatmap_df <- na.omit(heatmap_df)
+for (i in 1:length(rownames(heatmap_df))){
+  rownames(heatmap_df)[i] <- paste(rownames(heatmap_df)[i], gsub("description=", "", strsplit(as.character(cov_10G[cov_10G$Gene == rownames(heatmap_df)[i],]$Annotations[1]), split = ";")[[1]][2]), sep = "-->")
+}
+
+my_palette <- colorRampPalette(c("red", "black", "green"))(n = 500)
+heatmap.2(as.matrix(heatmap_df), 
+          scale="column", 
+          Rowv = NA, 
+          Colv = NA, 
+          col = my_palette, 
+          dendrogram = "none", 
+          trace = "none", 
+          srtCol = 0,
+          adjCol = c(0.5,1),
+          lmat = rbind(c(0,3),c(2,1),c(0,4)),
+          lwid = c(1,5),
+          lhei = c(1,6,1),
+          key = TRUE,
+          density.info = "none",
+          margins = c(8,30),
+          na.color = "grey",
+          main="Percentatge de Metilació")
+@
+\clearpage
+\subsubsection{Percentatge de gen covert ORF}
+<<met_percent_ORF, warning=FALSE, fig.width=10, fig.height=10, out.width='.9\\linewidth', echo = FALSE>>=
+g10_g <- df_10G_colapsed$Gene.cov
+b12_g <- df_1.2B_colapsed$Gene.cov[df_1.2B_colapsed$Gene != "PF3D7_1301600"]
+
+heatmap_df <- data.frame(c(g10_g, (b12_g*(0))), c((g10_g*(0)), b12_g))
+colnames(heatmap_df) <- c("10G", "1.2B")
+rownames(heatmap_df) <- c(as.character(df_10G_colapsed$Gene), as.character(df_1.2B_colapsed$Gene[df_1.2B_colapsed$Gene != "PF3D7_1301600"]))
+heatmap_df["PF3D7_1301600","1.2B"] <- df_1.2B_colapsed$X3.cov[df_1.2B_colapsed$Gene == "PF3D7_1301600"]
+heatmap_df["id"] <- rownames(heatmap_df)
+heatmap_df["Trans"] <- apply(heatmap_df, 1, function(x) Trans[Trans$ID == x[3],]$`Dif_1.2-10`[1])
+heatmap_df["Met"] <- heatmap_df$`1.2B` - heatmap_df$`10G`
+heatmap_df <- heatmap_df[heatmap_df$Met != 0,]
+df_percent_ORF <- heatmap_df
+
+heatmap_df <- arrange(heatmap_df, Met)
+rownames(heatmap_df) <- heatmap_df$id
+heatmap_df <- heatmap_df[,c(4,5)]
+heatmap_df <- na.omit(heatmap_df)
+for (i in 1:length(rownames(heatmap_df))){
+  rownames(heatmap_df)[i] <- paste(rownames(heatmap_df)[i], gsub("description=", "", strsplit(as.character(cov_10G[cov_10G$Gene == rownames(heatmap_df)[i],]$Annotations[1]), split = ";")[[1]][2]), sep = "-->")
+}
+
+my_palette <- colorRampPalette(c("red", "black", "green"))(n = 500)
+heatmap.2(as.matrix(heatmap_df), 
+          scale="column", 
+          Rowv = NA, 
+          Colv = NA, 
+          col = my_palette, 
+          dendrogram = "none", 
+          trace = "none", 
+          srtCol = 0,
+          adjCol = c(0.5,1),
+          lmat = rbind(c(0,3),c(2,1),c(0,4)),
+          lwid = c(1,5),
+          lhei = c(1,6,1),
+          key = TRUE,
+          density.info = "none",
+          margins = c(8,30),
+          na.color = "grey",
+          main="Percentatge de Metilació")
+@
+\clearpage
+\subsubsection{Percentatge de gen covert 3}
+<<met_percent_3, warning=FALSE, fig.width=10, fig.height=10, out.width='.9\\linewidth', echo = FALSE>>=
+g10_g <- df_10G_colapsed$X3.cov
+b12_g <- df_1.2B_colapsed$X3.cov[df_1.2B_colapsed$Gene != "PF3D7_1301600"]
+
+heatmap_df <- data.frame(c(g10_g, (b12_g*(0))), c((g10_g*(0)), b12_g))
+colnames(heatmap_df) <- c("10G", "1.2B")
+rownames(heatmap_df) <- c(as.character(df_10G_colapsed$Gene), as.character(df_1.2B_colapsed$Gene[df_1.2B_colapsed$Gene != "PF3D7_1301600"]))
+heatmap_df["PF3D7_1301600","1.2B"] <- df_1.2B_colapsed$X3.cov[df_1.2B_colapsed$Gene == "PF3D7_1301600"]
+heatmap_df["id"] <- rownames(heatmap_df)
+heatmap_df["Trans"] <- apply(heatmap_df, 1, function(x) Trans[Trans$ID == x[3],]$`Dif_1.2-10`[1])
+heatmap_df["Met"] <- heatmap_df$`1.2B` - heatmap_df$`10G`
+heatmap_df <- heatmap_df[heatmap_df$Met != 0,]
+df_percent_3 <- heatmap_df
+
+heatmap_df <- arrange(heatmap_df, Met)
+rownames(heatmap_df) <- heatmap_df$id
+heatmap_df <- heatmap_df[,c(4,5)]
+heatmap_df <- na.omit(heatmap_df)
+for (i in 1:length(rownames(heatmap_df))){
+  rownames(heatmap_df)[i] <- paste(rownames(heatmap_df)[i], gsub("description=", "", strsplit(as.character(cov_10G[cov_10G$Gene == rownames(heatmap_df)[i],]$Annotations[1]), split = ";")[[1]][2]), sep = "-->")
+}
+
+my_palette <- colorRampPalette(c("red", "black", "green"))(n = 500)
+heatmap.2(as.matrix(heatmap_df), 
+          scale="column", 
+          Rowv = NA, 
+          Colv = NA, 
+          col = my_palette, 
+          dendrogram = "none", 
+          trace = "none", 
+          srtCol = 0,
+          adjCol = c(0.5,1),
+          lmat = rbind(c(0,3),c(2,1),c(0,4)),
+          lwid = c(1,5),
+          lhei = c(1,6,1),
+          key = TRUE,
+          density.info = "none",
+          margins = c(8,30),
+          na.color = "grey",
+          main="Percentatge de Metilació")
+@
+\clearpage
+
+\subsection{Coverage}
+\subsubsection{Coverage 5}
+<<met_cov_5, warning=FALSE, fig.width=10, fig.height=10, out.width='.9\\linewidth', echo = FALSE>>=
+diff <- (as.numeric(cov_1.2B$X5.cov) - as.numeric(cov_10G$X5.cov)) 
+heatmap_df <- data.frame(cov_1.2B$Gene, diff)
+heatmap_df <- heatmap_df[heatmap_df$cov_1.2B.Gene %in% met_genes,]
+heatmap_df["Trans"] <- apply(heatmap_df, 1, function(x) Trans[Trans$ID == x[1],]$`Dif_1.2-10`[1])
+heatmap_df <- arrange(heatmap_df, diff)
+rownames(heatmap_df) <- heatmap_df$cov_1.2B.Gene
+colnames(heatmap_df) <- c("ID","Met", "Trans")
+heatmap_df <- heatmap_df[,c(3,2)]
+df_cov_5 <- heatmap_df
+
+heatmap_df <- na.omit(heatmap_df)
+
+
+for (i in 1:length(rownames(heatmap_df))){
+  rownames(heatmap_df)[i] <- paste(rownames(heatmap_df)[i], gsub("description=", "", strsplit(as.character(cov_10G[cov_10G$Gene == rownames(heatmap_df)[i],]$Annotations[1]), split = ";")[[1]][2]), sep = "-->")
+}
+
+my_palette <- colorRampPalette(c("red", "black", "green"))(n = 500)
+heatmap.2(as.matrix(heatmap_df), 
+          scale="column", 
+          Rowv = NA, 
+          Colv = NA, 
+          col = my_palette, 
+          dendrogram = "none", 
+          trace = "none", 
+          srtCol = 0,
+          adjCol = c(0.5,1),
+          lmat = rbind(c(0,3),c(2,1),c(0,4)),
+          lwid = c(1,5),
+          lhei = c(1,6,1),
+          key = TRUE,
+          density.info = "none",
+          margins = c(8,30),
+          na.color = "grey",
+          main="Coverage")
+@
+\clearpage
+\subsubsection{Coverage ORF}
+<<met_cov_ORF, warning=FALSE, fig.width=10, fig.height=10, out.width='.9\\linewidth', echo = FALSE>>=
+diff <- (as.numeric(cov_1.2B$Gene.cov) - as.numeric(cov_10G$Gene.cov)) 
+heatmap_df <- data.frame(cov_1.2B$Gene, diff)
+heatmap_df <- heatmap_df[heatmap_df$cov_1.2B.Gene %in% met_genes,]
+heatmap_df["Trans"] <- apply(heatmap_df, 1, function(x) Trans[Trans$ID == x[1],]$`Dif_1.2-10`[1])
+heatmap_df <- arrange(heatmap_df, diff)
+rownames(heatmap_df) <- heatmap_df$cov_1.2B.Gene
+colnames(heatmap_df) <- c("ID","Met", "Trans")
+heatmap_df <- heatmap_df[,c(3,2)]
+df_cov_ORF <- heatmap_df
+
+heatmap_df <- na.omit(heatmap_df)
+
+
+for (i in 1:length(rownames(heatmap_df))){
+  rownames(heatmap_df)[i] <- paste(rownames(heatmap_df)[i], gsub("description=", "", strsplit(as.character(cov_10G[cov_10G$Gene == rownames(heatmap_df)[i],]$Annotations[1]), split = ";")[[1]][2]), sep = "-->")
+}
+
+my_palette <- colorRampPalette(c("red", "black", "green"))(n = 500)
+heatmap.2(as.matrix(heatmap_df), 
+          scale="column", 
+          Rowv = NA, 
+          Colv = NA, 
+          col = my_palette, 
+          dendrogram = "none", 
+          trace = "none", 
+          srtCol = 0,
+          adjCol = c(0.5,1),
+          lmat = rbind(c(0,3),c(2,1),c(0,4)),
+          lwid = c(1,5),
+          lhei = c(1,6,1),
+          key = TRUE,
+          density.info = "none",
+          margins = c(8,30),
+          na.color = "grey",
+          main="Coverage")
+@
+\clearpage
+\subsubsection{Coverage 3}
+<<met_cov_3, warning=FALSE, fig.width=10, fig.height=10, out.width='.9\\linewidth', echo = FALSE>>=
+diff <- (as.numeric(cov_1.2B$X3.cov) - as.numeric(cov_10G$X3.cov)) 
+heatmap_df <- data.frame(cov_1.2B$Gene, diff)
+heatmap_df <- heatmap_df[heatmap_df$cov_1.2B.Gene %in% met_genes,]
+heatmap_df["Trans"] <- apply(heatmap_df, 1, function(x) Trans[Trans$ID == x[1],]$`Dif_1.2-10`[1])
+heatmap_df <- arrange(heatmap_df, diff)
+rownames(heatmap_df) <- heatmap_df$cov_1.2B.Gene
+colnames(heatmap_df) <- c("ID","Met", "Trans")
+heatmap_df <- heatmap_df[,c(3,2)]
+df_cov_3 <- heatmap_df
+
+heatmap_df <- na.omit(heatmap_df)
+
+
+for (i in 1:length(rownames(heatmap_df))){
+  rownames(heatmap_df)[i] <- paste(rownames(heatmap_df)[i], gsub("description=", "", strsplit(as.character(cov_10G[cov_10G$Gene == rownames(heatmap_df)[i],]$Annotations[1]), split = ";")[[1]][2]), sep = "-->")
+}
+
+my_palette <- colorRampPalette(c("red", "black", "green"))(n = 500)
+heatmap.2(as.matrix(heatmap_df), 
+          scale="column", 
+          Rowv = NA, 
+          Colv = NA, 
+          col = my_palette, 
+          dendrogram = "none", 
+          trace = "none", 
+          srtCol = 0,
+          adjCol = c(0.5,1),
+          lmat = rbind(c(0,3),c(2,1),c(0,4)),
+          lwid = c(1,5),
+          lhei = c(1,6,1),
+          key = TRUE,
+          density.info = "none",
+          margins = c(8,30),
+          na.color = "grey",
+          main="Coverage")
+@
+\clearpage
+
+\subsection{Coverage en Pics}
+S'han exclòs els 0s (gens als quals no hi ha pic a 5'/ORF/3').
+\subsubsection{Coverage en Pics 5}
+<<met_covapics_5, warning=FALSE, fig.width=10, fig.height=10, out.width='.9\\linewidth', echo = FALSE>>=
+diff <- (as.numeric(dif_1.2B_cov_colapsed$X5.cov) - as.numeric(dif_10G_cov_colapsed$X5.cov))
+heatmap_df <- data.frame(dif_1.2B_cov_colapsed$Gene, diff)
+heatmap_df["Trans"] <- apply(heatmap_df, 1, function(x) Trans[Trans$ID == x[1],]$`Dif_1.2-10`[1])
+heatmap_df <- arrange(heatmap_df, diff)
+rownames(heatmap_df) <- heatmap_df$dif_1.2B_cov_colapsed.Gene
+colnames(heatmap_df) <- c("ID","Met", "Trans")
+heatmap_df <- heatmap_df[,c(3,2)]
+df_diffpeakcov_5 <- heatmap_df[heatmap_df$Met != 0,]
+
+heatmap_df <- na.omit(heatmap_df)
+heatmap_df <- heatmap_df[heatmap_df$Met != 0,]
+for (i in 1:length(rownames(heatmap_df))){
+  rownames(heatmap_df)[i] <- paste(rownames(heatmap_df)[i], gsub("description=", "", strsplit(as.character(cov_10G[cov_10G$Gene == rownames(heatmap_df)[i],]$Annotations[1]), split = ";")[[1]][2]), sep = "-->")
+}
+
+my_palette <- colorRampPalette(c("red", "black", "green"))(n = 500)
+heatmap.2(as.matrix(heatmap_df), 
+          scale="column", 
+          Rowv = NA, 
+          Colv = NA, 
+          col = my_palette, 
+          dendrogram = "none", 
+          trace = "none", 
+          srtCol = 0,
+          adjCol = c(0.5,1),
+          lmat = rbind(c(0,3),c(2,1),c(0,4)),
+          lwid = c(1,5),
+          lhei = c(1,6,1),
+          key = TRUE,
+          density.info = "none",
+          margins = c(8,30),
+          na.color = "grey",
+          main="Coverage a Pics")
+@
+\clearpage
+\subsubsection{Coverage en Pics ORF}
+<<met_covapics_ORF, warning=FALSE, fig.width=10, fig.height=10, out.width='.9\\linewidth', echo = FALSE>>=
+diff <- (as.numeric(dif_1.2B_cov_colapsed$Gene.cov) - as.numeric(dif_10G_cov_colapsed$Gene.cov))
+heatmap_df <- data.frame(dif_1.2B_cov_colapsed$Gene, diff)
+heatmap_df["Trans"] <- apply(heatmap_df, 1, function(x) Trans[Trans$ID == x[1],]$`Dif_1.2-10`[1])
+heatmap_df <- arrange(heatmap_df, diff)
+rownames(heatmap_df) <- heatmap_df$dif_1.2B_cov_colapsed.Gene
+colnames(heatmap_df) <- c("ID","Met", "Trans")
+heatmap_df <- heatmap_df[,c(3,2)] 
+df_diffpeakcov_ORF <- heatmap_df[heatmap_df$Met != 0,]
+
+heatmap_df <- na.omit(heatmap_df)
+heatmap_df <- heatmap_df[heatmap_df$Met != 0,]
+for (i in 1:length(rownames(heatmap_df))){
+  rownames(heatmap_df)[i] <- paste(rownames(heatmap_df)[i], gsub("description=", "", strsplit(as.character(cov_10G[cov_10G$Gene == rownames(heatmap_df)[i],]$Annotations[1]), split = ";")[[1]][2]), sep = "-->")
+}
+
+my_palette <- colorRampPalette(c("red", "black", "green"))(n = 500)
+heatmap.2(as.matrix(heatmap_df), 
+          scale="column", 
+          Rowv = NA, 
+          Colv = NA, 
+          col = my_palette, 
+          dendrogram = "none", 
+          trace = "none", 
+          srtCol = 0,
+          adjCol = c(0.5,1),
+          lmat = rbind(c(0,3),c(2,1),c(0,4)),
+          lwid = c(1,5),
+          lhei = c(1,6,1),
+          key = TRUE,
+          density.info = "none",
+          margins = c(8,30),
+          na.color = "grey",
+          main="Coverage a Pics")
+@
+\clearpage
+\subsubsection{Coverage en Pics 3}
+<<met_covapics_3, warning=FALSE, fig.width=10, fig.height=10, out.width='.9\\linewidth', echo = FALSE>>=
+diff <- (as.numeric(dif_1.2B_cov_colapsed$X3.cov) - as.numeric(dif_10G_cov_colapsed$X3.cov))
+heatmap_df <- data.frame(dif_1.2B_cov_colapsed$Gene, diff)
+heatmap_df["Trans"] <- apply(heatmap_df, 1, function(x) Trans[Trans$ID == x[1],]$`Dif_1.2-10`[1])
+heatmap_df <- arrange(heatmap_df, diff)
+rownames(heatmap_df) <- heatmap_df$dif_1.2B_cov_colapsed.Gene
+colnames(heatmap_df) <- c("ID","Met", "Trans")
+heatmap_df <- heatmap_df[,c(3,2)]
+df_diffpeakcov_3 <- heatmap_df[heatmap_df$Met != 0,]
+
+heatmap_df <- na.omit(heatmap_df)
+heatmap_df <- heatmap_df[heatmap_df$Met != 0,]
+for (i in 1:length(rownames(heatmap_df))){
+  rownames(heatmap_df)[i] <- paste(rownames(heatmap_df)[i], gsub("description=", "", strsplit(as.character(cov_10G[cov_10G$Gene == rownames(heatmap_df)[i],]$Annotations[1]), split = ";")[[1]][2]), sep = "-->")
+}
+
+my_palette <- colorRampPalette(c("red", "black", "green"))(n = 500)
+heatmap.2(as.matrix(heatmap_df), 
+          scale="column", 
+          Rowv = NA, 
+          Colv = NA, 
+          col = my_palette, 
+          dendrogram = "none", 
+          trace = "none", 
+          srtCol = 0,
+          adjCol = c(0.5,1),
+          lmat = rbind(c(0,3),c(2,1),c(0,4)),
+          lwid = c(1,5),
+          lhei = c(1,6,1),
+          key = TRUE,
+          density.info = "none",
+          margins = c(8,30),
+          na.color = "grey",
+          main="Coverage a Pics")
+@
+\clearpage
+
+
+% %------------------------------------------------------------------------------------------------------------------------------------------
+% %-------------------------------------------------CORRELACIONS..........-------------------------------------------------------------------
+
+\section{Anàlisi de correlació}
+\subsection{Shapiro-Wilk Normality Test}
+El test de Shapiro-Wilk parteix de l'hipòtesi nula que la distribució és normal. Un pval $<$ 0.05 ens permet rebutjar la hipòtesi nula i per tant implica que la mostra no segueix una distribució nomal.
+<<cor_shapiro>>=
+shapiro.test(met_df$Met_5)
+shapiro.test(sample(cov_10G$X5.cov, 5000))
+shapiro.test(sample(Trans$`Dif_1.2-10`, 5000))
+@
+\clearpage
+\subsection{Gràfics}
+<<cor_graf, warning=FALSE, fig.width=10, fig.height=10, out.width='.9\\linewidth', echo = FALSE>>=
+hist(met_df$Met_5, breaks = 10)
+hist(cov_10G$X5.cov, breaks = 2000, xlim = c(1,15))
+hist(Trans$`Dif_1.2-10`, breaks = 2000)
+@
+\clearpage
+
+<<correlacions_trans, echo=FALSE, warning=FALSE>>=
+########### Filtrats per Transcripció ################
+trans_per_5 <- round(cor(trans_percent$Trans, trans_percent$Met_5, method = "spearman", use = "complete.obs"), digits=3)
+#plot(trans_percent$Trans, trans_percent$Met_5, main = "Percentatge Coverage 5'")
+
+trans_per_ORF <- round(cor(trans_percent$Trans, trans_percent$Met_ORF, method = "spearman", use = "complete.obs"), digits=3)
+#plot(trans_percent$Trans, trans_percent$Met_ORF, main = "Percentatge Coverage ORF'")
+
+trans_per_3 <- round(cor(trans_percent$Trans, trans_percent$Met_3, method = "spearman", use = "complete.obs"), digits=3)
+#plot(trans_percent$Trans, trans_percent$Met_3, main = "Percentatge Coverage 3'")
+
+trans_cov_5 <- round(cor(trans_cov$Trans, trans_cov$Met_5, method = "spearman", use = "complete.obs"), digits=3)
+#plot(trans_cov$Trans, trans_cov$Met_5, main = "Coverage 5'")
+
+trans_cov_ORF <- round(cor(trans_cov$Trans, trans_cov$Met_ORF, method = "spearman", use = "complete.obs"), digits=3)
+#plot(trans_cov$Trans, trans_cov$Met_ORF, main = "Coverage ORF")
+
+trans_cov_3 <- round(cor(trans_cov$Trans, trans_cov$Met_3, method = "spearman", use = "complete.obs"), digits=3)
+#plot(trans_cov$Trans, trans_cov$Met_3, main = "Coverage 3'")
+
+trans_diffpeakcov_5 <- round(cor(trans_picscov$Trans, trans_picscov$Met_5, method = "spearman", use = "complete.obs"), digits=3)
+#plot(trans_picscov$Trans, trans_picscov$Met_5, main = "Coverage a Pics 5'")
+
+trans_diffpeakcov_ORF <- round(cor(trans_picscov$Trans, trans_picscov$Met_ORF, method = "spearman", use = "complete.obs"), digits=3)
+#plot(trans_picscov$Trans, trans_picscov$Met_ORF, main = "Coverage a Pics ORF")
+
+trans_diffpeakcov_3 <- round(cor(trans_picscov$Trans, trans_picscov$Met_3, method = "spearman", use = "complete.obs"), digits=3)
+#plot(trans_picscov$Trans, trans_picscov$Met_3, main = "Coverage a Pics 3'")
+
+########### Filtrats per Metilació ###################
+cor_per_5 <- round(cor(df_percent_5$Trans, df_percent_5$Met, method = "spearman", use = "complete.obs"), digits=3)
+#plot(df_percent_5$Trans, df_percent_5$Met, main = "Percentatge Coverage 5'")
+
+cor_per_ORF <- round(cor(df_percent_ORF$Trans, df_percent_ORF$Met, method = "spearman", use = "complete.obs"), digits=3)
+#plot(df_percent_ORF$Trans, df_percent_ORF$Met, main = "Percentatge Coverage ORF")
+
+cor_per_3 <- round(cor(df_percent_3$Trans, df_percent_3$Met, method = "spearman", use = "complete.obs"), digits=3)
+#plot(df_percent_3$Trans, df_percent_3$Met, main = "Percentatge Coverage 3'")
+
+cor_cov_5 <- round(cor(df_cov_5$Trans, df_cov_5$Met, method = "spearman", use = "complete.obs"), digits=3)
+#plot(df_cov_5$Trans, df_cov_5$Met, main = "Coverage 5'")
+
+cor_cov_ORF <- round(cor(df_cov_ORF$Trans, df_cov_ORF$Met, method = "spearman", use = "complete.obs"), digits=3)
+#plot(df_cov_ORF$Trans, df_cov_ORF$Met, main = "Coverage ORF")
+
+cor_cov_3 <- round(cor(df_cov_3$Trans, df_cov_3$Met, method = "spearman", use = "complete.obs"), digits=3)
+#plot(df_cov_3$Trans, df_cov_3$Met, main = "Coverage 3'")
+
+cor_diffpeakcov_5 <- round(cor(df_diffpeakcov_5$Trans, df_diffpeakcov_5$Met, method = "spearman", use = "complete.obs"), digits=3)
+#plot(df_diffpeakcov_5$Trans, df_diffpeakcov_5$Met, main = "Coverage a Pics 5'")
+
+cor_diffpeakcov_ORF <- round(cor(df_diffpeakcov_ORF$Trans, df_diffpeakcov_ORF$Met, method = "spearman", use = "complete.obs"), digits=3)
+#plot(df_diffpeakcov_ORF$Trans, df_diffpeakcov_ORF$Met, main = "Coverage a Pics ORF")
+
+cor_diffpeakcov_3 <- round(cor(df_diffpeakcov_3$Trans, df_diffpeakcov_3$Met, method = "spearman", use = "complete.obs"), digits=3)
+#plot(df_diffpeakcov_3$Trans, df_diffpeakcov_3$Met, main = "Coverage a Pics 3'")
+@
+
+\subsection{Taula}
+\subsubsection{Filtrats per Transcripció}
+\begin{tabular}{ccc|ccc|ccc}
+\hline
+\multicolumn{3}{c}{Percentatge} &
+\multicolumn{3}{c}{Coverage} &
+\multicolumn{3}{c}{Coverage a Pics} \\
+\cline{1-3}
+\cline{4-6}
+\cline{7-9}
+5' & ORF & 3' & 5' & ORF & 3' & 5' & ORF & 3' \\
+\hline
+\Sexpr{trans_per_5} & \Sexpr{trans_per_ORF} & \Sexpr{trans_per_3} &
+\Sexpr{trans_cov_5} & \Sexpr{trans_cov_ORF} & \Sexpr{trans_cov_3} &
+\Sexpr{trans_diffpeakcov_5} & \Sexpr{trans_diffpeakcov_ORF} & \Sexpr{trans_diffpeakcov_3}\\
+\hline
+\end{tabular} \\\\
+
+\subsubsection{Filtrats per Metilació}
+\begin{tabular}{ccc|ccc|ccc}
+\hline
+\multicolumn{3}{c}{Percentatge} &
+\multicolumn{3}{c}{Coverage} &
+\multicolumn{3}{c}{Coverage a Pics} \\
+\cline{1-3}
+\cline{4-6}
+\cline{7-9}
+5' & ORF & 3' & 5' & ORF & 3' & 5' & ORF & 3' \\
+\hline
+\Sexpr{cor_per_5} & \Sexpr{cor_per_ORF} & \Sexpr{cor_per_3} &
+\Sexpr{cor_cov_5} & \Sexpr{cor_cov_ORF} & \Sexpr{cor_cov_3} &
+\Sexpr{cor_diffpeakcov_5} & \Sexpr{cor_diffpeakcov_ORF} & \Sexpr{cor_diffpeakcov_3}\\
+\hline
+\end{tabular} \\\\
+
+
+\end{document}

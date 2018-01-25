@@ -60,8 +60,8 @@ Trans[!startsWith(as.character(Trans$ID), "PF3D7"),]$ID <- c("PF3D7_0221900", "P
 Trans["Dif_1.2-10"] <- Trans$X1.2B - Trans$X10G # Calcular diferències.
 
 ### Importar dades de metilació ###
-df_10G <- read.table("/home/lucas/ISGlobal/Chip_Seq/DATA/Aligns/q5/Narrow_fe15/XLS_contrasts/Overlapped_and_filetred/calcFE/bed/annotated/10G_1.2B_peaks_overlappandfilter_calcFE_annotated.csv", header = TRUE, sep ="\t") 
-df_1.2B <- read.table("/home/lucas/ISGlobal/Chip_Seq/DATA/Aligns/q5/Narrow_fe15/XLS_contrasts/Overlapped_and_filetred/calcFE/bed/annotated/1.2B_10G_peaks_overlappandfilter_calcFE_annotated.csv", header = TRUE, sep ="\t")
+df_10G <- read.table("/home/lucas/ISGlobal/Chip_Seq/DATA/Aligns/q5/Narrow_fe15/XLS_contrasts/Overlapped_and_filetred/calcFE/bed/annotated2/10G_1.2B_peaks_overlappandfilter_calcFE_annotated.csv", header = TRUE, sep ="\t") 
+df_1.2B <- read.table("/home/lucas/ISGlobal/Chip_Seq/DATA/Aligns/q5/Narrow_fe15/XLS_contrasts/Overlapped_and_filetred/calcFE/bed/annotated2/1.2B_10G_peaks_overlappandfilter_calcFE_annotated.csv", header = TRUE, sep ="\t")
 
 ### Colapsar files (ajuntar diferents pics en un mateix gen) ###
 df_10G_colapsed <- ddply(df_10G, .(Gene), summarise, Gene.cov = sum(Gene.cov), X5.cov = sum(X5.cov), X3.cov = sum(X3.cov))
@@ -180,11 +180,15 @@ for (i in 1:length(rownames(heatmap_df))){
   rownames(heatmap_df)[i] <- paste(rownames(heatmap_df)[i], gsub("description=", "", strsplit(as.character(cov_10G[cov_10G$Gene == rownames(heatmap_df)[i],]$Annotations[1]), split = ";")[[1]][2]), sep = "-->")
 }
 
-
+is0 <- heatmap_df == 0
+for (i in 1:4){
+  heatmap_df[,i] <- scale(heatmap_df[,i])
+}
+heatmap_df[is0] <- 0
 
 my_palette <- colorRampPalette(c("red", "black", "green"))(n = 500)
-heatmap.2(as.matrix(heatmap_df), 
-          scale="column", 
+heatmap.2(as.matrix(heatmap_df),
+          #scale="column", 
           Rowv = NA, 
           Colv = NA, 
           col = my_palette, 

@@ -1,0 +1,17 @@
+\contentsline {section}{\numberline {1}All regions}{2}{section.1}
+\contentsline {section}{\numberline {2}Only "genes" (5', ORF and 3' regions)}{5}{section.2}
+\contentsline {section}{\numberline {3}5' regions}{8}{section.3}
+\contentsline {section}{\numberline {4}ORF regions}{9}{section.4}
+\contentsline {section}{\numberline {5}3' regions}{10}{section.5}
+\contentsline {section}{\numberline {6}All regions logscale}{11}{section.6}
+\contentsline {section}{\numberline {7}Only "genes" (5', ORF and 3' regions) logscale}{12}{section.7}
+\contentsline {section}{\numberline {8}5' regions logscale}{13}{section.8}
+\contentsline {section}{\numberline {9}ORF regions logscale}{14}{section.9}
+\contentsline {section}{\numberline {10}3' regions logscale}{15}{section.10}
+\contentsline {section}{\numberline {11}Gens Variants}{16}{section.11}
+\contentsline {section}{\numberline {12}Nom\IeC {\'e}s Gens Variants}{17}{section.12}
+\contentsline {section}{\numberline {13}Nom\IeC {\'e}s Gens No-Variants}{18}{section.13}
+\contentsline {section}{\numberline {14}Gens Variants sampling}{19}{section.14}
+\contentsline {section}{\numberline {15}Nom\IeC {\'e}s zones 5' (amb sampling)}{22}{section.15}
+\contentsline {section}{\numberline {16}Nom\IeC {\'e}s zones ORF (amb sampling)}{23}{section.16}
+\contentsline {section}{\numberline {17}Nom\IeC {\'e}s zones 3' (amb sampling)}{24}{section.17}

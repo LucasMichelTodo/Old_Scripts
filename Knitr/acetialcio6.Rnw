@@ -1,0 +1,373 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{hyperref}
+\hypersetup{
+  linktocpage,
+  colorlinks=true, 
+  linkcolor=blue,
+  citecolor=blue,
+  filecolor=blue,
+  urlcolor=blue
+}
+
+\begin{document}
+
+\title{Acetilation}
+\author{Lucas Michel Todó}
+\maketitle
+\tableofcontents
+\clearpage
+
+<<imports, echo=FALSE, warning=FALSE, message=F>>=
+library(ggplot2)
+library(dplyr)
+library(pscl)
+library(XLConnect)
+@
+
+<<creating_table_10G, echo=FALSE, warning=FALSE>>=
+
+# cov_met <- read.table("/home/lucas/ISGlobal/Chip_Seq/DATA/Aligns/q5/10G_me_sort_q5_fullcoverage.bed", header = FALSE,  sep ="\t", quote = "", row.names = NULL, stringsAsFactors = FALSE)
+# cov_ac <- read.table("/home/lucas/ISGlobal/Chip_Seq/DATA/Aligns/q5/10G_ac_sort_q5_fullcoverage.bed", header = FALSE,  sep ="\t", quote = "", row.names = NULL, stringsAsFactors = FALSE)
+# 
+# ref <- read.table("/home/lucas/ISGlobal/Gen_Referencies/Elongated_genes2.gff", header = FALSE,  sep ="\t", quote = "", row.names = NULL, stringsAsFactors = FALSE)
+# 
+# cov <- cbind(cov_met, cov_ac[,4])
+# colnames(cov) <- c("Chom", "Start", "Stop", "Met", "Ac")
+# cov <- cov[order(cov$Chom),]
+# rownames(cov) <- NULL
+# cov["Type"] <- "other"
+# dim(ref)
+# 
+#  for (i in 1:dim(ref)[1]){
+#    print(ref[i,])
+#    chr <- ref[i,1]
+#    print(chr)
+#    pre_start <- ref[i,4]
+#    pre_stop <- pre_start + ref[i,10]
+#    post_start <- ref[i,5] - ref[i,11]
+#    post_stop <- ref[i,5]
+# 
+#    # el problema es que retorna els idx dins dels subset (i després seleccionem els index al df sencer)
+#    if (ref[i,7] == "+") {
+#    cov[cov$Chom == chr,][which.min(abs(cov[cov$Chom == chr,2] - pre_start)): which.min(abs(cov[cov$Chom == chr,2] - pre_stop)),6] <- "5prima"
+#      cov[cov$Chom == chr,][which.min(abs(cov[cov$Chom == chr,2] - pre_stop)): which.min(abs(cov[cov$Chom == chr,2] - post_start)),6] <- "ORF"
+#      cov[cov$Chom == chr,][which.min(abs(cov[cov$Chom == chr,2] - post_start)): which.min(abs(cov[cov$Chom == chr,2] - post_stop)),6] <- "3prima"
+# 
+#    } else {
+#      cov[cov$Chom == chr,][which.min(abs(cov[cov$Chom == chr,2] - pre_start)): which.min(abs(cov[cov$Chom == chr,2] - pre_stop)),6] <- "3prima"
+#      cov[cov$Chom == chr,][which.min(abs(cov[cov$Chom == chr,2] - pre_stop)): which.min(abs(cov[cov$Chom == chr,2] - post_start)),6] <- "ORF"
+#      cov[cov$Chom == chr,][which.min(abs(cov[cov$Chom == chr,2] - post_start)): which.min(abs(cov[cov$Chom == chr,2] - post_stop)),6] <- "5prima"
+#      }
+#  }
+# 
+# write.table(cov, file = "/home/lucas/ISGlobal/Gen_Referencies/Coverage_200bp.csv", quote = FALSE, row.names = FALSE, dec = ".", sep = "\t")
+
+cov <- read.table("/home/lucas/ISGlobal/Gen_Referencies/Coverage_200bp.csv", header = TRUE,  sep ="\t", quote = "", row.names = NULL, stringsAsFactors = FALSE)
+
+cod_cov <- cov[cov$Type != "other",]
+
+variant <- read.table("/home/lucas/ISGlobal/Gen_Referencies/Gens_variants_gff2.txt", header = FALSE,  sep ="\t", quote = "", row.names = NULL, stringsAsFactors = FALSE)
+
+cov["Variant"] <- FALSE
+
+for (i in 1:dim(variant)[1]){
+  start <- variant[i,5]
+  stop <- variant[i,6]
+  chr <- variant[i,2]
+  cov[cov$Chom == chr,][which.min(abs(cov[cov$Chom == chr,2] - start)): which.min(abs(cov[cov$Chom == chr,2] - stop)),7] <- TRUE
+  }
+@
+
+<<creating_table_1.2B, echo=FALSE, warning=FALSE>>=
+
+# cov_met_12B <- read.table("/home/lucas/ISGlobal/Chip_Seq/DATA/Aligns/q5/1.2B_me_sort_q5_fullcoverage.bed", header = FALSE,  sep ="\t", quote = "", row.names = NULL, stringsAsFactors = FALSE)
+# cov_ac_12B <- read.table("/home/lucas/ISGlobal/Chip_Seq/DATA/Aligns/q5/1.2B_ac_sort_q5_fullcoverage.bed", header = FALSE,  sep ="\t", quote = "", row.names = NULL, stringsAsFactors = FALSE)
+# 
+# cov_12B <- cbind(cov_met_12B, cov_ac_12B[,4])
+# colnames(cov_12B) <- c("Chom", "Start", "Stop", "Met", "Ac")
+# cov_12B <- cov_12B[order(cov_12B$Chom),]
+# rownames(cov_12B) <- NULL
+# cov_12B["Type"] <- "other"
+# dim(ref)
+# 
+#  for (i in 1:dim(ref)[1]){
+#    print(ref[i,])
+#    chr <- ref[i,1]
+#    print(chr)
+#    pre_start <- ref[i,4]
+#    pre_stop <- pre_start + ref[i,10]
+#    post_start <- ref[i,5] - ref[i,11]
+#    post_stop <- ref[i,5]
+# 
+#    # el problema es que retorna els idx dins dels subset (i després seleccionem els index al df sencer)
+#    if (ref[i,7] == "+") {
+#    cov_12B[cov_12B$Chom == chr,][which.min(abs(cov_12B[cov_12B$Chom == chr,2] - pre_start)): which.min(abs(cov_12B[cov_12B$Chom == chr,2] - pre_stop)),6] <- "5prima"
+#      cov_12B[cov_12B$Chom == chr,][which.min(abs(cov_12B[cov_12B$Chom == chr,2] - pre_stop)): which.min(abs(cov_12B[cov_12B$Chom == chr,2] - post_start)),6] <- "ORF"
+#      cov_12B[cov_12B$Chom == chr,][which.min(abs(cov_12B[cov_12B$Chom == chr,2] - post_start)): which.min(abs(cov_12B[cov_12B$Chom == chr,2] - post_stop)),6] <- "3prima"
+# 
+#    } else {
+#      cov_12B[cov_12B$Chom == chr,][which.min(abs(cov_12B[cov_12B$Chom == chr,2] - pre_start)): which.min(abs(cov_12B[cov_12B$Chom == chr,2] - pre_stop)),6] <- "3prima"
+#      cov_12B[cov_12B$Chom == chr,][which.min(abs(cov_12B[cov_12B$Chom == chr,2] - pre_stop)): which.min(abs(cov_12B[cov_12B$Chom == chr,2] - post_start)),6] <- "ORF"
+#      cov_12B[cov_12B$Chom == chr,][which.min(abs(cov_12B[cov_12B$Chom == chr,2] - post_start)): which.min(abs(cov_12B[cov_12B$Chom == chr,2] - post_stop)),6] <- "5prima"
+#      }
+#  }
+# 
+# write.table(cov_12B, file = "/home/lucas/ISGlobal/Gen_Referencies/Coverage_12B_200bp.csv", quote = FALSE, row.names = FALSE, dec = ".", sep = "\t")
+
+cov_12B <- read.table("/home/lucas/ISGlobal/Gen_Referencies/Coverage_12B_200bp.csv", header = TRUE,  sep ="\t", quote = "", row.names = NULL, stringsAsFactors = FALSE)
+
+cod_cov_12B <- cov_12B[cov_12B$Type != "other",]
+
+cov_12B["Variant"] <- FALSE
+
+for (i in 1:dim(variant)[1]){
+  start <- variant[i,5]
+  stop <- variant[i,6]
+  chr <- variant[i,2]
+  cov_12B[cov_12B$Chom == chr,][which.min(abs(cov_12B[cov_12B$Chom == chr,2] - start)): which.min(abs(cov_12B[cov_12B$Chom == chr,2] - stop)),7] <- TRUE
+  }
+@
+
+@
+<<import_status_data, echo=FALSE, warning=FALSE>>=
+trans_df <- readWorksheetFromFile("/home/lucas/ISGlobal/Chip_Seq/Transcripció_CSV/3D7_Variantome_AllData_withGam.xls", sheet = 1)
+trans_df <- trans_df[,c(1,26)]
+
+rosetta <- read.table("/home/lucas/ISGlobal/Gen_Referencies/Gene_references_rosetta.txt", fill = TRUE, fileEncoding = "UTF-8")
+for (i in 1:length(trans_df[,1])){ # Traduïr noms.
+  if (trans_df[i,1] %in% rosetta[,3]){
+    trans_df[i,"ID"] <- rosetta[rosetta[,3] %in% trans_df[i,1],1][1]
+  } else if (trans_df[i,1] %in% rosetta[,4]){
+    trans_df[i,"ID"] <- rosetta[rosetta[,4] %in% trans_df[i,1],1][1]
+  } else if (trans_df[i,1] %in% rosetta[,5]){
+    trans_df[i,"ID"] <- rosetta[rosetta[,5] %in% trans_df[i,1],1][1]
+  }
+}
+
+ggplot(trans_df, aes(log(trans_df$Aver.2Higher10G.))) + geom_histogram(bins = 200)
+
+met_df <- read.table("/home/lucas/ISGlobal/Chip_Seq/DATA/Aligns/q5/Coverage/10G_met_cov.csv", header = TRUE, sep = "\t", fileEncoding = "UTF-8")
+met_df <- met_df[,c(1:5)]
+ggplot(met_df, aes(log(met_df$Gene.cov))) + geom_histogram(bins = 200)
+
+
+silenced <- met_df[log(met_df$Gene.cov) > 3,]$Gene
+noexprs <- trans_df[log(trans_df$Aver.2Higher10G.) < 4,]$ID
+table(silenced %in% noexprs)
+table(noexprs %in% silenced)
+
+ref <- read.table("/home/lucas/ISGlobal/Gen_Referencies/Elongated_genes2.gff", header = FALSE,  sep ="\t", quote = "", row.names = NULL, stringsAsFactors = FALSE)
+
+ref["ID"] <- unlist(lapply(ref[,9], function(x) gsub("ID=", "", unlist(strsplit(x, split = ";"))[1])))
+
+silenced_df <- ref[ref$ID %in% silenced,]
+
+cov["silenced"] <- FALSE
+for (i in 1:dim(silenced_df)[1]){
+  start <- silenced_df[i,4]
+  stop <- silenced_df[i,5]
+  chr <- silenced_df[i,1]
+  cov[cov$Chom == chr,][which.min(abs(cov[cov$Chom == chr,2] - start)): which.min(abs(cov[cov$Chom == chr,2] - stop)),"silenced"] <- TRUE
+  }
+
+noexprs_df <- ref[ref$ID %in% noexprs,]
+
+cov["noexprs"] <- FALSE
+for (i in 1:dim(noexprs_df)[1]){
+  start <- noexprs_df[i,4]
+  stop <- noexprs_df[i,5]
+  chr <- noexprs_df[i,1]
+  cov[cov$Chom == chr,][which.min(abs(cov[cov$Chom == chr,2] - start)): which.min(abs(cov[cov$Chom == chr,2] - stop)),"noexprs"] <- TRUE
+  }
+
+Trans2 <- read.table("/home/lucas/ISGlobal/Chip_Seq/Transcripció_CSV/Trans2.csv", sep="\t", header = TRUE)
+Trans2["expressedin_10G"] <- Trans2$Trans < 0
+difexp_10G <- Trans2[1:20, c(4:6)]
+difexp_10G <- difexp_10G[c(-15, -13),]
+difexp_10G["variant"] <- difexp_10G$ID %in% variant$V1
+upexp <- difexp_10G[difexp_10G$expressedin_10G,]$ID
+downexp <- difexp_10G[!difexp_10G$expressedin_10G,]$ID
+upexp_df <- ref[ref$ID %in% upexp,]
+downexp_df <- ref[ref$ID %in% downexp,]
+cov["difexp"] <- FALSE
+cov_12B["difexp"] <- FALSE
+#write.table(difexp_10G, "/home/lucas/ISGlobal/Gen_Referencies/Taula_gens_diferencials.txt", sep = "\t", row.names = FALSE, quote = FALSE)
+
+for (i in 1:dim(upexp_df)[1]){
+  start <- upexp_df[i,4]
+  stop <- upexp_df[i,5]
+  chr <- upexp_df[i,1]
+  cov[cov$Chom == chr,][which.min(abs(cov[cov$Chom == chr,2] - start)): which.min(abs(cov[cov$Chom == chr,2] - stop)),"difexp"] <- "UP"
+  cov_12B[cov_12B$Chom == chr,][which.min(abs(cov_12B[cov_12B$Chom == chr,2] - start)): which.min(abs(cov_12B[cov_12B$Chom == chr,2] - stop)),"difexp"] <- "DOWN"
+}
+for (i in 1:dim(downexp_df)[1]){
+  start <- downexp_df[i,4]
+  stop <- downexp_df[i,5]
+  chr <- downexp_df[i,1]
+  cov[cov$Chom == chr,][which.min(abs(cov[cov$Chom == chr,2] - start)): which.min(abs(cov[cov$Chom == chr,2] - stop)),"difexp"] <- "DOWN"
+  cov_12B[cov_12B$Chom == chr,][which.min(abs(cov_12B[cov_12B$Chom == chr,2] - start)): which.min(abs(cov_12B[cov_12B$Chom == chr,2] - stop)),"difexp"] <- "UP"
+  }
+
+@
+
+\section{Histograms}
+\subsection{log(Ac) All}
+<<dens_all, echo=FALSE, warning=FALSE, out.width="1\\linewidth", message=FALSE>>=
+df <- cov
+ggplot(df, aes(log(df$Ac), fill = df$Variant)) +  geom_histogram(bins = 200)
+@
+\clearpage
+\subsection{log(Ac) 5'}
+<<dens_5, echo=FALSE, warning=FALSE, out.width="1\\linewidth", message=FALSE>>=
+df <- cov[cov$Type == "5prima",]
+ggplot(df, aes(log(df$Ac), fill = df$Variant)) +  geom_histogram(bins = 200)
+@
+\clearpage
+\subsection{log(Ac) 3'}
+<<dens_3, echo=FALSE, warning=FALSE, out.width="1\\linewidth", message=FALSE>>=
+df <- cov[cov$Type == "3prima",]
+ggplot(df, aes(log(df$Ac), fill = df$Variant)) + geom_histogram(bins = 200)
+@
+\clearpage
+\subsection{log(Ac) ORF}
+<<dens_ORF, echo=FALSE, warning=FALSE, out.width="1\\linewidth", message=FALSE>>=
+df <- cov[cov$Type == "ORF",]
+ggplot(df, aes(log(df$Ac), fill = df$Variant)) + geom_histogram(bins = 200)
+@
+\clearpage
+\subsection{log(Met) All}
+<<dens_all_met, echo=FALSE, warning=FALSE, out.width="1\\linewidth", message=FALSE>>=
+df <- cov
+ggplot(df, aes(log(df$Met), fill = df$Variant)) + geom_histogram(bins = 200)
+@
+\clearpage
+\subsection{log(Met) 5'}
+<<dens_5_met, echo=FALSE, warning=FALSE, out.width="1\\linewidth", message=FALSE>>=
+df <- cov[cov$Type == "5prima",]
+ggplot(df, aes(log(df$Met), fill = df$Variant)) + geom_histogram(bins = 200)
+@
+\clearpage
+\subsection{log(Met) ORF}
+<<dens_ORF_met, echo=FALSE, warning=FALSE, out.width="1\\linewidth", message=FALSE>>=
+df <- cov[cov$Type == "ORF",]
+ggplot(df, aes(log(df$Met), fill = df$Variant)) + geom_histogram(bins = 200)
+@
+\clearpage
+\subsection{log(Ac) 3'}
+<<dens_3_met, echo=FALSE, warning=FALSE, out.width="1\\linewidth", message=FALSE>>=
+df <- cov[cov$Type == "3prima",]
+ggplot(df, aes(log(df$Ac), fill = df$Variant)) + geom_histogram(bins = 200)
+@
+
+\section{Metilation/Acetilation plots}
+ <<ac_met_log_status, echo=FALSE, warning=FALSE, out.width="1\\linewidth", message=FALSE>>=
+# cov["Class"] <- "Regular"
+# cov[cov$Variant == TRUE & cov$silenced == TRUE,]$Class <- "Variant-Silenced"
+# cov[cov$Variant == TRUE & cov$silenced == FALSE,]$Class <- "Variant-Active"
+# table(cov$Class)
+# df <- rbind(sample_n(cov[cov$Class == "Regular",], 10966), cov[cov$Class != "Regular",]) #Sampling
+# df <- df[df$Type == "ORF",]
+# ggplot(df, aes(x = df$Met, y = df$Ac, color = df$Class)) +
+#   scale_x_log10() + scale_y_log10() +
+#   geom_point(size=0.2)
+# 
+ @
+Genes have been classified as variant or not on the basis of a previous study.
+
+Fragments have been set to "noexprs" if transcription value is under threshold (<4).
+Fragments have been set to "silenced" if methilation value is over threshold(>3).
+<<ac_met_log, echo=FALSE, warning=FALSE, out.width="1\\linewidth", message=FALSE>>=
+df <- rbind(sample_n(cov[cov$noexprs == FALSE,], 2445), cov[cov$noexprs == TRUE,]) #Sampling
+
+table(cov$noexprs)
+
+ggplot(df, aes(x = df$Met, y = df$Ac, color = df$noexprs)) +
+  scale_x_log10() + scale_y_log10() +
+  scale_shape_manual(values=c(2, 16)) +
+  geom_point(size=1, aes(shape=df$silenced))
+
+@
+\clearpage
+Here we have highlited those genes that are "variant" (as shown in previous studies) and differentially expressed between 10G and 1.2B. Variant genes which are overexpressed have been set to "variant active" and viceversa.
+
+10G and 1.2B fragments have been pooled toghether for the grafic. Blurred point correspond to fragments representing the rest of genes (those that are not diferentially expressed). 
+<<ac_met_log_status_10G_12B, echo=FALSE, warning=FALSE, out.width="1\\linewidth", message=FALSE>>=
+df <- cov[cov$Type == "ORF",]
+df2 <- cov_12B[cov$Type == "ORF",]
+df["Class"] <- "Regular"
+df2["Class"] <- "Regular"
+df[df$Variant == TRUE,]$Class <- "Variant"
+df2[df2$Variant == TRUE,]$Class <- "Variant"
+df[df$difexp != "FALSE" & df$Variant == TRUE & df$difexp =="UP",]$Class <- "Variant-Active"
+df[df$difexp != "FALSE" & df$Variant == TRUE & df$difexp =="DOWN",]$Class <- "Variant-Inactive"
+df2[df2$difexp != "FALSE" & df2$Variant == TRUE & df2$difexp =="UP",]$Class <- "Variant-Active"
+df2[df2$difexp != "FALSE" & df2$Variant == TRUE & df2$difexp =="DOWN",]$Class <- "Variant-Inactive"
+
+df["Strain"] <- "10G"
+df2["Strain"] <- "12B"
+
+df <- rbind(df[,c(-8,-9)], df2)
+df["alpha"] <- 1
+df[df$Class == "Regular",]$alpha <- 0.1
+df[df$Class == "Variant",]$alpha <- 0.1
+
+df <- rbind(sample_n(df[df$Class == "Regular",], 10000), 
+            sample_n(df[df$Class == "Variant",], 10000), 
+            df[df$Class == "Variant-Active",],
+            df[df$Class == "Variant-Inactive",])
+
+
+ggplot(df, aes(x = df$Met, y = df$Ac, color = df$Class)) +
+  scale_x_log10() + scale_y_log10() +
+  geom_point(size=1, aes(alpha=df$alpha, shape=df$Strain)) +
+  scale_color_manual(values = c("orchid1", "gold1", "green3", "red1")) +
+  scale_alpha_continuous(guide=FALSE)
+@
+<<model, echo=FALSE, warning=FALSE>>=
+table(cov$Variant)
+#df <- cov
+df <- rbind(sample_n(cov[cov$Variant == FALSE,], 6365), cov[cov$Variant == TRUE,])
+
+train_idx <- rownames(sample_n(df, 8486))
+train_df <- df[rownames(df) %in% train_idx,]
+test_df <- df[!rownames(df) %in% train_idx,]
+
+model <- glm(Variant ~ Ac+Met+Type+Start+Stop+silenced+noexprs, family=binomial(link='logit'),data=train_df)
+model2 <- glm(Variant ~ Ac+Met+Type+Start+Stop, family=binomial(link='logit'), data=train_df)
+
+anova(model, model2, test = "Chisq")
+
+summary(model)
+fitted.results <- predict(model, test_df, type='response')
+table(test_df$Variant, fitted.results > 0.5)
+fitted.results <- ifelse(fitted.results > 0.5,1,0)
+misClasificError <- mean(fitted.results != test_df$Variant)
+print(paste('Accuracy',1-misClasificError))
+
+test_df["Pred"] <- fitted.results
+test_df["all_0.5"] <- sample(c(0,1), replace=TRUE, size=8845)
+misClasificError2 <- mean(test_df$all_0.5 != test_df$Variant)
+print(paste('Accuracy of null model',1-misClasificError2))
+
+library(ROCR)
+predict <- predict(model, type = 'response')
+ROCRpred <- prediction(predict, train_df$Variant)
+ROCRperf <- performance(ROCRpred, 'tpr','fpr')
+plot(ROCRperf, colorize = TRUE, text.adj = c(-0.2,1.7))
+
+false_pos_idx <- rownames(test_df[test_df$Pred == 1 & test_df$Variant == FALSE,])
+false_pos <- cov[rownames(cov) %in% false_pos_idx,]
+table(false_pos$Type)
+
+false_neg_idx <- rownames(test_df[test_df$Pred == 0 & test_df$Variant == TRUE,])
+false_neg <- cov[rownames(cov) %in% false_neg_idx,]
+table(false_neg$Type)
+
+pR2(model)
+
+@
+
+
+
+\end{document}

@@ -74,6 +74,7 @@ def susbstract_norm_cov(bam1, bam2):
 	return sub_cov
 
 
+<<<<<<< HEAD
 def ratio_norm_cov(bam1, bam2):
 	
 	ratio_cov = {}
@@ -94,6 +95,8 @@ def ratio_norm_cov(bam1, bam2):
 
 
 
+=======
+>>>>>>> 2195dd23572f5f9d67da0f779c1e1363c3f5d3d1
 def compare_to_input(treat, control):
 
 	input_cov = {}
@@ -122,9 +125,17 @@ def compare_to_input(treat, control):
 
 
 
+<<<<<<< HEAD
 ###### Change this part to use whatever function you like.
+=======
+
+>>>>>>> 2195dd23572f5f9d67da0f779c1e1363c3f5d3d1
 
 if __name__ == "__main__":
 	filenames = sys.argv[1:]
 	print filenames
+<<<<<<< HEAD
 	ratio_norm_cov(filenames[0], filenames[1])
+=======
+	susbstract_norm_cov(filenames[0], filenames[1])
+>>>>>>> 2195dd23572f5f9d67da0f779c1e1363c3f5d3d1

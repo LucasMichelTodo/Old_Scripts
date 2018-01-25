@@ -41,7 +41,7 @@ def ClustalEnt(clustal_file):
 		#print aa_var
 		#print most_common(aa_var)
 
-		if ent(data) <= 0.5:
+		if ent(data) <= 1:
 			 with open(clustal_file.replace("_sorted.aln", "_consensus.fasta"), "a+") as file:
 		 		file.write(most_common(aa_var))
 		else:

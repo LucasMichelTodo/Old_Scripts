@@ -1,0 +1,237 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{hyperref}
+\hypersetup{
+  linktocpage,
+  colorlinks=true, 
+  linkcolor=blue,
+  citecolor=blue,
+  filecolor=blue,
+  urlcolor=blue
+}
+
+\begin{document}
+
+\title{Acetilation vs Metilation}
+\author{Lucas Michel Todó}
+\maketitle
+\tableofcontents
+\clearpage
+
+
+<<imports, echo=FALSE, warning=FALSE>>=
+library(ggplot2)
+library(dplyr)
+@
+
+<<creating_table, echo=FALSE, warning=FALSE>>=
+
+# cov_met <- read.csv("/home/lucas/ISGlobal/Chip_Seq/DATA/Aligns/q5/10G_me_sort_q5_fullcoverage.bed", header = FALSE,  sep ="\t", quote = "", row.names = NULL, stringsAsFactors = FALSE)
+# cov_ac <- read.csv("/home/lucas/ISGlobal/Chip_Seq/DATA/Aligns/q5/10G_ac_sort_q5_fullcoverage.bed", header = FALSE,  sep ="\t", quote = "", row.names = NULL, stringsAsFactors = FALSE)
+# 
+# ref <- read.csv("/home/lucas/ISGlobal/Gen_Referencies/Elongated_genes2.gff", header = FALSE,  sep ="\t", quote = "", row.names = NULL, stringsAsFactors = FALSE)
+# 
+# cov <- cbind(cov_met, cov_ac[,4])
+# colnames(cov) <- c("Chom", "Start", "Stop", "Met", "Ac")
+# cov <- cov[order(cov$Chom),]
+# rownames(cov) <- NULL
+# cov["Type"] <- "other"
+# dim(ref)
+# 
+#  for (i in 1:dim(ref)[1]){
+#    print(ref[i,])
+#    chr <- ref[i,1]
+#    print(chr)
+#    pre_start <- ref[i,4]
+#    pre_stop <- pre_start + ref[i,10]
+#    post_start <- ref[i,5] - ref[i,11]
+#    post_stop <- ref[i,5]
+# 
+#    # el problema es que retorna els idx dins dels subset (i després seleccionem els index al df sencer)
+#    if (ref[i,7] == "+") {
+#    cov[cov$Chom == chr,][which.min(abs(cov[cov$Chom == chr,2] - pre_start)): which.min(abs(cov[cov$Chom == chr,2] - pre_stop)),6] <- "5prima"
+#      cov[cov$Chom == chr,][which.min(abs(cov[cov$Chom == chr,2] - pre_stop)): which.min(abs(cov[cov$Chom == chr,2] - post_start)),6] <- "ORF"
+#      cov[cov$Chom == chr,][which.min(abs(cov[cov$Chom == chr,2] - post_start)): which.min(abs(cov[cov$Chom == chr,2] - post_stop)),6] <- "3prima"
+# 
+#    } else {
+#      cov[cov$Chom == chr,][which.min(abs(cov[cov$Chom == chr,2] - pre_start)): which.min(abs(cov[cov$Chom == chr,2] - pre_stop)),6] <- "3prima"
+#      cov[cov$Chom == chr,][which.min(abs(cov[cov$Chom == chr,2] - pre_stop)): which.min(abs(cov[cov$Chom == chr,2] - post_start)),6] <- "ORF"
+#      cov[cov$Chom == chr,][which.min(abs(cov[cov$Chom == chr,2] - post_start)): which.min(abs(cov[cov$Chom == chr,2] - post_stop)),6] <- "5prima"
+#      }
+#  }
+# 
+# write.table(cov, file = "/home/lucas/ISGlobal/Gen_Referencies/Coverage_200bp.csv", quote = FALSE, row.names = FALSE, dec = ".", sep = "\t")
+
+cov <- read.csv("/home/lucas/ISGlobal/Gen_Referencies/Coverage_200bp.csv", header = TRUE,  sep ="\t", quote = "", row.names = NULL, stringsAsFactors = FALSE)
+
+cod_cov <- cov[cov$Type != "other",]
+
+variant <- read.csv("/home/lucas/ISGlobal/Gen_Referencies/Gens_variants.txt", header = FALSE,  sep ="\t", quote = "", row.names = NULL, stringsAsFactors = FALSE)
+
+cov["Variant"] <- FALSE
+
+for (i in 1:dim(variant)[1]){
+  start <- variant[i,5]
+  stop <- variant[i,6]
+  chr <- variant[i,2]
+  cov[cov$Chom == chr,][which.min(abs(cov[cov$Chom == chr,2] - start)): which.min(abs(cov[cov$Chom == chr,2] - stop)),7] <- TRUE
+  }
+@
+
+\section{All regions}
+<<plot_all, echo=FALSE, warning=FALSE>>=
+ggplot(cov, aes(x = cov$Met, y = cov$Ac, color = cov$Type)) +
+  geom_point(size=0.1)
+
+ggplot(cov, aes(x = cov$Met, y = cov$Ac, color = cov$Type)) +
+  scale_x_continuous(limits = c(0, 50000)) + scale_y_continuous(limits = c(0, 25000)) +
+  geom_point(size=0.1)
+
+ggplot(cov, aes(x = cov$Met, y = cov$Ac, color = cov$Type)) +
+  scale_x_continuous(limits = c(0, 20000)) + scale_y_continuous(limits = c(0, 10000)) +
+  geom_point(size=0.1)
+@
+\clearpage
+\section{Only "genes" (5', ORF and 3' regions)}
+<<plot_genes, echo=FALSE, warning=FALSE>>=
+ggplot(cod_cov, aes(x = cod_cov$Met, y = cod_cov$Ac, color = cod_cov$Type)) +
+  geom_point(size=0.1)
+
+ggplot(cod_cov, aes(x = cod_cov$Met, y = cod_cov$Ac, color = cod_cov$Type)) +
+  scale_x_continuous(limits = c(0, 50000)) + scale_y_continuous(limits = c(0, 25000)) +
+  geom_point(size=0.1)
+
+ggplot(cod_cov, aes(x = cod_cov$Met, y = cod_cov$Ac, color = cod_cov$Type)) +
+  scale_x_continuous(limits = c(0, 20000)) + scale_y_continuous(limits = c(0, 10000)) +
+  geom_point(size=0.1)
+@
+\clearpage
+\section{5' regions}
+<<plot_5, echo=FALSE, warning=FALSE>>=
+df <- cov[cov$Type == "5prima",]
+ggplot(df, aes(x = df$Met, y = df$Ac, color = df$Type)) +
+  geom_point(size=0.1)
+@
+\clearpage
+\section{ORF regions}
+<<plot_ORF, echo=FALSE, warning=FALSE>>=
+df <- cov[cov$Type == "ORF",]
+ggplot(df, aes(x = df$Met, y = df$Ac, color = df$Type)) +
+  geom_point(size=0.1)
+@
+\clearpage
+\section{3' regions}
+<<plot_3, echo=FALSE, warning=FALSE>>=
+df <- cov[cov$Type == "3prima",]
+ggplot(df, aes(x = df$Met, y = df$Ac, color = df$Type)) +
+  geom_point(size=0.1)
+@
+\clearpage
+%############################################################# Log-scale ##################################################################################
+\section{All regions logscale}
+<<plot_all_log, echo=FALSE, warning=FALSE>>=
+ggplot(cov, aes(x = cov$Met, y = cov$Ac, color = cov$Type)) +
+  scale_x_log10() + scale_y_log10() +
+
+  scale_x_log10() + scale_y_log10() +
+  geom_point(size=0.1)
+@
+\clearpage
+\section{Only "genes" (5', ORF and 3' regions) logscale}
+<<plot_genes_log, echo=FALSE, warning=FALSE>>=
+ggplot(cod_cov, aes(x = cod_cov$Met, y = cod_cov$Ac, color = cod_cov$Type)) +
+  scale_x_log10() + scale_y_log10() +
+  geom_point(size=0.1)
+@
+\clearpage
+\section{5' regions logscale}
+<<plot_5_log, echo=FALSE, warning=FALSE>>=
+df <- cov[cov$Type == "5prima",]
+ggplot(df, aes(x = df$Met, y = df$Ac, color = df$Type)) +
+  scale_x_log10() + scale_y_log10() +
+  geom_point(size=0.1)
+@
+\clearpage
+\section{ORF regions logscale}
+<<plot_ORF_log, echo=FALSE, warning=FALSE>>=
+df <- cov[cov$Type == "ORF",]
+ggplot(df, aes(x = df$Met, y = df$Ac, color = df$Type)) +
+  scale_x_log10() + scale_y_log10() +
+  geom_point(size=0.1)
+@
+\clearpage
+\section{3' regions logscale}
+<<plot_3_log, echo=FALSE, warning=FALSE>>=
+df <- cov[cov$Type == "3prima",]
+ggplot(df, aes(x = df$Met, y = df$Ac, color = df$Type)) +
+  scale_x_log10() + scale_y_log10() +
+  geom_point(size=0.1)
+@
+\clearpage
+\section{Gens Variants}
+<<plot_variant, echo=FALSE, warning=FALSE>>=
+df <- cov
+ggplot(df, aes(x = df$Met, y = df$Ac, color = df$Variant)) +
+  scale_x_log10() + scale_y_log10() +
+  geom_point(size=0.1)
+@
+\clearpage
+\section{Només Gens Variants}
+<<plot_onlyvariant, echo=FALSE, warning=FALSE>>=
+df <- cov[cov$Variant == TRUE,]
+ggplot(df, aes(x = df$Met, y = df$Ac, colour=df$Type)) +
+  scale_x_log10() + scale_y_log10() +
+  geom_point(size=0.2)
+@
+\clearpage
+\section{Només Gens No-Variants}
+<<plot_nonvariant, echo=FALSE, warning=FALSE>>=
+df <- cov[cov$Variant == FALSE,]
+ggplot(df, aes(x = df$Met, y = df$Ac)) +
+  scale_x_log10() + scale_y_log10() +
+  geom_point(size=0.1, colour = "indianred2")
+@
+\clearpage
+\section{Gens Variants sampling}
+Per a observar millor la distribució he fet un sampling dels punts "no-variants" (vermells) per a que hi hagi el mateix nombre de punts de cada color. (sinó els no-variants (vermells) tapen els variants (verds))
+\clearpage
+<<plot_variant_sampling, echo=FALSE, warning=FALSE>>=
+df <- rbind(sample_n(cov[cov$Variant == FALSE,], 6365),cov[cov$Variant == TRUE,])
+ggplot(df, aes(x = df$Met, y = df$Ac, color = df$Variant)) +
+  scale_x_log10() + scale_y_log10() +
+  geom_point(size=0.1)
+@
+\clearpage
+<<plot_variant_sampling_allvariables, echo=FALSE, warning=FALSE>>=
+df <- rbind(sample_n(cov[cov$Variant == FALSE,], 500), sample_n(cov[cov$Variant == TRUE,], 500))
+ggplot(df, aes(x = df$Met, y = df$Ac, color = df$Type, group=df$Variant)) +
+  scale_x_log10() + scale_y_log10() +
+  scale_shape_manual(values=c(2, 16)) +
+  geom_point(size=1.5, aes(shape=df$Variant))
+@
+\clearpage
+\section{Només zones 5' (amb sampling)}
+<<plot_5_var, echo=FALSE, warning=FALSE>>=
+df <- rbind(sample_n(cov[cov$Type == "5prima" & cov$Variant == FALSE,], 6365), cov[cov$Type == "5prima" & cov$Variant == TRUE,])
+ggplot(df, aes(x = df$Met, y = df$Ac, color = df$Variant)) +
+  scale_x_log10() + scale_y_log10() +
+  geom_point(size=0.1)
+@
+\clearpage
+\section{Només zones ORF (amb sampling)}
+<<plot_ORF_var, echo=FALSE, warning=FALSE>>=
+df <- rbind(sample_n(cov[cov$Type == "ORF" & cov$Variant == FALSE,], 6365), cov[cov$Type == "ORF" & cov$Variant == TRUE,])
+ggplot(df, aes(x = df$Met, y = df$Ac, color = df$Variant)) +
+  scale_x_log10() + scale_y_log10() +
+  geom_point(size=0.1)
+@
+\clearpage
+\section{Només zones 3' (amb sampling)}
+<<plot_3_var, echo=FALSE, warning=FALSE>>=
+df <- rbind(sample_n(cov[cov$Type == "3prima" & cov$Variant == FALSE,], 6365), cov[cov$Type == "3prima" & cov$Variant == TRUE,])
+ggplot(df, aes(x = df$Met, y = df$Ac, color = df$Variant)) +
+  scale_x_log10() + scale_y_log10() +
+  geom_point(size=0.1)
+@
+
+\end{document}

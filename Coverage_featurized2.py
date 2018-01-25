@@ -7,8 +7,8 @@ import csv
 import pandas as pd
 
 #depths = {"10G":10375962.0, "1.2B":12066703.0, "A7K9": 30393549.0, "C2": 12006887.0, "E5K9": 25195030.0} #A usar per metilacio
-#depths = {"10G":30798124.0, "1.2B":30009498.0, "A7K9": 17489454.0, "C2": 32059287.0, "E5K9": 21544493.0} #A usar per inputs
-depths = {"10G":22659880.0, "1.2B":30648669.0, "C2": 21165995.0} #A usar per acetilacio
+depths = {"10G":30798124.0, "1.2B":30009498.0, "A7K9": 17489454.0, "C2": 32059287.0, "E5K9": 21544493.0} #A usar per inputs
+#depths = {"10G":22659880.0, "1.2B":30648669.0, "C2": 21165995.0} #A usar per acetilacio
 
 def get_coverage(bamfile, chrom, start, stop):
 	bam = pysam.AlignmentFile(bamfile, "rb")
@@ -21,7 +21,7 @@ def get_coverage(bamfile, chrom, start, stop):
 
 def featurized_coverage(bamfile):
 	
-	with open(bamfile.replace("_ac_sort_q5.bam", "_ac_cov.csv"), "w+") as file2: #Ensure we create a new file "from scratch" every time the program is run.
+	with open(bamfile.replace("_sort_q5.bam", "_cov.csv"), "w+") as file2: #Ensure we create a new file "from scratch" every time the program is run.
 		file2.write("Gene\tGene-cov\t5-cov\t3-cov\tChrom\tAnnotations\n")
 
 	with open("/home/lucas/ISGlobal/Gen_Referencies/Elongated_genes2.gff", "r") as file:  
@@ -40,7 +40,7 @@ def featurized_coverage(bamfile):
 				cov5 = post
 				cov3 = pre
 
-			with open(bamfile.replace("_ac_sort_q5.bam", "_ac_cov.csv"), "a+") as file2:
+			with open(bamfile.replace("_sort_q5.bam", "_cov.csv"), "a+") as file2:
 				file2.write(line[8].split(";")[0].replace("ID=","")+"\t"+str(covGene)+"\t"+str(cov5)+"\t"+str(cov3)+"\t"+line[0]+"\t"+line[8]+"\n")
 
 

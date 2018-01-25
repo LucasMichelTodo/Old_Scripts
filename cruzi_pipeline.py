@@ -17,5 +17,6 @@ subprocess.call("perl muscle_tcruzi-clustr.pl", shell=True)
 subprocess.call("perl sort_msa.pl", shell=True)
 #subprocess.call("rm ./cluster_withref/msa/_sorted.aln", shell=True)
 
+subprocess.call("rm ./cluster_withref/msa/_sorted.aln ./cluster_withref/msa/_sorted.msa") #Sha darreglar!!!!
 subprocess.call("entropy.py ./cluster_withref/msa/*\_sorted.aln", shell=True)
 
