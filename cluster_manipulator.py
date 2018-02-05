@@ -1,9 +1,13 @@
 #!/usr/bin/env python
 
 from tqdm import tqdm
+import re
+
+in_pdb = re.compile("\d")
+in_esmeraldo = re.compile("T")
 
 clusters = {}
-with open("/home/lucas/ISGlobal/Cruzi/tcruzi_epitopes_vaccine/Run_18_01_18/tcruzi_filetered_unique.clstr", "r+") as infile:
+with open("/home/lucas/ISGlobal/Cruzi/tcruzi_epitopes_vaccine/Gen_referencies/PDB_fastas/pdb_esmeraldo_clustr2.clstr", "r+") as infile:
 	for line in infile:
 		if line.startswith(">"):
 			ID = line.strip()
@@ -11,8 +15,7 @@ with open("/home/lucas/ISGlobal/Cruzi/tcruzi_epitopes_vaccine/Run_18_01_18/tcruz
 		else:
 			clusters[ID].append(line.strip())
 
-
-
+print clusters
 
 # for key, value in tqdm(clusters.items()):
 # 	proteomes = []
@@ -21,14 +24,25 @@ with open("/home/lucas/ISGlobal/Cruzi/tcruzi_epitopes_vaccine/Run_18_01_18/tcruz
 # 	if len(set(proteomes)) < 2:
 # 		del clusters[key]
 
+for key, value in tqdm(clusters.items()): #Iterate over clusters and return a string containing the first letter of each of their prot entries. The idea here is that all pdb entries start with a number while all esmeraldo entries start with a T.
+	proteomes = ""
+	for i in value:
+		if i.split()[2].startswith(">"):
+			proteomes += str(i.split()[2][1])
+
+	if in_pdb.search(proteomes) and in_esmeraldo.search(proteomes):
+		print proteomes, "MATCH!!"
+	else: 
+		del clusters[key]
+
 
 print len(clusters)
 
-# with open("/home/lucas/ISGlobal/Cruzi/tcruzi_epitopes_vaccine/Run_proteomes/tcruzi_proteome_unique.clstr", "a+") as outfile:
-# 	for key, value in clusters.iteritems():
-# 		outfile.write(key)
-# 		outfile.write("\n")
-# 		for i in value:
-# 			outfile.write(i)
-# 			outfile.write("\n")
+with open("/home/lucas/ISGlobal/Cruzi/tcruzi_epitopes_vaccine/Gen_referencies/PDB_fastas/pdb_esmeraldo_unique_clustr2.clstr", "a+") as outfile:
+	for key, value in clusters.iteritems():
+		outfile.write(key)
+		outfile.write("\n")
+		for i in value:
+			outfile.write(i)
+			outfile.write("\n")
 

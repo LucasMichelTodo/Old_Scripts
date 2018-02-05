@@ -10,8 +10,8 @@ pd.set_option('display.expand_frame_repr', False)
 ## java -jar $GATK -R ref.fasta -T VariantsToTable -F CHROM -F POS -F REF -F ALT -GF GT -GF AD -GF GQ -V haplotypecaller_SNP_ploidy.vcf -o haplotypecalle_SNP_ploidy_table.txt
 
 ## Obrir arxiu vcf (resultat del variant calling) i parsejar totes les entrades coma diccionaris en una llista.
-with open("/home/lucas/ISGlobal/Chip_Seq/DATA/Aligns/q5/Variant_Calling/haplotypecalle_SNP_table.txt", "r+") as file1:
-		for line in file1:			
+with open("/home/lucas/ISGlobal/Chip_Seq/DATA/Aligns/q5/Variant_Calling/all_unifiedgenotyper_Eli_table.txt", "r+") as file1:
+		for line in file1:
 			if header:
 				header = False
 			else:
@@ -25,12 +25,12 @@ with open("/home/lucas/ISGlobal/Chip_Seq/DATA/Aligns/q5/Variant_Calling/haplotyp
 							"E5_AD":line.split()[17],
 							"A7_GQ":line.split()[12],
 							"E5_GQ":line.split()[18],})
-			
+
 filter_na = [item for item in ref if item["A7_AD"] != "NA" and item["E5_AD"] != "NA"]
 
 a7_e5 = []
 for i in filter_na:
-	if ((int(i["A7_AD"].split(",")[1])/(int(i["A7_AD"].split(",")[0])+1.0) >= 0 or 
+	if ((int(i["A7_AD"].split(",")[1])/(int(i["A7_AD"].split(",")[0])+1.0) >= 0 or
 		int(i["E5_AD"].split(",")[1])/(int(i["E5_AD"].split(",")[0])+1.0) >= 0) and
 		int(i["A7_AD"].split(",")[1]) + int(i["A7_AD"].split(",")[0]) > 10 and
 		int(i["E5_AD"].split(",")[1]) + int(i["E5_AD"].split(",")[0]) > 10 and
@@ -51,4 +51,4 @@ df_ordered = df[["Chrom", "Pos", "Ref", "A7_GT", "E5_GT", "A7_AD", "E5_AD", "A7_
 print df_ordered
 
 
-df_ordered.to_csv(path_or_buf="/home/lucas/ISGlobal/Chip_Seq/DATA/Aligns/q5/Variant_Calling/a7_e5_variants_unifiedGeno.csv", sep="\t", mode="w+", index = False)
+df_ordered.to_csv(path_or_buf="/home/lucas/ISGlobal/Chip_Seq/DATA/Aligns/q5/Variant_Calling/a7_e5_unifiedgeno_eli.csv", sep="\t", mode="w+", index = False)

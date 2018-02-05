@@ -224,7 +224,7 @@ for (i in 1:dim(varifin_df)[1]){
 @
 
 \section{Histogrames}
-En primer lloc hem representat la distribució dels valors d'acetilació i de metilació als fragments (de 10G). (Archiu "Coverage_10G_200bp.csv", 116656 fraagments corresponents al genoma sencer. Coverage directament del "bam" nomralitzat per nombre de reads.)
+En primer lloc hem representat la distribució dels valors d'acetilació i de metilació als fragments (de 10G). (Archiu "Coverage\_10G\_200bp.csv", 116656 fragments corresponents al genoma sencer. Coverage directament del "bam" nomralitzat per nombre de reads.)
 \subsection{log(Ac) All}
 <<dens_all, echo=FALSE, warning=FALSE, out.width="1\\linewidth", message=FALSE>>=
 df <- cov
@@ -277,7 +277,7 @@ ggplot(df, aes(log(df$Ac), fill = df$Variant)) + geom_histogram(bins = 200)
 \section{Acetilació vs Metilació}
 A continuació hem volgut dilucidar si la combinació de l'estat de metilació i acetilació dels fragments ens permet diferenciar entre gens variants/no-variants i entre els gens variants actius/incatius.
 
-Hem classificat els gens com a variants utilitzant una llista obtiniguda en un estudi anterior. (La llista de gens variants es troba a "Gens_variants_extended.txt", 514 gens. Aquesta informació s'ha expandit a tots els fragments que formen part d'aquests gens, 5' i 3' inclosos.)
+Hem classificat els gens com a variants utilitzant una llista obtiniguda en un estudi anterior. (La llista de gens variants es troba a "Gens\_variants\_extended.txt", 514 gens. Aquesta informació s'ha expandit a tots els fragments que formen part d'aquests gens, 5' i 3' inclosos.)
 \clearpage
 \subsection{Transcripció i Metilació}
 Per a poder classificar els gens com a variants actius/inactius peimer hem mirat la distribució de les dades de transcripció i les de metilació. (amb l'idea de trobar llindars per a expressat/no expressat, metilat/no metilat).
@@ -305,7 +305,7 @@ ggplot(df, aes(x = df$Met, y = df$Ac, color = df$Class)) +
  @
 \clearpage
 \subsection{Classificació segons Metilació i estat Transcripcional}
-En un segon intent hem afegit la variable "noexprs" que hem considerat "TRUE" quan el valor d'expressió d'un fragment està per sota d'un llindar ($<$4)(Igual que en el cas anterior el valor de transcripció correspon a un gen i s'ha expandit a tots els fragments que en formen part.)(Dades de trascripció a l'arxiu "3D7_Variantome_AllData_withGam.xls" fulla 1 columnes 1 i 26).
+En un segon intent hem afegit la variable "noexprs" que hem considerat "TRUE" quan el valor d'expressió d'un fragment està per sota d'un llindar ($<$4)(Igual que en el cas anterior el valor de transcripció correspon a un gen i s'ha expandit a tots els fragments que en formen part.)(Dades de trascripció a l'arxiu "3D7\_Variantome\_AllData\_withGam.xls" fulla 1 columnes 1 i 26).
 <<ac_met_log, echo=FALSE, warning=FALSE, out.width="1\\linewidth", message=FALSE, fig.pos = "b">>=
 df <- rbind(sample_n(cov[cov$noexprs == FALSE,], 2445), cov[cov$noexprs == TRUE,]) #Sampling
 

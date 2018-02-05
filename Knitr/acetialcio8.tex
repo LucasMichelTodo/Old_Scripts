@@ -79,7 +79,7 @@ Les dades representades en aquest set de gràfiques representen l'acetilació i 
 
 
 \section{Histogrames}
-En primer lloc hem representat la distribució dels valors d'acetilació i de metilació als fragments (de 10G). (Archiu "Coverage_10G_200bp.csv", 116656 fraagments corresponents al genoma sencer. Coverage directament del "bam" nomralitzat per nombre de reads.)
+En primer lloc hem representat la distribució dels valors d'acetilació i de metilació als fragments (de 10G). (Archiu "Coverage\_10G\_200bp.csv", 116656 fragments corresponents al genoma sencer. Coverage directament del "bam" nomralitzat per nombre de reads.)
 \subsection{log(Ac) All}
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
@@ -180,7 +180,7 @@ En primer lloc hem representat la distribució dels valors d'acetilació i de me
 \section{Acetilació vs Metilació}
 A continuació hem volgut dilucidar si la combinació de l'estat de metilació i acetilació dels fragments ens permet diferenciar entre gens variants/no-variants i entre els gens variants actius/incatius.
 
-Hem classificat els gens com a variants utilitzant una llista obtiniguda en un estudi anterior. (La llista de gens variants es troba a "Gens_variants_extended.txt", 514 gens. Aquesta informació s'ha expandit a tots els fragments que formen part d'aquests gens, 5' i 3' inclosos.)
+Hem classificat els gens com a variants utilitzant una llista obtiniguda en un estudi anterior. (La llista de gens variants es troba a "Gens\_variants\_extended.txt", 514 gens. Aquesta informació s'ha expandit a tots els fragments que formen part d'aquests gens, 5' i 3' inclosos.)
 \clearpage
 \subsection{Transcripció i Metilació}
 Per a poder classificar els gens com a variants actius/inactius peimer hem mirat la distribució de les dades de transcripció i les de metilació. (amb l'idea de trobar llindars per a expressat/no expressat, metilat/no metilat).
@@ -226,7 +226,7 @@ En un primer intent de diferenciar variants actius d'inactius hem creat el parem
 \end{knitrout}
 \clearpage
 \subsection{Classificació segons Metilació i estat Transcripcional}
-En un segon intent hem afegit la variable "noexprs" que hem considerat "TRUE" quan el valor d'expressió d'un fragment està per sota d'un llindar ($<$4)(Igual que en el cas anterior el valor de transcripció correspon a un gen i s'ha expandit a tots els fragments que en formen part.)(Dades de trascripció a l'arxiu "3D7_Variantome_AllData_withGam.xls" fulla 1 columnes 1 i 26).
+En un segon intent hem afegit la variable "noexprs" que hem considerat "TRUE" quan el valor d'expressió d'un fragment està per sota d'un llindar ($<$4)(Igual que en el cas anterior el valor de transcripció correspon a un gen i s'ha expandit a tots els fragments que en formen part.)(Dades de trascripció a l'arxiu "3D7\_Variantome\_AllData\_withGam.xls" fulla 1 columnes 1 i 26).
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
 
@@ -319,8 +319,8 @@ Finalment hem volgut comprovar si amb les dades de metilació i acetilació podi
 ## Model 1: Variant ~ Ac + Met + Type + Start + Stop + silenced + noexprs
 ## Model 2: Variant ~ Ac + Met + Type + Start + Stop
 ##   Resid. Df Resid. Dev Df Deviance  Pr(>Chi)    
-## 1      8477     5569.1                          
-## 2      8479     6281.6 -2  -712.51 < 2.2e-16 ***
+## 1      8477     5352.6                          
+## 2      8479     6066.9 -2  -714.26 < 2.2e-16 ***
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ## 
@@ -330,36 +330,36 @@ Finalment hem volgut comprovar si amb les dades de metilació i acetilació podi
 ## 
 ## Deviance Residuals: 
 ##     Min       1Q   Median       3Q      Max  
-## -5.3407  -0.7611   0.0038   0.1694   2.8113  
+## -5.1670  -0.7336   0.0001   0.0879   2.9123  
 ## 
 ## Coefficients: (1 not defined because of singularities)
 ##                Estimate Std. Error z value Pr(>|z|)    
-## (Intercept)   6.623e-01  1.006e-01   6.584 4.59e-11 ***
-## Ac           -1.083e-04  9.383e-06 -11.540  < 2e-16 ***
-## Met           3.419e-04  2.666e-05  12.824  < 2e-16 ***
-## Type5prima   -3.584e-01  9.993e-02  -3.587 0.000335 ***
-## TypeORF      -1.100e+00  8.769e-02 -12.543  < 2e-16 ***
-## Typeother    -1.016e+02  3.645e+06   0.000 0.999978    
-## Start        -2.534e-07  4.213e-08  -6.016 1.79e-09 ***
+## (Intercept)   4.052e-01  1.009e-01   4.017 5.90e-05 ***
+## Ac           -1.201e-04  9.478e-06 -12.674  < 2e-16 ***
+## Met           6.071e-04  5.022e-05  12.089  < 2e-16 ***
+## Type5prima   -3.264e-01  1.009e-01  -3.234  0.00122 ** 
+## TypeORF      -1.069e+00  8.907e-02 -12.007  < 2e-16 ***
+## Typeother    -5.454e+01  2.080e+02  -0.262  0.79310    
+## Start        -2.331e-07  4.533e-08  -5.143 2.71e-07 ***
 ## Stop                 NA         NA      NA       NA    
-## silencedTRUE  4.037e+00  3.014e-01  13.396  < 2e-16 ***
-## noexprsTRUE   2.018e+00  2.942e-01   6.858 6.97e-12 ***
+## silencedTRUE  4.856e+00  4.348e-01  11.168  < 2e-16 ***
+## noexprsTRUE   1.841e+00  2.811e-01   6.549 5.79e-11 ***
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ## 
 ## (Dispersion parameter for binomial family taken to be 1)
 ## 
-##     Null deviance: 11152.7  on 8485  degrees of freedom
-## Residual deviance:  5569.1  on 8477  degrees of freedom
-## AIC: 5587.1
+##     Null deviance: 11212.4  on 8485  degrees of freedom
+## Residual deviance:  5352.6  on 8477  degrees of freedom
+## AIC: 5370.6
 ## 
-## Number of Fisher Scoring iterations: 10
+## Number of Fisher Scoring iterations: 16
 ##        
 ##         FALSE TRUE
-##   FALSE  2980  274
-##   TRUE   1058 4351
-## [1] "Accuracy 0.846242641117396"
-## [1] "Accuracy of null model 0.498903382200162"
+##   FALSE  3056  142
+##   TRUE   1185 4280
+## [1] "Accuracy 0.846819808380469"
+## [1] "Accuracy of null model 0.495209511716495"
 \end{verbatim}
 
 
@@ -370,12 +370,12 @@ Finalment hem volgut comprovar si amb les dades de metilació i acetilació podi
 {\ttfamily\noindent\itshape\color{messagecolor}{\#\# The following object is masked from 'package:stats':\\\#\# \\\#\#\ \ \ \  lowess}}\begin{verbatim}
 ## 
 ## 3prima 5prima    ORF 
-##    178     71     25
+##     85     23     34
 ## 
 ## 3prima 5prima    ORF 
-##    128    236    694
+##    202    301    682
 ##           llh       llhNull            G2      McFadden          r2ML          r2CU 
-## -2784.5570366 -5576.3492019  5583.5843306     0.5006487     0.4821015     0.6592179
+## -2676.3084504 -5606.1770458  5859.7371909     0.5226144     0.4986838     0.6801418
 \end{verbatim}
 \end{kframe}
 

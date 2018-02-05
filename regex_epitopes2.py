@@ -23,10 +23,10 @@ with open("/home/lucas/ISGlobal/Cruzi/tcruzi_epitopes_vaccine/materias_primas/bc
 		epitopes_b.append(regex)
 
 #Create header for results (ensures file is written from scratch if re-run).
-with open("../../Results_tcell.txt", "w+") as file: 
+with open("Results_tcell.txt", "w+") as file: 
 	file.write("cluster"+"\t"+"sequence"+"\t"+"epitope"+"\t"+"number of matches"+"\t"+"annotation"+"\n")
 
-with open("../../Results_bcell.txt", "w+") as file: 
+with open("Results_bcell.txt", "w+") as file: 
 	file.write("cluster"+"\t"+"sequence"+"\t"+"epitope"+"\t"+"number of matches"+"\t"+"annotation"+"\n")
 
 
@@ -63,7 +63,7 @@ def check_epitopes(fasta_file):
 			print prot+"\n" 
 			print result[0]+"("+str(len(result))+")\n"
 			print "\n"+"-----------------------------------------------------------------"+"\n"
-			with open("../../Results_tcell.txt", "a+") as file:
+			with open("Results_tcell.txt", "a+") as file:
 				file.write(fasta_file.replace("_consensus.fasta", "")+"\t"+prot+"\t"+result[0]+"\t"+str(len(result))+"\t"+anot+"\n") # Write results.
 
 	for epitope in epitopes_b:
@@ -84,7 +84,7 @@ def check_epitopes(fasta_file):
 				print prot+"\n" 
 				print result[0]+"("+str(len(result))+")\n"
 				print "\n"+"-----------------------------------------------------------------"+"\n"
-				with open("../../Results_bcell.txt", "a+") as file:
+				with open("Results_bcell.txt", "a+") as file:
 					file.write(fasta_file.replace("_consensus.fasta", "")+"\t"+prot+"\t"+result[0]+"\t"+str(len(result))+"\t"+anot+"\n") # Write results.
 
 if __name__ == "__main__":
