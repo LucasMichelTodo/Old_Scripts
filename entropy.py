@@ -8,10 +8,10 @@ import pandas as pd
 import scipy as sc
 import scipy.stats
 
-# Input a pandas series 
-def ent(data): 
+# Input a pandas series
+def ent(data):
     p_data= data.value_counts()/len(data) # calculates the probabilities
-    entropy=scipy.stats.entropy(p_data)  # input probabilities to get the entropy 
+    entropy=scipy.stats.entropy(p_data)  # input probabilities to get the entropy
     return entropy
 
 
@@ -24,20 +24,21 @@ def ClustalEnt(clustal_file):
 	aa_var = [] # container for list of aa in a position
 	entropies = [] # container for final entropy result per position
 	alignment = AlignIO.read(open(clustal_file), "clustal")
-	
-	with open(clustal_file.replace("_sorted.aln", "_consensus.fasta"), "w+") as file: # Creating header for consensus file. Setting "w+" ensures the file will be created from scratch if re-run.
+
+    # Creating header for consensus file. Setting "w+" ensures the file will be created from scratch if re-run.
+	with open(clustal_file.replace("_sorted.aln", "_consensus.fasta"), "w+") as file:
 		#for record in alignment:
 		file.write(">"+alignment[0].id+"\n")
 
 	#summary = SummaryInfo(alignment)
 	#print summary.gap_consensus(threshold=0.4,ambiguous="*")[43]
 
-	for i in range(0,alignment.get_alignment_length()):   
+	for i in range(0,alignment.get_alignment_length()):
 		for record in alignment:
 			aa_var.append(record[i])
 		data = pd.Series(aa_var)
 		entropies.append(ent(data))
-		
+
 		#print aa_var
 		#print most_common(aa_var)
 
@@ -57,6 +58,5 @@ def ClustalEnt(clustal_file):
 if __name__ == "__main__":
 	filenames= sys.argv[1:]
 	print filenames
-	for file in filenames:	
+	for file in filenames:
 		ClustalEnt(file)
-	

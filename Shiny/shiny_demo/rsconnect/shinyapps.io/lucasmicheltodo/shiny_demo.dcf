@@ -1,0 +1,12 @@
+name: shiny_demo
+title: shiny_demo
+username:
+account: lucasmicheltodo
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 273742
+bundleId: 1209798
+url: https://lucasmicheltodo.shinyapps.io/shiny_demo/
+when: 1517913824.24519
+asMultiple: FALSE
+asStatic: FALSE
