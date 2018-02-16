@@ -1,0 +1,12 @@
+name: Variant_calling
+title: Variant_calling
+username:
+account: lucasmicheltodo
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 275704
+bundleId: 1213667
+url: https://lucasmicheltodo.shinyapps.io/Variant_calling/
+when: 1518099841.89262
+asMultiple: FALSE
+asStatic: FALSE

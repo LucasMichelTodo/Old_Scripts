@@ -10,7 +10,7 @@ pd.set_option('display.expand_frame_repr', False)
 ## java -jar $GATK -R ref.fasta -T VariantsToTable -F CHROM -F POS -F REF -F ALT -GF GT -GF AD -GF GQ -V haplotypecaller_SNP_ploidy.vcf -o haplotypecalle_SNP_ploidy_table.txt
 
 ## Obrir arxiu vcf (resultat del variant calling) i parsejar totes les entrades coma diccionaris en una llista.
-with open("/home/lucas/ISGlobal/Chip_Seq/DATA/Aligns/q5/Variant_Calling/all_unifiedgenotyper_Eli_table.txt", "r+") as file1:
+with open("/home/lucas/ISGlobal/Chip_Seq/DATA/Aligns/q5/Variant_Calling/all_recal_table.txt", "r+") as file1:
 		for line in file1:
 			if header:
 				header = False
@@ -51,4 +51,4 @@ df_ordered = df[["Chrom", "Pos", "Ref", "A7_GT", "E5_GT", "A7_AD", "E5_AD", "A7_
 print df_ordered
 
 
-df_ordered.to_csv(path_or_buf="/home/lucas/ISGlobal/Chip_Seq/DATA/Aligns/q5/Variant_Calling/a7_e5_unifiedgeno_eli.csv", sep="\t", mode="w+", index = False)
+df_ordered.to_csv(path_or_buf="/home/lucas/ISGlobal/Chip_Seq/DATA/Aligns/q5/Variant_Calling/a7_e5_all_recal_table.txt", sep="\t", mode="w+", index = False)
