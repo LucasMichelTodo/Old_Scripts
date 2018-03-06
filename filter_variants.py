@@ -42,13 +42,13 @@ for i in a7_e5:
 	i["E5_ratio"] = float(i["E5_AD"].split(",")[1])/(int(i["E5_AD"].split(",")[0]) + float(i["E5_AD"].split(",")[1]))
 
 dif_GT = [i for i in a7_e5 if i["A7_GT"] != i["E5_GT"]]
-dif_a7_e5 = [i for i in a7_e5 if abs(i["A7_ratio"]-i["E5_ratio"]) > 0.3] #Edit this line to change diference bwtween strain ratios to filter.
+dif_a7_e5 = [i for i in a7_e5 if abs(i["A7_ratio"]-i["E5_ratio"]) > 0.3 or i["A7_ratio"] > 0.3 or i["E5_ratio"] > 0.3] #Edit this line to change diference bwtween strain ratios to filter.
 
 df = pd.DataFrame(dif_a7_e5)
 #df = pd.DataFrame(dif_GT)
 #df = pd.DataFrame(a7_e5)
-df_ordered = df[["Chrom", "Pos", "Ref", "A7_GT", "E5_GT", "A7_AD", "E5_AD", "A7_ratio", "E5_ratio", "A7_GQ", "E5_GQ"]]
+df_ordered = df[["Chrom", "Pos", "Ref", "Alt", "A7_GT", "E5_GT", "A7_AD", "E5_AD", "A7_ratio", "E5_ratio", "A7_GQ", "E5_GQ"]]
 print df_ordered
 
 
-df_ordered.to_csv(path_or_buf="/home/lucas/ISGlobal/Chip_Seq/DATA/Aligns/q5/Variant_Calling/a7_e5_all_recal_table.txt", sep="\t", mode="w+", index = False)
+df_ordered.to_csv(path_or_buf="/home/lucas/ISGlobal/Chip_Seq/DATA/Aligns/q5/Variant_Calling/Run_Eliprotocol_12_02_18/Annotation/a7_e5_recal.csv", sep="\t", mode="w+", index = False)

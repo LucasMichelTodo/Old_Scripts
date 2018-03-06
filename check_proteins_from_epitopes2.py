@@ -5,7 +5,7 @@ import subprocess
 
 fasta = {}
 ## Change fasta file to match the one used for clusters.
-with open("/home/lucas/ISGlobal/Cruzi/tcruzi_epitopes_vaccine/Run_proteomes/all_fasta_proteomes.fasta", "r+") as file_one:
+with open("/home/lucas/ISGlobal/Cruzi/tcruzi_epitopes_vaccine/Run_27_02_18/all_fasta_noMar.fasta", "r+") as file_one:
     for line in file_one:
         line = line.strip()
         if not line:
@@ -32,7 +32,7 @@ def check_prot(result_file):
 				seq = fasta[prot]
 				if prot not in new_fasta:
 					new_fasta[prot] = seq
-	
+
 	with open(result_file.replace(".txt", ".fasta"), "a+") as out_file:
 		for key in new_fasta:
 			out_file.write(">"+key+"\n"+new_fasta[key]+"\n")
@@ -69,11 +69,5 @@ def check_prot(result_file):
 
 if __name__ == "__main__":
 	filenames= sys.argv[1:]
-	for file in filenames:	
+	for file in filenames:
 		check_prot(file)
-
-
-
-
-
-
