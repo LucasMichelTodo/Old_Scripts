@@ -12,10 +12,11 @@ epitopes_b = []
 gff = py.BedTool("/home/lucas/ISGlobal/Cruzi/tcruzi_epitopes_vaccine/Gen_referencies/TriTrypDB-34_TcruziCLBrenerEsmeraldo-like.gff")
 
 # Create a list with epitopes from file and convert them to regex. Change this file to change epitopes to search.
-with open("/home/lucas/ISGlobal/Cruzi/tcruzi_epitopes_vaccine/Gen_referencies/iedb_tcd8_ppcmayorcero.txt", "r+") as file:
+with open("/home/lucas/ISGlobal/Cruzi/tcruzi_epitopes_vaccine/Gen_referencies/tcd8_epitopes_to_cross.txt.txt", "r+") as file:
 	for line in file:
 		regex = re.compile(re.escape(str(line.strip())))
-		epitopes_t.append(regex)
+		if len(regex.pattern) > 1:
+			epitopes_t.append(regex)
 
 with open("/home/lucas/ISGlobal/Cruzi/tcruzi_epitopes_vaccine/materias_primas/bcell_epitopes_to_cross.txt", "r+") as file:
 	for line in file:
@@ -23,10 +24,10 @@ with open("/home/lucas/ISGlobal/Cruzi/tcruzi_epitopes_vaccine/materias_primas/bc
 		epitopes_b.append(regex)
 
 #Create header for results (ensures file is written from scratch if re-run).
-with open("Results_tcell_ent05iedb_tcd8_ppcmayorcero.txt", "w+") as file:
+with open("Results_tcell.txt", "w+") as file:
 	file.write("cluster"+"\t"+"sequence"+"\t"+"epitope"+"\t"+"number of matches"+"\t"+"annotation"+"\n")
 
-with open("Results_bcell_ent05_ppcmayorcero.txt", "w+") as file:
+with open("Results_bcell.txt", "w+") as file:
 	file.write("cluster"+"\t"+"sequence"+"\t"+"epitope"+"\t"+"number of matches"+"\t"+"annotation"+"\n")
 
 
@@ -63,7 +64,7 @@ def check_epitopes(fasta_file):
 			print prot+"\n"
 			print result[0]+"("+str(len(result))+")\n"
 			print "\n"+"-----------------------------------------------------------------"+"\n"
-			with open("Results_tcell_ent05iedb_tcd8_ppcmayorcero.txt", "a+") as file:
+			with open("Results_tcell.txt", "a+") as file:
 				file.write(fasta_file.replace("_consensus.fasta", "")+"\t"+prot+"\t"+result[0]+"\t"+str(len(result))+"\t"+anot+"\n") # Write results.
 
 	for epitope in epitopes_b:
@@ -84,7 +85,7 @@ def check_epitopes(fasta_file):
 				print prot+"\n"
 				print result[0]+"("+str(len(result))+")\n"
 				print "\n"+"-----------------------------------------------------------------"+"\n"
-				with open("Results_bcell_ent05_ppcmayorcero.txt", "a+") as file:
+				with open("Results_bcell", "a+") as file:
 					file.write(fasta_file.replace("_consensus.fasta", "")+"\t"+prot+"\t"+result[0]+"\t"+str(len(result))+"\t"+anot+"\n") # Write results.
 
 if __name__ == "__main__":

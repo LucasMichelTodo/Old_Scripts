@@ -15,7 +15,8 @@ def annotate_from_genes(bed_file):
     intersect = bed.intersect(gene_ref, wo=True) # Intersect each gene in the gff with the peaks in the bed file.
 
     #Print header before "for-loop":
-    print "Chrom\tPos\tRef\tAlt\tA7_GT\tE5_GT\tA7_AD\tE5_AD\tA7_ratio\tE5_ratio\tA7_GQ\tE5_GQ\tGene\tRegion\tOld_fam\tAnnot"
+    print "Chrom\tPos\tRef\tAlt\t1_GT\t2_GT\t1_AD\t2_AD\t1_ratio\t2_ratio\t1_GQ\t2_GQ\tGene\tRegion\tOld_fam\tAnnot"
+    #print "Chrom\tPos\tRef\tAlt\t1.2b_GT\t10g_GT\t1.2b_AD\t10g_AD\t1.2b_ratio\t10g_ratio\t1.2b_GQ\t10g_GQ\tGene\tRegion\tOld_fam\tAnnot"
 
     for line in intersect:
 

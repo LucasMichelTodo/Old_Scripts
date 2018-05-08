@@ -1,0 +1,13 @@
+name: Variant_calling_all
+title: Variant_calling_all
+username:
+account: lucasmicheltodo
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 323733
+bundleId: 1329102
+url: https://lucasmicheltodo.shinyapps.io/Variant_calling_all/
+when: 1524218545.56851
+asMultiple: FALSE
+asStatic: FALSE
+ignoredFiles: add_exprsdata.R|shiny_a7_e5_SNP.R|shiny_SNP.R

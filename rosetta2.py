@@ -13,34 +13,32 @@ with open("/home/lucas/ISGlobal/Gen_Referencies/Gene_references_rosetta.txt", "r
 # print len(rosetta)
 # print rosetta
 
-genes = {}
+genes = []
 
 def translate(filein):
 	with open(filein) as file:
 		for line in file:
-			genes[(line.strip())] = []
+			genes.append([line.strip(),""])
 
 		for i in tqdm(genes):
-			if i in str(rosetta.values()):
+			if i[0] in str(rosetta.values()):
 				for key, value in rosetta.iteritems():
-					if i in value:
-							# print i
-							# print value
-							# print "------------------------------------------------------------------"
-							genes[i].append(key)
+					if i[0] in value:
+						i[1] = key
 			else:
-				genes[i].append("NA")
+				i[1] = "NA"
+
 
 	with open(filein.replace(".txt", "_rosetta.txt"), "a+") as outfile:
-		for key, value in genes.iteritems():
-			outfile.write(key+"\t")
+		for i in genes:
+			outfile.write(i[0]+"\t")
 			first = True
-			for i in value:
+			for y in i[1:]:
 				if first:
-					outfile.write(i)
+					outfile.write(y)
 					first = False
 				else:
-					outfile.write(","+i)
+					outfile.write(","+y)
 
 			outfile.write("\n")
 

@@ -5,9 +5,9 @@ account: lucasmicheltodo
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 275704
-bundleId: 1254885
+bundleId: 1264076
 url: https://lucasmicheltodo.shinyapps.io/Variant_calling/
-when: 1520338117.67275
+when: 1520843380.73578
 asMultiple: FALSE
 asStatic: FALSE
 ignoredFiles: shiny_SNP.R

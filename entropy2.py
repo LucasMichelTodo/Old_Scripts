@@ -65,8 +65,8 @@ def ClustalEnt(clustal_file):
         #print most_common(aa_var)
         #print entropies[i]
 
-
-        if ent(data) <= 1:
+        # Set entropy threshold:
+        if ent(data) <= 0.5:
             consensus.append(most_common(aa_var))
 
         else:
@@ -112,9 +112,9 @@ def ClustalEnt(clustal_file):
 
     ## Write result to _consensus file:
     # Creating header for consensus file. Setting "w+" ensures the file will be created from scratch if re-run.
-    with open(clustal_file.replace("_sorted.aln", "_consensus.fasta"), "w+") as file:
+    with open(clustal_file.replace("_sorted.aln", "_consensus05.fasta"), "w+") as file:
         file.write(">"+current_ref+"\n")
-    with open(clustal_file.replace("_sorted.aln", "_consensus.fasta"), "a+") as file:
+    with open(clustal_file.replace("_sorted.aln", "_consensus05.fasta"), "a+") as file:
         file.write("".join(masked_ref))
 
 
