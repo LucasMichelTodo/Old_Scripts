@@ -66,7 +66,7 @@ def ClustalEnt(clustal_file):
         #print entropies[i]
 
         # Set entropy threshold:
-        if ent(data) <= 0.5:
+        if ent(data) <= 1:
             consensus.append(most_common(aa_var))
 
         else:
@@ -79,7 +79,7 @@ def ClustalEnt(clustal_file):
     current_min = 99999999999999999999999999999999999
     current_seq = ""
     current_ref = ""
-    ref_order = {'TcCLB':5, 'AODP0':4, 'AYLP0':7, 'AQHO0':2, 'TcChr':8, 'Tcruz':6, 'ANOX0':1, 'TcX10':3}
+    ref_order = {'TcCLB':5, 'AODP0':4, 'AYLP0':7, 'AQHO0':2, 'TcChr':8, 'Tcruz':6, 'ANOX0':1, 'TcX10':3, 'Expos':0, 'TcMAR':9}
 
     for record in alignment:
         #print record.seq
@@ -112,9 +112,9 @@ def ClustalEnt(clustal_file):
 
     ## Write result to _consensus file:
     # Creating header for consensus file. Setting "w+" ensures the file will be created from scratch if re-run.
-    with open(clustal_file.replace("_sorted.aln", "_consensus05.fasta"), "w+") as file:
+    with open(clustal_file.replace("_sorted.aln", "_consensus.fasta"), "w+") as file:
         file.write(">"+current_ref+"\n")
-    with open(clustal_file.replace("_sorted.aln", "_consensus05.fasta"), "a+") as file:
+    with open(clustal_file.replace("_sorted.aln", "_consensus.fasta"), "a+") as file:
         file.write("".join(masked_ref))
 
 

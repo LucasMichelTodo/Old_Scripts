@@ -20,7 +20,7 @@ library(tidyr)
 # topTable(fit)
 
 ## Read files
-roseta <- read.table("/home/lucas/ISGlobal/gens_array_rosetta.txt")
+rosetta <- read.table("/home/lucas/ISGlobal/gens_array_rosetta_annotated.txt", sep = "\t")
 
 ind_1_1 <- read.table("/home/lucas/ISGlobal/Arrays/Oriol_heatmaps/US10283823_258456110002/US10283823_258456110002_S01_GE2_1105_Oct12_ACC_2_1_1.txt",sep="\t",stringsAsFactors=FALSE, skip = 9, header = TRUE)
 ind_1_2 <- read.table("/home/lucas/ISGlobal/Arrays/Oriol_heatmaps/US10283823_258456110002/US10283823_258456110002_S01_GE2_1105_Oct12_ACC_2_1_2.txt",sep="\t",stringsAsFactors=FALSE, skip = 9, header = TRUE)
@@ -144,8 +144,86 @@ getTimeEstimation <- function(x,dataPath,functionsPath,figuresPath,B=100) {
 }
 
 estimatedTimes <- getTimeEstimation(xgene,bozdechPath,LemieuxFunctionsPath,file.path(figuresPath),B=100)
+estimatedTimes <- estimatedTimes + c(0,0,48,48,48,48)
+pData(xgene)$etime <- estimatedTimes
+
+### HEATMAPS
+
+write.table(heatmap_df, "/home/lucas/Documents/oriol_heatmap.csv", sep = "\t")
+heatmap_df <- data.frame(c(exprs(xgene)[,1] - exprs(xgene)[,2]), c(exprs(xgene)[,3] - exprs(xgene)[,4]), c(exprs(xgene)[,5] - exprs(xgene)[,6]))
+colnames(heatmap_df) <- c("T1", "T2", "T3")
+heatmap_df["gene"] <- rownames(heatmap_df)
+
+sel_all <- filter(heatmap_df, abs(T1) > 0.39794 | abs(T2) > 0.39794 | abs(T3) > 0.39794)
+
+sel_top1 <- arrange(heatmap_df, -T1)[c(1:20),]
+sel_bottom1 <- arrange(heatmap_df, T1)[c(1:20),]
+sel1 <- rbind(sel_top1, sel_bottom1)
+sel1 <- arrange(sel1, T1)
+
+# sel1 <- arrange(heatmap_df, -abs(T1))[1:30,]
+# sel1 <- arrange(sel1, T1)
+
+sel_top2 <- arrange(heatmap_df, -T2)[c(1:20),]
+sel_bottom2 <- arrange(heatmap_df, T2)[c(1:20),]
+sel2 <- rbind(sel_top2, sel_bottom2)
+sel2 <- arrange(sel2, T2)
+
+sel_top3 <- arrange(heatmap_df, -T3)[c(1:20),]
+sel_bottom3 <- arrange(heatmap_df, T3)[c(1:20),]
+sel3 <- rbind(sel_top3, sel_bottom3)
+sel3 <- arrange(sel3, T3)
+
+heatmap_df_t1 <- melt(sel1)
+heatmap_df_t1$gene <- factor(heatmap_df_t1$gene, levels=unique(as.character(heatmap_df_t1$gene)))
+
+heatmap_df_t2 <- melt(sel2)
+heatmap_df_t2$gene <- factor(heatmap_df_t2$gene, levels=unique(as.character(heatmap_df_t2$gene)))
+
+heatmap_df_t3 <- melt(sel3)
+heatmap_df_t3$gene <- factor(heatmap_df_t3$gene, levels=unique(as.character(heatmap_df_t3$gene)))
+
+plot_t1 <- ggplot(heatmap_df_t1, aes(x = variable, y = gene, fill = value)) + 
+  geom_tile() + 
+  scale_fill_gradient2(low = "red", high = "green", mid = "black") +
+  scale_x_discrete(expand = c(0, 0)) + scale_y_discrete(expand = c(0,0))
+
+plot_t1
+
+plot_t2 <- ggplot(heatmap_df_t2, aes(x = variable, y = gene, fill = value)) + 
+  geom_tile() + 
+  scale_fill_gradient2(low = "red", high = "green", mid = "black") +
+  scale_x_discrete(expand = c(0, 0)) + scale_y_discrete(expand = c(0,0))
+
+plot_t2
+
+plot_t3 <- ggplot(heatmap_df_t3, aes(x = variable, y = gene, fill = value)) + 
+  geom_tile() + 
+  scale_fill_gradient2(low = "red", high = "green", mid = "black") +
+  scale_x_discrete(expand = c(0, 0)) + scale_y_discrete(expand = c(0,0))
+
+plot_t3
 
 
+
+## Hierarchical Clustering
+
+hm_all <- melt(sel_all)
+plot_all <- ggplot(hm_all, aes(x = variable, y = gene, fill = value)) + 
+  geom_tile() + 
+  scale_fill_gradient2(low = "red", high = "green", mid = "black") +
+  scale_x_discrete(expand = c(0, 0)) + scale_y_discrete(expand = c(0,0))
+
+plot_all
+
+rownames(sel_all) <- sel_all$gene
+heatmap(
+  as.matrix(sel_all[,1:3]), Rowv=as.dendrogram(hclust(dist(as.matrix(sel_all[,1:3]))),
+  Colv=NA, cexRow = 2)
+)
+
+
+plot_grid(plot_t1, plot_t2, plot_t3, align = "v")
 
 
 

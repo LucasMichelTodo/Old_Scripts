@@ -1,0 +1,61 @@
+blast_probes <- read.csv("/home/lucas/ISGlobal/Arrays/parsed_result.csv", header = FALSE, sep = "\t", stringsAsFactors = FALSE)
+
+blast_probes["Score_1"] <- unlist(lapply(blast_probes$V3, function(x) strsplit(x, split = ".0", fixed = TRUE)[[1]][1]))
+blast_probes["Hit_2"] <- unlist(lapply(blast_probes$V3, function(x) strsplit(x, split = ".0", fixed = TRUE)[[1]][2]))
+
+
+df <- blast_probes[,c(1,2,5,6,4)]
+colnames(df) <- c("Probe", "Hit_1", "Score_1", "Hit_2", "Score_2")
+
+df["Target"] <- rep(NA, dim(df)[1])
+df["Target_ID"] <- rep(NA, dim(df)[1])
+
+df$Probe <- unlist(lapply(df$Probe, function(x) gsub(":", "/", x, fixed = TRUE)))
+
+array_description <- read.csv("/home/lucas/ISGlobal/Arrays/array_description.txt", sep = "\t", as.is = TRUE, header = TRUE)
+df[!df$Probe %in% array_description$ID,]
+
+for (i in 1:dim(df)[1]){
+  if (df[i,]$Probe %in% array_description$ID){
+    df[i,"Target"] <- unique(array_description[array_description$ID == df[i,]$Probe,]$TopHit) 
+  }
+}
+
+roseta <- read.csv("/home/lucas/ISGlobal/Gen_Referencies/Rosetta.txt", sep = "\t", as.is = TRUE, header = FALSE)
+
+for (i in 1:dim(df)[1]){
+  if (df[i,]$Target %in% roseta$V2){
+    df[i,]$Target_ID <- capture.output(cat(roseta[roseta$V2 == df[i,]$Target,]$V1, sep = ", "))
+  }
+  if (df[i,]$Target %in% roseta$V3){
+    df[i,]$Target_ID <- capture.output(cat(roseta[roseta$V3 == df[i,]$Target,]$V1, sep = ", "))
+  }
+  if (df[i,]$Target %in% roseta$V4){
+    df[i,]$Target_ID <- capture.output(cat(roseta[roseta$V4 == df[i,]$Target,]$V1, sep = ", "))
+  }
+  if (df[i,]$Target %in% roseta$V5){
+    df[i,]$Target_ID <- capture.output(cat(roseta[roseta$V5 == df[i,]$Target,]$V1, sep = ", "))
+  }
+}
+
+write.csv(df, file = "/home/lucas/ISGlobal/Arrays/probe_blast_table3.csv", row.names = FALSE, quote = FALSE)
+
+kasfak <- read.csv(file = "/home/lucas/ISGlobal/Arrays/SupTable1_Kafsack_MalJ2012.csv", header = TRUE, sep = "\t")
+
+kasfak$OligoID <- as.character(kasfak$OligoID)
+kasfak$OligoID
+
+kasfak$OligoID <- unlist(lapply(kasfak$OligoID, function(x) gsub(":", "/", x, fixed = TRUE)))
+
+table(kasfak$OligoID %in% df$Probe)
+kasfak[!(kasfak$OligoID %in% df$Probe),]
+
+
+
+
+
+df$Hit_1 <- unlist(lapply(df$Hit_1, function(x) gsub(".1", "", x, fixed = TRUE)))
+sel1 <- df[!(df$Hit_1 == df$Target_ID),]
+sel1[!is.na(sel1$Probe),]
+
+

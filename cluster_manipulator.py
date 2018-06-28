@@ -7,7 +7,7 @@ in_pdb = re.compile("\d")
 in_esmeraldo = re.compile("T")
 
 clusters = {}
-with open("/home/lucas/ISGlobal/Cruzi/tcruzi_epitopes_vaccine/New_strategy/selected_prots_and_ORFs.clstr", "r+") as infile:
+with open("/home/lucas/ISGlobal/Cruzi/tcruzi_epitopes_vaccine/New_strategy/exposed_ORFs_clusters.clstr", "r+") as infile:
 	for line in infile:
 		if line.startswith(">"):
 			ID = line.strip()
@@ -22,7 +22,8 @@ for key, value in tqdm(clusters.items()):
 	for i in value:
 		proteomes.append(i.split()[2][1:6])
 
-	if "expos" not in proteomes:
+	print proteomes
+	if "Expos" not in proteomes:
 		del clusters[key]
 
 	if len(set(proteomes)) < 7:
@@ -47,7 +48,7 @@ print len(clusters)
 #
 # print len(clusters)
 
-with open("/home/lucas/ISGlobal/Cruzi/tcruzi_epitopes_vaccine/New_strategy/selected_prots_and_ORFs_filtered.clstr", "a+") as outfile:
+with open("/home/lucas/ISGlobal/Cruzi/tcruzi_epitopes_vaccine/New_strategy/exposed_ORFs_clusters_filtered.clstr", "a+") as outfile:
 	for key, value in clusters.iteritems():
 		outfile.write(key)
 		outfile.write("\n")

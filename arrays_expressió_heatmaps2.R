@@ -1,26 +1,15 @@
 source("http://bioconductor.org/biocLite.R")
-#biocLite("Biobase")
-library("limma")
-#install.packages("Rcpp")
-#install.packages("dplyr")
+library(limma)
 library(dplyr)
 library(tidyr)
+library(Biobase)
+library(reshape2)
+library(ggplot2)
 
-# eset <- read.delim("/home/lucas/ISGlobal/Arrays/20180417 Read/US10283823_258456110003_S01_GE2_1105_Oct12_2_4.txt",check.names=FALSE,stringsAsFactors=FALSE)
-# x <- read.maimages("/home/lucas/ISGlobal/Arrays/20180417 Read/US10283823_258456110003_S01_GE2_1105_Oct12_2_4.txt" ,source="agilent")
-# eset <- as(x, "ExpressionSet")
-# 
-# > as(object, "ExpressionSet")
-# 
-# y <- backgroundCorrect(x,method="normexp")
-# str(x)
-# MA <- normalizeWithinArrays(y)
-# fit <- lmFit(MA)
-# fit <- eBayes(fit)
-# topTable(fit)
 
 ## Read files
-roseta <- read.table("/home/lucas/ISGlobal/gens_array_rosetta.txt")
+roseta <- read.csv("/home/lucas/ISGlobal/gens_array_rosetta_annotated.txt", sep = "\t", as.is = TRUE, header = FALSE)
+dim(roseta)
 
 ind_1_1 <- read.table("/home/lucas/ISGlobal/Arrays/Oriol_heatmaps/US10283823_258456110002/US10283823_258456110002_S01_GE2_1105_Oct12_ACC_2_1_1.txt",sep="\t",stringsAsFactors=FALSE, skip = 9, header = TRUE)
 ind_1_2 <- read.table("/home/lucas/ISGlobal/Arrays/Oriol_heatmaps/US10283823_258456110002/US10283823_258456110002_S01_GE2_1105_Oct12_ACC_2_1_2.txt",sep="\t",stringsAsFactors=FALSE, skip = 9, header = TRUE)
@@ -32,15 +21,18 @@ ctl_2_3 <- read.table("/home/lucas/ISGlobal/Arrays/Oriol_heatmaps/US10283823_258
 
 ## Create df
 df <- cbind(ind_1_1[,c(7,8,11)], ctl_2_1[,11], ind_1_2[,11], ctl_2_2[,11], ind_1_3[,11], ctl_2_3[,11])
-df["Gene_name"] <- sapply(df$SystematicName, function(x) roseta[roseta$V1 == x,2])
-colnames(df) <- c("ProbeName", "SystematicName", "Ind_1", "Ctl_1", "Ind_2", "Ctl_2", "Ind_3", "Ctl_3", "Gene_name")
+df["Gene_name"] <- roseta$V2
+df["Annot"] <- roseta$V3
+colnames(df) <- c("ProbeName", "SystematicName", "Ind_1", "Ctl_1", "Ind_2", "Ctl_2", "Ind_3", "Ctl_3", "Gene_name", "Annot")
+df[df$ProbeName == "HSDHFR_v7.1_P1/1",]$Gene_name <- "HSDHFR"
+df[df$ProbeName == "HSDHFR_v7.1_P1/1",]$Annot <- "hsdhfr"
 
 ## Create eSet
-exprsx <- as.matrix(df[,c(-1,-2,-9)])
-fdata <- new("AnnotatedDataFrame",df[,c(1:2,9)])
+exprsx <- as.matrix(df[,c(-1,-2,-9,-10)])
+fdata <- new("AnnotatedDataFrame",df[,c(1:2,9,10)])
 time <- factor(c(1,1,2,2,3,3))
 soca <- factor(rep(c("Ind", "Ctl"),3))
-pdata <- data.frame(soca=soca,time=time); rownames(pdata) <- colnames(df[,c(-1,-2,-9)])
+pdata <- data.frame(soca=soca,time=time); rownames(pdata) <- colnames(df[,c(-1,-2,-9,-10)])
 pdata <- new("AnnotatedDataFrame",pdata)
 x <- new("ExpressionSet",exprs=exprsx,featureData=fdata,phenoData=pdata)
 
@@ -67,16 +59,19 @@ renameGenesAndSummarize <- function(genesToRename.sd,exprsx,geneid,summaryMethod
   #   geneid[featureNames(x) %in% convTable$OligoID] <- myBadOligos
   # }
   
-  xgene <- by(exprsx[,c(-1,-2,-9)],geneid,myRma) 
+  xgene <- by(exprsx[,c(-1,-2,-9,-10)],geneid,myRma) 
   xgene <- do.call('rbind',xgene)
   
   mysd <- function(x) { ans <- ifelse(sum(!is.na(x))==1,0,sd(x,na.rm=TRUE)); return(ans) }
-  sdgene <- aggregate(exprsx[,c(-1,-2,-9)],by=list(geneid),FUN=mysd)
+  sdgene <- aggregate(exprsx[,c(-1,-2,-9, -10)],by=list(geneid),FUN=mysd)
   
   names(sdgene)[1] <- 'geneid'
   xgene <- data.frame(geneid=rownames(xgene),xgene); rownames(xgene) <- NULL
   
-  fdata <- data.frame(xgene$geneid, "")
+  fdata <- by(df[,9:10],geneid,unique)
+  genenames <- names(fdata)
+  fdata <- do.call('rbind',fdata)
+  
   fdata <- new("AnnotatedDataFrame",data.frame(fdata))
   rownames(fdata) <- as.character(xgene$geneid)
   
@@ -91,7 +86,7 @@ tmp <- renameGenesAndSummarize(genesToRename.sd=genesToRename.sd,exprsx=df,genei
 xgene <- tmp[['eset']]; sdgene <- tmp[['sdgene']]; fdata <- tmp[['fdata']]; geneid <- tmp[['geneid']]
 rownames(exprs(xgene))
 
-# Estimate times
+########################################### Estimate times ###############
 
 bozdechPath <- '/home/lucas/ISGlobal/Arrays/AnalisisR/Files2executeProgram/bozdech_Hb3_clean2.csv'
 LemieuxFunctionsPath <- '/home/lucas/ISGlobal/Arrays/AnalisisR/Files2executeProgram/lemieux_et_al_pipeline_functions.r'
@@ -144,8 +139,89 @@ getTimeEstimation <- function(x,dataPath,functionsPath,figuresPath,B=100) {
 }
 
 estimatedTimes <- getTimeEstimation(xgene,bozdechPath,LemieuxFunctionsPath,file.path(figuresPath),B=100)
+estimatedTimes <- estimatedTimes + c(0,0,48,48,48,48)
+pData(xgene)$etime <- estimatedTimes
+
+############################### HEATMAPS #########################################################
+
+heatmap_df <- data.frame(c(exprs(xgene)[,1] - exprs(xgene)[,2]), c(exprs(xgene)[,3] - exprs(xgene)[,4]), c(exprs(xgene)[,5] - exprs(xgene)[,6]))
+colnames(heatmap_df) <- c("T1", "T2", "T3")
+heatmap_df["gene"] <- paste0(xgene@featureData@data$Annot, ": ", rownames(heatmap_df))
+
+sel_all <- filter(heatmap_df, abs(T1) > 0.39794 | abs(T2) > 0.39794 | abs(T3) > 0.39794)
+
+sel_top1 <- arrange(heatmap_df, -T1)[c(1:20),]
+sel_bottom1 <- arrange(heatmap_df, T1)[c(1:20),]
+sel1 <- rbind(sel_top1, sel_bottom1)
+sel1 <- arrange(sel1, T1)
+
+# sel1 <- arrange(heatmap_df, -abs(T1))[1:30,]
+# sel1 <- arrange(sel1, T1)
+
+sel_top2 <- arrange(heatmap_df, -T2)[c(1:20),]
+sel_bottom2 <- arrange(heatmap_df, T2)[c(1:20),]
+sel2 <- rbind(sel_top2, sel_bottom2)
+sel2 <- arrange(sel2, T2)
+
+sel_top3 <- arrange(heatmap_df, -T3)[c(1:20),]
+sel_bottom3 <- arrange(heatmap_df, T3)[c(1:20),]
+sel3 <- rbind(sel_top3, sel_bottom3)
+sel3 <- arrange(sel3, T3)
+
+heatmap_df_t1 <- melt(sel1)
+heatmap_df_t1$gene <- factor(heatmap_df_t1$gene, levels=unique(as.character(heatmap_df_t1$gene)))
+
+heatmap_df_t2 <- melt(sel2)
+heatmap_df_t2$gene <- factor(heatmap_df_t2$gene, levels=unique(as.character(heatmap_df_t2$gene)))
+
+heatmap_df_t3 <- melt(sel3)
+heatmap_df_t3$gene <- factor(heatmap_df_t3$gene, levels=unique(as.character(heatmap_df_t3$gene)))
+
+plot_t1 <- ggplot(heatmap_df_t1, aes(x = variable, y = gene, fill = value)) + 
+  geom_tile() + 
+  scale_fill_gradient2(low = "red", high = "green", mid = "black") +
+  scale_x_discrete(expand = c(0, 0)) + scale_y_discrete(expand = c(0,0))
+
+plot_t1
+
+plot_t2 <- ggplot(heatmap_df_t2, aes(x = variable, y = gene, fill = value)) + 
+  geom_tile() + 
+  scale_fill_gradient2(low = "red", high = "green", mid = "black") +
+  scale_x_discrete(expand = c(0, 0)) + scale_y_discrete(expand = c(0,0))
+
+plot_t2
+
+plot_t3 <- ggplot(heatmap_df_t3, aes(x = variable, y = gene, fill = value)) + 
+  geom_tile() + 
+  scale_fill_gradient2(low = "red", high = "green", mid = "black") +
+  scale_x_discrete(expand = c(0, 0)) + scale_y_discrete(expand = c(0,0))
+
+plot_t3
+
+
+
+## Hierarchical Clustering
+
+hm_all <- melt(sel_all)
+plot_all <- ggplot(hm_all, aes(x = variable, y = gene, fill = value)) + 
+  geom_tile() + 
+  scale_fill_gradient2(low = "red", high = "green", mid = "black") +
+  scale_x_discrete(expand = c(0, 0)) + scale_y_discrete(expand = c(0,0))
+
+plot_all
+
+rownames(sel_all) <- sel_all$gene
+heatmap(
+  as.matrix(sel_all[,1:3]), Rowv=as.dendrogram(hclust(dist(as.matrix(sel_all[,1:3]))),
+  Colv=NA, cexRow = 2)
+)
+
+
+plot_grid(plot_t1, plot_t2, plot_t3, align = "v")
 
 
 
 
+
+############################### Proseguim ##########################
 

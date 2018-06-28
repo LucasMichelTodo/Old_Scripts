@@ -21,6 +21,9 @@ def fastatodict(fasta_file):
 
     return fasta
 
+def split_len(seq, length):
+    return [seq[i:i+length] for i in range(0, len(seq), length)]
+
 def merge_fastas(fasta_list):
 
     final_fasta = {}
@@ -29,8 +32,10 @@ def merge_fastas(fasta_list):
 
     for prot, seq in final_fasta.iteritems():
         if len(prot) > 1:
-            print ">exposed | "+prot
-            print seq
+            print prot.replace(">", ">Exposed_")
+            fragments = split_len(seq, 60)
+            for fragment in fragments:
+                print fragment
 
 
 if __name__ == "__main__":
