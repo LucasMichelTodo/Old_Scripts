@@ -244,6 +244,17 @@ for (x in 1:length(xgene@featureData@data$Gene_name)){
 
 heatmap_df["gene"] <- paste0(newlist, ": ", rownames(heatmap_df))
 
+heatmap_df["T1_FC_log2"] <- log2(10^heatmap_df$T1)
+heatmap_df["T2_FC_log2"] <- log2(10^heatmap_df$T2)
+heatmap_df["T3_FC_log2"] <- log2(10^heatmap_df$T3)
+
+heatmap_df["Gene_name"] <- xgene@featureData@data$Gene_name
+heatmap_df["Annot"] <- xgene@featureData@data$Annot
+heatmap_df["Variant"] <- xgene@featureData@data$Variant
+
+save(heatmap_df,file=file.path(dir,'df_FC.RData'))
+write.csv(heatmap_df, file = "/home/lucas/ISGlobal/Arrays/Oriol_heatmaps/whole_FC_df2.csv", row.names = FALSE)
+
 sel_all <- filter(heatmap_df, abs(T1) > 0.30103) #| abs(T2) > 0.39794 | abs(T3) > 0.39794)
 
 sel_top1 <- arrange(heatmap_df, -T1)[c(1:20),]
