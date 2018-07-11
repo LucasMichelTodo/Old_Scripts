@@ -20,21 +20,22 @@ def blast_probes(probe_list):
                 probe = line.split(",")[0].replace("/", ":")
 
                 cmd = ("blastn -query ./Probes_fastas/{}.fasta " +
-                        "-subject /home/lucas/ISGlobal/Gen_Referencies/PlasmoDB-30_Pfalciparum3D7_AnnotatedTranscripts.fasta " +
+                        "-subject /home/lucas/ISGlobal/Gen_Referencies/PlasmoDB-37_Pfalciparum3D7_AnnotatedTranscripts.fasta " +
                         "-outfmt 5 -task blastn -max_target_seqs 2 " +
-                        "-max_hsps 2 > blast_{}.xml") .format(probe,probe)
+                        "-dust no -soft_masking false " +
+                        "-max_hsps 2 > ./Probes_XMLs/blast_{}.xml") .format(probe,probe)
 
                 print cmd
                 subprocess.call(cmd, shell=True)
 
-                result_handle = open("blast_{}.xml" .format(probe))
+                result_handle = open("./Probes_XMLs/blast_{}.xml" .format(probe))
                 blast_records = NCBIXML.parse(result_handle)
                 for record in blast_records:
                     for alignment in record.alignments:
                         for hsp in alignment.hsps:
 
                             hits.append((alignment.title.split("|")[0].split()[1].strip(), hsp.bits))
-                            probe = i.replace("./blast_", "").replace(".fasta.xml", "")
+                            #probe = i.replace("./blast_", "").replace(".fasta.xml", "")
 
                 sorted_hits = sorted(hits, key=lambda x: x[1], reverse=True)
 
@@ -46,6 +47,14 @@ def blast_probes(probe_list):
                     print sorted_hits[0:2]
 
                 print "---------------------------------------------------------------------"
+
+                with open("parsed_result_bits_nocomplexity.csv", "a+") as outfile:
+                    outfile.write(probe+"\t")
+                    for x in sorted_hits[0:2]:
+                        outfile.write(x[0]+"\t"+str(x[1])+"\t")
+                    outfile.write("\n")
+
+                hits = []
 
         # result_handle = open(i)
         # #result_handle = open("blast_{}.xml" .format(i.replace("./", "")))

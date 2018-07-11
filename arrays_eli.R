@@ -5,6 +5,7 @@ library(tidyr)
 library(Biobase)
 library(reshape2)
 library(ggplot2)
+library(gplots)
 
 dir <- "/home/lucas/ISGlobal/Arrays/Eli_Arrays"
 figuresPath <- "/home/lucas/ISGlobal/Arrays/Eli_Arrays/Plots/"
@@ -14,6 +15,7 @@ figuresPath <- "/home/lucas/ISGlobal/Arrays/Eli_Arrays/Plots/"
 ## Import array data
 # 10E
 s10E_T0_CTL <- read.table("/home/lucas/ISGlobal/Arrays/AnalisisR/Per LUCAS_1st analysis_ETF/10E/US10283823_258456110002_S01_GE2_1105_Oct12_1_4.txt",sep="\t",stringsAsFactors=FALSE, skip = 9, header = TRUE)
+
 s10E_T0_HS <- read.table("/home/lucas/ISGlobal/Arrays/AnalisisR/Per LUCAS_1st analysis_ETF/10E/US10283823_258456110002_S01_GE2_1105_Oct12_1_4.txt",sep="\t",stringsAsFactors=FALSE, skip = 9, header = TRUE)
 s10E_T1_CTL <- read.table("/home/lucas/ISGlobal/Arrays/AnalisisR/Per LUCAS_1st analysis_ETF/10E/US10283823_258456110002_S01_GE2_1105_Oct12_2_4.txt",sep="\t",stringsAsFactors=FALSE, skip = 9, header = TRUE)
 s10E_T1_HS <- read.table("/home/lucas/ISGlobal/Arrays/AnalisisR/Per LUCAS_1st analysis_ETF/10E/US10283823_258456110003_S01_GE2_1105_Oct12_1_1.txt",sep="\t",stringsAsFactors=FALSE, skip = 9, header = TRUE)
@@ -213,6 +215,10 @@ getTimeEstimation <- function(x,dataPath,functionsPath,figuresPath,B=100) {
 }
 
 estimatedTimes <- getTimeEstimation(xgene,bozdechPath,LemieuxFunctionsPath,file.path(figuresPath),B=100)
+CTLEstimatedTimes <- as.numeric(unlist(lapply(estimatedTimes[rep(c(TRUE, FALSE), 12)], function(x) rep(x, 2))))
+names(CTLEstimatedTimes) <- names(estimatedTimes)
+estimatedTimes <- CTLEstimatedTimes
+
 save(estimatedTimes,file=file.path(dir,'estimatedTimes.RData'))
 load(file.path(dir,'estimatedTimes.RData'))
 write.csv(estimatedTimes,file.path(figuresPath,'Estimated_Times.csv'))
@@ -220,7 +226,7 @@ pData(xgene)$time <- estimatedTimes
 
 #save ExpressionSet at gene level
 save(xgene,file=file.path(dir,'normalizedData_geneLevel.RData'))
-save(xgene.noRatio,file=file.path(dir,'normalizedData_geneLevel_noRatio.RData'))
+#save(xgene.noRatio,file=file.path(dir,'normalizedData_geneLevel_noRatio.RData'))
 
 #boxplot after summarization
 pdf(file.path(figuresPath,'boxplot_afterSummarization.pdf'))
@@ -339,55 +345,27 @@ save(xgene,estim,file=file.path(dir,'xgene_estimated.RData'))
 
 ############################### Plots at gene level ######
 
-load(file.path(dir,'xgene_estimated.RData'))
-
-myOrder <- order(pData(xgene)$soca,pData(xgene)$time)
-xgene <- xgene[,myOrder]
-estim <- estim[,myOrder]
-
-time <- pData(xgene)$time
-soques <- levels(pData(xgene)$soca)
-ylim <- range(exprs(xgene)[!is.na(exprs(xgene))])
-if (!file.exists(file.path(figuresPath,'soques_genelevel_estimated/'))) dir.create(file.path(figuresPath,'soques_genelevel_estimated/'))
-outDir <- file.path(figuresPath,'soques_genelevel_estimated/')
-
-myRange <- range(time)
-myPoints.y <- round(seq(range(ylim)[1],range(ylim)[2],1))
-myPoints.x <- round(seq(myRange[1],ceiling(myRange[2]),2))
-
-#for (i in 1:nrow(xgene)) {
-for (i in 1:10) {
-  cat(paste(i,'\n'))
-  fileName <- paste(outDir,gsub('/','',gsub(':','#',featureNames(xgene)[i])),'.png',sep='') #colon is not supported under windows
-  png(fileName)
-  plot.new()
-  par(las=2)
-  plot.window(xlim=myRange,ylim=ylim)
-  axis(2,at=myPoints.y)
-  axis(1,at=myPoints.x)
-  #title(paste(featureNames(xgene)[i],ifelse(any(estim[i,]),'(has point estimation(s))','')),ylab='Log ratio',xlab='Time')
-  title(featureNames(xgene)[i])
-  for (j in 1:length(soques)) {
-    plotMe <- exprs(xgene[i,which(pData(xgene[i,])$soca==soques[j])])
-    lines(time[which(pData(xgene[i,])$soca==soques[j])][!is.na(plotMe)], plotMe[!is.na(plotMe)],col=j,pch=15)
-    myPch <- ifelse(estim[i,which(pData(xgene[i,])$soca==soques[j])],1,15)
-    points(time[which(pData(xgene[i,])$soca==soques[j])][!is.na(plotMe)], plotMe[!is.na(plotMe)],pch=myPch,col=j)
-  }
-  oldTime <- unlist(lapply(strsplit(sampleNames(xgene),','),function(x) x[length(x)]))
-  legend(ifelse(sum(is.na(exprs(xgene[i,which(oldTime==43)])))==length(soques) | mean(exprs(xgene[i,which(oldTime==43)]),na.rm=TRUE)<mean(ylim),"topright","bottomright"),soques,pch=15,col=1:length(soques),lty=1)
-  dev.off()
-}
-
-# Només "diferencials"
-
-if (!file.exists(file.path(figuresPath,'soques_genelevel_nomes_diferencials/'))) dir.create(file.path(figuresPath,'soques_genelevel_nomes_diferencials/'))
-outDir <- file.path(figuresPath,'soques_genelevel_nomes_diferencials/')
-difs <- rownames(exprs(xgene))[abs(exprs(xgene)[,4] - exprs(xgene)[,1]) > 0.39794 | 
-                                 abs(exprs(xgene)[,5] - exprs(xgene)[,2])  > 0.39794 | 
-                                 abs(exprs(xgene)[,6] - exprs(xgene)[,3])  > 0.39794]
-
-for (i in 1:nrow(xgene)) {
-  if (rownames(xgene)[i] %in% difs){
+strains <- c("s10E", "s10G", "EK0")
+for (strain in strains){
+  load(file.path(dir,'xgene_estimated.RData'))
+  xgene <- xgene[,startsWith(colnames(exprs(xgene)), strain)]
+  
+  myOrder <- order(pData(xgene)$soca,pData(xgene)$time)
+  xgene <- xgene[,myOrder]
+  estim <- estim[,myOrder]
+  
+  time <- pData(xgene)$time
+  soques <- levels(pData(xgene)$soca)
+  ylim <- range(exprs(xgene)[!is.na(exprs(xgene))])
+  if (!file.exists(file.path(figuresPath,paste0('soques_genelevel_estimated/',strain, "/")))) dir.create(file.path(figuresPath,paste0('soques_genelevel_estimated/',strain, "/")))
+  outDir <- file.path(figuresPath, paste0('soques_genelevel_estimated/',strain, "/"))
+  
+  myRange <- range(time)
+  myPoints.y <- round(seq(range(ylim)[1],range(ylim)[2],1))
+  myPoints.x <- round(seq(myRange[1],ceiling(myRange[2]),2))
+  
+  #for (i in 1:nrow(xgene)) {
+  for (i in 1:10) {
     cat(paste(i,'\n'))
     fileName <- paste(outDir,gsub('/','',gsub(':','#',featureNames(xgene)[i])),'.png',sep='') #colon is not supported under windows
     png(fileName)
@@ -397,7 +375,7 @@ for (i in 1:nrow(xgene)) {
     axis(2,at=myPoints.y)
     axis(1,at=myPoints.x)
     #title(paste(featureNames(xgene)[i],ifelse(any(estim[i,]),'(has point estimation(s))','')),ylab='Log ratio',xlab='Time')
-    title(newlist[i])
+    title(featureNames(xgene)[i],ylab='Log ratio',xlab='Time')
     for (j in 1:length(soques)) {
       plotMe <- exprs(xgene[i,which(pData(xgene[i,])$soca==soques[j])])
       lines(time[which(pData(xgene[i,])$soca==soques[j])][!is.na(plotMe)], plotMe[!is.na(plotMe)],col=j,pch=15)
@@ -409,38 +387,39 @@ for (i in 1:nrow(xgene)) {
     dev.off()
   }
 }
-############################### Plots Custom #############################
-
-load(file.path(dir,'normalizedData_geneLevel.RData'))
-
-CTLEstimatedTimes <- as.numeric(unlist(lapply(estimatedTimes[rep(c(TRUE, FALSE), 12)], function(x) rep(x, 2))))
-names(CTLEstimatedTimes) <- names(estimatedTimes)
-custom_plots_dir <- paste0(figuresPath, "Custom_plots/")
-
-##Plots
-#for (i in 1:nrow(exprs(xgene))){
-for (i in 1:10){
-  graf <- melt(exprs(xgene)[i,])
-  graf["Time"] <- CTLEstimatedTimes
-  graf["Type"] <- rep(c("CTL", "HS"), 12)
-  graf["Soque"] <- c(rep("s10E", 8), rep("s10G", 8), rep("EK0", 8))
-  graf["group"] <- c(rep(c(1,2), 4), rep(c(3,4), 4), rep(c(5,6), 4))
-  p <- ggplot(graf, aes(x = Time, y = value, col = Soque, linetype = Type, group = group))
-  p <- p + geom_point(aes(color = Soque, shape = Soque)) + geom_line() + scale_linetype_manual(values=c("dashed", "solid"))
-  ggsave(p, file=paste(custom_plots_dir,gsub('/','',gsub(':','#',featureNames(xgene)[i])),'.jpeg',sep=''), device = "jpeg", width = 14, height = 10, units = "cm")
-}
-
-# graf <- melt(exprs(xgene)[1,])
-# graf["Time"] <- CTLEstimatedTimes
-# graf["Type"] <- rep(c("CTL", "HS"), 12)
-# graf["Soque"] <- c(rep("s10E", 8), rep("s10G", 8), rep("EK0", 8))
-# graf["group"] <- c(rep(c(1,2), 4), rep(c(3,4), 4), rep(c(5,6), 4))
-# p <- ggplot(graf, aes(x = Time, y = value, col = Soque, linetype = Type, group = group))
-# p <- p + geom_point(aes(color = Soque, shape = Soque)) + geom_line() + scale_linetype_manual(values=c("dashed", "solid"))
-# p
 
 
-
+# # Només "diferencials"
+# 
+# if (!file.exists(file.path(figuresPath,'soques_genelevel_nomes_diferencials/'))) dir.create(file.path(figuresPath,'soques_genelevel_nomes_diferencials/'))
+# outDir <- file.path(figuresPath,'soques_genelevel_nomes_diferencials/')
+# difs <- rownames(exprs(xgene))[abs(exprs(xgene)[,4] - exprs(xgene)[,1]) > 0.39794 | 
+#                                  abs(exprs(xgene)[,5] - exprs(xgene)[,2])  > 0.39794 | 
+#                                  abs(exprs(xgene)[,6] - exprs(xgene)[,3])  > 0.39794]
+# 
+# for (i in 1:nrow(xgene)) {
+#   if (rownames(xgene)[i] %in% difs){
+#     cat(paste(i,'\n'))
+#     fileName <- paste(outDir,gsub('/','',gsub(':','#',featureNames(xgene)[i])),'.png',sep='') #colon is not supported under windows
+#     png(fileName)
+#     plot.new()
+#     par(las=2)
+#     plot.window(xlim=myRange,ylim=ylim)
+#     axis(2,at=myPoints.y)
+#     axis(1,at=myPoints.x)
+#     #title(paste(featureNames(xgene)[i],ifelse(any(estim[i,]),'(has point estimation(s))','')),ylab='Log ratio',xlab='Time')
+#     title(newlist[i])
+#     for (j in 1:length(soques)) {
+#       plotMe <- exprs(xgene[i,which(pData(xgene[i,])$soca==soques[j])])
+#       lines(time[which(pData(xgene[i,])$soca==soques[j])][!is.na(plotMe)], plotMe[!is.na(plotMe)],col=j,pch=15)
+#       myPch <- ifelse(estim[i,which(pData(xgene[i,])$soca==soques[j])],1,15)
+#       points(time[which(pData(xgene[i,])$soca==soques[j])][!is.na(plotMe)], plotMe[!is.na(plotMe)],pch=myPch,col=j)
+#     }
+#     oldTime <- unlist(lapply(strsplit(sampleNames(xgene),','),function(x) x[length(x)]))
+#     legend(ifelse(sum(is.na(exprs(xgene[i,which(oldTime==43)])))==length(soques) | mean(exprs(xgene[i,which(oldTime==43)]),na.rm=TRUE)<mean(ylim),"topright","bottomright"),soques,pch=15,col=1:length(soques),lty=1)
+#     dev.off()
+#   }
+# }
 ############################### Arees #####################
 
 timeCorrectedEpxrs <- function(exprsx,maxMin.time.est,minMax.time.est,time,soque) {
@@ -666,4 +645,169 @@ if (b>100) write.csv(maxDif.perm.out[,1:101],file.path(outDir,'maxDifPerm_100.cs
 xout <- data.frame(Name=geneDesc,area)
 rownames(xout) <- featureNames(xgene)
 write.csv(xout,file.path(outDir,'areas_subclons.csv'),na='')
+
+ 
+############################### Llistes #################################
+
+# Top 50
+tops <- c()
+strains <- c("s10E", "s10G", "EK0")
+for (strain in strains){
+  load(file.path(dir,'xgene_estimated.RData'))
+  xgene <- xgene[,startsWith(colnames(exprs(xgene)), strain)]
+  
+  heatmap_df <- data.frame(c(exprs(xgene)[,2] - exprs(xgene)[,1]), 
+                           c(exprs(xgene)[,4] - exprs(xgene)[,5]), 
+                           c(exprs(xgene)[,6] - exprs(xgene)[,5]), 
+                           c(exprs(xgene)[,8] - exprs(xgene)[,7]))
+  
+  colnames(heatmap_df) <- c("T1", "T2", "T3", "T4")
+  
+  newlist = c()
+  for (x in 1:length(xgene@featureData@data$Gene_name)){
+    if (is.na(xgene@featureData@data$Gene_name[x])){
+      newlist = c(newlist,xgene@featureData@data$Annot[x])
+    } else {
+      newlist = c(newlist,xgene@featureData@data$Gene_name[x])
+    }
+  }
+  
+  heatmap_df["gene"] <- paste0(newlist, ": ", rownames(heatmap_df))
+  #sel_FC25 <- filter(heatmap_df, abs(T1) > 0.39794 | abs(T2) > 0.39794 | abs(T3) > 0.39794)
+  max(heatmap_df$T4)
+  m <- melt(heatmap_df)
+  top50 <- arrange(m, -abs(value))[1:50,]
+  sel_FC25 <- m[abs(m$value) > 0.39794,]
+  top50 <- arrange(top50, -value)
+  sel_FC25 <- arrange(sel_FC25, -value)
+  top50["FC"] <- 10**top50$value
+  sel_FC25["FC"] <- 10**sel_FC25$value
+  write.csv(top50,file.path(figuresPath, paste0(strain,"_top50.csv")))
+  write.csv(sel_FC25,file.path(figuresPath, paste0(strain,"_FC25.csv")))
+  tops <- c(tops, top50$gene)
+}
+
+
+load(file.path(dir,'xgene_estimated.RData'))
+xgene <- xgene[,startsWith(colnames(exprs(xgene)), "s10G")]
+
+heatmap_df <- data.frame(c(exprs(xgene)[,2] - exprs(xgene)[,1]), 
+                         c(exprs(xgene)[,4] - exprs(xgene)[,5]), 
+                         c(exprs(xgene)[,6] - exprs(xgene)[,5]), 
+                         c(exprs(xgene)[,8] - exprs(xgene)[,7]))
+
+colnames(heatmap_df) <- c("T1", "T2", "T3", "T4")
+
+newlist = c()
+for (x in 1:length(xgene@featureData@data$Gene_name)){
+  if (is.na(xgene@featureData@data$Gene_name[x])){
+    newlist = c(newlist,xgene@featureData@data$Annot[x])
+  } else {
+    newlist = c(newlist,xgene@featureData@data$Gene_name[x])
+  }
+}
+
+heatmap_df["gene"] <- paste0(newlist, ": ", rownames(heatmap_df))
+sel_all <- filter(heatmap_df, abs(T2) > 0.39794 | abs(T3) > 0.39794 | abs(T4) > 0.39794)
+sel_all[,c(2:4)] <- 10**sel_all[,c(2:4)]
+head(sel_all)
+
+############################### Heatmaps #################################
+
+tops <- unique(tops)
+
+load(file.path(dir,'xgene_estimated.RData'))
+
+newlist = c()
+for (x in 1:length(xgene@featureData@data$Gene_name)){
+  if (is.na(xgene@featureData@data$Gene_name[x])){
+    newlist = c(newlist,xgene@featureData@data$Annot[x])
+  } else {
+    newlist = c(newlist,xgene@featureData@data$Gene_name[x])
+  }
+}
+
+short_names <- paste0(newlist, ": ", xgene@featureData@data$Gene_id)
+xgene@featureData@data["short_names"] <- short_names
+rownames(xgene) <-xgene@featureData@data$short_names
+
+heatmap_df <- data.frame(c(exprs(xgene)[,2] - exprs(xgene)[,1]), 
+                         c(exprs(xgene)[,4] - exprs(xgene)[,5]), 
+                         c(exprs(xgene)[,6] - exprs(xgene)[,5]), 
+                         c(exprs(xgene)[,8] - exprs(xgene)[,7]),
+                         c(exprs(xgene)[,10] - exprs(xgene)[,9]), 
+                         c(exprs(xgene)[,12] - exprs(xgene)[,11]), 
+                         c(exprs(xgene)[,14] - exprs(xgene)[,13]),
+                         c(exprs(xgene)[,16] - exprs(xgene)[,15]), 
+                         c(exprs(xgene)[,18] - exprs(xgene)[,17]),
+                         c(exprs(xgene)[,20] - exprs(xgene)[,19]), 
+                         c(exprs(xgene)[,22] - exprs(xgene)[,21]), 
+                         c(exprs(xgene)[,24] - exprs(xgene)[,23]))
+
+colnames(heatmap_df) <- gsub("_CTL", "", colnames(exprs(xgene))[rep(c(TRUE, FALSE), 12)])
+heatmap_df <- heatmap_df[,c(-1,-5,-9)]
+sel_all <- heatmap_df[rownames(heatmap_df) %in% tops, ]
+sel_all_T<- sel_all[,c(1,4,7,2,5,8,3,6,9)]
+
+# Hierarchical clustering with cols
+heatmap(
+  as.matrix(sel_all), Rowv=as.dendrogram(hclust(dist(as.matrix(sel_all))),
+                                               Colv=FALSE, cexRow = 2)
+)
+
+# Hierarchical clustering without cols
+
+hclustfunc <- function(x) hclust(x, method="complete")
+distfunc <- function(x) dist(x,method="euclidean")
+# par(mar=c(1,1,1,1))
+# png("/home/lucas/ISGlobal/Arrays/Eli_Arrays/Plots/heatmap_tops.png", height = 400, width = 800)
+heatmap.2(col=redgreen(75),
+          as.matrix(sel_all_T), 
+          Colv=FALSE,
+          keysize = 1,
+          dendrogram="row",
+          trace="none", 
+          hclust=hclustfunc,
+          distfun=distfunc,
+          colsep=c(3,6),
+          margins = c(6, 16),
+          cexRow=0.5,
+          lmat = rbind(3:4,2:1), lwid = c(0.3,4), lhei = c(0.5,4))
+dev.off()
+          
+
+############################### Plots Custom #############################
+
+tops <- unlist(lapply(tops, function(x) strsplit(x, ": ")[[1]][2]))
+load(file.path(dir,'normalizedData_geneLevel.RData'))
+xgene <- xgene[xgene@featureData@data$Gene_id %in% tops,]
+# CTLEstimatedTimes <- as.numeric(unlist(lapply(estimatedTimes[rep(c(TRUE, FALSE), 12)], function(x) rep(x, 2))))
+# names(CTLEstimatedTimes) <- names(estimatedTimes)
+custom_plots_dir <- paste0(figuresPath, "Custom_plots/")
+
+##Plots
+for (i in 1:nrow(exprs(xgene))){
+#for (i in 1:10){
+  print(i)
+  graf <- melt(exprs(xgene)[i,])
+  #graf["Time"] <- estimatedTimes
+  graf["Time"] <- c("T0", "T0", "T1", "T1", "T2", "T2", "T3", "T3")
+  graf["Type"] <- rep(c("CTL", "HS"), 12)
+  graf["Soque"] <- c(rep("s10E", 8), rep("s10G", 8), rep("EK0", 8))
+  graf["group"] <- c(rep(c(1,2), 4), rep(c(3,4), 4), rep(c(5,6), 4))
+  p <- ggplot(graf, aes(x = Time, y = value, col = Soque, linetype = Type, group = group))
+  p <- p + geom_point(aes(color = Soque, shape = Soque)) + geom_line() + scale_linetype_manual(values=c("dashed", "solid"))
+  ggsave(p, file=paste(custom_plots_dir,gsub('/','',gsub(':','#',featureNames(xgene)[i])),'.jpeg',sep=''), device = "jpeg", width = 14, height = 10, units = "cm")
+}
+
+# graf <- melt(exprs(xgene)[1,])
+# #graf["Time"] <- CTLEstimatedTimes
+# graf["Time"] <- c("T0", "T0", "T1", "T1", "T2", "T2", "T3", "T3")
+# graf["Type"] <- rep(c("CTL", "HS"), 12)
+# graf["Soque"] <- c(rep("s10E", 8), rep("s10G", 8), rep("EK0", 8))
+# graf["group"] <- c(rep(c(1,2), 4), rep(c(3,4), 4), rep(c(5,6), 4))
+# p <- ggplot(graf, aes(x = Time, y = value, col = Soque, linetype = Type, group = group))
+# p <- p + geom_point(aes(color = Soque, shape = Soque)) + geom_line() + scale_linetype_manual(values=c("dashed", "solid"))
+# p
+
 

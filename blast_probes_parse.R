@@ -1,10 +1,7 @@
-blast_probes <- read.csv("/home/lucas/ISGlobal/Arrays/parsed_result.csv", header = FALSE, sep = "\t", stringsAsFactors = FALSE)
+library(xlsx)
 
-blast_probes["Score_1"] <- unlist(lapply(blast_probes$V3, function(x) strsplit(x, split = ".0", fixed = TRUE)[[1]][1]))
-blast_probes["Hit_2"] <- unlist(lapply(blast_probes$V3, function(x) strsplit(x, split = ".0", fixed = TRUE)[[1]][2]))
-
-
-df <- blast_probes[,c(1,2,5,6,4)]
+blast_probes <- read.csv("/home/lucas/ISGlobal/Arrays/parsed_result_bits_nocomplexity.csv", header = FALSE, sep = "\t", stringsAsFactors = FALSE)
+df <- blast_probes[,c(1:5)]
 colnames(df) <- c("Probe", "Hit_1", "Score_1", "Hit_2", "Score_2")
 
 df["Target"] <- rep(NA, dim(df)[1])
@@ -38,24 +35,36 @@ for (i in 1:dim(df)[1]){
   }
 }
 
-write.csv(df, file = "/home/lucas/ISGlobal/Arrays/probe_blast_table3.csv", row.names = FALSE, quote = FALSE)
 
 kasfak <- read.csv(file = "/home/lucas/ISGlobal/Arrays/SupTable1_Kafsack_MalJ2012.csv", header = TRUE, sep = "\t")
-
 kasfak$OligoID <- as.character(kasfak$OligoID)
-kasfak$OligoID
-
 kasfak$OligoID <- unlist(lapply(kasfak$OligoID, function(x) gsub(":", "/", x, fixed = TRUE)))
 
-table(kasfak$OligoID %in% df$Probe)
-kasfak[!(kasfak$OligoID %in% df$Probe),]
+
+df["Kasfak"] <- rep(NA, dim(df)[1])
+
+for (i in 1:dim(df)[1]){
+  if (df[i,]$Probe %in% kasfak$OligoID){
+    df[i,]$Kasfak <- as.character(kasfak[kasfak$OligoID == df[i,]$Probe,]$Uniqueness)
+  }
+}
+
+
+for (i in 1:dim(df)[1]){
+  if (endsWith(df[i,"Hit_1"], ".1")){
+    df[i,"Hit_1"] <- gsub('.{2}$', '', df[i,"Hit_1"])
+  }
+}
+
+for (i in 1:dim(df)[1]){
+  if (endsWith(df[i,"Hit_2"], ".1")){
+    df[i,"Hit_2"] <- gsub('.{2}$', '', df[i,"Hit_2"])
+  }
+}
+
+#write.csv(df, file = "/home/lucas/ISGlobal/Arrays/probe_blast_table.csv", row.names = FALSE, quote = FALSE)
 
 
 
-
-
-df$Hit_1 <- unlist(lapply(df$Hit_1, function(x) gsub(".1", "", x, fixed = TRUE)))
-sel1 <- df[!(df$Hit_1 == df$Target_ID),]
-sel1[!is.na(sel1$Probe),]
 
 

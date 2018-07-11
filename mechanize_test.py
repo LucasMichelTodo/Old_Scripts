@@ -1,8 +1,9 @@
 #!/usr/bin/env python
 
-import re 
-from mechanize import Browser
-br = Browser()
+import mechanize 
+
+# Browser
+br = mechanize.Browser()
 
 # Ignore robots.txt
 br.set_handle_robots( False )
@@ -10,24 +11,16 @@ br.set_handle_robots( False )
 br.addheaders = [('User-agent', 'Firefox')]
 
 # Retrieve the Google home page, saving the response
-br.open( "http://www.google.com" )
+br.open( "http://www.cbs.dtu.dk/services/SignalP/" )
 
 # Select the search box and search for 'foo'
-br.select_form( 'f' )
-br.form[ 'q' ] = 'foo'
+for form in br.forms():
+	print "Form name:", form.name
+	print form
 
-# Get the search results
-br.submit()
+br.select_form(nr = 0)
+br.form[ 'SEQPASTE' ] = 'AETEVSRDPTDEHSD'
 
-# Find the link to foofighters.com; why did we run a search?
-resp = None
-for link in br.links():
-    siteMatch = re.compile( 'https://foofighters.com' ).search( link.url )
-    if siteMatch:
-        resp = br.follow_link( link )
-        break
 
-# Print the site
-content = resp.get_data()
-print content
-
+response = br.submit()
+print response.read()

@@ -4,6 +4,7 @@
 import pandas
 import csv
 import sys
+from tqdm import tqdm
 
 # Create a dictionary with chromosome lengths
 sizes = {}
@@ -47,6 +48,7 @@ def annotate_bed(bed_file):
 
 	#Load bedfile
 	bed = pandas.read_csv(filepath_or_buffer= bed_file, sep="\t", header=None, index_col=None, skiprows=1)
+	#bed = pandas.read_csv(filepath_or_buffer=csv_file, sep="\t", header=0, index_col=0)
 
 	for chrom in chromlist:
 
@@ -61,7 +63,7 @@ def annotate_bed(bed_file):
 
 		#Span gene names over every position they occupy in the genome. (on empty vector 1)
 		for index, row in chrom_genes.iterrows(): 
-			chrom_vect.iloc[row[3]:row[4],1] = row[8].split(";")[1][12:]
+			chrom_vect.iloc[row[3]:row[4],1] = row[8].split(";")[0:1]
 
 		#Span 1s over every covered region in the genome. (on empty vector 2)
 		for index,row in bed.iterrows():
@@ -77,16 +79,77 @@ def annotate_bed(bed_file):
 		#Divide 1s per gene / gene lengths to get coverage percentage.
 		result = gen_cov[2]/gen_total*100
 
-		#Print results to screen.
-		print "\n{}\n" .format(chrom[0].iloc[0])
-		print result[result != 0]
-		print "\n------------------------------------------------------------------------------------------"
+		#Look look at pre and post regions of every gene: (1000bp/previous or next gene)
+		surround = []
 
-		#Print results to file.
-		with open(bed_file.replace(bed_file[-4:], "_annotated.txt"), "a+") as result_file:
-			result_file.write("\n{}\n" .format(chrom[0].iloc[0]))
-			result[result != 0].to_string(result_file)
-			result_file.write("\n------------------------------------------------------------------------------------------")
+		for element in tqdm(result.index):
+
+			start = chrom_vect.loc[chrom_vect[1] == element].index[0]
+			stop = chrom_vect.loc[chrom_vect[1] == element].index[-1]
+			i = 1
+			pre_cov = 0
+			preregion = 0
+			postregion = 0
+			post_cov = 0
+
+			# Count coverage in previous 1000bp/gene:
+			while i < 1001:
+				if chrom_vect.iloc[start-i,1] == 0:
+					if chrom_vect.iloc[start-i,2] == 1:
+						pre_cov += 1
+						preregion += 1
+						i += 1
+					else:
+						preregion += 1
+						i += 1
+				else:
+					i = 1001
+
+
+			# Count converage in following 1000bp/gene:
+			i = 1
+
+			while i < 1001:
+				if stop+i < int(sizes[chrom[0].iloc[0]])-1:
+					
+					if chrom_vect.iloc[stop+i,1] == 0:
+						if chrom_vect.iloc[stop+i,2] == 1:
+							post_cov += 1
+							postregion += 1
+							i += 1
+						else:
+							postregion += 1
+							i += 1
+					else:
+						i = 1001
+				else:
+					i = 1001
+
+			surround.append([element,[pre_cov, preregion],[post_cov,postregion]])
+ 
+
+		#Create a df summarizing all results obtained:
+
+		a = [x[0] for x in [y[1] for y in surround]]
+		b = [x[1] for x in [y[1] for y in surround]]
+		c = [x[0] for x in [y[2] for y in surround]]
+		d = [x[1] for x in [y[2] for y in surround]]
+
+		results_df = pandas.DataFrame({'Gene-Coverage':gen_cov[2].tolist(), 'Gene-size':gen_total, 'Pre_Cov':a, 'Pre_size':b, 'Post_Cov':c, 'Post_size':d}, columns=['Gene-Coverage','Gene-size','Pre_Cov','Pre_size','Post_Cov','Post_size'], index=result.index)
+
+		#Print results_df into a csv:
+		with open(bed_file.replace(bed_file[-4:],"_annotation.csv"), "a+") as csv_file:
+			csv_file.write("\n{}\n" .format(chrom[0].iloc[0]))
+		results_df.to_csv(path_or_buf=bed_file.replace(bed_file[-4:],"_annotation.csv"), sep="\t", mode="a+")
+
+		#Print only rows with a non-zero coverage somwhere and eliminate first row:
+		no_zero_results = results_df[(results_df['Gene-Coverage'] != 0) | (results_df['Pre_Cov'] != 0) | (results_df['Post_Cov'] != 0)]
+		no_zero_results = no_zero_results.iloc[1:]
+
+		#Print positive results to a csv:
+		with open(bed_file.replace(bed_file[-4:],"_annotation_hits.csv"), "a+") as csv_file:
+			csv_file.write("\n{}\n" .format(chrom[0].iloc[0]))
+		no_zero_results.to_csv(path_or_buf=bed_file.replace(bed_file[-4:],"_annotation_hits.csv"), sep="\t", mode="a+")
 
 
 #If called from command line, execute main function for each file.

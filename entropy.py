@@ -52,11 +52,6 @@ def ClustalEnt(clustal_file):
     consensus = [] # container for consenses sequence
     alignment = AlignIO.read(open(clustal_file), "clustal")
 
-    # Creating header for consensus file. Setting "w+" ensures the file will be created from scratch if re-run.
-    with open(clustal_file.replace("_sorted.aln", "_consensus.fasta"), "w+") as file:
-        #for record in alignment:
-        file.write(">"+alignment[0].id+"\n")
-
     #summary = SummaryInfo(alignment)
     #print summary.gap_consensus(threshold=0.4,ambiguous="*")[43]
 
@@ -66,19 +61,15 @@ def ClustalEnt(clustal_file):
         data = pd.Series(aa_var)
         entropies.append(ent(data))
 
-        print aa_var
-        print most_common(aa_var)
-        print entropies[i]
+        #print aa_var
+        #print most_common(aa_var)
+        #print entropies[i]
 
-
+        # Set entropy threshold:
         if ent(data) <= 1:
-            with open(clustal_file.replace("_sorted.aln", "_consensus.fasta"), "a+") as file:
-                file.write(most_common(aa_var))
             consensus.append(most_common(aa_var))
 
         else:
-            with open(clustal_file.replace("_sorted.aln", "_consensus.fasta"), "a+") as file:
-                 file.write("*")
             consensus.append("*")
 
         aa_var = []
@@ -86,25 +77,45 @@ def ClustalEnt(clustal_file):
     consensus_str = "".join(consensus)
 
     current_min = 99999999999999999999999999999999999
+    current_seq = ""
     current_ref = ""
+    ref_order = {'TcCLB':5, 'AODP0':4, 'AYLP0':7, 'AQHO0':2, 'TcChr':8, 'Tcruz':6, 'ANOX0':1, 'TcX10':3, 'Expos':0, 'TcMAR':9}
+
     for record in alignment:
-        print record.seq
-        print consensus_str
-        print lv_number(str(record.seq), consensus_str)
+        #print record.seq
+        #print consensus_str
+        #print lv_number(str(record.seq), consensus_str)
         if lv_number(str(record.seq), consensus_str) < current_min:
-            print "min!"
+            #print "min!"
             current_min = lv_number(str(record.seq), consensus_str)
-            current_ref = record.seq
+            current_seq = record.seq
+            current_ref = record.id
+        elif lv_number(str(record.seq), consensus_str) == current_min:
+            if ref_order[record.id[0:5]] < ref_order[current_ref[0:5]]:
+                #print "min!"
+                #print "Current ref: {} ---> {}" .format(current_ref[0:5], ref_order[current_ref[0:5]])
+                #print "New ref: {}---> {}" .format(record.id[0:5], ref_order[record.id[0:5]])
+                current_min = lv_number(str(record.seq), consensus_str)
+                current_seq = record.seq
+                current_ref = record.id
 
-    print "\n"+current_ref
+    #print "\n"+current_seq
 
-    ref = list(current_ref)
+    ref = list(current_seq)
     masked_ref = ["*"] * len(ref)
     for i in range(0,len(ref)):
         if ref[i] == consensus[i]:
             masked_ref[i] = ref[i]
 
-    print "".join(masked_ref)
+    ## Print result to screen
+    #print "".join(masked_ref)
+
+    ## Write result to _consensus file:
+    # Creating header for consensus file. Setting "w+" ensures the file will be created from scratch if re-run.
+    with open(clustal_file.replace("_sorted.aln", "_consensus.fasta"), "w+") as file:
+        file.write(">"+current_ref+"\n")
+    with open(clustal_file.replace("_sorted.aln", "_consensus.fasta"), "a+") as file:
+        file.write("".join(masked_ref))
 
 
 
