@@ -6,29 +6,30 @@ import subprocess
 def predict_epitopes(fasta_file):
 
     hlas = [
-    # "HLA-A*02:01",
-    # "HLA-A*02:02",
-    # "HLA-A*02:05",
-    # "HLA-A*68:02",
-    # "HLA-A*03:01",
-    # "HLA-A*11:01",
-    # "HLA-A*31:01",
-    # "HLA-A*33:01",
-    # "HLA-A*68:01",
-    # "HLA-A*66:01",
-    # "HLA-A*24:02",
-    # "HLA-B*38:01",
-    # "HLA-B*07:02",
-    # "HLA-B*35:01",
-    # "HLA-B*51:01",
-    # "HLA-B*51:02",
-    # "HLA-B*53:01",
-    # "HLA-A*01:01",
+    "HLA-A*02:01",
+    "HLA-A*02:02",
+    "HLA-A*02:05",
+    "HLA-A*68:02",
+    "HLA-A*03:01",
+    "HLA-A*11:01",
+    "HLA-A*31:01",
+    "HLA-A*33:01",
+    "HLA-A*68:01",
+    "HLA-A*66:01",
+    "HLA-A*24:02",
+    "HLA-B*38:01",
+    "HLA-B*07:02",
+    "HLA-B*35:01",
+    "HLA-B*51:01",
+    "HLA-B*51:02",
+    "HLA-B*53:01",
+    "HLA-A*01:01",
     "HLA-B*15:01"
     ]
 
     #methods = ["ann", "comblib_sidney2008", "consensus", "IEDB_recommended", "netmhcpan", "smm", "smmpmbec", "pickpocket", "netmhccons", "netmhcstabpan"]
     methods = ["IEDB_recommended","smmpmbec", "pickpocket", "netmhccons", "netmhcstabpan"]
+    #methods = ["IEDB_recommended"]
 
     for i in methods:
         cmd = "mkdir {}" .format(i)

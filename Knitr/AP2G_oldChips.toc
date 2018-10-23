@@ -1,0 +1,18 @@
+\contentsline {section}{\numberline {1}Taules Resum}{2}{section.1}
+\contentsline {subsection}{\numberline {1.1}Regi\IeC {\'o} 5'}{2}{subsection.1.1}
+\contentsline {subsection}{\numberline {1.2}ORF}{2}{subsection.1.2}
+\contentsline {subsection}{\numberline {1.3}Regi\IeC {\'o} 3'}{2}{subsection.1.3}
+\contentsline {section}{\numberline {2}Gr\IeC {\`a}fics}{4}{section.2}
+\contentsline {subsection}{\numberline {2.1}Coverage}{4}{subsection.2.1}
+\contentsline {subsection}{\numberline {2.2}Coverage Normalitzat}{5}{subsection.2.2}
+\contentsline {subsection}{\numberline {2.3}Coverage "Equalitzat"}{6}{subsection.2.3}
+\contentsline {subsection}{\numberline {2.4}Coverage "Equalitzat": 10G vs 1.2B}{7}{subsection.2.4}
+\contentsline {subsection}{\numberline {2.5}Coverage "Equalitzat": 10G, E5, A7}{8}{subsection.2.5}
+\contentsline {subsection}{\numberline {2.6}Coverage Normalitzat i "Equalitzat"}{9}{subsection.2.6}
+\contentsline {subsection}{\numberline {2.7}Coverage Normalitzat i "Equalitzat": 10G, 1.2B}{10}{subsection.2.7}
+\contentsline {subsection}{\numberline {2.8}Coverage Normalitzat i "Equalitzat": 10G, E5, A7}{11}{subsection.2.8}
+\contentsline {subsection}{\numberline {2.9}Coverage Normalitzat a regi\IeC {\'o} 5'}{12}{subsection.2.9}
+\contentsline {subsection}{\numberline {2.10}Coverage Acetilaci\IeC {\'o}}{13}{subsection.2.10}
+\contentsline {subsection}{\numberline {2.11}Coverage Acetilaci\IeC {\'o} a 5'}{14}{subsection.2.11}
+\contentsline {subsection}{\numberline {2.12}Acetilaci\IeC {\'o} / Metilaci\IeC {\'o} (normalitzat per input)}{15}{subsection.2.12}
+\contentsline {subsection}{\numberline {2.13}Metilaci\IeC {\'o} / Acetilaci\IeC {\'o} (normalitzat per input)}{16}{subsection.2.13}

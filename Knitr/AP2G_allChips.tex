@@ -1,0 +1,235 @@
+\documentclass{article}\usepackage[]{graphicx}\usepackage[]{color}
+%% maxwidth is the original width if it is less than linewidth
+%% otherwise use linewidth (to make sure the graphics do not exceed the margin)
+\makeatletter
+\def\maxwidth{ %
+  \ifdim\Gin@nat@width>\linewidth
+    \linewidth
+  \else
+    \Gin@nat@width
+  \fi
+}
+\makeatother
+
+\definecolor{fgcolor}{rgb}{0.345, 0.345, 0.345}
+\newcommand{\hlnum}[1]{\textcolor[rgb]{0.686,0.059,0.569}{#1}}%
+\newcommand{\hlstr}[1]{\textcolor[rgb]{0.192,0.494,0.8}{#1}}%
+\newcommand{\hlcom}[1]{\textcolor[rgb]{0.678,0.584,0.686}{\textit{#1}}}%
+\newcommand{\hlopt}[1]{\textcolor[rgb]{0,0,0}{#1}}%
+\newcommand{\hlstd}[1]{\textcolor[rgb]{0.345,0.345,0.345}{#1}}%
+\newcommand{\hlkwa}[1]{\textcolor[rgb]{0.161,0.373,0.58}{\textbf{#1}}}%
+\newcommand{\hlkwb}[1]{\textcolor[rgb]{0.69,0.353,0.396}{#1}}%
+\newcommand{\hlkwc}[1]{\textcolor[rgb]{0.333,0.667,0.333}{#1}}%
+\newcommand{\hlkwd}[1]{\textcolor[rgb]{0.737,0.353,0.396}{\textbf{#1}}}%
+\let\hlipl\hlkwb
+
+\usepackage{framed}
+\makeatletter
+\newenvironment{kframe}{%
+ \def\at@end@of@kframe{}%
+ \ifinner\ifhmode%
+  \def\at@end@of@kframe{\end{minipage}}%
+  \begin{minipage}{\columnwidth}%
+ \fi\fi%
+ \def\FrameCommand##1{\hskip\@totalleftmargin \hskip-\fboxsep
+ \colorbox{shadecolor}{##1}\hskip-\fboxsep
+     % There is no \\@totalrightmargin, so:
+     \hskip-\linewidth \hskip-\@totalleftmargin \hskip\columnwidth}%
+ \MakeFramed {\advance\hsize-\width
+   \@totalleftmargin\z@ \linewidth\hsize
+   \@setminipage}}%
+ {\par\unskip\endMakeFramed%
+ \at@end@of@kframe}
+\makeatother
+
+\definecolor{shadecolor}{rgb}{.97, .97, .97}
+\definecolor{messagecolor}{rgb}{0, 0, 0}
+\definecolor{warningcolor}{rgb}{1, 0, 1}
+\definecolor{errorcolor}{rgb}{1, 0, 0}
+\newenvironment{knitrout}{}{} % an empty environment to be redefined in TeX
+
+\usepackage{alltt}
+
+\usepackage[utf8]{inputenc}
+\usepackage{hyperref}
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{multirow}
+\usepackage[table]{xcolor}
+\usepackage{wrapfig}
+\usepackage{float}
+\usepackage{colortbl}
+\usepackage{pdflscape}
+\usepackage{tabu}
+\usepackage{threeparttable}
+\usepackage{threeparttablex}
+\usepackage[normalem]{ulem}
+\usepackage{makecell}
+
+\hypersetup{
+    linktocpage,
+    colorlinks=true, 
+    linkcolor=blue,
+    citecolor=blue,
+    filecolor=blue,
+    urlcolor=blue
+}
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\begin{document}
+
+\title{AP2G Chip-Seq Comparisons}
+\author{Lucas Michel Todó}
+\maketitle
+\tableofcontents
+\clearpage
+
+
+
+
+
+\section{Taules Resum}
+\subsection{Regió 5'}
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{table}[H]
+\centering\rowcolors{2}{gray!6}{white}
+
+\resizebox{\linewidth}{!}{
+\begin{tabular}{lrrrrrrrrr}
+\hiderowcolors
+\toprule
+  & 10G & 1.2B & 3D7 & A7 & B11 & C2 & E5HA & E5 & NF54\\
+\midrule
+\showrowcolors
+Min. & 0.0 & 0.3 & 0.0 & 0.1 & 1.6 & 0.0 & 0.4 & 0.0 & 0.2\\
+1st Qu. & 12.0 & 16.7 & 4.6 & 7.7 & 20.5 & 5.2 & 6.1 & 4.3 & 6.4\\
+Median & 40.1 & 43.2 & 17.2 & 22.4 & 46.9 & 16.5 & 24.8 & 14.2 & 17.8\\
+Mean & 45.2 & 47.3 & 23.4 & 31.4 & 45.1 & 18.4 & 31.2 & 23.1 & 21.5\\
+3rd Qu. & 76.9 & 78.4 & 38.6 & 54.3 & 67.7 & 29.5 & 53.6 & 39.8 & 35.5\\
+Max. & 142.6 & 149.9 & 103.4 & 113.4 & 122.8 & 60.5 & 126.1 & 101.3 & 79.7\\
+\bottomrule
+\end{tabular}}
+\rowcolors{2}{white}{white}
+\end{table}
+
+
+\end{knitrout}
+\subsection{ORF}
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{table}[H]
+\centering\rowcolors{2}{gray!6}{white}
+
+\resizebox{\linewidth}{!}{
+\begin{tabular}{lrrrrrrrrr}
+\hiderowcolors
+\toprule
+  & 10G & 1.2B & 3D7 & A7 & B11 & C2 & E5HA & E5 & NF54\\
+\midrule
+\showrowcolors
+Min. & 20.0 & 22.3 & 9.9 & 19.8 & 29.5 & 9.4 & 22.4 & 16.8 & 13.2\\
+1st Qu. & 128.4 & 129.5 & 70.8 & 97.3 & 109.6 & 63.3 & 94.4 & 77.1 & 73.5\\
+Median & 154.4 & 154.0 & 92.8 & 120.3 & 129.9 & 75.2 & 118.8 & 108.2 & 87.4\\
+Mean & 152.4 & 151.8 & 88.8 & 116.1 & 128.8 & 89.3 & 114.9 & 100.8 & 91.2\\
+3rd Qu. & 179.9 & 178.7 & 107.3 & 139.1 & 149.1 & 104.3 & 138.6 & 123.7 & 103.4\\
+Max. & 257.4 & 244.9 & 161.7 & 183.1 & 216.0 & 222.0 & 211.0 & 178.4 & 202.9\\
+\bottomrule
+\end{tabular}}
+\rowcolors{2}{white}{white}
+\end{table}
+
+
+\end{knitrout}
+\subsection{Regió 3'}
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{table}[H]
+\centering\rowcolors{2}{gray!6}{white}
+
+\resizebox{\linewidth}{!}{
+\begin{tabular}{lrrrrrrrrr}
+\hiderowcolors
+\toprule
+  & 10G & 1.2B & 3D7 & A7 & B11 & C2 & E5HA & E5 & NF54\\
+\midrule
+\showrowcolors
+Min. & 2.8 & 3.3 & 0.7 & 2.8 & 4.7 & 2.3 & 1.7 & 1.3 & 4.1\\
+1st Qu. & 6.4 & 7.7 & 2.9 & 6.5 & 9.1 & 4.5 & 4.4 & 2.9 & 7.6\\
+Median & 14.6 & 21.7 & 5.1 & 10.3 & 22.5 & 7.9 & 5.7 & 4.3 & 11.9\\
+Mean & 16.3 & 22.2 & 5.7 & 12.2 & 23.5 & 8.7 & 6.7 & 5.0 & 13.4\\
+3rd Qu. & 21.3 & 31.5 & 7.3 & 17.0 & 34.0 & 11.8 & 8.6 & 6.5 & 17.3\\
+Max. & 78.8 & 81.3 & 19.5 & 43.8 & 76.9 & 33.9 & 22.5 & 18.5 & 48.4\\
+\bottomrule
+\end{tabular}}
+\rowcolors{2}{white}{white}
+\end{table}
+
+
+\end{knitrout}
+\clearpage
+
+
+
+\section{Gràfics}
+\subsection{Coverage}
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
+\includegraphics[width=1\linewidth]{figure/plot_coverage-1} 
+
+\end{knitrout}
+\clearpage
+\subsection{Coverage Normalitzat}
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
+\includegraphics[width=1\linewidth]{figure/plot_norm_cov-1} 
+
+\end{knitrout}
+\clearpage
+\subsection{Coverage "Equalitzat"}
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
+\includegraphics[width=1\linewidth]{figure/plot_equalizedCov-1} 
+
+\end{knitrout}
+\clearpage
+\subsection{Coverage Normalitzat i "Equalitzat"}
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
+\includegraphics[width=1\linewidth]{figure/plot_NormequalizedCov-1} 
+
+\end{knitrout}
+\clearpage
+\subsection{Coverage Normalitzat a regió 5'}
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
+\includegraphics[width=1\linewidth]{figure/plot_norm_cov_5-1} 
+
+\end{knitrout}
+\clearpage
+\subsection{Coverage Acetilació}
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
+\includegraphics[width=1\linewidth]{figure/plot_ac-1} 
+
+\end{knitrout}
+\clearpage
+\subsection{Coverage Acetilació a 5'}
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
+\includegraphics[width=1\linewidth]{figure/plot_ac_5-1} 
+
+\end{knitrout}
+\clearpage
+\subsection{Acetilació / Metilació (normalitzat per input)}
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
+\includegraphics[width=1\linewidth]{figure/Ac_Met-1} 
+
+\end{knitrout}
+\clearpage
+\subsection{Metilació / Acetilació (normalitzat per input)}
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
+\includegraphics[width=1\linewidth]{figure/Met_Ac-1} 
+
+\end{knitrout}
+
+\end{document}

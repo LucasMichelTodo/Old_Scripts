@@ -7,7 +7,7 @@ with open("/home/lucas/ISGlobal/Gen_Referencies/Gene_references_rosetta.txt", "r
 	for key, value in rosetta.iteritems():
 		value["old_refs"][-1] = value["old_refs"][-1].strip()
 
-with open("/home/lucas/ISGlobal/Gen_Referencies/PlasmoDB-31_Pfalciparum3D7.gff", "r+") as file2:
+with open("/home/lucas/ISGlobal/Gen_Referencies/PlasmoDB-38_Pfalciparum3D7.gff", "r+") as file2:
 	for line in file2:
 		if line.startswith("#"):
 			pass

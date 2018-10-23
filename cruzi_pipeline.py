@@ -25,5 +25,5 @@ except:
     print "Nothing to erase!"
 
 # Call all python scripts sequentially
-subprocess.call("entropy2.py ./cluster_withref/msa/*\_sorted.aln", shell=True)
+subprocess.call("entropy.py ./cluster_withref/msa/*\_sorted.aln", shell=True)
 subprocess.call("regex_epitopes2.py ./cluster_withref/msa/*\_consensus.fasta", shell=True)

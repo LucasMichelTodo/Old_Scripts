@@ -1,0 +1,36 @@
+27,28c27,31
+< roseta <- read.csv("/home/lucas/ISGlobal/Arrays/Anastasia_Arrays_Nous/probe_names_rosetta_annotated.txt", sep = "\t", as.is = TRUE, header = FALSE)
+< dim(roseta)
+---
+> #roseta <- read.csv("/home/lucas/ISGlobal/Arrays/Anastasia_Arrays_Nous/probe_names_rosetta_annotated.txt", sep = "\t", as.is = TRUE, header = FALSE)
+> #dim(roseta)
+> 
+> array_description <- read.csv("/home/lucas/ISGlobal/Arrays/new_array_description_final.csv", sep = "\t", as.is = TRUE, header = TRUE)
+> gene_names <- read.csv("/home/lucas/ISGlobal/Arrays/Array_Annotation/array_gene_list_rosetta_annotated.txt", sep = "\t", as.is = TRUE, header = FALSE)
+55,57c58,64
+< probe_df["Gene_id"] <- roseta$V2
+< probe_df["Gene_name"] <- roseta$V4
+< probe_df["Annot"] <- roseta$V3
+---
+> probe_df["Gene_id"] <- array_description$New_Target
+> probe_df["Gene_name"] <- gene_names$V3
+> probe_df["Annot"] <- array_description$New_Annot
+> 
+> #probe_df["Gene_id"] <- roseta$V2
+> #probe_df["Gene_name"] <- roseta$V4
+> #probe_df["Annot"] <- roseta$V3
+92a100,103
+> # Treure gens no únics
+> no_unics <- array_description[!is.na(array_description$Status) & array_description$Status == "drop",]$ProbeName
+> probe_df <- probe_df[!probe_df$ProbeName %in% no_unics,]
+> 
+359,360c370,371
+< rd_df["X_row"] <- ctl_3$Row
+< rd_df["Y_col"] <- ctl_3$Col
+---
+> rd_df["X_row"] <- ctl_3[ctl_3$ProbeName %in% probe_df$ProbeName,]$Row
+> rd_df["Y_col"] <- ctl_3[ctl_3$ProbeName %in% probe_df$ProbeName,]$Col
+392c403
+< # 
+---
+> #

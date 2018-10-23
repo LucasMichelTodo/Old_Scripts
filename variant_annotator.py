@@ -19,34 +19,35 @@ def annotate_from_genes(bed_file):
     #print "Chrom\tPos\tRef\tAlt\t1.2b_GT\t10g_GT\t1.2b_AD\t10g_AD\t1.2b_ratio\t10g_ratio\t1.2b_GQ\t10g_GQ\tGene\tRegion\tOld_fam\tAnnot"
 
     for line in intersect:
+        print line
 
-        if int(line[1]) >= int(line[16])+int(line[22]) and int(line[1]) <= int(line[17])-int(line[23]):
-            pos = "ORF"
-        elif int(line[1]) < int(line[16])+int(line[22]):
-            pos = "5region"
-        elif int(line[1]) > int(line[17])-int(line[23]):
-            pos = "3region"
-
-        if line[18] == "-":
-            if pos == "5region":
-                pos = "3region"
-            elif pos == "3region":
-                pos = "5region"
-
-        gene = line[21].split(";")[0].replace("ID=","")
-        print_line = []
-        print_line.append(line[0:2])
-        print_line.append(line[3:13])
-        print_line.append([gene,pos])
-
-        try:
-            print_line.append([rosetta[gene]["old_fam"]])
-            print_line.append([rosetta[gene]["annot"]])
-        except:
-            print_line.append([".", "."])
-
-        # chain "unnlists" the list of lists we created.
-        print "\t".join(list(chain.from_iterable(print_line)))
+        # if int(line[1]) >= int(line[16])+int(line[22]) and int(line[1]) <= int(line[17])-int(line[23]):
+        #     pos = "ORF"
+        # elif int(line[1]) < int(line[16])+int(line[22]):
+        #     pos = "5region"
+        # elif int(line[1]) > int(line[17])-int(line[23]):
+        #     pos = "3region"
+        #
+        # if line[18] == "-":
+        #     if pos == "5region":
+        #         pos = "3region"
+        #     elif pos == "3region":
+        #         pos = "5region"
+        #
+        # gene = line[21].split(";")[0].replace("ID=","")
+        # print_line = []
+        # print_line.append(line[0:2])
+        # print_line.append(line[3:13])
+        # print_line.append([gene,pos])
+        #
+        # try:
+        #     print_line.append([rosetta[gene]["old_fam"]])
+        #     print_line.append([rosetta[gene]["annot"]])
+        # except:
+        #     print_line.append([".", "."])
+        #
+        # # chain "unnlists" the list of lists we created.
+        # print "\t".join(list(chain.from_iterable(print_line)))
 
 
 

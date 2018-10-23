@@ -3,11 +3,13 @@
 from tqdm import tqdm
 import re
 
-in_pdb = re.compile("\d")
-in_esmeraldo = re.compile("T")
+# in_pdb = re.compile("\d")
+# in_esmeraldo = re.compile("T")
 
 clusters = {}
-with open("/home/lucas/ISGlobal/Cruzi/tcruzi_epitopes_vaccine/New_strategy/exposed_ORFs_clusters.clstr", "r+") as infile:
+#with open("/home/lucas/ISGlobal/Cruzi/tcruzi_epitopes_vaccine/New_strategy/exposed_ORFs_clusters.clstr", "r+") as infile:
+#with open("/home/lucas/ISGlobal/Brucei/aat_vaccine/cdhit/1533109047.fas.1.clstr", "r+") as infile:
+with open("/home/lucas/ISGlobal/Cruzi/tcruzi_New/tritryp_orfAA_proteomes/all_newORFs_clusters.clstr", "r+") as infile:
 	for line in infile:
 		if line.startswith(">"):
 			ID = line.strip()
@@ -22,11 +24,11 @@ for key, value in tqdm(clusters.items()):
 	for i in value:
 		proteomes.append(i.split()[2][1:6])
 
-	print proteomes
-	if "Expos" not in proteomes:
-		del clusters[key]
+	#print proteomes
+	# if "Expos" not in proteomes:
+	# 	del clusters[key]
 
-	if len(set(proteomes)) < 7:
+	if len(set(proteomes)) < 10: # <<-------------------------------- Set number of required diferent proteomes here
 		try:
 			del clusters[key]
 		except:
@@ -48,7 +50,7 @@ print len(clusters)
 #
 # print len(clusters)
 
-with open("/home/lucas/ISGlobal/Cruzi/tcruzi_epitopes_vaccine/New_strategy/exposed_ORFs_clusters_filtered.clstr", "a+") as outfile:
+with open("/home/lucas/ISGlobal/Cruzi/tcruzi_New/tritryp_orfAA_proteomes/all_newORFs_clusters_filetered.clstr", "a+") as outfile:
 	for key, value in clusters.iteritems():
 		outfile.write(key)
 		outfile.write("\n")

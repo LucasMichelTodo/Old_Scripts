@@ -23,14 +23,14 @@ def parse_consensus(consensus_file):
             if i not in "-*":
                 fragment += i
             else:
-                if len(fragment) > 9:
+                if len(fragment) > 8:
                     fragments.append(fragment)
                 fragment = ""
-        if len(fragment) > 9:
+        if len(fragment) > 8:
             fragments.append(fragment)
 
 
-        if len(fragments) > 1:
+        if len(fragments) >= 1:
             i = 1
             for x in fragments:
                 print "{}_{}" .format(prot, i)

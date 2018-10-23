@@ -7,17 +7,21 @@ library(Biobase)
 library(reshape2)
 library(ggplot2)
 library(xlsx)
+library(ggfortify)
 
 dir <- "/home/lucas/ISGlobal/Arrays/Anastasia_Arrays"
 figuresPath <- "/home/lucas/ISGlobal/Arrays/Anastasia_Arrays/Plots/"
 
 ############################### Read files and create ProbeSet ##################
 
-removeLowProbes <- function(probe_df){
-  gmedian <- median(probe_df[probe_df$SystematicName == "NegativeControl",]$gMedianSignal)
-  rmedian <- median(probe_df[probe_df$SystematicName == "NegativeControl",]$rMedianSignal)
-  probe_df[probe_df$gMedianSignal < 2*gmedian & probe_df$rMedianSignal < 2*rmedian, "LogRatio"] <- NA
-  return(probe_df)
+
+load(file.path(dir,'gene_list.RData'))
+
+removeLowProbes <- function(df){
+  gmedian <- median(sort(df[df$SystematicName %in% genes_list,]$gProcessedSignal)[1:100])
+  rmedian <- median(sort(df[df$SystematicName %in% genes_list,]$rProcessedSignal)[1:100])
+  df[df$gProcessedSignal < 3*gmedian & df$rProcessedSignal < 3*rmedian, "LogRatio"] <- NA
+  return(df)
 }
 
 ## Read files
@@ -138,10 +142,12 @@ write.csv(probe_df, "/home/lucas/ISGlobal/Arrays/Anastasia_Arrays/probe_probe_df
 
 ############################### Read files and create eSet ##################
 
+load(file.path(dir,'gene_list.RData'))
+
 removeLowProbes <- function(df){
-  gmedian <- median(df[df$SystematicName == "NegativeControl",]$gMedianSignal)
-  rmedian <- median(df[df$SystematicName == "NegativeControl",]$rMedianSignal)
-  df[df$gMedianSignal < 2*gmedian & df$rMedianSignal < 2*rmedian, "LogRatio"] <- NA
+  gmedian <- median(sort(df[df$SystematicName %in% genes_list,]$gProcessedSignal)[1:100])
+  rmedian <- median(sort(df[df$SystematicName %in% genes_list,]$rProcessedSignal)[1:100])
+  df[df$gProcessedSignal < 3*gmedian & df$rProcessedSignal < 3*rmedian, "LogRatio"] <- NA
   return(df)
 }
 
@@ -193,7 +199,7 @@ df["Gene_id"] <- roseta$V2
 df["Gene_name"] <- roseta$V4
 df["Annot"] <- roseta$V3
 
-df <- df[apply(df, 1, function(x) !all(is.na(x[3:11]))),]
+#df <- df[apply(df, 1, function(x) !all(is.na(x[3:11]))),]
 
 df["Annot"] <- gsub("Plasmodium", "Pl.", df$Annot)
 df["Annot"] <- gsub("protein", "prot.", df$Annot)
@@ -220,8 +226,8 @@ df[df$ProbeName == "HSDHFR_v7.1_P1/1",]$Gene_name <- "HSDHFR"
 df[df$ProbeName == "HSDHFR_v7.1_P1/1",]$Annot <- "hsdhfr"
 
 # Treure gens no únics
-no_unics <- read.table("/home/lucas/ISGlobal/Arrays/gens_no_unics.txt", sep = "\t", as.is = TRUE, header = TRUE)
-df <- df[!df$SystematicName %in% no_unics$GeneID,]
+# no_unics <- read.table("/home/lucas/ISGlobal/Arrays/gens_no_unics.txt", sep = "\t", as.is = TRUE, header = TRUE)
+# df <- df[!df$SystematicName %in% no_unics$GeneID,]
 
 # Afegir sondes noves
 plasmid_probes <- read.csv("/home/lucas/ISGlobal/Arrays/sondes_plasmids.csv", header = TRUE, sep = "\t")
@@ -462,6 +468,15 @@ xlim <- 1.5*range(pcdat$x[,1]); ylim <- 1.25*range(pcdat$x[,2])
 plot(pcdat$x[,1],pcdat$x[,2],col=g,xlab='PC1',ylab='PC2',xlim=xlim,ylim=ylim)
 text(pcdat$x[,1],pcdat$x[,2],n,pos=1,cex=.8)
 dev.off()
+
+############################### PCAs Nous ###########################
+
+pca_df <- t(exprs(x)[complete.cases(exprs(x)),])
+autoplot(prcomp(pca_df), data = x@phenoData@data, colour = "time")
+autoplot(prcomp(pca_df[3:5,]), data = x@phenoData@data[3:5,], colour = "soca") + ggtitle("Timepoint 2")
+autoplot(prcomp(pca_df[6:8,]), data = x@phenoData@data[6:8,], colour = "soca") + ggtitle("Timepoint 3")
+autoplot(prcomp(pca_df[9:11,]), data = x@phenoData@data[9:11,], colour = "soca") + ggtitle("Timepoint 4")
+autoplot(prcomp(pca_df[12:14,]), data = x@phenoData@data[12:14,], colour = "soca") + ggtitle("Timepoint 5")
 
 ############################### Array Plots ######################
 
@@ -736,8 +751,8 @@ for (i in 1:nrow(x)){
   graf$value <- log2((10^graf$value))
   p <- ggplot(graf, aes(x = Time, y = value, group = Soca, color = Soca))
   p <- p + geom_point() + geom_line() + coord_cartesian(ylim = c(-9, 6)) + ggtitle(x@featureData@data$ProbeName[i])
-  ggsave(p, file=paste0(figuresPath,"Probes/", as.character(i), "_", gsub("/", ":", x@featureData@data$Gene_id[i]), ".jpeg"), device = "jpeg", width = 14, height = 10, units = "cm")
-  #print(p)
+  #ggsave(p, file=paste0(figuresPath,"Probes/", as.character(i), "_", gsub("/", ":", x@featureData@data$Gene_id[i]), ".jpeg"), device = "jpeg", width = 14, height = 10, units = "cm")
+  print(p)
 }
 
 ############################### Point estimations ##########################################
@@ -851,6 +866,45 @@ for (i in 1:nrow(red_gene)){
 
 ############################### Fold Changes and stuff ################################
 
+## Probe Level
+head(probe_df)
+fc_probes <- data.frame(c(probe_df$LLCM_3 - probe_df$Ctl_3),
+                        c(probe_df$LL0_3 - probe_df$Ctl_3),
+                        c(probe_df$LLCM_3 - probe_df$LL0_3),
+                        c(probe_df$LLCM_4 - probe_df$Ctl_4),
+                        c(probe_df$LL0_4 - probe_df$Ctl_4),
+                        c(probe_df$LLCM_4 - probe_df$LL0_4),
+                        c(probe_df$LLCM_5 - probe_df$Ctl_5),
+                        c(probe_df$LL0_5 - probe_df$Ctl_5),
+                        c(probe_df$LLCM_5 - probe_df$LL0_5))
+
+fc_probes <- log2(10**fc_probes)
+colnames(fc_probes) <- c("LLCM_3", "LL0_3", "LLcmvsLL03", "LLCM_4", "LL0_4", "LLcmvsLL04", "LLCM_5", "LL0_5", "LLcmvsLL05")
+fc_probes <- cbind(fc_probes, probe_df[,c(1:2,45:48)])
+
+fcp_llcm_3 <- arrange(fc_probes, -abs(LLCM_3))[1:100,c(1,10:15)]
+fcp_llcm_4 <- arrange(fc_probes, -abs(LLCM_4))[1:100,c(4,10:15)]
+fcp_llcm_5 <- arrange(fc_probes, -abs(LLCM_5))[1:100,c(7,10:15)]
+fcp_ll0_3 <- arrange(fc_probes, -abs(LL0_3))[1:100,c(2,10:15)]
+fcp_ll0_4 <- arrange(fc_probes, -abs(LL0_4))[1:100,c(5,10:15)]
+fcp_ll0_5 <- arrange(fc_probes, -abs(LL0_5))[1:100,c(8,10:15)]
+fcp_llcm_ll0_3 <- arrange(fc_probes, -abs(LLcmvsLL03))[1:100,c(3,10:15)]
+fcp_llcm_ll0_4 <- arrange(fc_probes, -abs(LLcmvsLL04))[1:100,c(6,10:15)]
+fcp_llcm_ll0_5 <- arrange(fc_probes, -abs(LLcmvsLL05))[1:100,c(9,10:15)]
+
+write.xlsx(fcp_llcm_3, file = "/home/lucas/ISGlobal/Arrays/Anastasia_Arrays/Top_fc_probes_llcm_3.xlsx", sheetName = "Sheet1", row.names = FALSE)
+write.xlsx(fcp_llcm_4, file = "/home/lucas/ISGlobal/Arrays/Anastasia_Arrays/Top_fc_probes_llcm_4.xlsx", sheetName = "Sheet1", row.names = FALSE)
+write.xlsx(fcp_llcm_5, file = "/home/lucas/ISGlobal/Arrays/Anastasia_Arrays/Top_fc_probes_llcm_5.xlsx", sheetName = "Sheet1", row.names = FALSE)
+write.xlsx(fcp_ll0_3, file = "/home/lucas/ISGlobal/Arrays/Anastasia_Arrays/Top_fc_probes_ll0_3.xlsx", sheetName = "Sheet1", row.names = FALSE)
+write.xlsx(fcp_ll0_4, file = "/home/lucas/ISGlobal/Arrays/Anastasia_Arrays/Top_fc_probes_ll0_4.xlsx", sheetName = "Sheet1", row.names = FALSE)
+write.xlsx(fcp_ll0_5, file = "/home/lucas/ISGlobal/Arrays/Anastasia_Arrays/Top_fc_probes_ll0_5.xlsx", sheetName = "Sheet1", row.names = FALSE)
+write.xlsx(fcp_llcm_ll0_3, file = "/home/lucas/ISGlobal/Arrays/Anastasia_Arrays/Top_fc_probes_llcm_ll0_3.xlsx", sheetName = "Sheet1", row.names = FALSE)
+write.xlsx(fcp_llcm_ll0_4, file = "/home/lucas/ISGlobal/Arrays/Anastasia_Arrays/Top_fc_probes_llcm3_ll0_4.xlsx", sheetName = "Sheet1", row.names = FALSE)
+write.xlsx(fcp_llcm_ll0_5, file = "/home/lucas/ISGlobal/Arrays/Anastasia_Arrays/Top_fc_probes_llcm_ll0_5.xlsx", sheetName = "Sheet1", row.names = FALSE)
+
+hist(fcp_ll0_5$LL0_5, breaks = 50)
+
+## Gene Level
 load(file.path(dir,'xgene_estimated.RData'))
 head(exprs(xgene))
 fc_df <- data.frame(c(exprs(xgene)[,2]-exprs(xgene)[,1]), 
@@ -866,7 +920,6 @@ fc_df <- data.frame(c(exprs(xgene)[,2]-exprs(xgene)[,1]),
                     c(exprs(xgene)[,13]-exprs(xgene)[,12]),
                     c(exprs(xgene)[,14]-exprs(xgene)[,12]),
                     c(exprs(xgene)[,13]-exprs(xgene)[,14]))
-
 
 colnames(fc_df) <- c("LL0_1", "LLCM_2", "LL0_2", "LLvsLL2", "LLCM_3", "LL0_3", "LLvsLL3", "LLCM_4", "LL0_4", "LLvsLL4", "LLCM_5", "LL0_5", "LLvsLL5")
 head(fc_df)

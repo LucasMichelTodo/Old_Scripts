@@ -66,7 +66,7 @@ def ClustalEnt(clustal_file):
         #print entropies[i]
 
         # Set entropy threshold:
-        if ent(data) <= 1:
+        if ent(data) <= 9999:
             consensus.append(most_common(aa_var))
 
         else:
@@ -79,7 +79,8 @@ def ClustalEnt(clustal_file):
     current_min = 99999999999999999999999999999999999
     current_seq = ""
     current_ref = ""
-    ref_order = {'TcCLB':5, 'AODP0':4, 'AYLP0':7, 'AQHO0':2, 'TcChr':8, 'Tcruz':6, 'ANOX0':1, 'TcX10':3, 'Expos':0, 'TcMAR':9}
+    #ref_order = {'TcCLB':5, 'AODP0':4, 'AYLP0':7, 'AQHO0':2, 'TcChr':8, 'Tcruz':6, 'ANOX0':1, 'TcX10':3, 'Expos':0, 'TcMAR':9}
+    ref_order = {'Tb11.':6, 'TcIL3':1, 'TvY48':2, 'TY486':2.1, 'Tb927':4, 'TevST':3, 'Tb427':5, 'Tb05.':7, 'Tb09.':8, 'Tb10.':9, 'Tb07.':10, 'Tb06.':11, 'Tb04.':12, 'Tb08.':13, 'N19B2':14, '13J3.':15, '13J1.':16, 'H25N7':17}
 
     for record in alignment:
         #print record.seq
@@ -112,9 +113,9 @@ def ClustalEnt(clustal_file):
 
     ## Write result to _consensus file:
     # Creating header for consensus file. Setting "w+" ensures the file will be created from scratch if re-run.
-    with open(clustal_file.replace("_sorted.aln", "_consensus.fasta"), "w+") as file:
+    with open(clustal_file.replace("_sorted.aln", "_consensus_unmasked.fasta"), "w+") as file:
         file.write(">"+current_ref+"\n")
-    with open(clustal_file.replace("_sorted.aln", "_consensus.fasta"), "a+") as file:
+    with open(clustal_file.replace("_sorted.aln", "_consensus_unmasked.fasta"), "a+") as file:
         file.write("".join(masked_ref))
 
 

@@ -1,0 +1,408 @@
+\documentclass{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage{hyperref}
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{multirow}
+\usepackage[table]{xcolor}
+\usepackage{wrapfig}
+\usepackage{float}
+\usepackage{colortbl}
+\usepackage{pdflscape}
+\usepackage{tabu}
+\usepackage{threeparttable}
+\usepackage{threeparttablex}
+\usepackage[normalem]{ulem}
+\usepackage{makecell}
+
+\hypersetup{
+    linktocpage,
+    colorlinks=true, 
+    linkcolor=blue,
+    citecolor=blue,
+    filecolor=blue,
+    urlcolor=blue
+}
+
+\begin{document}
+
+\title{AP2G Chip-Seq Comparisons}
+\author{Lucas Michel Todó}
+\maketitle
+\tableofcontents
+\clearpage
+
+<<import_packages, echo=FALSE, warning=FALSE>>=
+#importFrom("stats", "filter")  # this protects filter from being harmed by a later load of dplyr
+library(ggplot2)
+library(reshape2)
+library(kableExtra)
+@
+
+<<imports, echo=FALSE, warning=FALSE>>=
+
+#### Import AP2G coverage vectors ####
+
+files <- list.files("/home/lucas/ISGlobal/Chip_Seq/Noves_dades/Results/Filtered_Bams_q5/AP2G_Coverage/")
+files_met <- files[grepl("_me_cov_vect", files)]
+files_in <- files[grepl("_in_cov_vect", files)]
+files_ac <- files[grepl("_ac_cov_vect", files)]
+  
+pres <- c()
+posts <- c()
+ORFs <- c()
+
+for (element in files_met){
+  vect <- strsplit(readLines(paste0("/home/lucas/ISGlobal/Chip_Seq/Noves_dades/Results/Filtered_Bams_q5/AP2G_Coverage/", element)), ",")
+  vect <- lapply(vect, function(x) as.numeric(x))
+  if (grepl("pre", element)){
+    pres <- c(pres, vect)
+  } else if (grepl("post", element)) {
+    posts <- c(posts, vect)
+  } else if (grepl("ORF", element)){
+    ORFs <- c(ORFs, vect)
+  }
+}
+
+names(pres) <- c("3D7", "B11", "E5HA", "NF54")
+names(posts) <- c("3D7", "B11", "E5HA", "NF54")
+names(ORFs) <- c("3D7", "B11", "E5HA", "NF54")
+
+total_3D7 <- c(pres$`3D7`, ORFs$`3D7`, posts$`3D7`)
+total_B11 <- c(pres$B11, ORFs$B11, posts$B11)
+total_E5HA <- c(pres$E5HA, ORFs$E5HA, posts$E5HA)
+total_NF54 <- c(pres$NF54, ORFs$NF54, posts$NF54)
+
+#### Import AP2G input-coverage vectors ####
+pres_in <- c()
+posts_in <- c()
+ORFs_in <- c()
+
+for (element in files_in){
+  vect <- strsplit(readLines(paste0("/home/lucas/ISGlobal/Chip_Seq/Noves_dades/Results/Filtered_Bams_q5/AP2G_Coverage/", element)), ",")
+  vect <- lapply(vect, function(x) as.numeric(x))
+  if (grepl("pre", element)){
+    pres_in <- c(pres_in, vect)
+  } else if (grepl("post", element)) {
+    posts_in <- c(posts_in, vect)
+  } else if (grepl("ORF", element)){
+    ORFs_in <- c(ORFs_in, vect)
+  }
+}
+
+names(pres_in) <- c("3D7", "B11", "E5HA", "NF54")
+names(posts_in) <- c("3D7", "B11", "E5HA", "NF54")
+names(ORFs_in) <- c("3D7", "B11", "E5HA", "NF54")
+
+total_3D7_in <- c(pres_in$`3D7`, ORFs_in$`3D7`, posts_in$`3D7`)
+total_B11_in <- c(pres_in$B11, ORFs_in$B11, posts_in$B11)
+total_E5HA_in <- c(pres_in$E5HA, ORFs_in$E5HA, posts_in$E5HA)
+total_NF54_in <- c(pres_in$NF54, ORFs_in$NF54, posts_in$NF54)
+
+#### Import AP2G acetilation-coverage vectors ####
+pres_ac <- c()
+posts_ac <- c()
+ORFs_ac <- c()
+
+for (element in files_ac){
+  vect <- strsplit(readLines(paste0("/home/lucas/ISGlobal/Chip_Seq/Noves_dades/Results/Filtered_Bams_q5/AP2G_Coverage/", element)), ",")
+  vect <- lapply(vect, function(x) as.numeric(x))
+  if (grepl("pre", element)){
+    pres_ac <- c(pres_ac, vect)
+  } else if (grepl("post", element)) {
+    posts_ac <- c(posts_ac, vect)
+  } else if (grepl("ORF", element)){
+    ORFs_ac <- c(ORFs_ac, vect)
+  }
+}
+
+names(pres_ac) <- c("3D7", "B11", "E5HA", "NF54")
+names(posts_ac) <- c("3D7", "B11", "E5HA", "NF54")
+names(ORFs_ac) <- c("3D7", "B11", "E5HA", "NF54")
+
+total_3D7_ac <- c(pres_ac$`3D7`, ORFs_ac$`3D7`, posts_ac$`3D7`)
+total_B11_ac <- c(pres_ac$B11, ORFs_ac$B11, posts_ac$B11)
+total_E5HA_ac <- c(pres_ac$E5HA, ORFs_ac$E5HA, posts_ac$E5HA)
+total_NF54_ac <- c(pres_ac$NF54, ORFs_ac$NF54, posts_ac$NF54)
+@
+
+\section{Taules Resum}
+\subsection{Regió 5'}
+<<summary_pre, echo=FALSE, warning=FALSE>>=
+i <- 1
+sum_df <- data.frame()
+for (element in pres){
+  sum_df <- rbind(sum_df,summary(element))
+  i = i+1
+}
+colnames(sum_df) <- c("Min.", "1st Qu.", "Median", "Mean", "3rd Qu.", "Max.")
+rownames(sum_df) <- c("3D7", "B11", "E5HA", "NF54")
+sum_df <- apply(sum_df, 1, round, 1)
+kable(sum_df, "latex", booktabs = T) %>% kable_styling(latex_options =c("striped"))
+@
+\subsection{ORF}
+<<summary_orf, echo=FALSE, warning=FALSE>>=
+i <- 1
+sum_df <- data.frame()
+for (element in ORFs){
+  sum_df <- rbind(sum_df,summary(element))
+  i = i+1
+}
+colnames(sum_df) <- c("Min.", "1st Qu.", "Median", "Mean", "3rd Qu.", "Max.")
+rownames(sum_df) <- c("3D7", "B11", "E5HA", "NF54")
+sum_df <- apply(sum_df, 1, round, 1)
+kable(sum_df, "latex", booktabs = T) %>% kable_styling(latex_options =c("striped"))
+@
+\subsection{Regió 3'}
+<<summary_post, echo=FALSE, warning=FALSE>>=
+i <- 1
+sum_df <- data.frame()
+for (element in posts){
+  sum_df <- rbind(sum_df,summary(element))
+  i = i+1
+}
+colnames(sum_df) <- c("Min.", "1st Qu.", "Median", "Mean", "3rd Qu.", "Max.")
+rownames(sum_df) <- c("3D7", "B11", "E5HA", "NF54")
+sum_df <- apply(sum_df, 1, round, 1)
+kable(sum_df, "latex", booktabs = T) %>% kable_styling(latex_options =c("striped"))
+@
+\clearpage
+
+
+<<norm_by_input, echo=FALSE, warning=FALSE>>=
+df <- as.data.frame(total_3D7)
+df["B11"] <- as.data.frame(total_B11)
+df["E5HA"] <- as.data.frame(total_E5HA)
+df["NF54"] <- as.data.frame(total_NF54)
+colnames(df)[1] <- "3d7"
+df["pos"] <- 903001:916000
+
+norm_in <- as.data.frame(cbind(total_3D7_in, total_B11_in, total_E5HA_in, total_NF54_in))
+norm_in["total"] <- apply(norm_in, 1, function(x) mean(x, na.rm=TRUE))
+norm_in["pos"] <- 903001:916000
+
+df_in <- df[,1:5] / norm_in$total
+df_in["pos"] <- 903001:916000
+@
+
+\section{Gràfics}
+\subsection{Coverage}
+<<plot_coverage, echo=FALSE, warning=FALSE, out.width="1\\linewidth", message=FALSE>>=
+
+trace.smooth<-function(trace, type="Savitsky-Golay", width=10){
+
+  if(type=="lowess"){
+    smooth.trace<-with(clean.trace, lowess(x=1:length(trace),
+                                   y=trace,
+                                   f=width/length(trace),
+                                   delta=width/2))$y
+  }
+
+  if(type=="moving-average"){
+        moving_average<-function(width=10){
+        moving.average<-rep(1,width)/width
+        return(moving.average)
+      }
+
+      moving.average<-moving_average(width)
+
+      smooth.trace<-filter(trace, moving.average)
+
+  }
+
+  if(type=="Savitsky-Golay"){
+      # Savitsky-Golay smoothing function 
+    savistsky_golay<-function(width=10){
+      x<-1:width-width/2
+      y<-max(x^2)-x^2
+      sg<-y/sum(y)
+      return(sg)
+    }
+
+    sg<-savistsky_golay(width)
+
+      smooth.trace<-filter(trace, sg)
+  }
+
+  return(smooth.trace)
+}
+
+f <- df
+for (i in 1:4){
+  f[,i] <- trace.smooth(f[,i], type="moving-average", width = 100)
+}
+
+df_m <- melt(f, id ="pos")
+ 
+p <- ggplot(df_m, aes(x = pos, y = df_m$value, colour = df_m$variable))
+p + geom_line() +
+    labs(title = "AP2G Coverage", x = "Position", y = "Coverage (Methylation)", colour = "Strain") +
+    theme(plot.title = element_text(hjust = 0.5)) +
+    geom_vline(xintercept =907203, linetype="dotted") +
+    geom_vline(xintercept =914501, linetype="dotted")
+@
+\clearpage
+\subsection{Coverage Normalitzat}
+<<plot_norm_cov, echo=FALSE, warning=FALSE, out.width="1\\linewidth", message=FALSE>>=
+f <- df_in
+
+for (i in 1:4){
+  f[,i] <- trace.smooth(f[,i], type="moving-average", width = 100)
+}
+
+df_in_m <- melt(f, id ="pos")
+
+p <- ggplot(df_in_m, aes(x = pos, y = df_in_m$value, colour = df_in_m$variable))
+p + geom_line() +
+    labs(title = "AP2G Coverage dividit per input", x = "Position", y = "Coverage (Methylation)", colour = "Strain") +
+    theme(plot.title = element_text(hjust = 0.5)) +
+    geom_vline(xintercept =907203, linetype="dotted") +
+    geom_vline(xintercept =914501, linetype="dotted")
+@
+\clearpage
+\subsection{Coverage "Equalitzat"}
+<<plot_equalizedCov, echo=FALSE, warning=FALSE, out.width="1\\linewidth", message=FALSE>>=
+
+f <- as.data.frame(df$`3d7` / df[1:4])
+f <- do.call(data.frame,lapply(f, function(x) replace(x, is.infinite(x),NA)))
+fact <- apply(f[4203:9501,], 2, function(x) mean(x, na.rm = TRUE))
+for (i in 1:4){
+  f[,i] <- df[,i]*fact[i]
+}
+f["pos"] <- df$pos
+
+for (i in 1:4){
+  f[,i] <- trace.smooth(f[,i], type="moving-average", width = 100)
+}
+
+f_m <- melt(f, id ="pos")
+
+p <- ggplot(f_m, aes(x = pos, y = f_m$value, colour = f_m$variable))
+p + geom_line() + 
+    labs(title = "AP2G Coverage Equalized 3D7 (mean)", x = "Position", y = "Coverage (Methylation)", colour = "Strain") +
+    theme(plot.title = element_text(hjust = 0.5)) +
+    geom_vline(xintercept =907203, linetype="dotted") +
+    geom_vline(xintercept =914501, linetype="dotted")
+@
+\clearpage
+\subsection{Coverage Normalitzat i "Equalitzat"}
+<<plot_NormequalizedCov, echo=FALSE, warning=FALSE, out.width="1\\linewidth", message=FALSE>>=
+
+f <- as.data.frame(df_in$`3d7` / df_in[1:4])
+f <- do.call(data.frame,lapply(f, function(x) replace(x, is.infinite(x),NA)))
+fact <- apply(f[4203:9501,], 2, function(x) mean(x, na.rm = TRUE))
+for (i in 1:4){
+  f[,i] <- df_in[,i]*fact[i]
+}
+f["pos"] <- df_in$pos
+
+
+for (i in 1:5){
+  f[,i] <- trace.smooth(f[,i], type="moving-average", width = 100)
+}
+
+f_m <- melt(f, id ="pos")
+
+p <- ggplot(f_m, aes(x = pos, y = f_m$value, colour = f_m$variable))
+p + geom_line() + 
+    labs(title = "AP2G Coverage Normalized and Equalized 1.2B(mean)", x = "Position", y = "Coverage (Methylation)", colour = "Strain") +
+    theme(plot.title = element_text(hjust = 0.5)) +
+    geom_vline(xintercept =907203, linetype="dotted") +
+    geom_vline(xintercept =914501, linetype="dotted")
+@
+\clearpage
+\subsection{Coverage Normalitzat a regió 5'}
+<<plot_norm_cov_5, echo=FALSE, warning=FALSE, out.width="1\\linewidth", message=FALSE>>=
+
+f <- df_in
+for (i in 1:4){
+  f[,i] <- trace.smooth(f[,i], type="moving-average", width = 100)
+}
+
+m_5 <- melt(f[1:4203,], id ="pos")
+
+p <- ggplot(m_5, aes(x = pos, y = m_5$value, colour = m_5$variable))
+p + geom_line() +
+    labs(title = "AP2G Coverage restant input 5'", x = "Position", y = "Coverage (Methylation)", colour = "Strain") +
+    theme(plot.title = element_text(hjust = 0.5))
+@
+\clearpage
+\subsection{Coverage Acetilació}
+<<plot_ac, echo=FALSE, warning=FALSE, out.width="1\\linewidth", message=FALSE>>=
+df_ac <- as.data.frame(total_3D7_ac)
+df_ac["B11"] <- as.data.frame(total_B11_ac)
+df_ac["E5HA"] <- as.data.frame(total_E5HA_ac)
+df_ac["NF54"] <- as.data.frame(total_NF54_ac)
+colnames(df_ac)[1] <- "3d7"
+df_ac["pos"] <- 903001:916000
+
+f <- df_ac
+for (i in 1:4){
+  f[,i] <- trace.smooth(f[,i], type="moving-average", width = 100)
+}
+
+df_ac_m <- melt(f, id ="pos")
+
+p <- ggplot(df_ac_m, aes(x = pos, y = df_ac_m$value, colour = df_ac_m$variable))
+p + geom_line() +
+    labs(title = "AP2G Coverage Acetilació", x = "Position", y = "Coverage (Acetilation)", colour = "Strain") +
+    theme(plot.title = element_text(hjust = 0.5)) +
+    geom_vline(xintercept =907203, linetype="dotted") +
+    geom_vline(xintercept =914501, linetype="dotted")
+@
+\clearpage
+\subsection{Coverage Acetilació a 5'}
+<<plot_ac_5, echo=FALSE, warning=FALSE, out.width="1\\linewidth", message=FALSE>>=
+df_ac5_m <- melt(f[1:4203,], id ="pos")
+
+p <- ggplot(df_ac5_m, aes(x = pos, y = df_ac5_m$value, colour = df_ac5_m$variable))
+p + geom_line() +
+    labs(title = "AP2G Coverage Acetilació a 5'", x = "Position", y = "Coverage (Methylation)", colour = "Strain") +
+    theme(plot.title = element_text(hjust = 0.5)) 
+@
+\clearpage
+\subsection{Acetilació / Metilació (normalitzat per input)}
+<<Ac_Met, echo=FALSE, warning=FALSE, out.width="1\\linewidth", message=FALSE>>=
+df_acmet <- df_ac[,1:4]/df[,1:4]
+df_acmet <- df_acmet/ norm_in$total
+df_acmet["pos"] <- df_ac["pos"]
+
+f <- df_acmet
+for (i in 1:4){
+  f[,i] <- trace.smooth(f[,i], type="moving-average", width = 100)
+}
+
+df_acmet_m <- melt(f, id ="pos")
+
+p <- ggplot(df_acmet_m, aes(x = pos, y = df_acmet_m$value, colour = df_acmet_m$variable))
+p + geom_line() +
+    labs(title = "AP2G Coverage Acetilació/Metilació", x = "Position", y = "Coverage (Acetilation/Methylation)", colour = "Strain") +
+    theme(plot.title = element_text(hjust = 0.5)) +
+    geom_vline(xintercept =907203, linetype="dotted") +
+    geom_vline(xintercept =914501, linetype="dotted")
+@
+\clearpage
+\subsection{Metilació / Acetilació (normalitzat per input)}
+<<Met_Ac, echo=FALSE, warning=FALSE, out.width="1\\linewidth", message=FALSE>>=
+df_metac <-df[,1:4]/ df_ac[,1:4]
+df_metac <- df_metac/ norm_in$total
+df_metac["pos"] <- df_ac["pos"]
+
+f <- df_metac
+for (i in 1:3){
+  f[,i] <- trace.smooth(f[,i], type="moving-average", width = 100)
+}
+
+df_metac_m <- melt(f, id ="pos")
+
+p <- ggplot(df_metac_m, aes(x = pos, y = df_metac_m$value, colour = df_metac_m$variable))
+p + geom_line() +
+    labs(title = "AP2G Coverage Metilació/Acetilació", x = "Position", y = "Coverage (Methylation/Acetilation)", colour = "Strain") +
+    theme(plot.title = element_text(hjust = 0.5)) +
+    geom_vline(xintercept =907203, linetype="dotted") +
+    geom_vline(xintercept =914501, linetype="dotted")
+@
+
+\end{document}

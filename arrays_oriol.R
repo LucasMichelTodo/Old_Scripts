@@ -6,15 +6,43 @@ library(Biobase)
 library(reshape2)
 library(ggplot2)
 
-dir <- "/home/lucas/ISGlobal/Arrays/Oriol_heatmaps"
-figuresPath <- "/home/lucas/ISGlobal/Arrays/Oriol_heatmaps/Plots/"
+dir <- "/home/lucas/ISGlobal/Arrays/Oriol_Arrays"
+figuresPath <- "/home/lucas/ISGlobal/Arrays/Oriol_Arrays/Plots/"
+
+############################### Remove Probes that are not Genes ############################
+
+# list1 <- ind_1_1$SystematicName[unlist(lapply(ind_1_1$SystematicName, function(x) startsWith(x, "PF")))]
+# list2 <- ind_1_1$SystematicName[unlist(lapply(ind_1_1$SystematicName, function(x) startsWith(x, "MAL")))]
+# list3 <- ind_1_1$SystematicName[unlist(lapply(ind_1_1$SystematicName, function(x) startsWith(x, "Pfa")))]
+# list4 <- ind_1_1$SystematicName[unlist(lapply(ind_1_1$SystematicName, function(x) startsWith(x, "mal")))]
+# #list5 <- ind_1_1$SystematicName[unlist(lapply(ind_1_1$SystematicName, function(x) grepl("tRNA", x)))] <-- Aquests els retirem de la llista de gens
+# list6 <- ind_1_1$SystematicName[unlist(lapply(ind_1_1$SystematicName, function(x) grepl("rRNA", x)))]
+# 
+# genes_list <- c(list1, list2, list3, list4, list6)
+# save(genes_list, file=file.path(dir,'gene_list.RData'))
+# # 
+# table(ind_1_1$SystematicName[!ind_1_1$SystematicName %in% genes_list])
+
+############################### Retirar NAs estudi ##########################
+# rmedian <- median(sort(ctl_2_3[ctl_2_3$SystematicName %in% genes_list,]$rProcessedSignal)[1:100])
+# 
+# arrange(ind_1_1[ind_1_1$SystematicName %in% genes_list,], rProcessedSignal)[1:100,c(7,8,11,14:15,44:46)]
+# 
+# qplot(ind_1_1$rProcessedSignal,
+#       geom="histogram",
+#       binwidth = 1,  
+#       main = "Histogram", #+ geom_vline(xintercept=4.7004, color="red")
+#       xlim=c(0,100))
 
 ############################### Read files and create eSet ##################
 
+load(file.path(dir,'gene_list.RData'))
+
+# No-log NA remove -> 2 Median
 removeLowProbes <- function(df){
-  gmedian <- median(df[df$SystematicName == "NegativeControl",]$gMedianSignal)
-  rmedian <- median(df[df$SystematicName == "NegativeControl",]$rMedianSignal)
-  df[df$gMedianSignal < 2*gmedian & df$rMedianSignal < 2*rmedian, "LogRatio"] <- NA
+  gmedian <- median(sort(df[df$SystematicName %in% genes_list,]$gProcessedSignal)[1:100])
+  rmedian <- median(sort(df[df$SystematicName %in% genes_list,]$rProcessedSignal)[1:100])
+  df[df$gProcessedSignal < 2*gmedian & df$rProcessedSignal < 2*rmedian, "LogRatio"] <- NA
   return(df)
 }
 
@@ -87,16 +115,8 @@ go["gene_id"] <- gsub("EuPathDB:", "", go$V17)
 go$gene_id <- gsub(".1", "", go$gene_id)
 table(df$Gene_id[!is.na(df$Gene_id)] %in% go$gene_id)
 
-searchset <- control_probes
-content <- df$SystematicName
-
-
-control_probes <- c("DarkCorner", "NegativeControl", "GE_BrightCorner", "EQC", "RC", "E1A", "ETG")
-no_id <- unique(df[is.na(df$Gene_id) & startsWith(df$SystematicName, control_probes),]$SystematicName)
-
-for (i in no_id){
-  print(i)
-}
+## Change to log2 (from log10)
+df[,c(3:8)] <- log2(10**df[,c(3:8)])
 
 ## Create eSet
 exprsx <- as.matrix(df[,c(-1,-2,-9,-10,-11,-12)])
@@ -158,7 +178,6 @@ renameGenesAndSummarize <- function(genesToRename.sd,exprsx,geneid,summaryMethod
 tmp <- renameGenesAndSummarize(genesToRename.sd=genesToRename.sd,exprsx=df,geneid=geneid,summaryMethod=myRma)
 xgene <- tmp[['eset']]; sdgene <- tmp[['sdgene']]; fdata <- tmp[['fdata']]; geneid <- tmp[['geneid']]
 write.csv(data.frame(probe=df[,1],gene=geneid),file.path(figuresPath,'geneProbes.csv'),row.names=FALSE) #probes of each gene
-rownames(exprs(xgene))
 
 ############################### Estimate times ###############
 
@@ -252,8 +271,8 @@ heatmap_df["Gene_name"] <- xgene@featureData@data$Gene_name
 heatmap_df["Annot"] <- xgene@featureData@data$Annot
 heatmap_df["Variant"] <- xgene@featureData@data$Variant
 
-save(heatmap_df,file=file.path(dir,'df_FC.RData'))
-write.csv(heatmap_df, file = "/home/lucas/ISGlobal/Arrays/Oriol_heatmaps/whole_FC_df2.csv", row.names = FALSE)
+#save(heatmap_df,file=file.path(dir,'df_FC.RData'))
+#write.csv(heatmap_df, file = "/home/lucas/ISGlobal/Arrays/Oriol_heatmaps/whole_FC_df2.csv", row.names = FALSE)
 
 sel_all <- filter(heatmap_df, abs(T1) > 0.30103) #| abs(T2) > 0.39794 | abs(T3) > 0.39794)
 
@@ -261,7 +280,7 @@ sel_top1 <- arrange(heatmap_df, -T1)[c(1:20),]
 sel_bottom1 <- arrange(heatmap_df, T1)[c(1:20),]
 sel1 <- rbind(sel_top1, sel_bottom1)
 sel1 <- arrange(sel1, T1)
-write.csv(sel1, file = paste0(dir, "/t1_fc.csv"))
+#write.csv(sel1, file = paste0(dir, "/t1_fc.csv"))
 
 # sel1 <- arrange(heatmap_df, -abs(T1))[1:30,]
 # sel1 <- arrange(sel1, T1)
@@ -270,13 +289,13 @@ sel_top2 <- arrange(heatmap_df, -T2)[c(1:20),]
 sel_bottom2 <- arrange(heatmap_df, T2)[c(1:20),]
 sel2 <- rbind(sel_top2, sel_bottom2)
 sel2 <- arrange(sel2, T2)
-write.csv(sel2, file = paste0(dir, "/t2_fc.csv"))
+#write.csv(sel2, file = paste0(dir, "/t2_fc.csv"))
 
 sel_top3 <- arrange(heatmap_df, -T3)[c(1:20),]
 sel_bottom3 <- arrange(heatmap_df, T3)[c(1:20),]
 sel3 <- rbind(sel_top3, sel_bottom3)
 sel3 <- arrange(sel3, T3)
-write.csv(sel3, file = paste0(dir, "/t3_fc.csv"))
+#write.csv(sel3, file = paste0(dir, "/t3_fc.csv"))
 
 heatmap_df_t1 <- melt(sel1)
 heatmap_df_t1$gene <- factor(heatmap_df_t1$gene, levels=unique(as.character(heatmap_df_t1$gene)))
@@ -757,6 +776,8 @@ if (b>100) write.csv(maxDif.perm.out[,1:101],file.path(outDir,'maxDifPerm_100.cs
 xout <- data.frame(Name=geneDesc,area)
 rownames(xout) <- featureNames(xgene)
 write.csv(xout,file.path(outDir,'areas_subclons.csv'),na='')
+
+
 
 
 

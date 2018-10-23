@@ -319,8 +319,8 @@ Finalment hem volgut comprovar si amb les dades de metilació i acetilació podi
 ## Model 1: Variant ~ Ac + Met + Type + Start + Stop + silenced + noexprs
 ## Model 2: Variant ~ Ac + Met + Type + Start + Stop
 ##   Resid. Df Resid. Dev Df Deviance  Pr(>Chi)    
-## 1      8477     5352.6                          
-## 2      8479     6066.9 -2  -714.26 < 2.2e-16 ***
+## 1      8477     5712.6                          
+## 2      8479     6336.7 -2  -624.06 < 2.2e-16 ***
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ## 
@@ -330,36 +330,36 @@ Finalment hem volgut comprovar si amb les dades de metilació i acetilació podi
 ## 
 ## Deviance Residuals: 
 ##     Min       1Q   Median       3Q      Max  
-## -5.1670  -0.7336   0.0001   0.0879   2.9123  
+## -5.3553  -0.7750   0.0026   0.2062   2.8502  
 ## 
 ## Coefficients: (1 not defined because of singularities)
 ##                Estimate Std. Error z value Pr(>|z|)    
-## (Intercept)   4.052e-01  1.009e-01   4.017 5.90e-05 ***
-## Ac           -1.201e-04  9.478e-06 -12.674  < 2e-16 ***
-## Met           6.071e-04  5.022e-05  12.089  < 2e-16 ***
-## Type5prima   -3.264e-01  1.009e-01  -3.234  0.00122 ** 
-## TypeORF      -1.069e+00  8.907e-02 -12.007  < 2e-16 ***
-## Typeother    -5.454e+01  2.080e+02  -0.262  0.79310    
-## Start        -2.331e-07  4.533e-08  -5.143 2.71e-07 ***
+## (Intercept)   5.613e-01  9.669e-02   5.805 6.45e-09 ***
+## Ac           -1.226e-04  9.374e-06 -13.080  < 2e-16 ***
+## Met           3.801e-04  2.959e-05  12.846  < 2e-16 ***
+## Type5prima   -2.872e-01  9.780e-02  -2.937  0.00332 ** 
+## TypeORF      -9.936e-01  8.504e-02 -11.683  < 2e-16 ***
+## Typeother    -2.807e+01  2.422e+02  -0.116  0.90774    
+## Start        -2.061e-07  4.209e-08  -4.898 9.68e-07 ***
 ## Stop                 NA         NA      NA       NA    
-## silencedTRUE  4.856e+00  4.348e-01  11.168  < 2e-16 ***
-## noexprsTRUE   1.841e+00  2.811e-01   6.549 5.79e-11 ***
+## silencedTRUE  3.532e+00  2.400e-01  14.716  < 2e-16 ***
+## noexprsTRUE   1.128e+00  2.241e-01   5.033 4.82e-07 ***
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ## 
 ## (Dispersion parameter for binomial family taken to be 1)
 ## 
-##     Null deviance: 11212.4  on 8485  degrees of freedom
-## Residual deviance:  5352.6  on 8477  degrees of freedom
-## AIC: 5370.6
+##     Null deviance: 11213.4  on 8485  degrees of freedom
+## Residual deviance:  5712.6  on 8477  degrees of freedom
+## AIC: 5730.6
 ## 
-## Number of Fisher Scoring iterations: 16
+## Number of Fisher Scoring iterations: 17
 ##        
 ##         FALSE TRUE
-##   FALSE  3056  142
-##   TRUE   1185 4280
-## [1] "Accuracy 0.846819808380469"
-## [1] "Accuracy of null model 0.495209511716495"
+##   FALSE  2996  201
+##   TRUE   1071 4395
+## [1] "Accuracy 0.85316864827427"
+## [1] "Accuracy of null model 0.500865750894609"
 \end{verbatim}
 
 
@@ -370,12 +370,12 @@ Finalment hem volgut comprovar si amb les dades de metilació i acetilació podi
 {\ttfamily\noindent\itshape\color{messagecolor}{\#\# The following object is masked from 'package:stats':\\\#\# \\\#\#\ \ \ \  lowess}}\begin{verbatim}
 ## 
 ## 3prima 5prima    ORF 
-##     85     23     34
+##    134     54     13
 ## 
 ## 3prima 5prima    ORF 
-##    202    301    682
+##    159    238    674
 ##           llh       llhNull            G2      McFadden          r2ML          r2CU 
-## -2676.3084504 -5606.1770458  5859.7371909     0.5226144     0.4986838     0.6801418
+## -2856.3024782 -5606.6952945  5500.7856326     0.4905551     0.4770236     0.6505712
 \end{verbatim}
 \end{kframe}
 

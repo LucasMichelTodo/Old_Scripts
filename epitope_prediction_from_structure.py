@@ -29,6 +29,7 @@ with open("/home/lucas/ISGlobal/Cruzi/tcruzi_epitopes_vaccine/PDB_results/kmp11/
         if line.startswith("RES"):
             rsas.append(line.strip().split()[3])
 
+
 print norm_b_factors
 print rsas
 print "....."
@@ -37,9 +38,19 @@ print len(rsas)
 
 epitopes = []
 for i in range(len(rsas)):
-    if (norm_b_factors[i] >= 0.5) & (rsas[i] > 50):
+    if (norm_b_factors[i] >= -999) & (float(rsas[i]) > 70):
         epitopes.append("E")
     else:
         epitopes.append("-")
 
 print "".join(epitopes)
+print "------------------------EQNKKFFADKPDESTL----------------------------------------------------"
+
+
+
+#
+# for i in rsas:
+#     print i
+#
+# for i in norm_b_factors:
+#     print i
