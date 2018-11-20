@@ -2,6 +2,7 @@ source("http://bioconductor.org/biocLite.R")
 library(Biobase)
 library(reshape2)
 library(ggplot2)
+library(ggfortify)
 library(VennDiagram)
 library(dplyr)
 library(tidyr)
@@ -140,6 +141,18 @@ plot_10E <- ggplot(heatmap_df_10E, aes(x = variable, y = Gene, fill = value)) +
   theme(axis.text.y = element_text(colour=ifelse(var, 'red', 'black')))
 plot_t1
 
+############################### PCA #################################
+noNA <- xgene[complete.cases(exprs(xgene))]
+df <- t(exprs(noNA))
+df<- as.data.frame(df)
 
+df$Strain <- noNA@phenoData@data$subclone
+df$Status <- noNA@phenoData@data$status
+df$Time <- noNA@phenoData@data$time_teor
 
+autoplot(prcomp(df[,1:5315]), data = df , colour = 'Strain')
+autoplot(prcomp(df[,1:5315]), data = df , colour = 'Status')
+autoplot(prcomp(df[,1:5315]), data = df , colour = 'Time')
+
+autoplot(prcomp(df[,1:5315]), data = df , colour = 'Strain', size = "Time", shape = "Status")
 
