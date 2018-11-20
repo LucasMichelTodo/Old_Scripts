@@ -6,8 +6,10 @@ import subprocess as sp
 
 #samples = ["3D7_me", "B11_me", "NF54_me"]
 
-inputPath = "/home/lucas/ISGlobal/Chip_Seq/Noves_dades/Results/Filtered_Bams_q5/"
+samples = ["3D7_ac", "B11_ac", "E5HA_ac", "NF54_ac"]
 
+# inputPath = "/home/lucas/ISGlobal/Chip_Seq/Noves_dades/Results/Filtered_Bams_q5/"
+#
 # ### Pre-process each sample
 # for sample in samples:
 #
@@ -120,23 +122,11 @@ inputPath = "/home/lucas/ISGlobal/Chip_Seq/Noves_dades/Results/Filtered_Bams_q5/
 # 	print cmd
 
 
-samples = ["3D7_in", "3D7_ac", "3D7_me",
-			"B11_in", "B11_ac", "B11_me",
-			"E5HA_in", "E5HA_ac",
-			"NF54_in", "NF54_ac", "NF54_me",]
-
-## Modify this line so there are as many inputs as samples
-#### Merge all newly created bams:
+# Modify this line so there are as many inputs as samples
+### Merge all newly created bams:
 # print "\n----------------Merging all rearranged samples----------------\n"
 # cmd = "java -jar $PICARD MergeSamFiles INPUT={}_SNP_recal_printreads_mq0.bam \
 # 									     INPUT={}_SNP_recal_printreads_mq0.bam \
-# 										 INPUT={}_SNP_recal_printreads_mq0.bam \
-# 										 INPUT={}_SNP_recal_printreads_mq0.bam \
-# 										 INPUT={}_SNP_recal_printreads_mq0.bam \
-# 										 INPUT={}_SNP_recal_printreads_mq0.bam \
-# 										 INPUT={}_SNP_recal_printreads_mq0.bam \
-# 										 INPUT={}_SNP_recal_printreads_mq0.bam \
-# 										 INPUT={}_SNP_recal_printreads_mq0.bam \
 # 										 INPUT={}_SNP_recal_printreads_mq0.bam \
 # 										 INPUT={}_SNP_recal_printreads_mq0.bam \
 # 										 OUTPUT=all_merged.bam SORT_ORDER=coordinate CREATE_INDEX=true" .format(*samples)
@@ -152,9 +142,9 @@ samples = ["3D7_in", "3D7_ac", "3D7_me",
 # cmd = "java -jar $GATK -T IndelRealigner -R ref.fasta -I all_merged.bam -targetIntervals all_merged.bam.list -o all_merged_realigned.bam"
 # sp.Popen(cmd, shell=True).wait()
 # print cmd
-
+#
 # #Erase pre-file:
-# print "-----------------Erasing Pre-file: all_merged.bam ----------------" 
+# print "-----------------Erasing Pre-file: all_merged.bam ----------------"
 # cmd = "rm all_merged.bam"
 # sp.Popen(cmd, shell=True).wait()
 # print cmd

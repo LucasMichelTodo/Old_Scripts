@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import sys
+from itertools import compress
 
 def parse_variants(vars_table):
 
@@ -8,6 +9,7 @@ def parse_variants(vars_table):
     with open(vars_table, "r+") as infile:
         for line in infile:
             if header:
+                print "Dif\t"+line
                 header = False
             else:
                 try:
@@ -29,12 +31,14 @@ def parse_variants(vars_table):
                         contrasts = [abs(ratio_E5HA-ratio_NF54), abs(ratio_3D7-ratio_B11), abs(ratio_3D7-ratio_E5HA), abs(ratio_3D7-ratio_NF54), abs(ratio_3D7-ratio_B11),
                                     abs(ratio_B11-ratio_E5HA), abs(ratio_B11-ratio_NF54)]
 
+                        difs = ["E5HA_NF54", "3D7_B11", "3D7_E5HA", "3D7_NF54", "3D7_B11", "B11_E5HA", "B11_NF54"]
 
                         # print contrasts
                         # print "\n"
 
-                        if any(i > 0.5 for i in contrasts):
-                            print "Differential variant: ", line,
+                        if any(i > 0.8 for i in contrasts):
+                            mask = [x > 0.8 for x in contrasts]
+                            print "Differential variant:    ", list(compress(difs, mask)), "\t", line,
                             #print contrasts
 
 
@@ -45,6 +49,5 @@ def parse_variants(vars_table):
 
 if __name__ == "__main__":
 	filenames = sys.argv[1:]
-	print filenames
 	for element in filenames:
 		parse_variants(element)

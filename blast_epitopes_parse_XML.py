@@ -12,23 +12,24 @@ def parse_blastp(blast_xml):
     best_hits = []
 
     for record in blast_records:
-        #epitope_length = record.query.split(" | ")[2]
-        epitope_length = 9
+
+        epitope_length = record.query.split(" | ")[1]
+        #epitope_length = 9
         hits = []
         for alignment in record.alignments:
             for hsp in alignment.hsps:
 
-
-                hits.append((alignment.title.split("|")[3], float(hsp.identities)/int(epitope_length)*100, hsp.expect, hsp.bits))
+                hits.append((alignment.title, float(hsp.identities)/int(epitope_length)*100, hsp.expect, hsp.bits))
                 #hits.append((alignment.title.split("|")[3], float(hsp.identities)/9*100, hsp.expect))
                 sorted_hits = sorted(hits, key=lambda x: x[3], reverse=True)
 
         try:
             best_hits.append((record.query, sorted_hits[0]))
         except:
-            print "hopla!"
+            best_hits.append((record.query, ""))
+            #print "hopla!", record.query
 
-    with open("/home/lucas/ISGlobal/Cruzi/tcruzi_epitopes_vaccine/Microbiome/New_run_091018/tcd8_microbiome.csv", "r+") as infile:
+    with open("/home/lucas/ISGlobal/Brucei/aat_vaccine/Run_060818/Blasts/Microbiome/tcd4_Epitopes/tcd4_microbiome.csv", "r+") as infile:
         for line in infile:
             epitope = line.strip().split("\t")[0]
             # print line.strip().split("\t")
