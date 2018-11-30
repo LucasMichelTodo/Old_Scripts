@@ -14,7 +14,7 @@ def parse_variants(vars_table):
             else:
                 try:
                     linelist = line.split()
-                    depth_threhold = 50
+                    depth_threhold = 30
 
                     if ((float(linelist[11].split(",")[1]) + float(linelist[11].split(",")[0])) > depth_threhold and
                         (float(linelist[5].split(",")[1]) + float(linelist[5].split(",")[0])) > depth_threhold and

@@ -37,7 +37,7 @@ def sort_gff(gff_file):
     with open(gff_file, "r+") as filein:
         for line in filein:
             if line.startswith("#"):
-                pass
+                print line.strip()
             else:
                 seqs.append((line.strip().split("\t")))
 

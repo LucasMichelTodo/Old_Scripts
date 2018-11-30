@@ -671,30 +671,53 @@ load(file.path(dir,'xgene_estimated.RData'))
 
 ## Ratio
 
+harvies <- c("PF3D7_1418100", 
+             "PF3D7_1222600", 
+             "PF3D7_1016900", 
+             "PF3D7_1102500", 
+             "PF3D7_0936600", 
+             "PF3D7_0406200", 
+             "PF3D7_1477300", 
+             "PF3D7_0717700", 
+             "PF3D7_0812600", 
+             "PF3D7_1148600")
+
+harvies_i <- c()
+for (gene in harvies){
+  harvies_i = c(harvies_i, which(xgene@featureData@data$Gene_id == gene))
+}
+
+
+
 #for (i in 1:nrow(xgene)){
-  for (i in 1:10){
+  #for (i in 1:10){
+  for (i in harvies_i){
   print(i)
   graf <- melt(exprs(xgene)[i,])
   graf["Soca"] <- xgene@phenoData@data$soca
   graf["Time"] <- estimatedTimes
   p <- ggplot(graf, aes(x = Time, y = value, group = Soca, color = Soca))
   p <- p + geom_point() + geom_line() + coord_cartesian(ylim = c(-8, 8)) + ggtitle(xgene@featureData@data$Gene_id[i])
-  ggsave(p, file=paste0(figuresPath,"Ratio/Genes/", gsub("/", ":", xgene@featureData@data$Gene_id[i]), ".jpeg"), device = "jpeg", width = 14, height = 10, units = "cm")
-  #print(p)
+  #ggsave(p, file=paste0(figuresPath,"Ratio/Genes/", gsub("/", ":", xgene@featureData@data$Gene_id[i]), ".jpeg"), device = "jpeg", width = 14, height = 10, units = "cm")
+  print(p)
+  ggsave(p, file=paste0("/home/lucas/ISGlobal/harvie_plots/", gsub("/", ":", xgene@featureData@data$Gene_id[i]), ".jpeg"), device = "jpeg", width = 14, height = 10, units = "cm")
+  
 }
 
 ## Red Signal
 
 #for (i in 1:nrow(red_gene)){
-for (i in 1:10){
+#for (i in 1:10){
+for (i in harvies_i){
   print(i)
   graf <- melt(exprs(red_gene)[i,])
   graf["Soca"] <- red_gene@phenoData@data$soca
   graf["Time"] <- estimatedTimes
   p <- ggplot(graf, aes(x = Time, y = value, group = Soca, color = Soca))
   p <- p + geom_point() + geom_line() + coord_cartesian(ylim = c(1.5, 19)) + ggtitle(red_gene@featureData@data$Gene_id[i])
-  ggsave(p, file=paste0(figuresPath,"RedSignal/Genes/", gsub("/", ":", red_gene@featureData@data$Gene_id[i]), ".jpeg"), device = "jpeg", width = 14, height = 10, units = "cm")
-  #print(p)
+  #ggsave(p, file=paste0(figuresPath,"RedSignal/Genes/", gsub("/", ":", red_gene@featureData@data$Gene_id[i]), ".jpeg"), device = "jpeg", width = 14, height = 10, units = "cm")
+  print(p)
+  ggsave(p, file=paste0("/home/lucas/ISGlobal/harvie_plots/", gsub("/", ":", xgene@featureData@data$Gene_id[i]), ".jpeg"), device = "jpeg", width = 14, height = 10, units = "cm")
 }
 
 # Només "diferencials"
@@ -967,3 +990,12 @@ write.csv(xout,file.path(outDir,'areas_subclons.csv'),na='')
 
 
 
+
+
+############################### Comprovacions de Background i coses #######################
+
+hist(df$Ctl_1, breaks = 200)
+summary(df[df$Gene_id == "PF3D7_1222600","Ctl_1"])
+
+hist(exprs(xgene)[,2], breaks = 200)
+exprs(xgene)[rownames(exprs(xgene)) == "PF3D7_1222600",]

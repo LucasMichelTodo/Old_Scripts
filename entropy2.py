@@ -80,7 +80,24 @@ def ClustalEnt(clustal_file):
     current_seq = ""
     current_ref = ""
     #ref_order = {'TcCLB':5, 'AODP0':4, 'AYLP0':7, 'AQHO0':2, 'TcChr':8, 'Tcruz':6, 'ANOX0':1, 'TcX10':3, 'Expos':0, 'TcMAR':9}
-    ref_order = {'Tb11.':6, 'TcIL3':1, 'TvY48':2, 'TY486':2.1, 'Tb927':4, 'TevST':3, 'Tb427':5, 'Tb05.':7, 'Tb09.':8, 'Tb10.':9, 'Tb07.':10, 'Tb06.':11, 'Tb04.':12, 'Tb08.':13, 'N19B2':14, '13J3.':15, '13J1.':16, 'H25N7':17}
+    ref_order = {'Tb11.':6,
+                'TcIL3':1,
+                'TvY48':2,
+                'TY486':2.1,
+                'Tb927':4,
+                'TevST':3,
+                'Tb427':5,
+                'Tb05.':7,
+                'Tb09.':8,
+                'Tb10.':9,
+                'Tb07.':10,
+                'Tb06.':11,
+                'Tb04.':12,
+                'Tb08.':13,
+                'N19B2':14,
+                '13J3.':15,
+                '13J1.':16,
+                'H25N7':17}
 
     for record in alignment:
         #print record.seq
