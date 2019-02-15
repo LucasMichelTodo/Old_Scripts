@@ -70,13 +70,35 @@
 \section{Introducció}
 Les dades representades en aquest set de gràfiques representen l'acetilació i meilació de de les mostres 10G i 1.2B del nostre estudi de Chip-Seq. El genoma sencer de les dues mostres s'ha partit en fragments de 200bp que s'on els que conformen la base de les dades representades. Cada fragment de 200bp porta associada informació respecte el gen a què correspon, l'estat d'acetilació i metilació i si correspon a una zona 3',5' o ORF. 
 \clearpage
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in library(pscl): there is no package called 'pscl'}}
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in library(XLConnect): there is no package called 'XLConnect'}}\end{kframe}
+\end{knitrout}
 
 
 
 
 
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 
 
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in readWorksheetFromFile("{}/home/lucas/ISGlobal/Chip\_Seq/Transcripció\_CSV/3D7\_Variantome\_AllData\_withGam.xls"{}, : could not find function "{}readWorksheetFromFile"{}}}
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in eval(expr, envir, enclos): object 'trans\_df' not found}}
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in eval(expr, envir, enclos): object 'trans\_df' not found}}
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in eval(expr, envir, enclos): object 'trans\_df' not found}}
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in ref\$ID \%in\% noexprs: object 'noexprs' not found}}
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in eval(expr, envir, enclos): object 'noexprs\_df' not found}}\end{kframe}
+\end{knitrout}
 
 \section{Histogrames}
 En primer lloc hem representat la distribució dels valors d'acetilació i de metilació als fragments (de 10G). (Archiu "Coverage\_10G\_200bp.csv", 116656 fragments corresponents al genoma sencer. Coverage directament del "bam" nomralitzat per nombre de reads.)
@@ -185,14 +207,10 @@ Hem classificat els gens com a variants utilitzant una llista obtiniguda en un e
 \subsection{Transcripció i Metilació}
 Per a poder classificar els gens com a variants actius/inactius peimer hem mirat la distribució de les dades de transcripció i les de metilació. (amb l'idea de trobar llindars per a expressat/no expressat, metilat/no metilat).
 \begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
-
-{\centering \includegraphics[width=1\linewidth]{figure/minimal-trans_histo-1} 
-
-}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 
 
-
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in ggplot(trans\_df, aes(log(trans\_df\$Aver.2Higher10G.))): object 'trans\_df' not found}}\end{kframe}
 \end{knitrout}
 \clearpage
 \begin{knitrout}
@@ -319,8 +337,8 @@ Finalment hem volgut comprovar si amb les dades de metilació i acetilació podi
 ## Model 1: Variant ~ Ac + Met + Type + Start + Stop + silenced + noexprs
 ## Model 2: Variant ~ Ac + Met + Type + Start + Stop
 ##   Resid. Df Resid. Dev Df Deviance  Pr(>Chi)    
-## 1      8477     5712.6                          
-## 2      8479     6336.7 -2  -624.06 < 2.2e-16 ***
+## 1      8478     5697.8                          
+## 2      8479     6339.3 -1  -641.59 < 2.2e-16 ***
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ## 
@@ -330,61 +348,56 @@ Finalment hem volgut comprovar si amb les dades de metilació i acetilació podi
 ## 
 ## Deviance Residuals: 
 ##     Min       1Q   Median       3Q      Max  
-## -5.3553  -0.7750   0.0026   0.2062   2.8502  
+## -7.5153  -0.7720   0.0073   0.1886   3.0433  
 ## 
-## Coefficients: (1 not defined because of singularities)
+## Coefficients: (2 not defined because of singularities)
 ##                Estimate Std. Error z value Pr(>|z|)    
-## (Intercept)   5.613e-01  9.669e-02   5.805 6.45e-09 ***
-## Ac           -1.226e-04  9.374e-06 -13.080  < 2e-16 ***
-## Met           3.801e-04  2.959e-05  12.846  < 2e-16 ***
-## Type5prima   -2.872e-01  9.780e-02  -2.937  0.00332 ** 
-## TypeORF      -9.936e-01  8.504e-02 -11.683  < 2e-16 ***
-## Typeother    -2.807e+01  2.422e+02  -0.116  0.90774    
-## Start        -2.061e-07  4.209e-08  -4.898 9.68e-07 ***
+## (Intercept)   8.063e-01  9.816e-02   8.214  < 2e-16 ***
+## Ac           -1.297e-04  9.454e-06 -13.720  < 2e-16 ***
+## Met           3.064e-04  2.234e-05  13.715  < 2e-16 ***
+## Type5prima   -3.511e-01  9.901e-02  -3.546 0.000391 ***
+## TypeORF      -1.102e+00  8.637e-02 -12.758  < 2e-16 ***
+## Typeother    -3.843e+01  1.200e+03  -0.032 0.974462    
+## Start        -2.501e-07  4.152e-08  -6.025 1.69e-09 ***
 ## Stop                 NA         NA      NA       NA    
-## silencedTRUE  3.532e+00  2.400e-01  14.716  < 2e-16 ***
-## noexprsTRUE   1.128e+00  2.241e-01   5.033 4.82e-07 ***
+## silencedTRUE  4.148e+00  2.997e-01  13.840  < 2e-16 ***
+## noexprsTRUE          NA         NA      NA       NA    
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ## 
 ## (Dispersion parameter for binomial family taken to be 1)
 ## 
-##     Null deviance: 11213.4  on 8485  degrees of freedom
-## Residual deviance:  5712.6  on 8477  degrees of freedom
-## AIC: 5730.6
+##     Null deviance: 11150.5  on 8485  degrees of freedom
+## Residual deviance:  5697.8  on 8478  degrees of freedom
+## AIC: 5713.8
 ## 
-## Number of Fisher Scoring iterations: 17
+## Number of Fisher Scoring iterations: 20
 ##        
 ##         FALSE TRUE
-##   FALSE  2996  201
-##   TRUE   1071 4395
-## [1] "Accuracy 0.85316864827427"
-## [1] "Accuracy of null model 0.500865750894609"
+##   FALSE  2965  291
+##   TRUE   1046 4361
+## [1] "Accuracy 0.845665473854323"
+## [1] "Accuracy of null model 0.495786678979568"
 \end{verbatim}
 
 
-{\ttfamily\noindent\itshape\color{messagecolor}{\#\# Loading required package: gplots}}
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in library(ROCR): there is no package called 'ROCR'}}
 
-{\ttfamily\noindent\itshape\color{messagecolor}{\#\# \\\#\# Attaching package: 'gplots'}}
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in prediction(predict, train\_df\$Variant): could not find function "{}prediction"{}}}
 
-{\ttfamily\noindent\itshape\color{messagecolor}{\#\# The following object is masked from 'package:stats':\\\#\# \\\#\#\ \ \ \  lowess}}\begin{verbatim}
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in performance(ROCRpred, "{}tpr"{}, "{}fpr"{}): could not find function "{}performance"{}}}
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in plot(ROCRperf, colorize = TRUE, text.adj = c(-0.2, 1.7)): object 'ROCRperf' not found}}\begin{verbatim}
+## 
+## 3prima 5prima    ORF  other 
+##    170    104     16      1
 ## 
 ## 3prima 5prima    ORF 
-##    134     54     13
-## 
-## 3prima 5prima    ORF 
-##    159    238    674
-##           llh       llhNull            G2      McFadden          r2ML          r2CU 
-## -2856.3024782 -5606.6952945  5500.7856326     0.4905551     0.4770236     0.6505712
+##    138    197    711
 \end{verbatim}
-\end{kframe}
-
-{\centering \includegraphics[width=\maxwidth]{figure/minimal-model-1} 
-
-}
 
 
-
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in pR2(model): could not find function "{}pR2"{}}}\end{kframe}
 \end{knitrout}
 
 

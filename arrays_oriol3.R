@@ -306,12 +306,12 @@ arrayPlot <- function(df) {
   print(p3)
 }
 
-# arrayPlot(ind_1_1)
-# arrayPlot(ind_1_2)
-# arrayPlot(ind_1_3)
-# arrayPlot(ctl_2_1)
-# arrayPlot(ctl_2_2)
-# arrayPlot(ctl_2_3)
+arrayPlot(ind_1_1)
+arrayPlot(ind_1_2)
+arrayPlot(ind_1_3)
+arrayPlot(ctl_2_1)
+arrayPlot(ctl_2_2)
+arrayPlot(ctl_2_3)
 
 ############################### HEATMAPS #########################################################
 

@@ -1,0 +1,956 @@
+\documentclass{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage{hyperref}
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{multirow}
+\usepackage[table]{xcolor}
+\usepackage{wrapfig}
+\usepackage{float}
+\usepackage{colortbl}
+\usepackage{pdflscape}
+\usepackage{tabu}
+\usepackage{threeparttable}
+\usepackage{threeparttablex}
+\usepackage[normalem]{ulem}
+\usepackage{makecell}
+
+\hypersetup{
+    linktocpage,
+    colorlinks=true, 
+    linkcolor=blue,
+    citecolor=blue,
+    filecolor=blue,
+    urlcolor=blue
+}
+
+\begin{document}
+
+<<setup, include=FALSE, cache=FALSE>>=
+
+source("http://bioconductor.org/biocLite.R")
+if (!requireNamespace("BiocManager"))
+    install.packages("BiocManager")
+#BiocManager::install("Biobase")
+
+#install.packages(c("reshape2", "ggplot2", "gplots", "ggfortify", "VennDiagram", "dplyr", "tidyr", "gridExtra", "pca3d", "venneuler", "ggdendro", "kableExtra"))
+
+library(Biobase)
+library(reshape2)
+library(ggplot2)
+library(gplots)
+library(ggfortify)
+library(VennDiagram)
+library(dplyr)
+library(tidyr)
+library(gridExtra)
+library(pca3d)
+library(venneuler)
+library(ggdendro)
+library(kableExtra)
+
+
+load("/home/lucas/ISGlobal/Arrays/Eli_Arrays/imputedData_geneLevel.RData")
+load("/home/lucas/ISGlobal/Arrays/Eli_Arrays/normalizedData_geneLevel.RData")
+
+noNAimputed <- exprs(xgene_impute)[complete.cases(exprs(xgene_impute)),]
+noNAfeatureData <- xgene_impute[complete.cases(exprs(xgene_impute)),]@featureData@data
+
+write.table(noNAfeatureData, file = "/media/lucas/Disc4T/Projects/Arrays_Eli/noNA_imputed_featureData.tsv", sep = "\t", row.names = T)
+write.table(noNAimputed, file = "/media/lucas/Disc4T/Projects/Arrays_Eli/noNA_imputed.tsv", sep = "\t", row.names = T)
+
+figPath = "/media/lucas/Disc4T/Projects/Arrays_Eli/Arrays/Plots/"
+dirPath = "/media/lucas/Disc4T/Projects/Arrays_Eli/Arrays/"
+
+updown_num <- 50
+
+# set global chunk options
+opts_chunk$set(fig.path='figure/minimal-', fig.align='center', fig.show='hold')
+options(formatR.arrow=TRUE, width=90)
+@
+  
+\title{Heatschock Arrays}
+\author{Elisabet Tintó, Lucas Michel Todó}
+\maketitle
+\tableofcontents
+\clearpage
+
+%%%%------------------------------------------------FC------------------------------------------------%%%%
+
+\section{Imputed FC}
+
+<<imputed_fc, warning=FALSE, fig.align='center', out.width="1\\linewidth", echo = FALSE>>=
+## 10E
+eset_10E <- xgene_impute[,xgene_impute@phenoData@data$subclone == "s10E"]
+
+df_10E_CTL <- exprs(eset_10E)[,eset_10E@phenoData@data$status == "CTL"]
+df_10E_HS <- exprs(eset_10E)[,eset_10E@phenoData@data$status == "HS"]
+
+df_DIF_10E <- df_10E_HS-df_10E_CTL
+df_DIF_10E <- data.frame(df_DIF_10E)
+
+df_DIF_10E$Max_Dif <- as.numeric(apply(df_DIF_10E, 1, function(x) x[which.max(abs(x))]))
+
+df_DIF_10E$Gene <- rownames(df_DIF_10E)
+df_DIF_10E$Annot <- xgene_impute@featureData@data$Annot
+
+imputed_10E_difs <- arrange(df_DIF_10E, -abs(Max_Dif))
+updown_10E <- arrange(rbind(arrange(df_DIF_10E, -Max_Dif)[1:updown_num,], arrange(df_DIF_10E, Max_Dif)[1:updown_num,]), -Max_Dif)
+
+## 10G
+eset_10G <- xgene_impute[,xgene_impute@phenoData@data$subclone == "s10G"]
+
+df_10G_CTL <- exprs(eset_10G)[,eset_10G@phenoData@data$status == "CTL"]
+df_10G_HS <- exprs(eset_10G)[,eset_10G@phenoData@data$status == "HS"]
+
+df_DIF_10G <- df_10G_HS-df_10G_CTL
+df_DIF_10G <- data.frame(df_DIF_10G)
+
+df_DIF_10G$Max_Dif <- as.numeric(apply(df_DIF_10G, 1, function(x) x[which.max(abs(x))]))
+
+df_DIF_10G$Gene <- rownames(df_DIF_10G)
+df_DIF_10G$Annot <- xgene_impute@featureData@data$Annot
+
+imputed_10G_difs <- arrange(df_DIF_10G, -abs(Max_Dif))
+updown_10G <- arrange(rbind(arrange(df_DIF_10G, -Max_Dif)[1:updown_num,], arrange(df_DIF_10G, Max_Dif)[1:updown_num,]), -Max_Dif)
+
+## EK0
+eset_EK0 <- xgene_impute[,xgene_impute@phenoData@data$subclone == "EK0"]
+
+df_EK0_CTL <- exprs(eset_EK0)[,eset_EK0@phenoData@data$status == "CTL"]
+df_EK0_HS <- exprs(eset_EK0)[,eset_EK0@phenoData@data$status == "HS"]
+
+df_DIF_EK0 <- df_EK0_HS-df_EK0_CTL
+df_DIF_EK0 <- data.frame(df_DIF_EK0)
+
+df_DIF_EK0$Max_Dif <- as.numeric(apply(df_DIF_EK0, 1, function(x) x[which.max(abs(x))]))
+
+df_DIF_EK0$Gene <- rownames(df_DIF_EK0)
+df_DIF_EK0$Annot <- xgene_impute@featureData@data$Annot
+
+imputed_EK0_difs <- arrange(df_DIF_EK0, -abs(Max_Dif))
+updown_EK0 <- arrange(rbind(arrange(df_DIF_EK0, -Max_Dif)[1:updown_num,], arrange(df_DIF_EK0, Max_Dif)[1:updown_num,]), -Max_Dif)
+@
+\subsection{10E FC}
+<<10E_fc, warning=FALSE, fig.align='center', out.width="1\\linewidth", echo = FALSE>>=
+kable(imputed_10E_difs[1:50,-1], "latex", booktabs = TRUE) %>% kable_styling(latex_options =c("striped", "scale_down"))
+@
+\clearpage
+\subsection{10G FC}
+<<10G_fc, warning=FALSE, fig.align='center', out.width="1\\linewidth", echo = FALSE>>=
+kable(imputed_10G_difs[1:50,-1], "latex", booktabs = TRUE) %>% kable_styling(latex_options =c("striped", "scale_down"))
+@
+\clearpage
+\subsection{EK0 FC}
+<<EK0_fc, warning=FALSE, fig.align='center', out.width="1\\linewidth", echo = FALSE>>=
+kable(imputed_EK0_difs[1:50,-1], "latex", booktabs = TRUE) %>% kable_styling(latex_options =c("striped", "scale_down"))
+@
+\clearpage
+
+
+%%%%------------------------------------------------VENNS------------------------------------------------%%%%
+
+\section{Venn Diagrams}
+
+\subsection{Max.FC (any timepoint) $>4$ FC}
+\subsubsection{Up-regulated}
+<<venn_alltimes_3fc_up, warning=FALSE, message=FALSE, out.width="1\\linewidth", echo = FALSE, warning=FALSE>>=
+## Top 50 deprecated
+
+# imputed_10E_difs[1:50,]$Gene
+# imputed_10G_difs[1:50,]$Gene
+# imputed_EK0_difs[1:50,]$Gene
+# 
+# s10E_s10G <- intersect(imputed_10E_difs[1:50,]$Gene, imputed_10G_difs[1:50,]$Gene)
+# s10G_EK0 <- intersect(imputed_10G_difs[1:50,]$Gene, imputed_EK0_difs[1:50,]$Gene)
+# s10E_EK0 <- intersect(imputed_10E_difs[1:50,]$Gene, imputed_EK0_difs[1:50,]$Gene)
+# s10E_s10G_EK0 <- intersect(intersect(imputed_10E_difs[1:50,]$Gene, imputed_10G_difs[1:50,]$Gene), imputed_EK0_difs[1:50,]$Gene)
+# 
+# grid.newpage()
+# d <- draw.triple.venn(area1 = 50, area2 = 50, area3 = 50, n12 = length(s10E_s10G), n23 = length(s10G_EK0), n13 = length(s10E_EK0),
+#                  n123 = length(s10E_s10G_EK0), category = c("10E", "10G", "EK0"), lty = "blank",
+#                  fill = c("#009688", "#FFC107", "#CDDC39"))
+# 
+# top10E <- imputed_10E_difs[1:50,]
+# 
+# ## Only 10E genes (AP2-GHS targets?)
+# top10E[!top10E$Gene %in% s10E_s10G & !top10E$Gene %in% s10E_EK0,]
+
+#### Max. Fold-Change (any TP) ####
+## >3 FC genes
+top_10E_up <- imputed_10E_difs[imputed_10E_difs$Max_Dif > log2(4) & !is.na(imputed_10E_difs$Max_Dif),]
+top_10G_up <- imputed_10G_difs[imputed_10G_difs$Max_Dif > log2(4) & !is.na(imputed_10G_difs$Max_Dif),]
+top_EK0_up <- imputed_EK0_difs[imputed_EK0_difs$Max_Dif > log2(4) & !is.na(imputed_EK0_difs$Max_Dif),]
+
+
+s10E_s10G <- intersect(top_10E_up$Gene, top_10G_up$Gene)
+s10G_EK0 <- intersect(top_10G_up$Gene, top_EK0_up$Gene)
+s10E_EK0 <- intersect(top_10E_up$Gene,top_EK0_up$Gene)
+s10E_s10G_EK0 <- intersect(intersect(top_10E_up$Gene, top_10G_up$Gene), top_EK0_up$Gene)
+@
+<<venn_alltimes_3fc_up_venn, warning=FALSE, message=FALSE, out.width="1\\linewidth", out.height=".4\\textheight", echo = FALSE>>=
+grid.newpage()
+d <- draw.triple.venn(area1 = dim(top_10E_up)[1], 
+                 area2 = dim(top_10G_up)[1], 
+                 area3 = dim(top_EK0_up)[1], 
+                 n12 = length(s10E_s10G), n23 = length(s10G_EK0), n13 = length(s10E_EK0),
+                 n123 = length(s10E_s10G_EK0), category = c("10E", "10G(Q3417X)", expression("10E_"*Delta*"ap2-hs")), 
+                 lty = "blank", fill = c("#619CFF", "#F8766D", "#00BA38"), alpha = 0.5,
+                 fontfamily = "sans",
+                 cat.fontfamily = "sans")
+
+ggsave(d, filename = paste0(figPath, "venn_all_up.png"), device = "png", dpi = "retina")
+@
+<<venn_alltimes_3fc_up_euler, warning=FALSE, message=FALSE, out.width="1\\linewidth", out.height=".4\\textheight", echo = FALSE>>=
+e <- venneuler(c("10E" = dim(top_10E_up)[1], "10G" = dim(top_10G_up)[1], "EK0" = dim(top_EK0_up)[1],
+                 "10E&10G" = length(s10E_s10G),
+                 "10G&EK0" = length(s10G_EK0),
+                 "10E&EK0" = length(s10E_EK0),
+                 "10E&10G&EK0" = length(s10E_s10G_EK0)))
+plot(e)
+@
+\clearpage
+\subsubsection{Down-regulated}
+<<venn_alltimes_3fc_down, warning=FALSE, message=FALSE, out.width="1\\linewidth", echo = FALSE>>=
+## <1/3 FC genes
+top_10E_down <- imputed_10E_difs[imputed_10E_difs$Max_Dif < log2(1/4) & !is.na(imputed_10E_difs$Max_Dif),]
+top_10G_down <- imputed_10G_difs[imputed_10G_difs$Max_Dif < log2(1/4) & !is.na(imputed_10G_difs$Max_Dif),]
+top_EK0_down <- imputed_EK0_difs[imputed_EK0_difs$Max_Dif < log2(1/4) & !is.na(imputed_EK0_difs$Max_Dif),]
+
+
+s10E_s10G <- intersect(top_10E_down$Gene, top_10G_down$Gene)
+s10G_EK0 <- intersect(top_10G_down$Gene, top_EK0_down$Gene)
+s10E_EK0 <- intersect(top_10E_down$Gene,top_EK0_down$Gene)
+s10E_s10G_EK0 <- intersect(intersect(top_10E_down$Gene, top_10G_down$Gene), top_EK0_down$Gene)
+@
+<<venn_alltimes_3fc_down_venn, warning=FALSE, message=FALSE, out.width="1\\linewidth", out.height=".4\\textheight", echo = FALSE>>=
+grid.newpage()
+d <- draw.triple.venn(area1 = dim(top_10E_down)[1], area2 = dim(top_10G_down)[1], area3 = dim(top_EK0_down)[1], n12 = length(s10E_s10G), n23 = length(s10G_EK0), n13 = length(s10E_EK0),
+                 n123 = length(s10E_s10G_EK0), category = c("10E", "10G(Q3417X)", expression("10E_"*Delta*"ap2-hs")), 
+                 lty = "blank", fill = c("#619CFF", "#F8766D", "#00BA38"), alpha = 0.5,
+                 fontfamily = "sans",
+                 cat.fontfamily = "sans")
+
+ggsave(d, filename = paste0(figPath, "venn_all_dw.png"), device = "png", dpi = "retina")
+@
+<<venn_alltimes_3fc_down_euler, warning=FALSE, message=FALSE, out.width="1\\linewidth", out.height=".4\\textheight", echo = FALSE>>=
+v <- venneuler(c("10E" = dim(top_10E_down)[1], "10G" = dim(top_10G_down)[1], "EK0" = dim(top_EK0_down)[1],
+                 "10E&10G" = length(s10E_s10G),
+                 "10G&EK0" = length(s10G_EK0),
+                 "10E&EK0" = length(s10E_EK0),
+                 "10E&10G&EK0" = length(s10E_s10G_EK0)))
+plot(v)
+@
+\clearpage
+
+\subsection{Max.FC T1 $>4$ FC}
+\subsubsection{Up-regulated}
+<<venn_t1_3fc_up, warning=FALSE, fig.align='center', out.width="1\\linewidth", echo = FALSE>>=
+#### Fold-Change by TP ####
+## >3 FC in TP 1 genes
+top_10E_up <- imputed_10E_difs[imputed_10E_difs$s10E_T1_HS > log2(4) & !is.na(imputed_10E_difs$Max_Dif),]
+top_10G_up <- imputed_10G_difs[imputed_10G_difs$s10G_T1_HS > log2(4) & !is.na(imputed_10G_difs$Max_Dif),]
+top_EK0_up <- imputed_EK0_difs[imputed_EK0_difs$EK0_T1_HS > log2(4) & !is.na(imputed_EK0_difs$Max_Dif),]
+
+
+s10E_s10G <- intersect(top_10E_up$Gene, top_10G_up$Gene)
+s10G_EK0 <- intersect(top_10G_up$Gene, top_EK0_up$Gene)
+s10E_EK0 <- intersect(top_10E_up$Gene,top_EK0_up$Gene)
+s10E_s10G_EK0 <- intersect(intersect(top_10E_up$Gene, top_10G_up$Gene), top_EK0_up$Gene)
+@
+<<venn_t1_3fc_up_venn, warning=FALSE, message=FALSE, out.width="1\\linewidth", out.height=".4\\textheight", echo = FALSE>>=
+grid.newpage()
+d <- draw.triple.venn(area1 = dim(top_10E_up)[1], area2 = dim(top_10G_up)[1], area3 = dim(top_EK0_up)[1], n12 = length(s10E_s10G), n23 = length(s10G_EK0), n13 = length(s10E_EK0),
+                 n123 = length(s10E_s10G_EK0), category = c("10E", "10G(Q3417X)", expression("10E_"*Delta*"ap2-hs")), 
+                 lty = "blank", fill = c("#619CFF", "#F8766D", "#00BA38"), alpha = 0.5,
+                 fontfamily = "sans",
+                 cat.fontfamily = "sans")
+
+ggsave(d, filename = paste0(figPath, "venn_t1_up.png"), device = "png", dpi = "retina")
+@
+<<venn_t1_3fc_up_euler, warning=FALSE, message=FALSE, out.width="1\\linewidth", out.height=".4\\textheight", echo = FALSE>>=
+v <- venneuler(c("10E" = dim(top_10E_up)[1], "10G" = dim(top_10G_up)[1], "EK0" = dim(top_EK0_up)[1],
+                 "10E&10G" = length(s10E_s10G),
+                 "10G&EK0" = length(s10G_EK0),
+                 "10E&EK0" = length(s10E_EK0),
+                 "10E&10G&EK0" = length(s10E_s10G_EK0)))
+plot(v)
+@
+\clearpage
+\subsubsection{Down-regulated}
+<<venn_t1_3fc_down, warning=FALSE, fig.align='center', out.width="1\\linewidth", echo = FALSE>>=
+## <1/3 FC genes
+top_10E_down <- imputed_10E_difs[imputed_10E_difs$s10E_T1_HS < log2(1/4) & !is.na(imputed_10E_difs$Max_Dif),]
+top_10G_down <- imputed_10G_difs[imputed_10G_difs$s10G_T1_HS < log2(1/4) & !is.na(imputed_10G_difs$Max_Dif),]
+top_EK0_down <- imputed_EK0_difs[imputed_EK0_difs$EK0_T1_HS < log2(1/4) & !is.na(imputed_EK0_difs$Max_Dif),]
+
+
+s10E_s10G <- intersect(top_10E_down$Gene, top_10G_down$Gene)
+s10G_EK0 <- intersect(top_10G_down$Gene, top_EK0_down$Gene)
+s10E_EK0 <- intersect(top_10E_down$Gene,top_EK0_down$Gene)
+s10E_s10G_EK0 <- intersect(intersect(top_10E_down$Gene, top_10G_down$Gene), top_EK0_down$Gene)
+@
+<<venn_t1_3fc_down_venn, warning=FALSE, message=FALSE, out.width="1\\linewidth", out.height=".4\\textheight", echo = FALSE>>=
+grid.newpage()
+d <- draw.triple.venn(area1 = dim(top_10E_down)[1], area2 = dim(top_10G_down)[1], area3 = dim(top_EK0_down)[1], n12 = length(s10E_s10G), n23 = length(s10G_EK0), n13 = length(s10E_EK0),
+                 n123 = length(s10E_s10G_EK0), category = c("10E", "10G(Q3417X)", expression("10E_"*Delta*"ap2-hs")), 
+                 lty = "blank", fill = c("#619CFF", "#F8766D", "#00BA38"), alpha = 0.5,
+                 fontfamily = "sans",
+                 cat.fontfamily = "sans")
+
+ggsave(d, filename = paste0(figPath, "venn_t1_dw.png"), device = "png", dpi = "retina")
+@
+<<venn_t1_3fc_down_euler, warning=FALSE, message=FALSE, out.width="1\\linewidth", out.height=".4\\textheight", echo = FALSE>>=
+v <- venneuler(c("10E" = dim(top_10E_down)[1], "10G" = dim(top_10G_down)[1], "EK0" = dim(top_EK0_down)[1],
+                 "10E&10G" = length(s10E_s10G),
+                 "10G&EK0" = length(s10G_EK0),
+                 "10E&EK0" = length(s10E_EK0),
+                 "10E&10G&EK0" = length(s10E_s10G_EK0)))
+plot(v)
+@
+\clearpage
+
+\subsection{Max.FC T2 $>4$ FC}
+\subsubsection{Up-regulated}
+<<venn_t2_3fc_up, warning=FALSE, fig.align='center', out.width="1\\linewidth", echo = FALSE>>=
+## >3 FC in TP 2 genes
+top_10E_up <- imputed_10E_difs[imputed_10E_difs$s10E_T2_HS > log2(4) & !is.na(imputed_10E_difs$Max_Dif),]
+top_10G_up <- imputed_10G_difs[imputed_10G_difs$s10G_T2_HS > log2(4) & !is.na(imputed_10G_difs$Max_Dif),]
+top_EK0_up <- imputed_EK0_difs[imputed_EK0_difs$EK0_T2_HS > log2(4) & !is.na(imputed_EK0_difs$Max_Dif),]
+
+
+s10E_s10G <- intersect(top_10E_up$Gene, top_10G_up$Gene)
+s10G_EK0 <- intersect(top_10G_up$Gene, top_EK0_up$Gene)
+s10E_EK0 <- intersect(top_10E_up$Gene,top_EK0_up$Gene)
+s10E_s10G_EK0 <- intersect(intersect(top_10E_up$Gene, top_10G_up$Gene), top_EK0_up$Gene)
+@
+<<venn_t2_3fc_up_venn, warning=FALSE, message=FALSE, out.width="1\\linewidth", out.height=".4\\textheight", echo = FALSE>>=
+grid.newpage()
+d <- draw.triple.venn(area1 = dim(top_10E_up)[1], area2 = dim(top_10G_up)[1], area3 = dim(top_EK0_up)[1], n12 = length(s10E_s10G), n23 = length(s10G_EK0), n13 = length(s10E_EK0),
+                 n123 = length(s10E_s10G_EK0), category = c("10E", "10G(Q3417X)", expression("10E_"*Delta*"ap2-hs")), 
+                 lty = "blank", fill = c("#619CFF", "#F8766D", "#00BA38"), alpha = 0.5,
+                 fontfamily = "sans",
+                 cat.fontfamily = "sans")
+
+ggsave(d, filename = paste0(figPath, "venn_t2_up.png"), device = "png", dpi = "retina")
+@
+<<venn_t2_3fc_up_euler, warning=FALSE, message=FALSE, out.width="1\\linewidth", out.height=".4\\textheight", echo = FALSE>>=
+v <- venneuler(c("10E" = dim(top_10E_up)[1], "10G" = dim(top_10G_up)[1], "EK0" = dim(top_EK0_up)[1],
+                 "10E&10G" = length(s10E_s10G),
+                 "10G&EK0" = length(s10G_EK0),
+                 "10E&EK0" = length(s10E_EK0),
+                 "10E&10G&EK0" = length(s10E_s10G_EK0)))
+plot(v)
+@
+\clearpage
+\subsubsection{Down-Regulated}
+<<venn_t2_3fc_down, warning=FALSE, fig.align='center', out.width="1\\linewidth", echo = FALSE>>=
+## <1/3 FC genes
+top_10E_down <- imputed_10E_difs[imputed_10E_difs$s10E_T2_HS < log2(1/4) & !is.na(imputed_10E_difs$Max_Dif),]
+top_10G_down <- imputed_10G_difs[imputed_10G_difs$s10G_T2_HS < log2(1/4) & !is.na(imputed_10G_difs$Max_Dif),]
+top_EK0_down <- imputed_EK0_difs[imputed_EK0_difs$EK0_T2_HS < log2(1/4) & !is.na(imputed_EK0_difs$Max_Dif),]
+
+
+s10E_s10G <- intersect(top_10E_down$Gene, top_10G_down$Gene)
+s10G_EK0 <- intersect(top_10G_down$Gene, top_EK0_down$Gene)
+s10E_EK0 <- intersect(top_10E_down$Gene,top_EK0_down$Gene)
+s10E_s10G_EK0 <- intersect(intersect(top_10E_down$Gene, top_10G_down$Gene), top_EK0_down$Gene)
+@
+<<venn_t2_3fc_down_venn, warning=FALSE, message=FALSE, out.width="1\\linewidth", out.height=".4\\textheight", echo = FALSE>>=
+grid.newpage()
+d <- draw.triple.venn(area1 = dim(top_10E_down)[1], area2 = dim(top_10G_down)[1], area3 = dim(top_EK0_down)[1], n12 = length(s10E_s10G), n23 = length(s10G_EK0), n13 = length(s10E_EK0),
+                 n123 = length(s10E_s10G_EK0), category = c("10E", "10G(Q3417X)", expression("10E_"*Delta*"ap2-hs")), 
+                 lty = "blank", fill = c("#619CFF", "#F8766D", "#00BA38"), alpha = 0.5,
+                 fontfamily = "sans",
+                 cat.fontfamily = "sans")
+
+ggsave(d, filename = paste0(figPath, "venn_t2_dw.png"), device = "png", dpi = "retina")
+@
+<<venn_t2_3fc_down_euler, warning=FALSE, message=FALSE, out.width="1\\linewidth", out.height=".4\\textheight", echo = FALSE>>=
+v <- venneuler(c("10E" = dim(top_10E_down)[1], "10G" = dim(top_10G_down)[1], "EK0" = dim(top_EK0_down)[1],
+                 "10E&10G" = length(s10E_s10G),
+                 "10G&EK0" = length(s10G_EK0),
+                 "10E&EK0" = length(s10E_EK0),
+                 "10E&10G&EK0" = length(s10E_s10G_EK0)))
+plot(v)
+@
+\clearpage
+
+\subsection{Max.FC T3 $>4$ FC}
+\subsubsection{Up-regulated}
+<<venn_t3_3fc_up, warning=FALSE, fig.align='center', out.width="1\\linewidth", echo = FALSE>>=
+## >3 FC in TP 3 genes
+top_10E_up <- imputed_10E_difs[imputed_10E_difs$s10E_T3_HS > log2(4) & !is.na(imputed_10E_difs$Max_Dif),]
+top_10G_up <- imputed_10G_difs[imputed_10G_difs$s10G_T3_HS > log2(4) & !is.na(imputed_10G_difs$Max_Dif),]
+top_EK0_up <- imputed_EK0_difs[imputed_EK0_difs$EK0_T3_HS > log2(4) & !is.na(imputed_EK0_difs$Max_Dif),]
+
+
+s10E_s10G <- intersect(top_10E_up$Gene, top_10G_up$Gene)
+s10G_EK0 <- intersect(top_10G_up$Gene, top_EK0_up$Gene)
+s10E_EK0 <- intersect(top_10E_up$Gene,top_EK0_up$Gene)
+s10E_s10G_EK0 <- intersect(intersect(top_10E_up$Gene, top_10G_up$Gene), top_EK0_up$Gene)
+@
+<<venn_t3_3fc_up_venn, warning=FALSE, message=FALSE, out.width="1\\linewidth", out.height=".4\\textheight", echo = FALSE>>=
+grid.newpage()
+d <- draw.triple.venn(area1 = dim(top_10E_up)[1], area2 = dim(top_10G_up)[1], area3 = dim(top_EK0_up)[1], n12 = length(s10E_s10G), n23 = length(s10G_EK0), n13 = length(s10E_EK0),
+                 n123 = length(s10E_s10G_EK0), category = c("10E", "10G(Q3417X)", expression("10E_"*Delta*"ap2-hs")), 
+                 lty = "blank", fill = c("#619CFF", "#F8766D", "#00BA38"), alpha = 0.5,
+                 fontfamily = "sans",
+                 cat.fontfamily = "sans")
+
+ggsave(d, filename = paste0(figPath, "venn_t3_up.png"), device = "png", dpi = "retina")
+@
+<<venn_t3_3fc_up_euler, warning=FALSE, message=FALSE, out.width="1\\linewidth", out.height=".4\\textheight", echo = FALSE>>=
+v <- venneuler(c("10E" = dim(top_10E_up)[1], "10G" = dim(top_10G_up)[1], "EK0" = dim(top_EK0_up)[1],
+                 "10E&10G" = length(s10E_s10G),
+                 "10G&EK0" = length(s10G_EK0),
+                 "10E&EK0" = length(s10E_EK0),
+                 "10E&10G&EK0" = length(s10E_s10G_EK0)))
+plot(v)
+@
+\clearpage
+\subsubsection{Down-Regulated}
+<<venn_t3_3fc_down, warning=FALSE, fig.align='center', out.width="1\\linewidth", echo = FALSE>>=
+## <1/3 FC genes
+top_10E_down <- imputed_10E_difs[imputed_10E_difs$s10E_T3_HS < log2(1/4) & !is.na(imputed_10E_difs$Max_Dif),]
+top_10G_down <- imputed_10G_difs[imputed_10G_difs$s10G_T3_HS < log2(1/4) & !is.na(imputed_10G_difs$Max_Dif),]
+top_EK0_down <- imputed_EK0_difs[imputed_EK0_difs$EK0_T3_HS < log2(1/4) & !is.na(imputed_EK0_difs$Max_Dif),]
+
+
+s10E_s10G <- intersect(top_10E_down$Gene, top_10G_down$Gene)
+s10G_EK0 <- intersect(top_10G_down$Gene, top_EK0_down$Gene)
+s10E_EK0 <- intersect(top_10E_down$Gene,top_EK0_down$Gene)
+s10E_s10G_EK0 <- intersect(intersect(top_10E_down$Gene, top_10G_down$Gene), top_EK0_down$Gene)
+@
+<<venn_t3_3fc_down_venn, warning=FALSE, message=FALSE, out.width="1\\linewidth", out.height=".4\\textheight", echo = FALSE>>=
+grid.newpage()
+d <- draw.triple.venn(area1 = dim(top_10E_down)[1], area2 = dim(top_10G_down)[1], area3 = dim(top_EK0_down)[1], n12 = length(s10E_s10G), n23 = length(s10G_EK0), n13 = length(s10E_EK0),
+                 n123 = length(s10E_s10G_EK0), category = c("10E", "10G(Q3417X)", expression("10E_"*Delta*"ap2-hs")), 
+                 lty = "blank", fill = c("#619CFF", "#F8766D", "#00BA38"), alpha = 0.5,
+                 fontfamily = "sans",
+                 cat.fontfamily = "sans")
+
+ggsave(d, filename = paste0(figPath, "venn_t3_dw.png"), device = "png", dpi = "retina")
+@
+<<venn_t3_3fc_down_euler, warning=FALSE, message=FALSE, out.width="1\\linewidth", out.height=".4\\textheight", echo = FALSE>>=
+v <- venneuler(c("10E" = dim(top_10E_down)[1], "10G" = dim(top_10G_down)[1], "EK0" = dim(top_EK0_down)[1],
+                 "10E&10G" = length(s10E_s10G),
+                 "10G&EK0" = length(s10G_EK0),
+                 "10E&EK0" = length(s10E_EK0),
+                 "10E&10G&EK0" = length(s10E_s10G_EK0)))
+plot(v)
+
+@
+\clearpage
+
+
+
+%%%%------------------------------------------------CUSTOM------------------------------------------------%%%%
+
+
+
+\section{Example Custom Plot}
+<<custom_plots, warning=FALSE, fig.align='center', out.width="1\\linewidth", echo = FALSE>>=
+##Plots
+#for (i in 1:nrow(exprs(xgene))){
+for (i in 1:1){
+  #print(i)
+  graf <- melt(exprs(xgene)[i,])
+  graf["Time"] <- xgene_impute@phenoData@data$time
+  graf["Type"] <- xgene_impute@phenoData@data$status
+  graf["Soque"] <- xgene_impute@phenoData@data$subclone
+  graf["group"] <- xgene_impute@phenoData@data$soca
+  p <- ggplot(graf, aes(x = Time, y = value, col = Soque, linetype = Type, group = group))
+  p <- p + geom_point(aes(color = Soque, shape = Soque)) + geom_path() + scale_linetype_manual(values=c("dashed", "solid"))
+  print(p)
+}
+@
+\clearpage
+
+
+
+%%%%------------------------------------------------HEATMAPS------------------------------------------------%%%%
+
+
+\section{Heat maps}
+\subsection{Top FC separated}
+<<heatmaps, warning=FALSE, fig.align='center', out.width="1\\linewidth", echo = FALSE>>=
+## Melt
+heatmap_df_10E <- melt(imputed_10E_difs[1:50,], id.vars = "Gene", measure.vars = c("s10E_T1_HS", "s10E_T2_HS", "s10E_T3_HS"))
+## Order
+heatmap_df_10E$Gene <- factor(heatmap_df_10E$Gene, levels = rev(imputed_10E_difs[1:50,]$Gene), ordered = TRUE)
+
+## Heatmap
+plot_10E <- ggplot(heatmap_df_10E, aes(x = variable, y = Gene, fill = value)) +
+  geom_tile() +
+  scale_fill_gradient2(low = "red", high = "green", mid = "black") +
+  scale_x_discrete(expand = c(0, 0)) + scale_y_discrete(expand = c(0,0))
+#plot_10E
+
+## Updown Heatmaps
+## Melt
+heatmap_df_10E <- melt(updown_10E, id.vars = "Gene", measure.vars = c("s10E_T1_HS", "s10E_T2_HS", "s10E_T3_HS"))
+heatmap_df_10G <- melt(updown_10G, id.vars = "Gene", measure.vars = c("s10G_T1_HS", "s10G_T2_HS", "s10G_T3_HS"))
+heatmap_df_EK0 <- melt(updown_EK0, id.vars = "Gene", measure.vars = c("EK0_T1_HS", "EK0_T2_HS", "EK0_T3_HS"))
+## Order
+heatmap_df_10E$Gene <- factor(updown_10E$Gene, levels = rev(updown_10E$Gene), ordered = TRUE)
+heatmap_df_10G$Gene <- factor(updown_10G$Gene, levels = rev(updown_10G$Gene), ordered = TRUE)
+heatmap_df_EK0$Gene <- factor(updown_EK0$Gene, levels = rev(updown_EK0$Gene), ordered = TRUE)
+
+## Heatmap
+plot_10E <- ggplot(heatmap_df_10E, aes(x = variable, y = Gene, fill = value)) +
+  geom_tile() +
+  scale_fill_gradient2(low = "red", high = "green", mid = "black") +
+  scale_x_discrete(expand = c(0, 0)) + scale_y_discrete(expand = c(0,0)) +
+  theme(legend.position="top") +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1),
+        axis.text.y = element_text(size = 5),
+        axis.title = element_blank())
+#plot_10E
+
+plot_10G <- ggplot(heatmap_df_10G, aes(x = variable, y = Gene, fill = value)) +
+  geom_tile() +
+  scale_fill_gradient2(low = "red", high = "green", mid = "black") +
+  scale_x_discrete(expand = c(0, 0)) + scale_y_discrete(expand = c(0,0)) +
+  theme(legend.position="top") +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1),
+        axis.text.y = element_text(size = 5),
+        axis.title = element_blank())
+#plot_10G
+
+plot_EK0 <- ggplot(heatmap_df_EK0, aes(x = variable, y = Gene, fill = value)) +
+  geom_tile() +
+  scale_fill_gradient2(low = "red", high = "green", mid = "black") +
+  scale_x_discrete(expand = c(0, 0)) + scale_y_discrete(expand = c(0,0)) +
+  theme(legend.position="top") +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1),
+        axis.text.y = element_text(size = 5),
+        axis.title = element_blank())
+#plot_EK0
+grid.arrange(plot_10E, plot_10G, plot_EK0, ncol=3)
+@
+\clearpage
+\subsection{Top FC in 10E, across strains, ordered}
+<<heatmap_all_facet, warning=FALSE, fig.align='center', out.width="1\\linewidth", echo = FALSE>>=
+##Create df
+updown10E_all <- left_join(updown_10E[,-1], df_DIF_10G[,c(2:4, 6)], by = "Gene")
+updown10E_all <- left_join(updown10E_all, df_DIF_EK0[,c(2:4, 6)], by = "Gene")
+updown10E_all <- updown10E_all[,c(1,2,3,7,8,9,10,11,12,4,5,6)]
+
+## Melt
+heatmap_df <- melt(updown10E_all, id.vars = "Gene", measure.vars = c("s10E_T1_HS", "s10E_T2_HS", "s10E_T3_HS",
+                                                                     "s10G_T1_HS", "s10G_T2_HS", "s10G_T3_HS",
+                                                                     "EK0_T1_HS", "EK0_T2_HS", "EK0_T3_HS"))
+## Order
+heatmap_df$Gene <- factor(updown10E_all$Gene, levels = rev(updown10E_all$Gene), ordered = TRUE)
+## Add strain
+heatmap_df$Strain <- c(rep("10E", updown_num*6), rep("10G", updown_num*6), rep("EK0", updown_num*6))
+
+## Heatmap
+plot_all <- ggplot(heatmap_df, aes(x = variable, y = Gene, fill = value)) +
+  geom_tile() +
+  scale_fill_gradient2(low = "red", high = "green", mid = "black") +
+  scale_x_discrete(expand = c(0, 0)) + scale_y_discrete(expand = c(0,0)) +
+  facet_wrap(~Strain, scales="free_x") +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1),
+        axis.text.y = element_text(size = 5),
+        axis.title = element_blank())
+plot_all
+@
+\clearpage
+\subsection{Top FC in 10E, across strains, clustered}
+<<heatmap_all_10E_clustered, warning=FALSE, fig.align='center', out.width="1\\linewidth", echo = FALSE>>=
+##Create df -> maximal differences in 10E
+updown10E_all <- left_join(updown_10E[,-1], df_DIF_10G[,c(2:4, 6)], by = "Gene")
+updown10E_all <- left_join(updown10E_all, df_DIF_EK0[,c(2:4, 6)], by = "Gene")
+updown10E_all <- updown10E_all[,c(1,2,3,7,8,9,10,11,12,4,5,6)]
+updown10E_all <- updown10E_all[complete.cases(updown10E_all),]
+
+# Heatmap
+data <- scale(updown10E_all[,1:9])
+ord <- hclust( dist(data, method = "euclidean"), method = "complete" )$order
+
+heatmap_df <- melt(updown10E_all, id.vars = "Gene", measure.vars = c("s10E_T1_HS", "s10E_T2_HS", "s10E_T3_HS",
+                                                                "s10G_T1_HS", "s10G_T2_HS", "s10G_T3_HS",
+                                                                "EK0_T1_HS", "EK0_T2_HS", "EK0_T3_HS"))
+## Order
+heatmap_df$Gene <- factor(updown10E_all$Gene, levels = updown10E_all$Gene[ord], ordered = TRUE)
+## Add strain
+heatmap_df$Strain <- c(rep("10E", table(heatmap_df$variable)[1]+table(heatmap_df$variable)[2]+table(heatmap_df$variable)[3]),
+                       rep("10G", table(heatmap_df$variable)[4]+table(heatmap_df$variable)[5]+table(heatmap_df$variable)[6]),
+                       rep("EK0", table(heatmap_df$variable)[7]+table(heatmap_df$variable)[8]+table(heatmap_df$variable)[9]))
+
+## Heatmap
+plot_all <- ggplot(heatmap_df, aes(x = variable, y = Gene, fill = value)) +
+  geom_tile() +
+  scale_fill_gradient2(low = "red", high = "green", mid = "black") +
+  scale_x_discrete(expand = c(0, 0)) + scale_y_discrete(expand = c(0,0)) +
+  facet_wrap(~Strain, scales="free_x") +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))+
+  theme(axis.text.x = element_text(angle = 90, hjust = 1),
+        axis.text.y = element_text(size = 5),
+        axis.title = element_blank())
+plot_all
+@
+\clearpage
+\subsection{FC $>$6 in all strains combined, clustered}
+<<heatmap_all_clustered, warning=FALSE, fig.align='center', out.width="1\\linewidth", echo = FALSE>>=
+##Create df -> maximal differences anywhere
+all_DIF <- cbind(df_DIF_10E[,2:4], df_DIF_10G[,2:4], df_DIF_EK0[,c(2:4, 6:7)])
+all_DIF$Max_Dif <- as.numeric(apply(all_DIF[,1:9], 1, function(x) x[which.max(abs(x))]))
+top_difs <- arrange(all_DIF, -Max_Dif)
+top_difs <- top_difs[abs(top_difs$Max_Dif) > log2(6),]
+top_difs <- top_difs[complete.cases(top_difs),]
+
+## GGPLOT2 hclust
+data <- scale(top_difs[,1:9])
+ord <- hclust( dist(data, method = "euclidean"), method = "complete" )$order
+
+heatmap_df <- melt(top_difs, id.vars = "Gene", measure.vars = c("s10E_T1_HS", "s10E_T2_HS", "s10E_T3_HS",
+                                                                     "s10G_T1_HS", "s10G_T2_HS", "s10G_T3_HS",
+                                                                     "EK0_T1_HS", "EK0_T2_HS", "EK0_T3_HS"))
+## Order
+heatmap_df$Gene <- factor(top_difs$Gene, levels = top_difs$Gene[ord], ordered = TRUE)
+## Add strain
+heatmap_df$Strain <- c(rep("10E", table(heatmap_df$variable)[1]+table(heatmap_df$variable)[2]+table(heatmap_df$variable)[3]),
+                       rep("10G", table(heatmap_df$variable)[4]+table(heatmap_df$variable)[5]+table(heatmap_df$variable)[6]),
+                       rep("EK0", table(heatmap_df$variable)[7]+table(heatmap_df$variable)[8]+table(heatmap_df$variable)[9]))
+
+## Heatmap
+plot_all <- ggplot(heatmap_df, aes(x = variable, y = Gene, fill = value)) +
+  geom_tile() +
+  scale_fill_gradient2(low = "red", high = "green", mid = "black") +
+  scale_x_discrete(expand = c(0, 0)) + scale_y_discrete(expand = c(0,0)) +
+  facet_wrap(~Strain, scales="free_x") +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1),
+        axis.text.y = element_text(size = 5),
+        axis.title = element_blank())
+plot_all
+
+#plot(hclust( dist(data, method = "euclidean"), method = "ward.D" ), cex = 0.6)
+
+@
+
+
+
+%%%%------------------------------------------------PCA------------------------------------------------%%%%
+
+
+
+\clearpage
+\section{Principal Component Analysis}
+<<pcas, warning=FALSE, fig.align='center', out.width="1\\linewidth", echo = FALSE>>=
+noNA <- xgene[complete.cases(exprs(xgene))]
+df <- t(exprs(noNA))
+df<- as.data.frame(df)
+
+df$Strain <- noNA@phenoData@data$subclone
+df$Status <- noNA@phenoData@data$status
+df$Time <- noNA@phenoData@data$time_teor
+df$Group <- noNA@phenoData@data$soca
+
+# autoplot(prcomp(df[,1:5315]), data = df , colour = 'Strain')
+# autoplot(prcomp(df[,1:5315]), data = df , colour = 'Status')
+# autoplot(prcomp(df[,1:5315]), data = df , colour = 'Time')
+
+autoplot(prcomp(df[,1:5315]), data = df , colour = 'Strain', size = "Time", shape = "Status")
+
+pca <- prcomp(df[,1:5315])
+df_pca <- as.data.frame(pca$x)
+df_pca$Strain <- noNA@phenoData@data$subclone
+df_pca$Status <- noNA@phenoData@data$status
+df_pca$Time <- noNA@phenoData@data$time_teor
+df_pca$Group <- noNA@phenoData@data$soca
+
+
+p <- ggplot(df_pca, aes(x=PC1,y=PC2, col = Strain, linetype = Status, group = Group))
+p <- p + geom_point()  
+p <- p + scale_color_manual(labels = c("10E", "10G(Q3417X)", expression("10E_"*Delta*"ap2-hs")), 
+                                          values = c("#619CFF", "#F8766D", "#00BA38")) 
+p <- p + geom_path() 
+p <- p + scale_linetype_manual(labels = c(expression("37 "*degree*"C"), "HS"), values=c("dashed", "solid"))
+
+a <- p + theme_minimal() + theme(text = element_text(size=20))
+b <- p + theme_void() + theme(text = element_text(size=20))
+c <- p + theme_light() + theme(text = element_text(size=20))
+
+print(a)
+print(b)
+print(c)
+ggsave(a, filename = paste0(figPath, "PCA_white1.png"), device = "png", dpi = "retina")
+ggsave(c, filename = paste0(figPath, "PCA_white2.png"), device = "png", dpi = "retina")
+# ggplot_build(p)$data
+
+@
+
+
+
+%%%%------------------------------------------------Cluster Expression------------------------------------------------%%%%
+
+
+
+\clearpage
+\section{Cluster Expression Data}
+<<clust_exp, warning=FALSE, fig.align='center', out.width="1\\linewidth", echo = FALSE>>=
+cl1 <- read.csv(file = "/media/lucas/Disc4T/Projects/Arrays_Eli/Motifs/Cluster_fastas/cluster1.csv", header = T, sep = "\t")
+cl2 <- read.csv(file = "/media/lucas/Disc4T/Projects/Arrays_Eli/Motifs/Cluster_fastas/cluster2.csv", header = T, sep = "\t")
+cl3 <- read.csv(file = "/media/lucas/Disc4T/Projects/Arrays_Eli/Motifs/Cluster_fastas/cluster3.csv", header = T, sep = "\t")
+cl4 <- read.csv(file = "/media/lucas/Disc4T/Projects/Arrays_Eli/Motifs/Cluster_fastas/cluster4.csv", header = T, sep = "\t")
+cl5 <- read.csv(file = "/media/lucas/Disc4T/Projects/Arrays_Eli/Motifs/Cluster_fastas/cluster5.csv", header = T, sep = "\t")
+cl6 <- read.csv(file = "/media/lucas/Disc4T/Projects/Arrays_Eli/Motifs/Cluster_fastas/cluster6.csv", header = T, sep = "\t")
+csv <- cl2
+
+
+clust_plot <- function(csv){
+  nrows = dim(csv)[1]
+  df <- melt(csv)
+  df["Strain"] <- c(rep("10E", nrows*3), rep("10G", nrows*3), rep("EK0", nrows*3))
+  df["Time"] <- c(rep(1, nrows), rep(2, nrows), rep(3,nrows))
+  
+  b <- ggplot(df, aes(x = Time, y = value, group = Strain))
+  b <- b + geom_smooth(aes(color = Strain, fill = Strain), level = 0.95)
+  b <- b + geom_hline(yintercept = 0, linetype="dashed", size = 2)
+  b <- b + scale_color_manual(labels = c("10E", "10G(Q3417X)", expression("10E_"*Delta*"ap2-hs")), 
+                                          values = c("#619CFF", "#F8766D", "#00BA38")) 
+  b <- b + scale_fill_manual(values = c("#619CFF", "#F8766D", "#00BA38")) 
+  b <- b + guides(fill = F)
+  b <- b + theme_classic() + theme(text = element_text(size=20, family = "arial"))
+  ggsave(b, filename = paste0(figPath, deparse(substitute(csv)), "_smooth.png"), device = "png", dpi = "retina")
+  b <- b + theme(text = element_text(family = "sans")) # Changing font again for PDF output.
+  b <- b + scale_x_continuous(breaks = c(1,2,3), expand = c(0, 0), labels=c("1.5h", "3h", "+2h"))
+  print(b)
+}
+
+clust_plot(cl1)
+clust_plot(cl2)
+clust_plot(cl3)
+clust_plot(cl4)
+clust_plot(cl5)
+clust_plot(cl6)
+
+# ggplot_build(p)$data
+
+@
+
+\clearpage
+\section{Functional Enrichment analysis}
+<<FE_analysis, warning=FALSE, fig.align='center', out.width="1\\linewidth", echo = FALSE>>=
+#BiocManager::install(c("org.Pf.plasmo.db", "GO.db", "annotate", "genefilter"))
+if (!requireNamespace("BiocManager", quietly = TRUE))
+    install.packages("BiocManager")
+BiocManager::install("org.Pf.plasmo.db", version = "3.8")
+
+if (!requireNamespace("BiocManager", quietly = TRUE))
+    install.packages("BiocManager")
+BiocManager::install("GO.db", version = "3.8")
+
+library("AnnotationForge")
+library("GOstats")
+library("DBI")
+library("org.Pf.plasmo.db")
+library("GO.db")
+library("annotate")
+library("genefilter")
+library("GOstats")
+#install.packages(c("RColorBrewer", "xtable", "Rgraphviz"))
+library("RColorBrewer")
+library("xtable")
+library("Rgraphviz")
+#install.packages("tidyverse")
+library(tidyverse)
+
+## Load annotation package for Pf.
+ls("package:org.Pf.plasmo.db")
+summary(org.Pf.plasmoGO)
+print(org.Pf.plasmoGO)
+df_GO <- toTable(org.Pf.plasmoGO)
+head(df_GO)
+
+## Manipulate annotation package
+x <- org.Pf.plasmo.db
+columns(x)
+keytypes(x)
+head(keys(x, keytype = "GO"))
+
+#1st get some example keys
+k <- keys(x,keytype="SYMBOL")[1123:1133]
+# then call select
+head(select(x, keys="GO:0016021", columns=c("GENENAME", "SYMBOL"), keytype="GO"))
+
+columns(GO.db)
+keytypes(GO.db)
+ls("package:GO.db")
+
+## Remove genes that have no entrezGene id
+# entrezIds <- mget(featureNames(xgene_impute), envir=org.Pf.plasmoGENENAME, ifnotfound = NA)
+# 
+# anotGO <-  select(org.Pf.plasmo.db, keys = featureNames(xgene_impute), columns = c("GENENAME", "GO"), keytype = "SYMBOL")
+# anotGO[2000:2010,]
+# 
+# haveEntrezId <- names(entrezIds)[sapply(entrezIds, function(x) !is.na(x))]
+
+## Remove genes with no GO mapping
+# haveGo <- sapply(mget(haveEntrezId, org.Pf.plasmoGO),
+#                 function(x) {
+#                     if (length(x) == 1 && is.na(x))
+#                       FALSE
+#                     else TRUE
+#                 })
+# numNoGO <- sum(!haveGo)
+# haveBoth <- haveEntrezId[haveGo]
+# universe <- haveBoth
+# 
+# if (any(duplicated(universe)))
+#   stop("error in gene universe: can't have duplicate Entrez Gene Ids")
+# 
+# testSet <- top_difs$Gene[top_difs$Gene %in% universe]
+
+## Set parameters for Hyper-Geometric test
+hgCutoff <- 0.05
+paramsBP <- new("GOHyperGParams",
+             geneIds=testSet,
+             universeGeneIds=universe,
+             annotation="org.Pf.plasmo.db",
+               ontology="BP",
+             pvalueCutoff=hgCutoff,
+             conditional=FALSE,
+             testDirection="over")
+
+hgOver <- hyperGTest(paramsBP)
+hgOver
+summary(hgOver)
+
+
+
+## Create universe; only genes with GO BP annotations
+all_tbl <-  select(org.Pf.plasmo.db, keys = featureNames(xgene_impute), columns = c("GENENAME", "GO"), keytype = "SYMBOL")
+ids = keys(org.Pf.plasmo.db, "GO")
+df = select(GO.db, keys(GO.db), "ONTOLOGY")
+
+bp_ids = ids[ids %in% df$GOID[df$ONTOLOGY == "BP"]]
+universeBP <- unique(all_tbl[all_tbl$GO %in% bp_ids, "SYMBOL"])
+
+cc_ids = ids[ids %in% df$GOID[df$ONTOLOGY == "CC"]]
+universeCC <- unique(all_tbl[all_tbl$GO %in% cc_ids, "SYMBOL"])
+
+
+mf_ids = ids[ids %in% df$GOID[df$ONTOLOGY == "MF"]]
+universeMF <- unique(all_tbl[all_tbl$GO %in% mf_ids, "SYMBOL"])
+
+# Remove genes that have go terms that do not appear in GO.db
+noGO <- all_tbl[!all_tbl$GO %in% keys(GO.db),]$SYMBOL
+
+universeBP <- universeBP[!universeBP %in% noGO]
+universeCC <- universeCC[!universeCC %in% noGO]
+universeMF <- universeMF[!universeMF %in% noGO]
+
+## Run FE (hyperGTest) for each cluster
+clust <- read.csv(file = "/media/lucas/Disc4T/Projects/Arrays_Eli/Motifs/FC4_all_6Clusters_Spearmann.csv", header = T, stringsAsFactors = F)
+outDir <- "/media/lucas/Disc4T/Projects/Arrays_Eli/FE_GSEA/"
+for (i in 1:6){
+  cl <- clust[clust$Cluster == i,]$Gene
+  cl_bp <- cl[cl %in% universeBP]
+  cl_cc <- cl[cl %in% universeCC]
+  cl_mf <- cl[cl %in% universeMF]
+  
+  hgCutoff <- 0.05
+  paramsBP <- new("GOHyperGParams",
+               geneIds=cl_bp,
+               universeGeneIds=universeBP,
+               annotation="org.Pf.plasmo.db",
+                 ontology="BP",
+               pvalueCutoff=hgCutoff,
+               conditional=FALSE,
+               testDirection="over")
+  
+  paramsCC <- new("GOHyperGParams",
+               geneIds=cl_cc,
+               universeGeneIds=universeCC,
+               annotation="org.Pf.plasmo.db",
+                 ontology="CC",
+               pvalueCutoff=hgCutoff,
+               conditional=FALSE,
+               testDirection="over")
+  
+  paramsMF <- new("GOHyperGParams",
+               geneIds=cl_mf,
+               universeGeneIds=universeMF,
+               annotation="org.Pf.plasmo.db",
+                 ontology="MF",
+               pvalueCutoff=hgCutoff,
+               conditional=FALSE,
+               testDirection="over")
+  
+  hgOverBP <- hyperGTest(paramsBP)
+  write.table(summary(hgOverBP), file = paste0(outDir, "cluster_", i, "_BP.csv"), quote = F, sep = "\t", row.names = F)
+  
+  hgOverCC <- hyperGTest(paramsCC)
+  write.table(summary(hgOverCC), file = paste0(outDir, "cluster_", i, "_CC.csv"), quote = F, sep = "\t", row.names = F)
+  
+  hgOverMF <- hyperGTest(paramsMF)
+  write.table(summary(hgOverMF), file = paste0(outDir, "cluster_", i, "_MF.csv"), quote = F, sep = "\t", row.names = F)
+  
+}
+
+
+cl1 <- clust[clust$Cluster == 2,]$Gene
+cl1_bp <- cl1[cl1 %in% universeBP]
+cl1_cc <- cl1[cl1 %in% universeCC]
+cl1_mf <- cl1[cl1 %in% universeMF]
+
+cl2 <- clust[clust$Cluster == 2,]$Gene
+cl2 <- cl2[cl2 %in% universeBP]
+
+## Set parameters for Hyper-Geometric test
+hgCutoff <- 0.05
+paramsBP <- new("GOHyperGParams",
+             geneIds=cl1_bp,
+             universeGeneIds=universeBP,
+             annotation="org.Pf.plasmo.db",
+               ontology="BP",
+             pvalueCutoff=hgCutoff,
+             conditional=FALSE,
+             testDirection="over")
+
+paramsCC <- new("GOHyperGParams",
+             geneIds=cl1_cc,
+             universeGeneIds=universeCC,
+             annotation="org.Pf.plasmo.db",
+               ontology="CC",
+             pvalueCutoff=hgCutoff,
+             conditional=FALSE,
+             testDirection="over")
+
+paramsMF <- new("GOHyperGParams",
+             geneIds=cl1_mf,
+             universeGeneIds=universeMF,
+             annotation="org.Pf.plasmo.db",
+               ontology="MF",
+             pvalueCutoff=hgCutoff,
+             conditional=FALSE,
+             testDirection="over")
+
+## Run hyperGTest
+hgOverBP <- hyperGTest(paramsBP)
+summary(hgOverBP)
+write.table(summary(hgOverBP), file = outDir, quote = F, sep = "\t", row.names = F)
+
+hgOverCC <- hyperGTest(paramsCC)
+summary(hgOverCC)
+hgOverMF <- hyperGTest(paramsMF)
+summary(hgOverMF)
+@
+
+\end{document}
+
+
+
+
+
+
+
+
+
+

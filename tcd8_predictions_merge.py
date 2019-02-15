@@ -24,7 +24,7 @@ def parse_tcd8(fileins):
                     firstline = False
                 else:
                     linelist = line.split("\t")
-                    if float(linelist[7]) <= 0.1:
+                    if float(linelist[7]) <= 1:  # Modify this line to change threshold!!!
                         epitopes.append(linelist[5])
 
 

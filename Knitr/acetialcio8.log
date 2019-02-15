@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2018.7.31)  5 OCT 2018 11:38
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2018.10.13)  15 FEB 2019 12:45
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -593,289 +593,320 @@ LaTeX Font Info:    External font `cmex10' loaded for size
 {/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}] [2
 
 ]
-Package color Info: Redefining color shadecolor on input line 85.
+Package color Info: Redefining color shadecolor on input line 74.
+LaTeX Font Info:    Font shape `OT1/cmtt/bx/n' in size <10> not available
+(Font)              Font shape `OT1/cmtt/m/n' tried instead on input line 77.
 
+Overfull \hbox (27.74675pt too wide) in paragraph at lines 79--79
+[]\OT1/cmtt/m/n/10 ## Error in library(XLConnect): there is no package called '
+XLConnect'[] 
+ []
+
+Package color Info: Redefining color shadecolor on input line 87.
+
+Overfull \hbox (267.14459pt too wide) in paragraph at lines 90--91
+[]\OT1/cmtt/m/n/10 ## Error in readWorksheetFromFile("/home/lucas/ISGlobal/Chip
+[]Seq/Transcripci^^So[]CSV/3D7[]Variantome[]AllData[]withGam.xls",
+ []
+
+
+Overfull \hbox (5.27693pt too wide) in paragraph at lines 92--93
+[]\OT1/cmtt/m/n/10 ## Error in eval(expr, envir, enclos): object 'trans[]df' no
+t found[] 
+ []
+
+
+Overfull \hbox (5.27693pt too wide) in paragraph at lines 94--95
+[]\OT1/cmtt/m/n/10 ## Error in eval(expr, envir, enclos): object 'trans[]df' no
+t found[] 
+ []
+
+
+Overfull \hbox (5.27693pt too wide) in paragraph at lines 96--97
+[]\OT1/cmtt/m/n/10 ## Error in eval(expr, envir, enclos): object 'trans[]df' no
+t found[] 
+ []
+
+
+Overfull \hbox (15.77684pt too wide) in paragraph at lines 100--100
+[]\OT1/cmtt/m/n/10 ## Error in eval(expr, envir, enclos): object 'noexprs[]df' 
+not found[] 
+ []
+
+Package color Info: Redefining color shadecolor on input line 107.
 <figure/minimal-dens_all-1.pdf, id=124, 505.89pt x 505.89pt>
 File: figure/minimal-dens_all-1.pdf Graphic file (type pdf)
 
 <use figure/minimal-dens_all-1.pdf>
-Package pdftex.def Info: figure/minimal-dens_all-1.pdf used on input line 87.
+Package pdftex.def Info: figure/minimal-dens_all-1.pdf used on input line 109.
 (pdftex.def)             Requested size: 345.0pt x 345.00414pt.
  [3
 
- <./figure/minimal-dens_all-1.pdf>]
-Package color Info: Redefining color shadecolor on input line 97.
+] [4 <./figure/minimal-dens_all-1.pdf>]
+Package color Info: Redefining color shadecolor on input line 119.
 
-<figure/minimal-dens_5-1.pdf, id=134, 505.89pt x 505.89pt>
+<figure/minimal-dens_5-1.pdf, id=139, 505.89pt x 505.89pt>
 File: figure/minimal-dens_5-1.pdf Graphic file (type pdf)
 
 <use figure/minimal-dens_5-1.pdf>
-Package pdftex.def Info: figure/minimal-dens_5-1.pdf used on input line 99.
-(pdftex.def)             Requested size: 345.0pt x 345.00414pt.
- [4
-
- <./figure/minimal-dens_5-1.pdf>]
-Package color Info: Redefining color shadecolor on input line 109.
-
-<figure/minimal-dens_3-1.pdf, id=144, 505.89pt x 505.89pt>
-File: figure/minimal-dens_3-1.pdf Graphic file (type pdf)
-
-<use figure/minimal-dens_3-1.pdf>
-Package pdftex.def Info: figure/minimal-dens_3-1.pdf used on input line 111.
+Package pdftex.def Info: figure/minimal-dens_5-1.pdf used on input line 121.
 (pdftex.def)             Requested size: 345.0pt x 345.00414pt.
  [5
 
- <./figure/minimal-dens_3-1.pdf>]
-Package color Info: Redefining color shadecolor on input line 121.
+ <./figure/minimal-dens_5-1.pdf>]
+Package color Info: Redefining color shadecolor on input line 131.
 
-<figure/minimal-dens_ORF-1.pdf, id=154, 505.89pt x 505.89pt>
-File: figure/minimal-dens_ORF-1.pdf Graphic file (type pdf)
+<figure/minimal-dens_3-1.pdf, id=149, 505.89pt x 505.89pt>
+File: figure/minimal-dens_3-1.pdf Graphic file (type pdf)
 
-<use figure/minimal-dens_ORF-1.pdf>
-Package pdftex.def Info: figure/minimal-dens_ORF-1.pdf used on input line 123.
+<use figure/minimal-dens_3-1.pdf>
+Package pdftex.def Info: figure/minimal-dens_3-1.pdf used on input line 133.
 (pdftex.def)             Requested size: 345.0pt x 345.00414pt.
  [6
 
- <./figure/minimal-dens_ORF-1.pdf>]
-Package color Info: Redefining color shadecolor on input line 133.
+ <./figure/minimal-dens_3-1.pdf>]
+Package color Info: Redefining color shadecolor on input line 143.
 
-<figure/minimal-dens_all_met-1.pdf, id=165, 505.89pt x 505.89pt>
+<figure/minimal-dens_ORF-1.pdf, id=160, 505.89pt x 505.89pt>
+File: figure/minimal-dens_ORF-1.pdf Graphic file (type pdf)
+
+<use figure/minimal-dens_ORF-1.pdf>
+Package pdftex.def Info: figure/minimal-dens_ORF-1.pdf used on input line 145.
+(pdftex.def)             Requested size: 345.0pt x 345.00414pt.
+ [7
+
+ <./figure/minimal-dens_ORF-1.pdf>]
+Package color Info: Redefining color shadecolor on input line 155.
+
+<figure/minimal-dens_all_met-1.pdf, id=171, 505.89pt x 505.89pt>
 File: figure/minimal-dens_all_met-1.pdf Graphic file (type pdf)
 
 <use figure/minimal-dens_all_met-1.pdf>
 Package pdftex.def Info: figure/minimal-dens_all_met-1.pdf used on input line 1
-35.
-(pdftex.def)             Requested size: 345.0pt x 345.00414pt.
- [7
-
- <./figure/minimal-dens_all_met-1.pdf>]
-Package color Info: Redefining color shadecolor on input line 145.
- <figure/minimal-dens_5_met-1.pdf, id=176, 505.89pt x 505.89pt>
-File: figure/minimal-dens_5_met-1.pdf Graphic file (type pdf)
-
-<use figure/minimal-dens_5_met-1.pdf>
-Package pdftex.def Info: figure/minimal-dens_5_met-1.pdf used on input line 147
-.
+57.
 (pdftex.def)             Requested size: 345.0pt x 345.00414pt.
  [8
 
- <./figure/minimal-dens_5_met-1.pdf>]
-Package color Info: Redefining color shadecolor on input line 157.
+ <./figure/minimal-dens_all_met-1.pdf>]
+Package color Info: Redefining color shadecolor on input line 167.
+ <figure/minimal-dens_5_met-1.pdf, id=181, 505.89pt x 505.89pt>
+File: figure/minimal-dens_5_met-1.pdf Graphic file (type pdf)
 
-<figure/minimal-dens_ORF_met-1.pdf, id=186, 505.89pt x 505.89pt>
+<use figure/minimal-dens_5_met-1.pdf>
+Package pdftex.def Info: figure/minimal-dens_5_met-1.pdf used on input line 169
+.
+(pdftex.def)             Requested size: 345.0pt x 345.00414pt.
+ [9
+
+ <./figure/minimal-dens_5_met-1.pdf>]
+Package color Info: Redefining color shadecolor on input line 179.
+
+<figure/minimal-dens_ORF_met-1.pdf, id=191, 505.89pt x 505.89pt>
 File: figure/minimal-dens_ORF_met-1.pdf Graphic file (type pdf)
 
 <use figure/minimal-dens_ORF_met-1.pdf>
 Package pdftex.def Info: figure/minimal-dens_ORF_met-1.pdf used on input line 1
-59.
-(pdftex.def)             Requested size: 345.0pt x 345.00414pt.
- [9
-
- <./figure/minimal-dens_ORF_met-1.pdf>]
-Package color Info: Redefining color shadecolor on input line 169.
- <figure/minimal-dens_3_met-1.pdf, id=196, 505.89pt x 505.89pt>
-File: figure/minimal-dens_3_met-1.pdf Graphic file (type pdf)
-
-<use figure/minimal-dens_3_met-1.pdf>
-Package pdftex.def Info: figure/minimal-dens_3_met-1.pdf used on input line 171
-.
+81.
 (pdftex.def)             Requested size: 345.0pt x 345.00414pt.
  [10
 
+ <./figure/minimal-dens_ORF_met-1.pdf>]
+Package color Info: Redefining color shadecolor on input line 191.
+ <figure/minimal-dens_3_met-1.pdf, id=201, 505.89pt x 505.89pt>
+File: figure/minimal-dens_3_met-1.pdf Graphic file (type pdf)
+
+<use figure/minimal-dens_3_met-1.pdf>
+Package pdftex.def Info: figure/minimal-dens_3_met-1.pdf used on input line 193
+.
+(pdftex.def)             Requested size: 345.0pt x 345.00414pt.
+ [11
+
  <./figure/minimal-dens_3_met-1.pdf>]
-Overfull \hbox (10.06639pt too wide) in paragraph at lines 183--184
+Overfull \hbox (10.06639pt too wide) in paragraph at lines 205--206
 \OT1/cmr/m/n/10 es-tudi an-te-rior. (La llista de gens vari-ants es troba a "Ge
 ns[]variants[]extended.txt",
  []
 
-[11
+[12
 
 ]
-Package color Info: Redefining color shadecolor on input line 188.
- <figure/minimal-trans_histo-1.pdf, id=210, 505.89pt x 505.89pt>
-File: figure/minimal-trans_histo-1.pdf Graphic file (type pdf)
+Package color Info: Redefining color shadecolor on input line 210.
 
-<use figure/minimal-trans_histo-1.pdf>
-Package pdftex.def Info: figure/minimal-trans_histo-1.pdf used on input line 19
-0.
-(pdftex.def)             Requested size: 345.0pt x 345.00414pt.
- [12
+Overfull \hbox (40.55661pt too wide) in paragraph at lines 213--213
+[]\OT1/cmtt/m/n/10 ## Error in ggplot(trans[]df, aes(log(trans[]df$Aver.2Higher
+10G.))): object
+ []
 
- <./figure/minimal-trans_histo-1.pdf>]
-Package color Info: Redefining color shadecolor on input line 199.
+[13
+
+]
+Package color Info: Redefining color shadecolor on input line 217.
  <figure/minimal-met_histo-1.pdf, id=220, 505.89pt x 505.89pt>
 File: figure/minimal-met_histo-1.pdf Graphic file (type pdf)
 
 <use figure/minimal-met_histo-1.pdf>
-Package pdftex.def Info: figure/minimal-met_histo-1.pdf used on input line 201.
+Package pdftex.def Info: figure/minimal-met_histo-1.pdf used on input line 219.
 
 (pdftex.def)             Requested size: 345.0pt x 345.00414pt.
- [13
+ [14
 
  <./figure/minimal-met_histo-1.pdf>]
-Package color Info: Redefining color shadecolor on input line 212.
+Package color Info: Redefining color shadecolor on input line 230.
 
-Overfull \hbox (0.22276pt too wide) in paragraph at lines 210--212
+Overfull \hbox (0.22276pt too wide) in paragraph at lines 228--230
 \OT1/cmr/m/n/10 En un primer in-tent de difer-en-ciar vari-ants ac-tius d'inact
 ius hem creat el pareme-
  []
 
-<figure/minimal-ac_met_log_status-1.pdf, id=231, 505.89pt x 505.89pt>
+<figure/minimal-ac_met_log_status-1.pdf, id=230, 505.89pt x 505.89pt>
 File: figure/minimal-ac_met_log_status-1.pdf Graphic file (type pdf)
 
 <use figure/minimal-ac_met_log_status-1.pdf>
 Package pdftex.def Info: figure/minimal-ac_met_log_status-1.pdf used on input l
-ine 220.
-(pdftex.def)             Requested size: 345.0pt x 345.00414pt.
- [14
-
- <./figure/minimal-ac_met_log_status-1.pdf>]
-Package color Info: Redefining color shadecolor on input line 231.
- <figure/minimal-ac_met_log-1.pdf, id=243, 505.89pt x 505.89pt>
-File: figure/minimal-ac_met_log-1.pdf Graphic file (type pdf)
-
-<use figure/minimal-ac_met_log-1.pdf>
-Package pdftex.def Info: figure/minimal-ac_met_log-1.pdf used on input line 233
-.
+ine 238.
 (pdftex.def)             Requested size: 345.0pt x 345.00414pt.
  [15
 
+ <./figure/minimal-ac_met_log_status-1.pdf>]
+Package color Info: Redefining color shadecolor on input line 249.
+ <figure/minimal-ac_met_log-1.pdf, id=241, 505.89pt x 505.89pt>
+File: figure/minimal-ac_met_log-1.pdf Graphic file (type pdf)
+
+<use figure/minimal-ac_met_log-1.pdf>
+Package pdftex.def Info: figure/minimal-ac_met_log-1.pdf used on input line 251
+.
+(pdftex.def)             Requested size: 345.0pt x 345.00414pt.
+ [16
+
  <./figure/minimal-ac_met_log-1.pdf>]
-[16
+[17
 
 ]
-Package color Info: Redefining color shadecolor on input line 249.
+Package color Info: Redefining color shadecolor on input line 267.
 
-<figure/minimal-ac_met_log_status_10G_12B_ORF-1.pdf, id=257, 505.89pt x 505.89p
+<figure/minimal-ac_met_log_status_10G_12B_ORF-1.pdf, id=255, 505.89pt x 505.89p
 t>
 File: figure/minimal-ac_met_log_status_10G_12B_ORF-1.pdf Graphic file (type pdf
 )
  <use figure/minimal-ac_met_log_status_10G_12B_ORF-1.pdf>
 Package pdftex.def Info: figure/minimal-ac_met_log_status_10G_12B_ORF-1.pdf use
-d on input line 251.
-(pdftex.def)             Requested size: 345.0pt x 345.00414pt.
- [17
-
- <./figure/minimal-ac_met_log_status_10G_12B_ORF-1.pdf>]
-Package color Info: Redefining color shadecolor on input line 261.
-
-<figure/minimal-ac_met_log_status_10G_12B_5-1.pdf, id=270, 505.89pt x 505.89pt>
-File: figure/minimal-ac_met_log_status_10G_12B_5-1.pdf Graphic file (type pdf)
-<use figure/minimal-ac_met_log_status_10G_12B_5-1.pdf>
-Package pdftex.def Info: figure/minimal-ac_met_log_status_10G_12B_5-1.pdf used 
-on input line 263.
+d on input line 269.
 (pdftex.def)             Requested size: 345.0pt x 345.00414pt.
  [18
 
- <./figure/minimal-ac_met_log_status_10G_12B_5-1.pdf>]
-Package color Info: Redefining color shadecolor on input line 273.
+ <./figure/minimal-ac_met_log_status_10G_12B_ORF-1.pdf>]
+Package color Info: Redefining color shadecolor on input line 279.
 
-<figure/minimal-ac_met_log_status_10G_12B_3-1.pdf, id=283, 505.89pt x 505.89pt>
-File: figure/minimal-ac_met_log_status_10G_12B_3-1.pdf Graphic file (type pdf)
-<use figure/minimal-ac_met_log_status_10G_12B_3-1.pdf>
-Package pdftex.def Info: figure/minimal-ac_met_log_status_10G_12B_3-1.pdf used 
-on input line 275.
+<figure/minimal-ac_met_log_status_10G_12B_5-1.pdf, id=268, 505.89pt x 505.89pt>
+File: figure/minimal-ac_met_log_status_10G_12B_5-1.pdf Graphic file (type pdf)
+<use figure/minimal-ac_met_log_status_10G_12B_5-1.pdf>
+Package pdftex.def Info: figure/minimal-ac_met_log_status_10G_12B_5-1.pdf used 
+on input line 281.
 (pdftex.def)             Requested size: 345.0pt x 345.00414pt.
  [19
 
- <./figure/minimal-ac_met_log_status_10G_12B_3-1.pdf>]
-Package color Info: Redefining color shadecolor on input line 285.
+ <./figure/minimal-ac_met_log_status_10G_12B_5-1.pdf>]
+Package color Info: Redefining color shadecolor on input line 291.
 
-<figure/minimal-ac_met_log_status_10G_12B_varifin-1.pdf, id=298, 505.89pt x 505
+<figure/minimal-ac_met_log_status_10G_12B_3-1.pdf, id=282, 505.89pt x 505.89pt>
+File: figure/minimal-ac_met_log_status_10G_12B_3-1.pdf Graphic file (type pdf)
+<use figure/minimal-ac_met_log_status_10G_12B_3-1.pdf>
+Package pdftex.def Info: figure/minimal-ac_met_log_status_10G_12B_3-1.pdf used 
+on input line 293.
+(pdftex.def)             Requested size: 345.0pt x 345.00414pt.
+ [20
+
+ <./figure/minimal-ac_met_log_status_10G_12B_3-1.pdf>]
+Package color Info: Redefining color shadecolor on input line 303.
+
+<figure/minimal-ac_met_log_status_10G_12B_varifin-1.pdf, id=296, 505.89pt x 505
 .89pt>
 File: figure/minimal-ac_met_log_status_10G_12B_varifin-1.pdf Graphic file (type
  pdf)
  <use figure/minimal-ac_met_log_status_10G_12B_varifin-1.pdf>
 Package pdftex.def Info: figure/minimal-ac_met_log_status_10G_12B_varifin-1.pdf
- used on input line 287.
+ used on input line 305.
 (pdftex.def)             Requested size: 345.0pt x 345.00414pt.
- [20
+ [21
 
  <./figure/minimal-ac_met_log_status_10G_12B_varifin-1.pdf>]
-Package color Info: Redefining color shadecolor on input line 297.
+Package color Info: Redefining color shadecolor on input line 315.
 
-<figure/minimal-ac_met_log_status_10G_12B_novarifin-1.pdf, id=311, 505.89pt x 5
+<figure/minimal-ac_met_log_status_10G_12B_novarifin-1.pdf, id=309, 505.89pt x 5
 05.89pt>
 File: figure/minimal-ac_met_log_status_10G_12B_novarifin-1.pdf Graphic file (ty
 pe pdf)
  <use figure/minimal-ac_met_log_status_10G_12B_novarifin-1.pdf>
 Package pdftex.def Info: figure/minimal-ac_met_log_status_10G_12B_novarifin-1.p
-df used on input line 299.
+df used on input line 317.
 (pdftex.def)             Requested size: 345.0pt x 345.00414pt.
 
-[21
+[22
 
  <./figure/minimal-ac_met_log_status_10G_12B_novarifin-1.pdf>]
-Package color Info: Redefining color shadecolor on input line 312.
+Package color Info: Redefining color shadecolor on input line 330.
 
-Overfull \hbox (38.24666pt too wide) in paragraph at lines 363--363
+Overfull \hbox (38.24666pt too wide) in paragraph at lines 381--381
 []\OT1/cmtt/m/n/10 ## Model 1: Variant ~ Ac + Met + Type + Start + Stop + silen
 ced + noexprs[] 
  []
 
 
-Overfull \hbox (22.4968pt too wide) in paragraph at lines 363--363
+Overfull \hbox (22.4968pt too wide) in paragraph at lines 381--381
 []\OT1/cmtt/m/n/10 ## glm(formula = Variant ~ Ac + Met + Type + Start + Stop + 
 silenced +[] 
  []
 
 
-Overfull \hbox (6.74693pt too wide) in paragraph at lines 363--363
+Overfull \hbox (6.74693pt too wide) in paragraph at lines 381--381
 []\OT1/cmtt/m/n/10 ##     noexprs, family = binomial(link = "logit"), data = tr
 ain_df)[] 
  []
 
 
-Overfull \hbox (106.49606pt too wide) in paragraph at lines 379--379
-[]\OT1/cmtt/m/n/10 ##           llh       llhNull            G2      McFadden  
-        r2ML          r2CU[] 
+Overfull \hbox (38.24666pt too wide) in paragraph at lines 388--389
+[]\OT1/cmtt/m/n/10 ## Error in performance(ROCRpred, "tpr", "fpr"): could not f
+ind function
  []
 
 
-Overfull \hbox (106.49606pt too wide) in paragraph at lines 379--379
-[]\OT1/cmtt/m/n/10 ## -2856.3024782 -5606.6952945  5500.7856326     0.4905551  
-   0.4770236     0.6505712[] 
+Overfull \hbox (17.24684pt too wide) in paragraph at lines 390--390
+[]\OT1/cmtt/m/n/10 ## Error in plot(ROCRperf, colorize = TRUE, text.adj = c(-0.
+2, 1.7)):
  []
 
-[22
+[23
 
-] <figure/minimal-model-1.pdf, id=328, 505.89pt x 505.89pt>
-File: figure/minimal-model-1.pdf Graphic file (type pdf)
-
-<use figure/minimal-model-1.pdf>
-Package pdftex.def Info: figure/minimal-model-1.pdf used on input line 382.
-(pdftex.def)             Requested size: 345.0pt x 345.00414pt.
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 392.
- [23] [24 <./figure/minimal-model-1.pdf>]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 392.
-
-(./acetialcio8.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 392.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 392.
+]
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 405.
+ [24]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 405.
+ (./acetialcio8.aux)
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 405.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 405.
 Package rerunfilecheck Info: File `acetialcio8.out' has not changed.
 (rerunfilecheck)             Checksum: 05FE468DB4E5169BD6AEE341BE577641;1546.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 392.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 405.
  ) 
 Here is how much of TeX's memory you used:
- 5656 strings out of 493029
- 84078 string characters out of 6136234
+ 5645 strings out of 493029
+ 83757 string characters out of 6136233
  171886 words of memory out of 5000000
- 9076 multiletter control sequences out of 15000+600000
- 8231 words of font info for 30 fonts, out of 8000000 for 9000
+ 9068 multiletter control sequences out of 15000+600000
+ 8063 words of font info for 29 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  29i,7n,28p,469b,369s stack positions out of 5000i,500n,10000p,200000b,80000s
 </usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></us
 r/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/shar
-e/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmitt10.pfb></usr/share/tex
-live/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texlive/t
-exmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texlive/texmf-di
-st/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/share/texlive/texmf-dist/font
-s/type1/public/amsfonts/cm/cmr17.pfb></usr/share/texlive/texmf-dist/fonts/type1
-/public/amsfonts/cm/cmtt10.pfb>
-Output written on acetialcio8.pdf (24 pages, 3581479 bytes).
+e/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texl
+ive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texlive/tex
+mf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/share/texlive/texmf-dist
+/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/share/texlive/texmf-dist/fonts/
+type1/public/amsfonts/cm/cmtt10.pfb>
+Output written on acetialcio8.pdf (24 pages, 3434216 bytes).
 PDF statistics:
- 384 PDF objects out of 1000 (max. 8388607)
- 310 compressed objects within 4 object streams
+ 367 PDF objects out of 1000 (max. 8388607)
+ 299 compressed objects within 3 object streams
  47 named destinations out of 1000 (max. 500000)
- 259 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 249 words of extra memory for PDF output out of 10000 (max. 10000000)
 

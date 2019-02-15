@@ -1,14 +1,15 @@
 #!/usr/bin/env python
 
 from tqdm import tqdm
-import re
 
 # in_pdb = re.compile("\d")
 # in_esmeraldo = re.compile("T")
 
 clusters = {}
-#with open("/home/lucas/ISGlobal/Cruzi/tcruzi_epitopes_vaccine/New_strategy/exposed_ORFs_clusters.clstr", "r+") as infile:
-#with open("/home/lucas/ISGlobal/Brucei/aat_vaccine/cdhit/1533109047.fas.1.clstr", "r+") as infile:
+
+# with open("/home/lucas/ISGlobal/Cruzi/tcruzi_epitopes_vaccine/New_strategy/exposed_ORFs_clusters.clstr", "r+") as infile:
+# with open("/home/lucas/ISGlobal/Brucei/aat_vaccine/cdhit/1533109047.fas.1.clstr", "r+") as infile:
+
 with open("/home/lucas/ISGlobal/Cruzi/tcruzi_New/tritryp_orfAA_proteomes/all_newORFs_clusters.clstr", "r+") as infile:
 	for line in infile:
 		if line.startswith(">"):

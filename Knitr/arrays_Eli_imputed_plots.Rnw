@@ -618,10 +618,11 @@ df_pca$Group <- noNA@phenoData@data$soca
 
 
 p <- ggplot(df_pca, aes(x=PC1,y=PC2, col = Strain, linetype = Status, group = Group))
-p <- p + geom_point(aes(color = Strain, shape = Strain), size=3)
-p <- p + geom_path()
+p <- p + geom_point(aes(color = Strain, shape = Strain), size=3) 
+p <- p + geom_path() + scale_color_manual(values = c("#00BA38", "#619CFF", "#F8766D"))
 p <- p + scale_linetype_manual(values=c("dashed", "solid"))
 print(p)
+ggplot_build(p)$data
 @
 
 \end{document}

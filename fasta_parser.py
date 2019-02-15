@@ -2,9 +2,6 @@
 
 import sys
 
-#!/usr/bin/env python
-
-import sys
 
 def fastatodict(fasta_file):
 
@@ -17,7 +14,7 @@ def fastatodict(fasta_file):
             if line.startswith(">"):
                 fasta[prot] = seq
                 seq = ""
-                prot = line.strip().split(" | ")[0]
+                prot = line.strip()
             else:
                 seq += line.strip()
 
@@ -25,17 +22,19 @@ def fastatodict(fasta_file):
 
     return fasta
 
-ref_fasta = fastatodict("/home/lucas/ISGlobal/Chip_Seq_Oriol/Chr14/chr14_fragment.fasta")
-#mod_fasta = fastatodict("/home/lucas/ISGlobal/Chip_Seq_Oriol/Reference_Genomes/PlasmoDB-39_Pfalciparum3D7_Genome_Ind_System_In.fasta")
+
+ref_fasta = fastatodict("/home/lucas/ISGlobal/Chip_Seq_Oriol/Chr14/chr14.fasta") 
+
+mod_fasta = fastatodict("/home/lucas/ISGlobal/Chip_Seq_Oriol/Reference_Genomes/PlasmoDB-39_Pfalciparum3D7_Genome_Ind_System_In_Revised.fas")
 
 
 print "Reference Fasta:"
 for key, value in ref_fasta.iteritems():
-    print key, value[0:10]
+    print key, value[-10:-1]
 
-# print "Modified Fasta:"
-# for key, value in mod_fasta.iteritems():
-#     print key, len(value)
+print "Modified Fasta:"
+for key, value in mod_fasta.iteritems():
+    print key, len(value)
 
 
 # print ">Reference_Chr14"
@@ -43,10 +42,3 @@ for key, value in ref_fasta.iteritems():
 # print ">Inducible_Chr14"
 # print mod_fasta[">Pf3D7_14_v3"][762614:773407]
 
-
-
-if __name__ == "__main__":
-    filenames= sys.argv[1:]
-    print filenames
-    for filein in filenames:
-        merge_fastas(filein)

@@ -1,7 +1,7 @@
 #! /usr/bin/Rscript
 
 # Load gff and chromosome lengths
-df <- read.csv("/home/lucas/ISGlobal/Gen_Referencies/PlasmoDB-31_Pfalciparum3D7_Sorted_filtered.gff", sep = "\t")
+df <- read.csv("/home/lucas/ISGlobal/Gen_Referencies/Pdb41_sorted_filtered.gff", sep = "\t")
 colnames(df) <-  c("chrom", "source", "feature", "start", "stop", "score", "strand", "frame", "attributes")
 chrom_lengths <- read.table("/home/lucas/ISGlobal/Gen_Referencies/Pf3D7.sizes")
 df["pre"] <- rep(0, dim(df)[1])
@@ -64,6 +64,6 @@ for (i in 1:length(df$chrom)){
   }              
 }
 
-write.table(df, file = "/home/lucas/ISGlobal/Gen_Referencies/Elongated_genes2.gff", sep = "\t", quote = FALSE, row.names = FALSE, col.names = FALSE)
+write.table(df, file = "/home/lucas/ISGlobal/Gen_Referencies/Elongated_genes_3.gff", sep = "\t", quote = FALSE, row.names = FALSE, col.names = FALSE)
 head(df, 50)
 

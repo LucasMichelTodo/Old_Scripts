@@ -20,13 +20,13 @@ def parse_consensus(consensus_file):
         fragment = ""
         fragments = []
         for i in seq:
-            if i not in "-*":
+            if i not in "-*X":
                 fragment += i
             else:
-                if len(fragment) > 8:
+                if len(fragment) > 14:
                     fragments.append(fragment)
                 fragment = ""
-        if len(fragment) > 8:
+        if len(fragment) > 14:
             fragments.append(fragment)
 
 

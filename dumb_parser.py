@@ -1,67 +1,73 @@
 #!/usr/bin/env python
 
 import sys
-
-def parse_consensus(consensus_file):
-
-    refs = []
-    with open("/home/lucas/ISGlobal/Cruzi/tcruzi_epitopes_vaccine/kmp11_epitope_blast_hits.txt", "r+") as ref:
-        for line in ref:
-            refs.append(line.strip())
-
-        refs = [x.split(" | ")[2] for x in refs]
-
-    fasta = {}
-    seq = ""
-    prot = ""
-
-    with open(consensus_file, "r+") as file1:
-        for line in file1:
-            if line.startswith(">"):
-                fasta[prot] = seq
-                seq = ""
-                prot = line.strip()
-            else:
-                seq += line.strip()
-
-        fasta[prot] = seq
-
-    for prot, seq in fasta.iteritems():
-        if prot:
-            if prot.startswith(">exposed"):
-                pass
-            else:
-                loc = prot.split(" | ")
-                loc = [x for x in loc if x.startswith('location=')][0]
-
-                if loc in refs:
-                    print prot
-                    print seq
-
-    # with open(consensus_file, "r+") as infile:
-    #     for line in infile:
-
-            # linelist = line.strip().split("\t")
-            # #print linelist
-            # print (">"+linelist[0]+" | "+linelist[2]+" | "+linelist[3]+"\n"+linelist[1])
+from Bio import SeqIO
 
 
-
-
-
-#def parse_consensus(filein):
-
-    # i = 1
-    # ref = []
-    # with open("/home/lucas/ISGlobal/Brucei/aat_vaccine/Run_060818/all_consensus00_onlyAA_15aa.fasta", "r+") as infile1:
-    #     for line in infile1:
-    #         if line.startswith(">"):
-    #             #print i, "_".join(line.split("_")[0:3])
-    #             ref.append(line.split(".")[0].strip())
-    #             i +=1
-                #print ref
+def parse_consensus(infile):
+    with open(infile, "r+") as handle:
+        for record in SeqIO.parse(handle, "fasta"):
+            print(">"+record.id+" | "+str(len(record.seq)))
+            print record.seq
+#
+#     refs = []
+#     with open("/home/lucas/ISGlobal/Cruzi/tcruzi_epitopes_vaccine/kmp11_epitope_blast_hits.txt", "r+") as ref:
+#         for line in ref:
+#             refs.append(line.strip())
+#
+#         refs = [x.split(" | ")[2] for x in refs]
+#
+#     fasta = {}
+#     seq = ""
+#     prot = ""
+#
+#     with open(consensus_file, "r+") as file1:
+#         for line in file1:
+#             if line.startswith(">"):
+#                 fasta[prot] = seq
+#                 seq = ""
+#                 prot = line.strip()
+#             else:
+#                 seq += line.strip()
+#
+#         fasta[prot] = seq
+#
+#     for prot, seq in fasta.iteritems():
+#         if prot:
+#             if prot.startswith(">exposed"):
+#                 pass
+#             else:
+#                 loc = prot.split(" | ")
+#                 loc = [x for x in loc if x.startswith('location=')][0]
+#
+#                 if loc in refs:
+#                     print prot
+#                     print seq
+#
+#     # with open(consensus_file, "r+") as infile:
+#     #     for line in infile:
+#
+#             # linelist = line.strip().split("\t")
+#             # #print linelist
+#             # print (">"+linelist[0]+" | "+linelist[2]+" | "+linelist[3]+"\n"+linelist[1])
 #
 #
+#
+#
+#
+# #def parse_consensus(filein):
+#
+#     # i = 1
+#     # ref = []
+#     # with open("/home/lucas/ISGlobal/Brucei/aat_vaccine/Run_060818/all_consensus00_onlyAA_15aa.fasta", "r+") as infile1:
+#     #     for line in infile1:
+#     #         if line.startswith(">"):
+#     #             #print i, "_".join(line.split("_")[0:3])
+#     #             ref.append(line.split(".")[0].strip())
+#     #             i +=1
+#                 #print ref
+# #
+# #
     # with open(filein, "r+") as infile:
     #     i = 1
     #     for line in infile:
